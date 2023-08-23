@@ -1,11 +1,29 @@
 {
   "extends": [
-    "next/core-web-vitals",
-    "prettier",
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended"
+    "next/core-web-vitals", // next 전용, react도 포함되어있음
+    "eslint:recommended", // 추천되는 eslint용 rule을 확장
+    "plugin:prettier/recommended", // prettier rule에 어긋나는 것들을 error 표시해줌
+    "plugin:@typescript-eslint/recommended" // typescript를 위한 lint rule이 담겨있음
   ],
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
-  "root": true
+  "root": true,
+  "rules": {
+    "import/order": [
+      "error",
+      {
+        // TODO: 어떻순으로 import를 배치할 것인지 정한후 수정 (https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/order.md)
+        "groups": [
+          "index",
+          "sibling",
+          "parent",
+          "internal",
+          "external",
+          "builtin",
+          "object",
+          "type"
+        ]
+      }
+    ]
+  }
 }

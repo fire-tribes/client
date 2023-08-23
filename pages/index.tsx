@@ -1,6 +1,6 @@
+import Head from 'next/head';
 import { atom, useAtom } from 'jotai';
 import type { NextPage } from 'next';
-import Head from 'next/head';
 
 const countAtom = atom(0);
 
