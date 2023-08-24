@@ -21,10 +21,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <Global styles={globalStyle} />
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          <ReactQueryDevtools />
-          <Component {...pageProps} />
-        </ThemeProvider>
+        <ReactQueryDevtools />
+        <Component {...pageProps} />
       </QueryClientProvider>
     </>
   );
