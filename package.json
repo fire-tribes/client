@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "next start"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -37,6 +36,6 @@
     "typescript": "^5.1.6"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "eslint"
+    "*.{js,jsx,ts,tsx}": "eslint --cache"
   }
 }
