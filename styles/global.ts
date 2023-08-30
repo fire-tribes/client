@@ -1,5 +1,5 @@
-import { css } from '@emotion/react';
 import { fontFacePretendard } from '@/styles/fonts';
+import { css } from '@emotion/react';
 
 export const globalStyle = css`
   * {
@@ -34,7 +34,9 @@ export const globalStyle = css`
   }
 
   a {
+    display: inline-block;
     text-decoration: none;
+    cursor: pointer;
   }
 
   input::-webkit-outer-spin-button,
