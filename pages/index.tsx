@@ -1,13 +1,8 @@
 import Head from 'next/head';
-import { atom, useAtom } from 'jotai';
+import Link from 'next/link';
 import type { NextPage } from 'next';
 
-const countAtom = atom(0);
-
 const Home: NextPage = () => {
-  const [count, setCount] = useAtom(countAtom);
-  const onClickHandler = () => setCount((pre) => pre + 1);
-
   return (
     <div>
       <Head>
@@ -16,12 +11,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <button onClick={onClickHandler}>버튼</button>
-        <div>{count}</div>
-        <h1>Welcome</h1>
-        <div>Next.js</div>
+        <Link href={'/login'}>로그인 페이지 진입</Link>
       </main>
-      <footer>footer</footer>
+      <footer></footer>
     </div>
   );
 };
