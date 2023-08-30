@@ -2,6 +2,7 @@
   "theme_color": "#f69435",
   "background_color": "#f69435",
   "display": "standalone",
+  "orientation" : "portrait",
   "scope": "/",
   "start_url": "/",
   "name": "fires",
