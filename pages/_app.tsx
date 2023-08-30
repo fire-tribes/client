@@ -1,6 +1,9 @@
-import theme from '../styles/theme';
+// import theme from '../styles/theme';
 import { globalStyle } from '@/styles/global';
-import { Global, ThemeProvider } from '@emotion/react';
+import {
+  Global,
+  // ThemeProvider
+} from '@emotion/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useState } from 'react';
