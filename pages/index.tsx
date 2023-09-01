@@ -1,5 +1,6 @@
 import PopupTest from '@/components/PopupTest';
 import Layout from '@/components/common/Layout';
+import CommonList from '@/components/common/ListItem';
 import IOSSwitch from '@/components/common/Switch/CommonIosSwitch';
 import CommonTextField from '@/components/common/TextField';
 
@@ -11,6 +12,7 @@ const PageIndex = () => {
       <div>
         <IOSSwitch />
         <CommonTextField label="10글자만 입력" />
+        <CommonList items={['1']} />
       </div>
     </Layout>
   );
