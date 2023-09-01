@@ -1,8 +1,18 @@
-import theme from './theme';
+import { basic, sementic } from '@/styles/palette';
+import { fontSize } from '@/styles/typography';
 import '@emotion/react';
 
-type ThemeType = typeof theme;
+type LightPaletteSementic = typeof sementic.light;
+type DarkPaletteSementic = typeof sementic.dark;
+
+export type CustomTheme = {
+  fontSize: typeof fontSize;
+  palette: {
+    basic: typeof basic;
+    sementic: LightPaletteSementic | DarkPaletteSementic;
+  };
+};
 
 declare module '@emotion/react' {
-  export interface Theme extends ThemeType {}
+  export interface Theme extends CustomTheme {}
 }
