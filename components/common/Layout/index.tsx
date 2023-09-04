@@ -19,20 +19,16 @@ const StyledLayout = styled.main`
   min-width: 320px;
   max-width: 430px;
 
-  height: 100vh;
-
+  min-height: 100vh;
   margin: 0 auto;
 
   position: relative;
-  overflow: hidden;
   text-align: center;
-  border: 1px solid black;
-  //
 `;
 
 const StyledContent = styled.section`
   min-height: 100vh;
-  padding-bottom: 56px;
+  padding: 0 5% 56px 5%;
 `;
 
 export default Layout;
