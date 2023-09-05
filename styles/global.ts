@@ -18,6 +18,12 @@ export const globalStyle = css`
   button {
     all: unset;
     cursor: pointer;
+
+    font-weight: 700;
+
+    :hover {
+      opacity: 0.8;
+    }
   }
 
   li,
