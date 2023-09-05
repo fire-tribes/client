@@ -1,6 +1,8 @@
 import BadgeStyleSheet from '@/components/common/Badge/styles';
 import { css } from '@emotion/react';
+
 import styled from '@emotion/styled';
+import type { BasicColorKeys } from '@/styles/palette';
 import type { ButtonHTMLAttributes, PropsWithChildren, ReactNode } from 'react';
 
 type ButtonVariantProps = 'text' | 'outlined' | 'contained';
@@ -11,8 +13,8 @@ interface CommonBadgeProps
     ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariantProps;
   size?: ButtonSizeProps;
-  mainColor?: string;
-  subColor?: string;
+  mainColor?: BasicColorKeys;
+  subColor?: BasicColorKeys;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
 }
@@ -22,10 +24,11 @@ export default function CommonBadge({
   variant = 'outlined',
   type = 'button',
   size = 'small',
-  mainColor = 'blue',
-  subColor = 'white',
+  mainColor = 'gray0',
+  subColor = 'point_blue02',
   leftIcon,
   rightIcon,
+  ...rest
 }: CommonBadgeProps) {
   return (
     <StyledBadge
@@ -34,6 +37,7 @@ export default function CommonBadge({
       size={size}
       mainColor={mainColor}
       subColor={subColor}
+      {...rest}
     >
       {leftIcon}
       {children}
@@ -57,13 +61,11 @@ const StyledBadge = styled.button<StyledBadgeProps>`
   ${({ size }) => BadgeStyleSheet.size[size]}
 
   // variant
-  ${({
-    // theme,
-    variant,
-    mainColor,
-    subColor,
-  }) => css`
-    ${BadgeStyleSheet.variant[variant](mainColor, subColor)}
+  ${({ theme, variant, mainColor, subColor }) => css`
+    ${BadgeStyleSheet.variant[variant](
+      theme.palette.basic[mainColor],
+      theme.palette.basic[subColor],
+    )}
   `}
 
   ${() => css`
