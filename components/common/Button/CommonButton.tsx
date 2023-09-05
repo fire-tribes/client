@@ -1,3 +1,4 @@
+// import { ButtonUI } from './style';
 import { Button, ButtonProps, styled } from '@mui/material';
 
 const CommonButton = ({
@@ -7,7 +8,7 @@ const CommonButton = ({
   ...rest
 }: ButtonProps) => {
   return (
-    <StyledButton variant={variant} color={color} {...rest}>
+    <StyledButton color={color} variant={variant} {...rest}>
       {children}
     </StyledButton>
   );

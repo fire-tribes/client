@@ -85,7 +85,7 @@ const Button = styled(CommonButton)`
   height: 44px;
 `;
 
-export const PopupUI = {
+export const ModalUI = {
   Dimmed,
   Container,
   TitleWrapper,
