@@ -43,3 +43,9 @@ export const sementic = {
     font_gray: basic.gray5,
   },
 };
+
+export type BasicColor = typeof basic;
+export type SementicColor = typeof sementic;
+
+export type BasicColorKeys = keyof typeof basic;
+export type SementicColorKeys = keyof typeof sementic;
