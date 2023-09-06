@@ -1,4 +1,5 @@
 import { Comp } from '@/components/common/Comp';
+import UseQueryExampleComp from '@/components/Test/UseQueryExampleComp';
 import Head from 'next/head';
 import { atom, useAtom } from 'jotai';
 import type { NextPage } from 'next';
@@ -21,6 +22,7 @@ const Home: NextPage = () => {
         <div>{count}</div>
         <h1>Welcome</h1>
         <div>Next.js</div>
+        <UseQueryExampleComp />
         <Comp />
       </main>
       <footer>footer</footer>
