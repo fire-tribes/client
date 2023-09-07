@@ -1,31 +1,61 @@
-import { PopupUI } from './style';
+// <<<<<<< HEAD
+import { ModalUI } from './style';
 import { CSSProperties, createContext } from 'react';
 
-export type TPopupProps = {
-  children: React.ReactNode;
+// export type TPopupProps = {
+//   children: React.ReactNode;
+//   onClose?: () => void;
+//   show: boolean;
+//   disableBackgroundClick?: boolean;
+//   minWidth?: CSSProperties['minWidth'];
+//   position?: 'center' | 'bottom';
+//   layout?: 'fill' | 'initial';
+// };
+
+interface TModalCSSProps {
+  type?: 'alert' | 'confirm'; // 버튼 타입, default: alert
   show: boolean;
-  onClose?: () => void;
   disableBackgroundClick?: boolean;
   minWidth?: CSSProperties['minWidth'];
   position?: 'center' | 'bottom';
   layout?: 'fill' | 'initial';
-};
+}
 
-const ClosePopupContext = createContext(() => {});
+export interface TModalProps extends TModalCSSProps {
+  children: React.ReactNode;
+  onClose?: () => void;
+}
 
-const Popup = ({
-  children,
+// const Popup = ({
+//   children,
+//   show,
+//   onClose,
+//   disableBackgroundClick,
+//   minWidth = 400,
+//   position = 'center',
+//   layout = 'initial',
+// }: TModalProps) => {
+//   if (!show) return null;
+
+//   return (
+//     <ModalUI.Dimmed
+//       position={position}
+
+const CloseModalContext = createContext(() => {});
+
+const Modal = ({
   show,
-  onClose,
-  disableBackgroundClick,
+  disableBackgroundClick = false,
   minWidth = 400,
   position = 'center',
   layout = 'initial',
-}: TPopupProps) => {
+  children,
+  onClose,
+}: TModalProps) => {
   if (!show) return null;
 
   return (
-    <PopupUI.Dimmed
+    <ModalUI.Dimmed
       position={position}
       onClick={() => {
         if (disableBackgroundClick) return;
@@ -33,36 +63,36 @@ const Popup = ({
         if (onClose) onClose();
       }}
     >
-      <ClosePopupContext.Provider
+      <CloseModalContext.Provider
         value={() => {
           if (onClose) onClose();
         }}
       >
-        <PopupUI.Container
+        <ModalUI.Container
           minWidth={minWidth}
           layout={layout}
           position={position}
         >
           {children}
-        </PopupUI.Container>
-      </ClosePopupContext.Provider>
-    </PopupUI.Dimmed>
+        </ModalUI.Container>
+      </CloseModalContext.Provider>
+    </ModalUI.Dimmed>
   );
 };
 
 const Title = ({ children }: { children: React.ReactNode }) => {
   return (
-    <PopupUI.TitleWrapper>
-      <PopupUI.Title>{children}</PopupUI.Title>
-    </PopupUI.TitleWrapper>
+    <ModalUI.TitleWrapper>
+      <ModalUI.Title>{children}</ModalUI.Title>
+    </ModalUI.TitleWrapper>
   );
 };
 
-Popup.Title = Title;
-Popup.ContentLabel = PopupUI.ContentLabel;
-Popup.Content = PopupUI.Content;
+Modal.Title = Title;
+Modal.ContentLabel = ModalUI.ContentLabel;
+Modal.Content = ModalUI.Content;
 
-Popup.Actions = PopupUI.Actions;
-Popup.Button = PopupUI.Button;
+Modal.Actions = ModalUI.Actions;
+Modal.Button = ModalUI.Button;
 
-export default Popup;
+export default Modal;

@@ -1,10 +1,10 @@
-import Popup, { TPopupProps } from '@/components/common/Modal';
-import useControlPopup from '@/hook/useControlPopup';
-import { PropsWithChildren, ReactNode } from 'react';
+import Modal, { TModalProps } from '@/components/common/Modal';
+import useControlModal from '@/hook/useControlModal';
+import type { PropsWithChildren, ReactNode } from 'react';
 
-type PickTPopupPropsType = Pick<TPopupProps, 'layout' | 'position'>;
+type PickTModalPropsType = Pick<TModalProps, 'layout' | 'position'>;
 
-interface NotifyModalProps extends PropsWithChildren, PickTPopupPropsType {
+interface NotifyModalProps extends PropsWithChildren, PickTModalPropsType {
   title: ReactNode;
   content: ReactNode;
   buttonText?: string;
@@ -18,18 +18,18 @@ export default function NotifyModal({
   layout = 'fill',
   position = 'bottom',
 }: NotifyModalProps) {
-  const { isShow, openPopup, closePopup } = useControlPopup();
+  const { isShow, openModal, closeModal } = useControlModal();
 
   return (
     <>
-      <Popup show={isShow} layout={layout} position={position}>
-        <Popup.Title>{title}</Popup.Title>
-        <Popup.Content>{content}</Popup.Content>
-        <Popup.Actions>
-          <Popup.Button onClick={closePopup}>{buttonText}</Popup.Button>
-        </Popup.Actions>
-      </Popup>
-      <span onClick={openPopup}>{children}</span>
+      <Modal show={isShow} layout={layout} position={position}>
+        <Modal.Title>{title}</Modal.Title>
+        <Modal.Content>{content}</Modal.Content>
+        <Modal.Actions>
+          <Modal.Button onClick={closeModal}>{buttonText}</Modal.Button>
+        </Modal.Actions>
+      </Modal>
+      <span onClick={openModal}>{children}</span>
     </>
   );
 }

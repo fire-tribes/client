@@ -7,7 +7,7 @@ const CommonButton = ({
   ...rest
 }: ButtonProps) => {
   return (
-    <StyledButton variant={variant} color={color} {...rest}>
+    <StyledButton color={color} variant={variant} {...rest}>
       {children}
     </StyledButton>
   );

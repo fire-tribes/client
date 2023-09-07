@@ -1,7 +1,6 @@
 import BadgeTest from '@/components/BdageTest';
 
 import { mockNotifyModalItemModel, mockNotifyModalItemModel2 } from '@/mocks';
-import PopupTest from '@/components/PopupTest';
 
 import NotifyListModal from '@/components/common/Modal/NotifyListModal';
 import Head from 'next/head';
@@ -10,7 +9,7 @@ import type { NextPage } from 'next';
 
 // custom이 필요한 경우 아래와 같이 구현
 
-const Home: NextPage = () => {
+const IndexPage: NextPage = () => {
   return (
     <div>
       <Head>
@@ -19,7 +18,6 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <PopupTest />
         <NotifyListModal
           modalTitle="배당 수익률"
           items={mockNotifyModalItemModel}
@@ -45,4 +43,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default IndexPage;
