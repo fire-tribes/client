@@ -1,16 +1,5 @@
-// <<<<<<< HEAD
 import { ModalUI } from './style';
 import { CSSProperties, createContext } from 'react';
-
-// export type TPopupProps = {
-//   children: React.ReactNode;
-//   onClose?: () => void;
-//   show: boolean;
-//   disableBackgroundClick?: boolean;
-//   minWidth?: CSSProperties['minWidth'];
-//   position?: 'center' | 'bottom';
-//   layout?: 'fill' | 'initial';
-// };
 
 interface TModalCSSProps {
   type?: 'alert' | 'confirm'; // 버튼 타입, default: alert
@@ -25,21 +14,6 @@ export interface TModalProps extends TModalCSSProps {
   children: React.ReactNode;
   onClose?: () => void;
 }
-
-// const Popup = ({
-//   children,
-//   show,
-//   onClose,
-//   disableBackgroundClick,
-//   minWidth = 400,
-//   position = 'center',
-//   layout = 'initial',
-// }: TModalProps) => {
-//   if (!show) return null;
-
-//   return (
-//     <ModalUI.Dimmed
-//       position={position}
 
 const CloseModalContext = createContext(() => {});
 
