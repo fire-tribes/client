@@ -1,6 +1,6 @@
-const PageIndex = () => {
+const FullPage = () => {
   // Comp;
   return <div>full page</div>;
 };
 
-export default PageIndex;
+export default FullPage;

@@ -1,5 +1,5 @@
 import AlertModal from '@/components/common/AlertModal';
-// import Link from 'next/link';
+import Link from 'next/link';
 
 function Empty() {
   return (
@@ -21,9 +21,9 @@ function Empty() {
         <div>
           <strong>배당 계산을 위해 첫 주식을 추가해주세요.</strong>
         </div>
-        {/* <Link href="/fires/search"> */}
-        <span>+ 주식 추가하기</span>
-        {/* </Link> */}
+        <Link href="/fires/search">
+          <span>+ 주식 추가하기</span>
+        </Link>
       </div>
     </div>
   );
