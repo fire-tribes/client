@@ -1,0 +1,24 @@
+import { PopularStockUI } from './style';
+import increaseSvg from '@/public/icon/increase.svg';
+import decreaseSvg from '@/public/icon/decrease.svg';
+import Image from 'next/image';
+
+interface PopularStockProps {
+  increase?: boolean; // default: true
+  popularStock: string;
+}
+
+function PopularStock({ increase = true, popularStock }: PopularStockProps) {
+  return (
+    <PopularStockUI.Container>
+      {increase ? (
+        <Image src={increaseSvg} alt="Increase Svg" />
+      ) : (
+        <Image src={decreaseSvg} alt="Decrease Svg" />
+      )}
+      <span>{popularStock}</span>
+    </PopularStockUI.Container>
+  );
+}
+
+export default PopularStock;

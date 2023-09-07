@@ -1,14 +1,9 @@
-import Layout from '@/components/common/Layout';
 import AlertModal from '@/components/common/AlertModal';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 
-function empty() {
-  const router = useRouter();
-  const onMoveSearchPage = () => {
-    router.push('/fires/search');
-  };
+function Empty() {
   return (
-    <Layout>
+    <div>
       <AlertModal
         type={'confirm'}
         title={'준비중입니다.'}
@@ -26,152 +21,12 @@ function empty() {
         <div>
           <strong>배당 계산을 위해 첫 주식을 추가해주세요.</strong>
         </div>
-        <div>
-          <button onClick={onMoveSearchPage}>+ 주식 추가하기</button>
-        </div>
-        <div>돈주머니 이미지</div>
-        <div>
-          <strong>배당 계산을 위해 첫 주식을 추가해주세요.</strong>
-        </div>
-        <div>
-          <button onClick={onMoveSearchPage}>+ 주식 추가하기</button>
-        </div>
-        <div>돈주머니 이미지</div>
-        <div>
-          <strong>배당 계산을 위해 첫 주식을 추가해주세요.</strong>
-        </div>
-        <div>
-          <button onClick={onMoveSearchPage}>+ 주식 추가하기</button>
-        </div>
-        <div>돈주머니 이미지</div>
-        <div>
-          <strong>배당 계산을 위해 첫 주식을 추가해주세요.</strong>
-        </div>
-        <div>
-          <button onClick={onMoveSearchPage}>+ 주식 추가하기</button>
-        </div>
-        <div>돈주머니 이미지</div>
-        <div>
-          <strong>배당 계산을 위해 첫 주식을 추가해주세요.</strong>
-        </div>
-        <div>
-          <button onClick={onMoveSearchPage}>+ 주식 추가하기</button>
-        </div>
-        <div>돈주머니 이미지</div>
-        <div>
-          <strong>배당 계산을 위해 첫 주식을 추가해주세요.</strong>
-        </div>
-        <div>
-          <button onClick={onMoveSearchPage}>+ 주식 추가하기</button>
-        </div>
-        <div>돈주머니 이미지</div>
-        <div>
-          <strong>배당 계산을 위해 첫 주식을 추가해주세요.</strong>
-        </div>
-        <div>
-          <button onClick={onMoveSearchPage}>+ 주식 추가하기</button>
-        </div>
-        <div>돈주머니 이미지</div>
-        <div>
-          <strong>배당 계산을 위해 첫 주식을 추가해주세요.</strong>
-        </div>
-        <div>
-          <button onClick={onMoveSearchPage}>+ 주식 추가하기</button>
-        </div>
-        <div>돈주머니 이미지</div>
-        <div>
-          <strong>배당 계산을 위해 첫 주식을 추가해주세요.</strong>
-        </div>
-        <div>
-          <button onClick={onMoveSearchPage}>+ 주식 추가하기</button>
-        </div>
-        <div>돈주머니 이미지</div>
-        <div>
-          <strong>배당 계산을 위해 첫 주식을 추가해주세요.</strong>
-        </div>
-        <div>
-          <button onClick={onMoveSearchPage}>+ 주식 추가하기</button>
-        </div>
-        <div>돈주머니 이미지</div>
-        <div>
-          <strong>배당 계산을 위해 첫 주식을 추가해주세요.</strong>
-        </div>
-        <div>
-          <button onClick={onMoveSearchPage}>+ 주식 추가하기</button>
-        </div>
-        <div>돈주머니 이미지</div>
-        <div>
-          <strong>배당 계산을 위해 첫 주식을 추가해주세요.</strong>
-        </div>
-        <div>
-          <button onClick={onMoveSearchPage}>+ 주식 추가하기</button>
-        </div>
-        <div>돈주머니 이미지</div>
-        <div>
-          <strong>배당 계산을 위해 첫 주식을 추가해주세요.</strong>
-        </div>
-        <div>
-          <button onClick={onMoveSearchPage}>+ 주식 추가하기</button>
-        </div>
-        <div>돈주머니 이미지</div>
-        <div>
-          <strong>배당 계산을 위해 첫 주식을 추가해주세요.</strong>
-        </div>
-        <div>
-          <button onClick={onMoveSearchPage}>+ 주식 추가하기</button>
-        </div>
-        <div>돈주머니 이미지</div>
-        <div>
-          <strong>배당 계산을 위해 첫 주식을 추가해주세요.</strong>
-        </div>
-        <div>
-          <button onClick={onMoveSearchPage}>+ 주식 추가하기</button>
-        </div>
-        <div>돈주머니 이미지</div>
-        <div>
-          <strong>배당 계산을 위해 첫 주식을 추가해주세요.</strong>
-        </div>
-        <div>
-          <button onClick={onMoveSearchPage}>+ 주식 추가하기</button>
-        </div>
-        <div>돈주머니 이미지</div>
-        <div>
-          <strong>배당 계산을 위해 첫 주식을 추가해주세요.</strong>
-        </div>
-        <div>
-          <button onClick={onMoveSearchPage}>+ 주식 추가하기</button>
-        </div>
-        <div>돈주머니 이미지</div>
-        <div>
-          <strong>배당 계산을 위해 첫 주식을 추가해주세요.</strong>
-        </div>
-        <div>
-          <button onClick={onMoveSearchPage}>+ 주식 추가하기</button>
-        </div>
-        <div>돈주머니 이미지</div>
-        <div>
-          <strong>배당 계산을 위해 첫 주식을 추가해주세요.</strong>
-        </div>
-        <div>
-          <button onClick={onMoveSearchPage}>+ 주식 추가하기</button>
-        </div>
-        <div>돈주머니 이미지</div>
-        <div>
-          <strong>배당 계산을 위해 첫 주식을 추가해주세요.</strong>
-        </div>
-        <div>
-          <button onClick={onMoveSearchPage}>+ 주식 추가하기</button>
-        </div>
-        <div>돈주머니 이미지</div>
-        <div>
-          <strong>배당 계산을 위해 첫 주식을 추가해주세요.</strong>
-        </div>
-        <div>
-          <button onClick={onMoveSearchPage}>+ 주식 추가하기</button>
-        </div>
+        <Link href="/fires/search">
+          <span>+ 주식 추가하기</span>
+        </Link>
       </div>
-    </Layout>
+    </div>
   );
 }
 
-export default empty;
+export default Empty;
