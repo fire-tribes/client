@@ -1,5 +1,5 @@
 import useControlPopup from '@/hook/useControlPopup';
-import Popup from '@/components/common/Popup';
+import Popup from '@/components/common/Modal';
 import CommonTextField from '@/components/common/TextField';
 import { ChangeEvent, useState } from 'react';
 import { red } from '@mui/material/colors';
