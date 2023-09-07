@@ -6,13 +6,23 @@ type LightPaletteSementic = typeof sementic.light;
 type DarkPaletteSementic = typeof sementic.dark;
 
 export type CustomTheme = {
-  fontSize: typeof fontSize;
+  font: typeof fontSize;
   palette: {
     basic: typeof basic;
     sementic: LightPaletteSementic | DarkPaletteSementic;
   };
 };
 
+type CustomPalette = {
+  basic: typeof basic;
+  sementic: LightPaletteSementic | DarkPaletteSementic;
+};
+
 declare module '@emotion/react' {
   export interface Theme extends CustomTheme {}
+}
+
+declare module '@mui/material/styles' {
+  interface Palette extends CustomPalette {}
+  interface PaletteOptions extends CustomPalette {}
 }

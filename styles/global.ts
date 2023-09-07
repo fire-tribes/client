@@ -1,5 +1,6 @@
-import { css } from '@emotion/react';
 import { fontFacePretendard } from '@/styles/fonts';
+import { fontSize } from '@/styles/typography';
+import { css } from '@emotion/react';
 
 export const globalStyle = css`
   * {
@@ -41,6 +42,30 @@ export const globalStyle = css`
   input::-webkit-inner-spin-button {
     appearance: none;
     margin: 0;
+  }
+
+  h {
+    font-weight: 700;
+  }
+
+  h1 {
+    font-size: ${fontSize.h1};
+    font-weight: 700;
+  }
+  h2 {
+    font-size: ${fontSize.h2};
+    font-weight: 700;
+  }
+  h3 {
+    font-size: ${fontSize.h3};
+    font-weight: 700;
+  }
+  h4 {
+    font-size: ${fontSize.h4};
+    font-weight: 700;
+  }
+  h5 {
+    font-size: ${fontSize.h5};
   }
 
   /* about font */
