@@ -3,6 +3,7 @@ import BadgeTest from '@/components/BdageTest';
 import { mockNotifyModalItemModel, mockNotifyModalItemModel2 } from '@/mocks';
 
 import NotifyListModal from '@/components/common/Modal/NotifyListModal';
+import BarChart from '@/components/Chart';
 import Head from 'next/head';
 
 import type { NextPage } from 'next';
@@ -37,6 +38,8 @@ const IndexPage: NextPage = () => {
           <button>납부한 세금</button>
         </NotifyListModal>
         <BadgeTest />
+
+        <BarChart />
       </main>
       <footer>footer</footer>
     </div>
