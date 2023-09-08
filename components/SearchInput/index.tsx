@@ -11,19 +11,21 @@ function SearchInput() {
   };
   return (
     <SearchInputUI.Container>
-      <SearchInputUI.InputContainer>
-        <Image src={SearchSvg} width={24} height={24} alt="Search Icon" />
-        <div>
-          <SearchInputUI.Input
-            type="text"
-            value={stock}
-            onChange={handleShowSearchResult}
-            placeholder="주식 이름 혹은 티커 검색"
-          />
-        </div>
-      </SearchInputUI.InputContainer>
-      <Image src={CloseSvg} width={24} height={24} alt="Close Icon" />
-      <div>{stock}</div>
+      <SearchInputUI.Item>
+        <SearchInputUI.InputContainer>
+          <Image src={SearchSvg} width={24} height={24} alt="Search Icon" />
+          <div>
+            <SearchInputUI.Input
+              type="text"
+              value={stock}
+              onChange={handleShowSearchResult}
+              placeholder="주식 이름 혹은 티커 검색"
+            />
+          </div>
+        </SearchInputUI.InputContainer>
+        <Image src={CloseSvg} width={24} height={24} alt="Close Icon" />
+        <div>{stock}</div>
+      </SearchInputUI.Item>
     </SearchInputUI.Container>
   );
 }

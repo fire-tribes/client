@@ -10,30 +10,36 @@ interface SearchResultProps {
   stockTickerCode: string; // default : 'APPL'
 }
 
-function SearchResult({
-  stockName = 'apple',
-  stockTickerCode = 'APPL',
-}: SearchResultProps) {
+function SearchResult({ stockName, stockTickerCode }: SearchResultProps) {
   const [isAddStock, setIsAddStock] = useState(false);
-  const handleAddStock = () => {
-    isAddStock ? setIsAddStock(false) : setIsAddStock(true);
+  const handleAddStocks = () => {
+    {
+      isAddStock ? setIsAddStock(false) : setIsAddStock(true);
+    }
   };
+
   return (
     <SearchResultUI.Container>
-      <SearchResultUI.StockContainer>
-        <Image src={testCircleSvg} alt="testCircle Svg" />
-        <div>
-          <div>{stockName}</div>
-          <div>{stockTickerCode}</div>
+      <SearchResultUI.Item>
+        <SearchResultUI.StockContainer>
+          <Image src={testCircleSvg} alt="testCircle Svg" />
+          <div>
+            <div>{stockName}</div>
+            <div>{stockTickerCode}</div>
+          </div>
+        </SearchResultUI.StockContainer>
+        <div onClick={handleAddStocks}>
+          {isAddStock ? (
+            <button>
+              <Image src={checkTrueSvg} alt="checkTrue Svg" />
+            </button>
+          ) : (
+            <button>
+              <Image src={checkFalseSvg} alt="checkFalse Svg" />
+            </button>
+          )}
         </div>
-      </SearchResultUI.StockContainer>
-      <div onClick={() => handleAddStock()}>
-        {isAddStock ? (
-          <Image src={checkTrueSvg} alt="checkTrue Svg" />
-        ) : (
-          <Image src={checkFalseSvg} alt="checkFalse Svg" />
-        )}
-      </div>
+      </SearchResultUI.Item>
     </SearchResultUI.Container>
   );
 }

@@ -9,30 +9,29 @@ interface RecentSearchWordProps {
 }
 
 function RecentSearchWord({ recentSearchWord }: RecentSearchWordProps) {
+  const handleAddRecentSearchWord = () => {
+    // 검색창에 최근 검색어 추가하기
+  };
   return (
-    <article>
-      <RecentSearchWordUI.Container>
-        <div>
-          <button>
-            <Image src={searchSvg} width={18} height={18} alt="Search Icon" />
-            <span>{recentSearchWord}</span>
-          </button>
-        </div>
-        <div>
+    <RecentSearchWordUI.Container>
+      <RecentSearchWordUI.Item>
+        <RecentSearchWordUI.LeftContainer onClick={handleAddRecentSearchWord}>
+          <Image src={searchSvg} width={18} height={18} alt="Search Icon" />
+          <button>{recentSearchWord}</button>
+        </RecentSearchWordUI.LeftContainer>
+        <RecentSearchWordUI.RightContainer>
           <DateDisplay />
-        </div>
-        <div>
-          <button>
+          <div>
             <Image
               src={cancelDotSvg}
               width={14}
               height={14}
               alt="cancelDot Icon"
             />
-          </button>
-        </div>
-      </RecentSearchWordUI.Container>
-    </article>
+          </div>
+        </RecentSearchWordUI.RightContainer>
+      </RecentSearchWordUI.Item>
+    </RecentSearchWordUI.Container>
   );
 }
 
