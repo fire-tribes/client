@@ -1,7 +1,7 @@
 import CommonButton from '@/components/common/Button/CommonButton';
 import { fontSize } from '@/styles/typography';
 import styled from '@emotion/styled';
-import { keyframes } from '@emotion/react';
+import { css, keyframes } from '@emotion/react';
 import { CSSProperties } from 'react';
 
 const fadeInKeyframs = keyframes`
@@ -13,7 +13,18 @@ const fadeInKeyframs = keyframes`
     }
 `;
 
-const Dimmed = styled.section`
+const fadeInUpKeyframes = keyframes`
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  } 
+  to {
+    opacity: 1;
+      transform: translateZ(0);
+  }
+`;
+
+const Dimmed = styled.section<{ position: 'center' | 'bottom' }>`
   z-index: 2000;
 
   position: fixed;
@@ -22,8 +33,10 @@ const Dimmed = styled.section`
 
   display: flex;
 
-  justify-content: center;
-  align-items: center;
+  ${({ position }) => css`
+    justify-content: center;
+    align-items: ${position === 'center' ? 'center' : 'end'};
+  `}
 
   width: 100%;
   height: 100%;
@@ -34,19 +47,41 @@ const Dimmed = styled.section`
   animation-duration: 0.3s;
 `;
 
-const Container = styled.div<{ minWidth: CSSProperties['minWidth'] }>`
-  min-width: ${({ minWidth }) =>
-    typeof minWidth === 'number' ? `${minWidth}px` : minWidth};
+const Container = styled.div<{
+  minWidth: CSSProperties['minWidth'];
+  layout: 'fill' | 'initial';
+  position: 'center' | 'bottom';
+}>`
+  padding: 24px 24px 24px 24px;
 
   background-color: white;
-  border-radius: 10px;
-
   overflow: hidden;
+
+  ${({ layout, position, minWidth }) => css`
+    min-width: ${layout === 'fill'
+      ? '0px'
+      : typeof minWidth === 'number'
+      ? `${minWidth}px`
+      : minWidth};
+
+    width: ${layout === 'fill' && '100%'};
+
+    ${position === 'center'
+      ? css`
+          border-radius: 10px;
+        `
+      : css`
+          border-radius: 10px 10px 0 0;
+
+          animation-name: ${fadeInUpKeyframes};
+          animation-duration: 0.3s;
+        `}
+  `}
 `;
 
 const TitleWrapper = styled.div`
   text-align: center;
-  padding: 24px 24px 0px 24px;
+  /* padding: 24px 24px 0px 24px; */
 `;
 
 const Title = styled.strong`
@@ -77,7 +112,7 @@ const Actions = styled.div`
   display: flex;
   gap: 10px;
 
-  padding: 0px 24px 24px 24px;
+  /* padding: 0px 24px 24px 24px; */
 `;
 
 const Button = styled(CommonButton)`

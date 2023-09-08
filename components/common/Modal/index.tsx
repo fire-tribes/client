@@ -6,9 +6,11 @@ interface TModalCSSProps {
   show: boolean;
   disableBackgroundClick?: boolean;
   minWidth?: CSSProperties['minWidth'];
+  position?: 'center' | 'bottom';
+  layout?: 'fill' | 'initial';
 }
 
-interface TModalProps extends TModalCSSProps {
+export interface TModalProps extends TModalCSSProps {
   children: React.ReactNode;
   onClose?: () => void;
 }
@@ -19,6 +21,8 @@ const Modal = ({
   show,
   disableBackgroundClick = false,
   minWidth = 400,
+  position = 'center',
+  layout = 'initial',
   children,
   onClose,
 }: TModalProps) => {
@@ -26,6 +30,7 @@ const Modal = ({
 
   return (
     <ModalUI.Dimmed
+      position={position}
       onClick={() => {
         if (disableBackgroundClick) return;
 
@@ -37,7 +42,13 @@ const Modal = ({
           if (onClose) onClose();
         }}
       >
-        <ModalUI.Container minWidth={minWidth}>{children}</ModalUI.Container>
+        <ModalUI.Container
+          minWidth={minWidth}
+          layout={layout}
+          position={position}
+        >
+          {children}
+        </ModalUI.Container>
       </CloseModalContext.Provider>
     </ModalUI.Dimmed>
   );
