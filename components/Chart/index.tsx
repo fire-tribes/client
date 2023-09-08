@@ -28,7 +28,7 @@ export default function CommonChart() {
         // TODO: 차트의 크기를 고정하고 싶다면 해당 tag 활성화
         // maintainAspectRatio: false,
         layout: {
-          padding: 20,
+          padding: 0,
         },
         scales: {
           y: {

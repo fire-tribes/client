@@ -31,7 +31,9 @@ const CommonBottomNavigatior = () => {
     <BottomNavigation
       showLabels={false}
       sx={{
-        position: 'absolute',
+        position: 'fixed',
+        minWidth: '320px',
+        maxWidth: '430px',
         bottom: 0,
         width: 1.0,
         borderTop: '1px solid gray',
