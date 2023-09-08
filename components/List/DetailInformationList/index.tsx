@@ -1,7 +1,9 @@
-import NotifyPopup from '@/components/Popup/NotifyPopup';
 import FlexBox from '@/components/common/FlexBox';
+import { mockNotifyModalItemModel } from '@/mocks';
+import NotifyListModal from '@/components/common/Modal/NotifyListModal';
 import styled from '@emotion/styled';
 import { Typography } from '@mui/material';
+// import NotifyPopup from '@/components/Popup/NotifyPopup';
 
 const badangDetailTexts = [
   {
@@ -28,12 +30,18 @@ export default function DetailInformationList() {
   return (
     <>
       {badangDetailTexts.map(({ title, content }) => (
-        <NotifyPopup key={title}>
+        // <NotifyPopup key={title}>
+        <NotifyListModal
+          key={title}
+          modalTitle={title}
+          items={mockNotifyModalItemModel}
+        >
           <FlexBox justifyContent="space-between" paddingBottom={2}>
             <S.Title>{title}</S.Title>
             <S.Content>{content}</S.Content>
           </FlexBox>
-        </NotifyPopup>
+        </NotifyListModal>
+        // </NotifyPopup>
       ))}
     </>
   );

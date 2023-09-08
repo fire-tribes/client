@@ -1,4 +1,3 @@
-import NotifyPopup from '@/components/Popup/NotifyPopup';
 import {
   Box,
   List,
@@ -9,6 +8,7 @@ import {
   Avatar,
   Typography,
 } from '@mui/material';
+// import NotifyPopup from '@/components/Popup/NotifyPopup';
 
 interface MyStockItemModel {
   symbol: string;
@@ -54,7 +54,8 @@ export function MyStockList() {
             assetTotalPrice,
             assetTotalPriceDiffRate,
           }) => (
-            <NotifyPopup key={symbol}>
+            // <NotifyPopup key={symbol}>
+            <>
               <ListItem disablePadding>
                 <ListItemButton sx={{ padding: 0, gap: '9px' }}>
                   <ListItemIcon sx={{ minWidth: 0 }}>
@@ -82,7 +83,8 @@ export function MyStockList() {
                   />
                 </ListItemButton>
               </ListItem>
-            </NotifyPopup>
+            </>
+            // </NotifyPopup>
           ),
         )}
       </List>

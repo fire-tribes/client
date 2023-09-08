@@ -1,4 +1,3 @@
-import NotifyPopup from '@/components/Popup/NotifyPopup';
 import {
   Box,
   List,
@@ -9,6 +8,7 @@ import {
   Avatar,
   Typography,
 } from '@mui/material';
+// import NotifyPopup from '@/components/Popup/NotifyPopup';
 
 interface ScheduleItemModel {
   date: string;
@@ -40,7 +40,8 @@ export function ScheduleList() {
     <Box>
       <List disablePadding>
         {datas.map(({ date, ticker, cost, costDate }) => (
-          <NotifyPopup key={ticker}>
+          // <NotifyPopup key={ticker}>
+          <>
             <ListItem disablePadding>
               <ListItemButton sx={{ padding: 0, gap: '9px' }}>
                 <ListItemText secondary={date} sx={{ maxWidth: 32 }} />
@@ -57,7 +58,8 @@ export function ScheduleList() {
                 />
               </ListItemButton>
             </ListItem>
-          </NotifyPopup>
+          </>
+          // </NotifyPopup>
         ))}
       </List>
     </Box>
