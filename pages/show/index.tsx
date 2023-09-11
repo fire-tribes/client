@@ -9,15 +9,20 @@ import FlexBox from '@/components/common/FlexBox';
 import IOSSwitch from '@/components/common/Switch/CommonIosSwitch';
 import CommonChart from '@/components/Chart';
 import { Typography } from '@mui/material';
-// import styled from '@emotion/styled';
+import Image from 'next/image';
 
 const ShowPage = () => {
   Comp;
   return (
     <Layout>
-      <header>
+      <header style={{ paddingBottom: '20px' }}>
         <FlexBox justifyContent="space-between">
-          <div>icon</div>
+          <Image
+            src="/icon/snow_logo.png"
+            width={32}
+            height={32}
+            alt="snow"
+          ></Image>
           <FlexBox gap="6px">
             <span>심플모드</span>
             <IOSSwitch />
