@@ -7,6 +7,12 @@ import { Switch, SwitchProps, styled } from '@mui/material';
  * @returns
  */
 
+const IOSSwitchStyleConfig = {
+  width: 38,
+  height: 20,
+  circleWidth: 18,
+};
+
 export default function IOSSwitch(props: SwitchProps) {
   return <StyledIOSSwitch {...props} />;
 }
@@ -15,15 +21,15 @@ export default function IOSSwitch(props: SwitchProps) {
 const StyledIOSSwitch = styled((props: SwitchProps) => (
   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
 ))(({ theme }) => ({
-  width: 38,
-  height: 20,
+  width: IOSSwitchStyleConfig.width,
+  height: IOSSwitchStyleConfig.height,
   padding: 0,
   '& .MuiSwitch-switchBase': {
     padding: 0,
     margin: 1,
     transitionDuration: '600ms',
     '&.Mui-checked': {
-      transform: 'translateX(18px)',
+      transform: `translateX(${IOSSwitchStyleConfig.circleWidth}px)`,
       color: '#fff',
       '& + .MuiSwitch-track': {
         backgroundColor: theme.palette.mode === 'dark' ? '#2ECA45' : '#65C466',
@@ -50,8 +56,8 @@ const StyledIOSSwitch = styled((props: SwitchProps) => (
   },
   '& .MuiSwitch-thumb': {
     boxSizing: 'border-box',
-    width: 18,
-    height: 18,
+    width: IOSSwitchStyleConfig.circleWidth,
+    height: IOSSwitchStyleConfig.circleWidth,
   },
   '& .MuiSwitch-track': {
     borderRadius: 26 / 2,
