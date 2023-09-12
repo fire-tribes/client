@@ -11,12 +11,14 @@ interface PopularStockProps {
 function PopularStock({ increase = true, popularStock }: PopularStockProps) {
   return (
     <PopularStockUI.Container>
-      {increase ? (
-        <Image src={increaseSvg} alt="Increase Svg" />
-      ) : (
-        <Image src={decreaseSvg} alt="Decrease Svg" />
-      )}
-      <span>{popularStock}</span>
+      <PopularStockUI.Item>
+        {increase ? (
+          <Image src={increaseSvg} alt="Increase Svg" />
+        ) : (
+          <Image src={decreaseSvg} alt="Decrease Svg" />
+        )}
+        <span>{popularStock}</span>
+      </PopularStockUI.Item>
     </PopularStockUI.Container>
   );
 }

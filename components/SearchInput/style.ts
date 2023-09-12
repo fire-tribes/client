@@ -3,6 +3,10 @@ import { fontSize } from '@/styles/typography';
 import styled from '@emotion/styled';
 
 const Container = styled.div`
+  padding: 10px 16px;
+`;
+
+const Item = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -27,6 +31,7 @@ const Input = styled.input`
 
 export const SearchInputUI = {
   Container,
+  Item,
   InputContainer,
   Input,
 } as const;
