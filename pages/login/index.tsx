@@ -1,5 +1,4 @@
 import { KakaoLoginButton } from '@/components/oauth/KakaoLoginButton';
-import { LoginPageUI } from '@/pages/login/styles';
 import Image from 'next/image';
 
 const GUIDE_TEXT = `배당주 계산과 관리를 가장 쉽고 편하게 하는 방법`;
@@ -28,3 +27,41 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+import styled from '@emotion/styled';
+
+const Layout = styled.div`
+  height: 100vh;
+  text-align: center;
+`;
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  gap: 48 20;
+`;
+
+const Title = styled.h2`
+  margin-top: 48px;
+  margin-bottom: 32px;
+`;
+
+const SubTitle = styled.div`
+  font-size: ${({ theme }) => theme.font.body3};
+`;
+
+const Padding = styled.div`
+  padding-top: 15px;
+`;
+
+const LoginPageUI = {
+  Layout,
+  Content,
+  Title,
+  SubTitle,
+  Padding,
+};
