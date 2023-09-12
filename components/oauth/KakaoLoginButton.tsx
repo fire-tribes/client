@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 
 export const KakaoLoginButton = () => {
   const { init, open } = useKakaoLogin();
-  // init을 진행
 
   useEffect(() => {
     init();
