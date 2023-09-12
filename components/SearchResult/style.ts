@@ -5,8 +5,15 @@ const Container = styled.div`
 `;
 const Item = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
+
+  > div:first-child {
+    flex: 1;
+  }
+  > div:last-child {
+    width: 20px;
+    height: 20px;
+  }
 `;
 
 const StockContainer = styled.div`

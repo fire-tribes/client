@@ -12,6 +12,10 @@ function RecentSearchWord({ recentSearchWord }: RecentSearchWordProps) {
   const handleAddRecentSearchWord = () => {
     // 검색창에 최근 검색어 추가하기
   };
+  const handleDeleteRecentSearchWord = () => {
+    // 검색창에 최근 검색어 제거하기
+  };
+
   return (
     <RecentSearchWordUI.Container>
       <RecentSearchWordUI.Item>
@@ -21,14 +25,13 @@ function RecentSearchWord({ recentSearchWord }: RecentSearchWordProps) {
         </RecentSearchWordUI.LeftContainer>
         <RecentSearchWordUI.RightContainer>
           <DateDisplay />
-          <div>
-            <Image
-              src={cancelDotSvg}
-              width={14}
-              height={14}
-              alt="cancelDot Icon"
-            />
-          </div>
+          <Image
+            src={cancelDotSvg}
+            width={14}
+            height={14}
+            alt="cancelDot Icon"
+            onClick={handleDeleteRecentSearchWord}
+          />
         </RecentSearchWordUI.RightContainer>
       </RecentSearchWordUI.Item>
     </RecentSearchWordUI.Container>

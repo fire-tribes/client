@@ -1,7 +1,7 @@
 import { basic } from '@/styles/palette';
 import styled from '@emotion/styled';
 
-const Container = styled.span``;
+const Container = styled.div``;
 const Item = styled.span`
   height: 34px;
   border-radius: 40px;
