@@ -8,6 +8,8 @@ import FlexBox from '@/components/common/FlexBox';
 
 import IOSSwitch from '@/components/common/Switch/CommonIosSwitch';
 import CommonChart from '@/components/Chart';
+import CommonIcon from '@/components/common/Icon';
+import CommonFont from '@/components/Font';
 import { Typography } from '@mui/material';
 import Image from 'next/image';
 
@@ -38,14 +40,19 @@ const ShowPage = () => {
           <FlexBox justifyContent="space-between">
             <span>
               <FlexBox gap="14px">
-                <button type="button">
-                  <span>✅</span>
-                  <span>소득세</span>
+                <button>
+                  <FlexBox>
+                    <CommonIcon iconName={'checked_none'} />
+                    <CommonFont fontSize={'body3'}>소득세</CommonFont>
+                    <span></span>
+                  </FlexBox>
                 </button>
 
-                <button type="button">
-                  <span>⛔</span>
-                  <span>4대보험</span>
+                <button>
+                  <FlexBox>
+                    <CommonIcon iconName={'checked'} />
+                    <CommonFont fontSize={'body3'}>4대보험</CommonFont>
+                  </FlexBox>
                 </button>
               </FlexBox>
             </span>
