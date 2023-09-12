@@ -5,7 +5,6 @@ import { mockNotifyModalItemModel, mockNotifyModalItemModel2 } from '@/mocks';
 import NotifyListModal from '@/components/common/Modal/NotifyListModal';
 import BarChart from '@/components/Chart';
 import Head from 'next/head';
-import Link from 'next/link';
 import type { NextPage } from 'next';
 
 const IndexPage: NextPage = () => {
@@ -17,7 +16,6 @@ const IndexPage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Link href={'/login'}>로그인 페이지 진입</Link>
         <NotifyListModal
           modalTitle="배당 수익률"
           items={mockNotifyModalItemModel}
