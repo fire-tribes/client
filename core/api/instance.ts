@@ -7,7 +7,8 @@ const createAPIInstance = (config: AxiosRequestConfig) => {
 };
 
 const APIInstance = createAPIInstance({
-  baseURL: 'server_url',
+  baseURL: process.env.NEXT_PUBLIC_SERVER_URL + '/api/v1/',
+  withCredentials: true,
 });
 
 export default APIInstance;

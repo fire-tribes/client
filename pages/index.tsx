@@ -5,10 +5,7 @@ import { mockNotifyModalItemModel, mockNotifyModalItemModel2 } from '@/mocks';
 import NotifyListModal from '@/components/common/Modal/NotifyListModal';
 import BarChart from '@/components/Chart';
 import Head from 'next/head';
-
 import type { NextPage } from 'next';
-
-// custom이 필요한 경우 아래와 같이 구현
 
 const IndexPage: NextPage = () => {
   return (
@@ -41,7 +38,7 @@ const IndexPage: NextPage = () => {
 
         <BarChart />
       </main>
-      <footer>footer</footer>
+      <footer></footer>
     </div>
   );
 };

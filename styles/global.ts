@@ -41,7 +41,9 @@ export const globalStyle = css`
   }
 
   a {
+    display: inline-block;
     text-decoration: none;
+    cursor: pointer;
   }
 
   input::-webkit-outer-spin-button,
