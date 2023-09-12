@@ -1,8 +1,14 @@
+import BadgeTest from '@/components/BdageTest';
+
+import { mockNotifyModalItemModel, mockNotifyModalItemModel2 } from '@/mocks';
+
+import NotifyListModal from '@/components/common/Modal/NotifyListModal';
+import BarChart from '@/components/Chart';
 import Head from 'next/head';
 import Link from 'next/link';
 import type { NextPage } from 'next';
 
-const Home: NextPage = () => {
+const IndexPage: NextPage = () => {
   return (
     <div>
       <Head>
@@ -12,10 +18,31 @@ const Home: NextPage = () => {
       </Head>
       <main>
         <Link href={'/login'}>로그인 페이지 진입</Link>
+        <NotifyListModal
+          modalTitle="배당 수익률"
+          items={mockNotifyModalItemModel}
+        >
+          <button>배당 수익률</button>
+        </NotifyListModal>
+        <NotifyListModal
+          modalTitle="납부할 세금"
+          items={mockNotifyModalItemModel2}
+        >
+          <button>납부할 세금</button>
+        </NotifyListModal>
+        <NotifyListModal
+          modalTitle="납부한 세금"
+          items={mockNotifyModalItemModel2}
+        >
+          <button>납부한 세금</button>
+        </NotifyListModal>
+        <BadgeTest />
+
+        <BarChart />
       </main>
       <footer></footer>
     </div>
   );
 };
 
-export default Home;
+export default IndexPage;
