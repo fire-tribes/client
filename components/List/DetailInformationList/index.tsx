@@ -1,26 +1,36 @@
 import FlexBox from '@/components/common/FlexBox';
 import { mockNotifyModalItemModel } from '@/mocks';
 import NotifyListModal from '@/components/common/Modal/NotifyListModal';
+import { CommonFontUI } from '@/components/Font/styles';
 import styled from '@emotion/styled';
-import { Typography } from '@mui/material';
-// import NotifyPopup from '@/components/Popup/NotifyPopup';
+import type { BasicColorKeys } from '@/styles/palette';
 
-const badangDetailTexts = [
+type badgeDetailText = {
+  title: string;
+  content: string;
+  color: BasicColorKeys;
+};
+
+const badangDetailTexts: badgeDetailText[] = [
   {
     title: '연간 총 배당금',
     content: '8810만원',
+    color: 'gray9',
   },
   {
     title: '배당수익률',
     content: '6.9%',
+    color: 'point_red01',
   },
   {
     title: '납부한 세금',
     content: '104만원',
+    color: 'point_blue02',
   },
   {
     title: '납부할 세금',
     content: '49만원 예상',
+    color: 'point_blue02',
   },
 ];
 
@@ -29,8 +39,7 @@ export default function DetailInformationList() {
 
   return (
     <>
-      {badangDetailTexts.map(({ title, content }) => (
-        // <NotifyPopup key={title}>
+      {badangDetailTexts.map(({ title, content, color }) => (
         <NotifyListModal
           key={title}
           modalTitle={title}
@@ -38,21 +47,20 @@ export default function DetailInformationList() {
         >
           <FlexBox justifyContent="space-between" paddingBottom={2}>
             <S.Title>{title}</S.Title>
-            <S.Content>{content}</S.Content>
+            <S.Content color={color}>{content}</S.Content>
           </FlexBox>
         </NotifyListModal>
-        // </NotifyPopup>
       ))}
     </>
   );
 }
 
 const S = {
-  Title: styled(Typography)`
+  Title: styled(CommonFontUI.Font)`
     font-size: ${({ theme }) => theme.font.body1};
     font-weight: 500;
   `,
-  Content: styled(Typography)`
+  Content: styled(CommonFontUI.Font)`
     font-size: ${({ theme }) => theme.font.body1};
     font-weight: 700;
   `,
