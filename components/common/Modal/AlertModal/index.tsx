@@ -15,6 +15,7 @@ interface AlertModalProps
     PickTModalPropsType {
   title: string;
   message: string;
+  onClickEvent?: () => void;
 }
 
 function AlertModal({
@@ -24,11 +25,13 @@ function AlertModal({
   message,
   layout = 'fill',
   position = 'center',
+  onClickEvent,
 }: AlertModalProps) {
   const { isShow, openModal, closeModal } = useControlModal();
 
   const clickConfirmButton = () => {
     closeModal;
+    onClickEvent;
   };
   return (
     <>
