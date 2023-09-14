@@ -1,9 +1,10 @@
 import CommonBadge from '@/components/common/Badge';
+import FlexBox from '@/components/common/FlexBox';
 import CommonIcon from '@/components/common/Icon';
 
-export default function BadgeTest() {
+export default function BadgeGroup() {
   return (
-    <>
+    <FlexBox gap="6px">
       <CommonBadge
         variant="contained"
         onClick={() => alert('편집버튼 클릭')}
@@ -18,6 +19,6 @@ export default function BadgeTest() {
       >
         추가
       </CommonBadge>
-    </>
+    </FlexBox>
   );
 }
