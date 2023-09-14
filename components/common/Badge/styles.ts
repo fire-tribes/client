@@ -70,6 +70,7 @@ const StyledBadge = styled.button<StyledBadgeProps>`
   margin: 0;
   padding: 0 1rem;
   gap: 4px;
+  font-size: 14px;
 
   ${({ size }) => BadgeStyleSheet.size[size]}
 

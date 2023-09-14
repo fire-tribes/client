@@ -8,7 +8,9 @@ interface SectionContainerProps extends PropsWithChildren {
   paddingBottom?: CSSProperties['paddingBottom'];
 }
 
+type CSSPadding = CSSProperties['padding'];
 type SectionTitleProps = Pick<SectionContainerProps, 'paddingBottom'>;
+type SectionFooterProps = { padding: CSSPadding };
 
 function SectionContainer({
   children,
@@ -39,11 +41,15 @@ const S = {
     padding-bottom: ${({ paddingBottom }) => paddingBottom};
   `,
   SectionSubTitle: styled.p``,
+  SectionFooter: styled.div<SectionFooterProps>`
+    padding: ${({ padding }) => padding};
+  `,
 };
 
 const Section = Object.assign(SectionContainer, {
   Title: S.SectionTitle,
   SubTitle: S.SectionSubTitle,
+  Footer: S.SectionFooter,
 });
 
 export default Section;

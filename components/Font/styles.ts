@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
+
 import type { CommonFontProps } from '@/components/Font';
 
 type StyledFontProps = Pick<
@@ -16,3 +17,11 @@ export const CommonFontUI = {
     `}
   `,
 };
+
+type AllHTMLTagsType = keyof JSX.IntrinsicElements;
+
+function factoryFontUI(component: AllHTMLTagsType) {
+  return CommonFontUI.Font.withComponent(component);
+}
+
+export const Span = factoryFontUI('nav');

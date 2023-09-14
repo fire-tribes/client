@@ -1,3 +1,4 @@
+import CommonFont from '@/components/Font';
 import {
   Box,
   List,
@@ -53,7 +54,15 @@ export function ScheduleList() {
                 />
                 <ListItemText
                   primary={<Typography fontWeight={700}>{cost}</Typography>}
-                  secondary={costDate}
+                  secondary={
+                    <CommonFont
+                      fontSize="caption2"
+                      fontWeight="regular"
+                      color={'gray6'}
+                    >
+                      {costDate}
+                    </CommonFont>
+                  }
                   sx={{ textAlign: 'right' }}
                 />
               </ListItemButton>
