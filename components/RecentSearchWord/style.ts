@@ -11,6 +11,10 @@ const Item = styled.div`
 const LeftContainer = styled.div`
   display: flex;
   align-items: center;
+
+  button {
+    margin-left: 6px;
+  }
 `;
 const RightContainer = styled.div`
   display: flex;
