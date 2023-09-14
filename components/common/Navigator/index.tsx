@@ -15,12 +15,12 @@ const navagationItems: NavagationItem[] = [
     iconName: 'home',
   },
   {
-    href: '/fires/chart',
+    href: '/caculate',
     label: '',
     iconName: 'chart',
   },
   {
-    href: '/fires/setting',
+    href: '/setting',
     label: '',
     iconName: 'setting',
   },
@@ -40,20 +40,22 @@ const CommonBottomNavigatior = () => {
       }}
     >
       {navagationItems.map(({ label, href, iconName }) => (
-        <BottomNavigationAction
-          key={label}
-          label={label}
-          icon={
-            <Link href={href}>
-              <Image
-                src={`/icon/emphasis_${iconName}.svg`}
-                alt={label}
-                width={20}
-                height={20}
-              />
-            </Link>
-          }
-        />
+        <Link href={href} key={label}>
+          <BottomNavigationAction
+            label={label}
+            sx={{ margin: 0 }}
+            icon={
+              <Link href={href}>
+                <Image
+                  src={`/icon/emphasis_${iconName}.svg`}
+                  alt={label}
+                  width={20}
+                  height={20}
+                />
+              </Link>
+            }
+          />
+        </Link>
       ))}
     </BottomNavigation>
   );
