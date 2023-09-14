@@ -15,9 +15,7 @@ import styled from '@emotion/styled';
 import { Typography } from '@mui/material';
 import Head from 'next/head';
 
-const mockExchangeRate = 1326.99;
-
-const HomePage = () => {
+const MainPage = () => {
   return (
     <main>
       <Head>
@@ -30,57 +28,52 @@ const HomePage = () => {
           <ModeController />
         </header>
 
-        <ExchangeRate>
-          <CommonFont fontSize={'caption'} color={'gray5'}>
-            달러환율
-          </CommonFont>
-          <CommonFont fontSize={'caption'} color={'point_blue02'}>
-            {mockExchangeRate}원
-          </CommonFont>
-        </ExchangeRate>
+        <ExchangeRate />
 
         <Section textAlign="left" paddingTop="11px">
           <FlexBox justifyContent="space-between" paddingBottom="16px">
             <Section.Title>0000년 0월 배당금</Section.Title>
             <FlexBox justifyContent="space-between">
-              <span>
-                <FlexBox gap="14px">
-                  <button>
-                    <FlexBox gap="4px">
-                      <CommonIcon iconName={'checked'} />
-                      <CommonFont fontSize={'body3'}>소득세</CommonFont>
-                      <span></span>
-                    </FlexBox>
-                  </button>
-
-                  <button>
-                    <FlexBox gap="4px">
-                      <CommonIcon iconName={'checked_none'} />
-                      <CommonFont fontSize={'body3'}>4대보험</CommonFont>
-                    </FlexBox>
-                  </button>
-                </FlexBox>
-              </span>
+              <FlexBox gap="14px">
+                {
+                  //TODO: 버튼별로 별도의 컴포넌트로 분리
+                }
+                <button>
+                  <FlexBox gap="4px">
+                    <CommonIcon iconName={'checked'} />
+                    <CommonFont fontSize={'body3'}>소득세</CommonFont>
+                  </FlexBox>
+                </button>
+                <button>
+                  <FlexBox gap="4px">
+                    <CommonIcon iconName={'checked_none'} />
+                    <CommonFont fontSize={'body3'}>4대보험</CommonFont>
+                  </FlexBox>
+                </button>
+              </FlexBox>
             </FlexBox>
           </FlexBox>
-          <div>
-            <FlexBox
-              flexDirection="column"
-              alignItems={'start'}
-              paddingBottom={'18px'}
-            >
-              <h1 style={{ paddingBottom: '6px' }}>389만원</h1>
-              <CommonFont fontSize="body1" color="point_red01">
-                지난 배당 대비 +151만원
-              </CommonFont>
-            </FlexBox>
-          </div>
 
+          <FlexBox
+            flexDirection="column"
+            alignItems={'start'}
+            paddingBottom={'18px'}
+          >
+            <h1 style={{ paddingBottom: '6px' }}>389만원</h1>
+            <CommonFont fontSize="body1" color="point_red01">
+              지난 배당 대비 +151만원
+            </CommonFont>
+          </FlexBox>
+          {
+            // TODO: 차트 수정해야함
+          }
           <CommonChart />
         </Section>
+
         <Section paddingTop="30px" paddingBottom="30px">
           <DetailInformationList />
         </Section>
+
         <Section textAlign="left">
           <Section.Title paddingBottom="18px">배당 달력(8월)</Section.Title>
           <ScheduleList />
@@ -95,6 +88,7 @@ const HomePage = () => {
           </Section.Footer>
           <CommonBar />
         </Section>
+
         <Section textAlign="left" paddingTop="18px">
           <FlexBox justifyContent={'space-between'} paddingBottom="16px">
             <Section.Title>보유 주식</Section.Title>
@@ -109,6 +103,7 @@ const HomePage = () => {
           </Typography>
           <MyStockList />
         </Section>
+
         <StyledFooter>
           <CommonFont color="gray6" fontWeight="regular">
             현재 파이어스에서 제공하는 배당 금액은 환율, 세법, 주식 시장 가격
@@ -132,4 +127,4 @@ const StyledFooter = styled.footer`
 //   `,
 // };
 
-export default HomePage;
+export default MainPage;
