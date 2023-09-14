@@ -4,13 +4,13 @@ import CloseSvg from '@/public/icon/close.svg';
 import Image from 'next/image';
 
 interface SearchInputProps {
-  stock: string;
+  value: string;
   onFocus: () => void;
   handleShowSearchResult: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 function SearchInput({
-  stock,
+  value,
   onFocus,
   handleShowSearchResult,
 }: SearchInputProps) {
@@ -25,7 +25,7 @@ function SearchInput({
             <SearchInputUI.Input
               type="text"
               id="searchInput"
-              value={stock}
+              value={value}
               onFocus={onFocus}
               onChange={handleShowSearchResult}
               placeholder="주식 이름 혹은 티커 검색"

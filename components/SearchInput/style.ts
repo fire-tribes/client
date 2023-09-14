@@ -34,6 +34,12 @@ const InputContainer = styled.div`
     width: 24px;
     height: 24px;
   }
+  div:last-child {
+    flex: 1;
+  }
+  div:last-child input {
+    width: 100%;
+  }
 `;
 const Input = styled.input`
   height: 24px;
