@@ -51,7 +51,7 @@ const Title = styled.h2`
 `;
 
 const SubTitle = styled.div`
-  font-size: ${({ theme }) => theme.font.body3};
+  font-size: ${({ theme }) => theme.font.size.body3};
 `;
 
 const Padding = styled.div`
