@@ -39,18 +39,26 @@ export default function DetailInformationList() {
 
   return (
     <>
-      {badangDetailTexts.map(({ title, content, color }) => (
-        <NotifyListModal
-          key={title}
-          modalTitle={title}
-          items={mockNotifyModalItemModel}
-        >
-          <FlexBox justifyContent="space-between" paddingBottom={2}>
-            <S.Title>{title}</S.Title>
-            <S.Content color={color}>{content}</S.Content>
-          </FlexBox>
-        </NotifyListModal>
-      ))}
+      {badangDetailTexts.map(({ title, content, color }, index) => {
+        const shouldPaddingBottomZero = index === badangDetailTexts.length - 1;
+        const paddingBottom = shouldPaddingBottomZero ? 0 : '16px';
+
+        return (
+          <NotifyListModal
+            key={title}
+            modalTitle={title}
+            items={mockNotifyModalItemModel}
+          >
+            <FlexBox
+              justifyContent="space-between"
+              paddingBottom={paddingBottom}
+            >
+              <S.Title>{title}</S.Title>
+              <S.Content color={color}>{content}</S.Content>
+            </FlexBox>
+          </NotifyListModal>
+        );
+      })}
     </>
   );
 }

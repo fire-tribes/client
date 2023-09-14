@@ -37,6 +37,7 @@ const IndexPage: NextPage = () => {
         >
           <button>납부한 세금</button>
         </NotifyListModal>
+
         <BadgeTest />
 
         <BarChart />
