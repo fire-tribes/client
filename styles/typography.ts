@@ -25,7 +25,7 @@ const fontSize = {
   body2: '0.938rem', // 15px
   body3: '0.875rem', // 14px
   caption: '0.813rem', // 13px
-  caption2: '0.75rem', // 12px\
+  caption2: '0.75rem', // 12px
   caption3: '0.625rem', // 10px
   caption4: '0.5625rem', // default로 minimum이 10px인걸로 알고있습니다.
 } as const;
