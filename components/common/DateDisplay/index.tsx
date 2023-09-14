@@ -2,6 +2,7 @@ import { DateDisplayUI } from './style';
 
 function DateDisplay() {
   // 날짜 데이터
+  // const date = '2023-09-14T04:33:09.589Z';
   const DateData = [
     {
       date: new Date().toLocaleString('ko-KR', {
@@ -33,6 +34,7 @@ function DateDisplay() {
 
   return (
     <DateDisplayUI.Container>
+      today
       {DateData[0].date === todayDate
         ? '오늘'
         : DateData[0].date === yesterdayDate
