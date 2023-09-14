@@ -10,7 +10,7 @@ interface CommonFontProps extends PropsWithChildren {
 
 export default function CommonFont({
   fontSize = 'body2',
-  color = 'point_blue02',
+  color = 'gray9',
   children,
 }: CommonFontProps) {
   return (
