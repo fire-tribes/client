@@ -1,5 +1,5 @@
 import { fontFacePretendard } from '@/styles/fonts';
-import { fontSize } from '@/styles/typography';
+import { fontSize, fontWeight } from '@/styles/typography';
 import { css } from '@emotion/react';
 
 export const globalStyle = css`
@@ -9,7 +9,7 @@ export const globalStyle = css`
     margin: 0;
     font: inherit;
     font-family: Pretendard;
-    font-weight: 300;
+    font-weight: ${fontWeight.normal};
     color: inherit;
     word-wrap: break-word;
     word-break: keep-all;
@@ -19,7 +19,7 @@ export const globalStyle = css`
     all: unset;
     cursor: pointer;
 
-    font-weight: 700;
+    font-weight: ${fontWeight.bold};
 
     :hover {
       opacity: 0.8;
@@ -50,25 +50,21 @@ export const globalStyle = css`
     margin: 0;
   }
 
-  h {
-    font-weight: 700;
-  }
-
   h1 {
     font-size: ${fontSize.h1};
-    font-weight: 700;
+    font-weight: ${fontWeight.bold};
   }
   h2 {
     font-size: ${fontSize.h2};
-    font-weight: 700;
+    font-weight: ${fontWeight.bold};
   }
   h3 {
     font-size: ${fontSize.h3};
-    font-weight: 700;
+    font-weight: ${fontWeight.bold};
   }
   h4 {
     font-size: ${fontSize.h4};
-    font-weight: 700;
+    font-weight: ${fontWeight.bold};
   }
   h5 {
     font-size: ${fontSize.h5};

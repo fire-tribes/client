@@ -57,11 +57,11 @@ export default function DetailInformationList() {
 
 const S = {
   Title: styled(CommonFontUI.Font)`
-    font-size: ${({ theme }) => theme.font.body1};
+    font-size: ${({ theme }) => theme.font.size.body1};
     font-weight: 500;
   `,
   Content: styled(CommonFontUI.Font)`
-    font-size: ${({ theme }) => theme.font.body1};
+    font-size: ${({ theme }) => theme.font.size.body1};
     font-weight: 700;
   `,
 };
