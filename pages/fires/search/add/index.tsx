@@ -2,7 +2,7 @@ import Backward from '@/components/Backward';
 import FeedStockInfos from '@/components/FeedStockInfos';
 import BottomFixedButton from '@/components/common/Button/BottomFixedButton';
 import { useMutation } from '@tanstack/react-query';
-import { useLocation } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import axios from 'axios';
 
 interface MakePortfolio {
@@ -65,9 +65,9 @@ const usePostStocksAtPortfolio = (PORTFOLIO_ID: number | undefined) => {
 };
 
 function Add() {
-  const LOCATION = useLocation();
-  const QUERYPARAMS = new URLSearchParams(LOCATION.search);
-  const PORTFOLIO_ID = QUERYPARAMS.get('portfolioId');
+  const router = useRouter();
+  const { query } = router;
+  const PORTFOLIO_ID = query.portfolioId;
   console.log('PORTFOLIO_ID: ', PORTFOLIO_ID);
 
   // portfolioId 유무 확인(없으면 신규, 있으면 기존 포트폴리오)하고 신규일 경우, 포트폴리오 생성
