@@ -1,14 +1,21 @@
 import { CommonFontUI } from '@/components/Font/styles';
+import { BasicColorKeys } from '@/styles/palette';
 import { FontSizeKeys } from '@/styles/typography';
 import { PropsWithChildren } from 'react';
 
 interface CommonFontProps extends PropsWithChildren {
-  fontSize: FontSizeKeys;
+  fontSize?: FontSizeKeys;
+  color?: BasicColorKeys;
 }
 
 export default function CommonFont({
   fontSize = 'body2',
+  color = 'point_blue02',
   children,
 }: CommonFontProps) {
-  return <CommonFontUI.Font fontSize={fontSize}>{children}</CommonFontUI.Font>;
+  return (
+    <CommonFontUI.Font fontSize={fontSize} color={color}>
+      {children}
+    </CommonFontUI.Font>
+  );
 }
