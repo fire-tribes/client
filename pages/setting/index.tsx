@@ -1,11 +1,9 @@
 import Layout from '@/components/common/Layout';
 
-const FullPage = () => {
+export default function SettingPage() {
   return (
     <Layout>
-      <div>ssd</div>
+      <div>setting</div>
     </Layout>
   );
-};
-
-export default FullPage;
+}

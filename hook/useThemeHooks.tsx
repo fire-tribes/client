@@ -1,5 +1,5 @@
 import { basic, sementic } from '@/styles/palette';
-import { fontSize } from '@/styles/typography';
+import { fontSize, fontWeight } from '@/styles/typography';
 import { useLayoutEffect, useState } from 'react';
 
 type ThemeMode = keyof typeof sementic;
@@ -44,7 +44,10 @@ export const useEmotionTheme = () => {
   const palette = useEmotionPalette();
 
   return {
-    font: fontSize,
+    font: {
+      size: fontSize,
+      weight: fontWeight,
+    },
     palette,
   };
 };

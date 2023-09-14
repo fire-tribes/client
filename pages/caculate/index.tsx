@@ -1,11 +1,9 @@
 import Layout from '@/components/common/Layout';
 
-const FullPage = () => {
+export default function index() {
   return (
     <Layout>
-      <div>ssd</div>
+      <div>계산</div>
     </Layout>
   );
-};
-
-export default FullPage;
+}
