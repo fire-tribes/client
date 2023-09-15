@@ -30,6 +30,7 @@ export const sementic = {
     rect_bg_point_red02: basic.point_red02,
     input_bg_gray: basic.gray2,
     font_gray: basic.gray5,
+    font_section_title: basic.gray_blue,
   },
   dark: {
     bg_white: basic.white,
@@ -41,5 +42,12 @@ export const sementic = {
     rect_bg_point_red02: basic.point_red02,
     input_bg_gray: basic.gray2,
     font_gray: basic.gray5,
+    font_section_title: basic.gray_blue,
   },
 };
+
+export type BasicColor = typeof basic;
+export type SementicColor = typeof sementic;
+
+export type BasicColorKeys = keyof typeof basic;
+export type SementicColorKeys = keyof typeof sementic;
