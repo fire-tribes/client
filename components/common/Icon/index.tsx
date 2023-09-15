@@ -15,7 +15,7 @@ export default function CommonIcon({
     <Image
       width={width}
       height={height}
-      src={`/icons/${iconName}.svg`}
+      src={`/icon/${iconName}.svg`}
       alt={`${iconName}-icon`}
     />
   );

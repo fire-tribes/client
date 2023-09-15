@@ -14,7 +14,8 @@
  *caption3: '0.625rem', // 10px
  *caption4: '0.5625rem', // 9px
  */
-export const fontSize = {
+
+const fontSize = {
   h1: '1.75rem', // 28px
   h2: '1.5rem', // 24px
   h3: '1.25rem', // 20px
@@ -28,3 +29,15 @@ export const fontSize = {
   caption3: '0.625rem', // 10px
   caption4: '0.5625rem', // default로 minimum이 10px인걸로 알고있습니다.
 } as const;
+
+const fontWeight = {
+  regular: 400,
+  normal: 500,
+  bold: 700,
+};
+
+type FontSizeKeys = keyof typeof fontSize;
+type FontWeightKeys = keyof typeof fontWeight;
+
+export { fontSize, fontWeight };
+export type { FontSizeKeys, FontWeightKeys };

@@ -1,12 +1,16 @@
 import { basic, sementic } from '@/styles/palette';
-import { fontSize } from '@/styles/typography';
+import { fontSize, fontWeight } from '@/styles/typography';
 import '@emotion/react';
 
 type LightPaletteSementic = typeof sementic.light;
 type DarkPaletteSementic = typeof sementic.dark;
 
 export type CustomTheme = {
-  font: typeof fontSize;
+  font: {
+    size: typeof fontSize;
+    weight: typeof fontWeight;
+  };
+  fontSize: typeof fontSize;
   palette: {
     basic: typeof basic;
     sementic: LightPaletteSementic | DarkPaletteSementic;
