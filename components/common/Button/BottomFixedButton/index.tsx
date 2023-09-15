@@ -12,13 +12,46 @@ function BottomFixedButton({
   ...rest
 }: ButtonCSSProps) {
   return (
-    <div style={{ width: '100%', position: 'fixed', bottom: '0' }}>
-      <div style={{ margin: '16px' }}>
-        <button disabled={isDisabled}>
-          <StyledButton color={color} variant={variant} {...rest}>
+    <div>
+      <span
+        style={{
+          position: 'fixed',
+          minWidth: '320px',
+          maxWidth: '430px',
+          bottom: 92,
+          width: '100%',
+          height: '16px',
+          background:
+            'linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, #FFF 100%)',
+        }}
+      ></span>
+      <div
+        style={{
+          position: 'fixed',
+          minWidth: '320px',
+          maxWidth: '430px',
+          bottom: 0,
+          width: '100%',
+          backgroundColor: 'white',
+        }}
+      >
+        <div style={{ margin: '16px' }}>
+          <StyledButton
+            color={color}
+            variant={variant}
+            {...rest}
+            disabled={isDisabled}
+            style={{
+              width: '100%',
+              padding: '16px',
+              borderRadius: '12px',
+              fontSize: '16px',
+              fontWeight: '700',
+            }}
+          >
             {children}
           </StyledButton>
-        </button>
+        </div>
       </div>
     </div>
   );
