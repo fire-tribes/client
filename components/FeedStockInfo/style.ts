@@ -2,9 +2,7 @@ import { basic } from '@/styles/palette';
 import { fontSize } from '@/styles/typography';
 import styled from '@emotion/styled';
 
-const Container = styled.div`
-  padding: 16px;
-`;
+const Container = styled.div``;
 
 const Item = styled.div``;
 

@@ -75,7 +75,7 @@ function RecentSearchWords() {
 
   return (
     <>
-      <RecentSearchWordTitleContainer style={{ padding: '16px' }}>
+      <RecentSearchWordTitleContainer>
         <h6>최근 검색</h6>
         <AlertModal
           title={'최근 검색어 삭제'}

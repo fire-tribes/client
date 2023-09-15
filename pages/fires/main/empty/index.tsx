@@ -1,9 +1,9 @@
-// import { EmptyUI } from './style';
 import { basic } from '@/styles/palette';
 import CommonButton from '@/components/common/Button/CommonButton';
 // import MoneyBagImage from '@/public/Money_bag.png';
 import CloudImage from '@/public/Cloud.png';
 import PlusSvg from '@/public/icon/plus.svg';
+import Layout from '@/components/common/Layout';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -14,23 +14,25 @@ function Empty() {
     router.push('/fires/search');
   };
   return (
-    <EmptyUI.Container>
-      <EmptyUI.Item>
-        <div>
-          <Image src={CloudImage} alt="Cloud Image" />
-        </div>
-        <div>
-          배당 계산을 위해
-          <tr /> 첫 주식을 추가해주세요.
-        </div>
-        <div onClick={onMoveSearchPage}>
-          <CommonButton>
-            <Image src={PlusSvg} alt="plus Svg" />
-            <span>주식 추가하기</span>
-          </CommonButton>
-        </div>
-      </EmptyUI.Item>
-    </EmptyUI.Container>
+    <Layout>
+      <EmptyUI.Container>
+        <EmptyUI.Item>
+          <div>
+            <Image src={CloudImage} alt="Cloud Image" />
+          </div>
+          <div>
+            배당 계산을 위해
+            <tr /> 첫 주식을 추가해주세요.
+          </div>
+          <div onClick={onMoveSearchPage}>
+            <CommonButton>
+              <Image src={PlusSvg} alt="plus Svg" />
+              <span>주식 추가하기</span>
+            </CommonButton>
+          </div>
+        </EmptyUI.Item>
+      </EmptyUI.Container>
+    </Layout>
   );
 }
 

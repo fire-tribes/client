@@ -14,6 +14,12 @@ const Item = styled.span`
   margin-bottom: 6px;
 
   white-space: nowrap;
+
+  > span:last-child {
+    width: 30px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
 `;
 
 export const PopularStockUI = {

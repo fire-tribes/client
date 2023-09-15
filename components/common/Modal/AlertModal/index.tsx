@@ -30,8 +30,8 @@ function AlertModal({
   const { isShow, openModal, closeModal } = useControlModal();
 
   const clickConfirmButton = () => {
-    closeModal;
     onClickEvent;
+    closeModal();
   };
   return (
     <>

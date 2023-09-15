@@ -53,9 +53,10 @@ function PopularStocks() {
   console.log('getPopularStocks.data?: ', getPopularStocks.data);
   console.log('getPopularStocks.data?.data: ', getPopularStocks.data?.data);
   return (
-    <>
-      <h6 style={{ padding: '16px' }}>인기 주식</h6>
-      <PopularStocksUI.BottomContainer style={{ padding: '16px' }}>
+    <PopularStocksUI.Container>
+      <PopularStocksUI.Header>인기 주식</PopularStocksUI.Header>
+      <PopularStocksUI.BottomContainer>
+        {/* <PopularStock increase={true} popularStock={'AAPL'} /> */}
         {/* {getPopularStocks.data !== undefined &&
           getPopularStocks.data.data.map((item, id) => {
             return (
@@ -63,7 +64,7 @@ function PopularStocks() {
             );
           })} */}
       </PopularStocksUI.BottomContainer>
-    </>
+    </PopularStocksUI.Container>
   );
 }
 
