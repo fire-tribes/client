@@ -5,7 +5,6 @@ import {
   Box,
   List,
   ListItem,
-  ListItemButton,
   ListItemText,
   ListItemIcon,
   Avatar,
@@ -61,48 +60,44 @@ export function MyStockList() {
               {
                 // TODO: 데이터와 연동하면서 리팩토링 진행
               }
-              <ListItem disablePadding>
-                <ListItemButton sx={{ padding: 0, gap: '9px' }}>
-                  <ListItemIcon sx={{ minWidth: 0 }}>
-                    <Avatar />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={
-                      <CommonFont fontWeight="bold">{symbol}</CommonFont>
-                    }
-                    secondary={
-                      <CommonFont
-                        fontSize="caption"
-                        fontWeight="normal"
-                        color="gray5"
-                      >
-                        내 평균 ${assetPurchasePrice}원
-                      </CommonFont>
-                    }
-                    sx={{ textAlign: 'left' }}
-                  />
-                  <ListItemText
-                    primary={
-                      <CommonFont
-                        fontSize="body1"
-                        fontWeight="bold"
-                        color="gray7"
-                      >
-                        {assetTotalPrice}원
-                      </CommonFont>
-                    }
-                    secondary={
-                      <CommonFont
-                        fontSize="caption2"
-                        fontWeight="regular"
-                        color="point_red01"
-                      >
-                        {assetTotalPriceDiffRate}
-                      </CommonFont>
-                    }
-                    sx={{ textAlign: 'right' }}
-                  />
-                </ListItemButton>
+              <ListItem disablePadding sx={{ gap: '9px' }}>
+                <ListItemIcon sx={{ minWidth: 0 }}>
+                  <Avatar />
+                </ListItemIcon>
+                <ListItemText
+                  primary={<CommonFont fontWeight="bold">{symbol}</CommonFont>}
+                  secondary={
+                    <CommonFont
+                      fontSize="caption"
+                      fontWeight="normal"
+                      color="gray5"
+                    >
+                      내 평균 ${assetPurchasePrice}원
+                    </CommonFont>
+                  }
+                  sx={{ textAlign: 'left' }}
+                />
+                <ListItemText
+                  primary={
+                    <CommonFont
+                      fontSize="body1"
+                      fontWeight="bold"
+                      color="gray7"
+                    >
+                      {assetTotalPrice}원
+                    </CommonFont>
+                  }
+                  secondary={
+                    <CommonFont
+                      fontSize="caption2"
+                      fontWeight="regular"
+                      color="point_red01"
+                    >
+                      {assetTotalPriceDiffRate}
+                    </CommonFont>
+                  }
+                  sx={{ textAlign: 'right' }}
+                />
               </ListItem>
 
               {
