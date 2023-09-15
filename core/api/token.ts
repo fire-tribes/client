@@ -1,5 +1,7 @@
 import { Cookie } from '@/core/api/cookie';
-import type { HeadersDefaults } from 'axios';
+import APIInstance from '@/core/api/instance';
+
+import type { AxiosRequestConfig, HeadersDefaults } from 'axios';
 
 export class Token {
   #cookie;
@@ -33,3 +35,31 @@ export class Token {
     return expiredAt && now < expireAtDate;
   }
 }
+
+//
+
+const token = new Token({
+  cookie: new Cookie(),
+  apiHeaders: APIInstance.defaults.headers,
+});
+
+const tokenVerifyHandler = (config: AxiosRequestConfig) => {
+  // token을 체크해서 그에따른 행동
+
+  const hasToken = token.has();
+  const validToken = token.expired();
+
+  if (hasToken && validToken) {
+    return config;
+  }
+
+  return config;
+
+  // TODO: refresh token api call
+};
+
+const tokenVerifyErrorHandler = (config: AxiosRequestConfig) => {
+  return config;
+};
+
+export { tokenVerifyHandler, tokenVerifyErrorHandler };

@@ -1,6 +1,6 @@
 import { basic, sementic } from '@/styles/palette';
 import { fontSize } from '@/styles/typography';
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type ThemeMode = keyof typeof sementic;
 const themeModes: ThemeMode[] = ['light', 'dark'];
@@ -16,7 +16,7 @@ export const useMode = () => {
     });
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     // select mode
     const cachedMode = window?.localStorage.getItem('cachedMode') as CachedMode;
     setMode(cachedMode || themeModes[0]);
