@@ -11,4 +11,11 @@ const APIInstance = createAPIInstance({
   withCredentials: true,
 });
 
+const AuthAPIInstance = createAPIInstance({
+  baseURL: '/api/login',
+  withCredentials: true,
+});
+
+export { APIInstance, AuthAPIInstance };
+
 export default APIInstance;

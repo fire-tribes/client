@@ -4,19 +4,10 @@ import { AxiosError } from 'axios';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-// const createRandomString = () => Math.random().toString(36).substring(2, 10);
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  console.log(req.method);
-  if (req.method === 'GET') {
-    return res.redirect('/404');
-  }
-  // cunstom response method
-  // const responseClientError = () =>
-  //   res.status(400).send('클라이언트 측 에러입니다.');
   const responseSuccess = (data: unknown) => res.status(200).send(data);
   const responseServerError = (err: AxiosError) =>
     res.status(500).send({ data: '백엔드 서버 측 에러입니다.', err });
@@ -84,17 +75,18 @@ export default async function handler(
       const signUpResponse = await SignApi.signUp(defaultSignUpForm);
 
       return responseSuccess(signUpResponse.data);
-      // 클라이언트측에서 response를 통해서 setting을 하고 redirect해준다. (메인으로 가면되겠지?)
     }
 
     const canSignIn = !shouldSignUp;
     if (canSignIn) {
       const signInResponse = await SignApi.signIn(defaultForm);
+      const { data } = signInResponse;
 
-      return responseSuccess(signInResponse.data);
+      return responseSuccess(data);
     }
   } catch (err) {
-    // console.log('여기는 ServerError가 발생한 곳입니다.', err);
     responseServerError(err as AxiosError);
   }
+
+  res.status(400).send({ message: '여기까지 오면 안되는데 와버렸네요' });
 }
