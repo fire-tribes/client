@@ -105,13 +105,11 @@ const MainPage = () => {
         </Section>
 
         <StyledFooter>
-          <Typography>
-            {/* <CommonFont color="gray6" fontWeight="regular" fontSize="caption"> */}
+          <CommonFont color="gray6" fontWeight="regular" fontSize="caption">
             현재 파이어스에서 제공하는 배당 금액은 환율, 세법, 주식 시장 가격
             변동으로 인해 일부 차이가 있을 수 있습니다. (환율은 전일자 종가를
             기준)
-            {/* </CommonFont> */}
-          </Typography>
+          </CommonFont>
         </StyledFooter>
       </Layout>
     </main>

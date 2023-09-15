@@ -114,47 +114,61 @@ export function MyStockList() {
                     <DetailListItemText
                       textAlign="left"
                       primary={
-                        <CommonFont fontSize="caption">배당율</CommonFont>
+                        <CommonFont fontSize="caption" color="gray6">
+                          배당율
+                        </CommonFont>
                       }
                     ></DetailListItemText>
                     <DetailListItemText textAlign="right">
-                      <CommonFont fontSize="caption">11.05%</CommonFont>
+                      <CommonFont fontSize="caption" color="gray8">
+                        11.05%
+                      </CommonFont>
                     </DetailListItemText>
                   </DetailListItem>
                   <DetailListItem>
                     <DetailListItemText
                       textAlign="left"
                       primary={
-                        <CommonFont fontSize="caption">배당주기</CommonFont>
+                        <CommonFont fontSize="caption" color="gray6">
+                          배당주기
+                        </CommonFont>
                       }
                     ></DetailListItemText>
                     <DetailListItemText textAlign="right">
-                      <CommonFont fontSize="caption">월배당</CommonFont>
+                      <CommonFont fontSize="caption" color="gray8">
+                        월배당
+                      </CommonFont>
                     </DetailListItemText>
                   </DetailListItem>
                   <DetailListItem>
                     <DetailListItemText
                       textAlign="left"
                       primary={
-                        <CommonFont fontSize="caption">보유수량</CommonFont>
+                        <CommonFont fontSize="caption" color="gray6">
+                          보유수량
+                        </CommonFont>
                       }
                     ></DetailListItemText>
                     <DetailListItemText textAlign="right">
-                      <CommonFont fontSize="caption">53,000</CommonFont>
+                      <CommonFont fontSize="caption" color="gray8">
+                        53,000
+                      </CommonFont>
                     </DetailListItemText>
                   </DetailListItem>
                   <DetailListItem>
                     <DetailListItemText
                       textAlign="left"
                       primary={
-                        <CommonFont fontSize="caption">자산가치</CommonFont>
+                        <CommonFont fontSize="caption" color="gray6">
+                          자산가치
+                        </CommonFont>
                       }
                     ></DetailListItemText>
                     <DetailListItemText
                       textAlign="right"
                       primary={
                         <>
-                          <CommonFont fontSize="caption">
+                          <CommonFont fontSize="caption" color="gray8">
                             2억 3521만원
                           </CommonFont>
                           <CommonFont

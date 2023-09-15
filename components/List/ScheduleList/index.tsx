@@ -7,7 +7,6 @@ import {
   ListItemText,
   ListItemIcon,
   Avatar,
-  Typography,
 } from '@mui/material';
 // import NotifyPopup from '@/components/Popup/NotifyPopup';
 
@@ -50,10 +49,18 @@ export function ScheduleList() {
                   <Avatar />
                 </ListItemIcon>
                 <ListItemText
-                  primary={<Typography fontWeight={700}>{ticker}</Typography>}
+                  primary={
+                    <CommonFont fontWeight="bold" color="gray9">
+                      {ticker}
+                    </CommonFont>
+                  }
                 />
                 <ListItemText
-                  primary={<Typography fontWeight={700}>{cost}</Typography>}
+                  primary={
+                    <CommonFont fontWeight="bold" color="gray7">
+                      {cost}
+                    </CommonFont>
+                  }
                   secondary={
                     <CommonFont
                       fontSize="caption2"
