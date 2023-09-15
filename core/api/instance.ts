@@ -1,51 +1,31 @@
-import { Cookie } from '@/core/api/cookie';
-import { Token } from '@/core/api/token';
+// import { tokenVerifyErrorHandler, tokenVerifyHandler } from '@/core/api/token';
 import axios, { AxiosRequestConfig } from 'axios';
 
-const api = axios.create({
-  baseURL: process.env.SERVER_URL,
+const createAPIInstance = (config: AxiosRequestConfig) => {
+  const instance = axios.create({ withCredentials: true, ...config });
+
+  return instance;
+};
+
+const APIInstance = createAPIInstance({
+  baseURL: process.env.NEXT_PUBLIC_SERVER_URL + '/api/v1/',
   withCredentials: true,
 });
 
-const token = new Token({
-  cookie: new Cookie(),
-  apiHeaders: api.defaults.headers,
+// APIInstance.interceptors.request.use(
+//   tokenVerifyHandler,
+//   tokenVerifyErrorHandler,
+// );
+
+// AuthAPIInstance.interceptors.response.use(() => {
+//   conf;
+// });
+
+const AuthAPIInstance = createAPIInstance({
+  baseURL: '/api/login',
+  withCredentials: true,
 });
 
-const tokenVerifyHandler = (config: AxiosRequestConfig) => {
-  // token을 체크해서 그에따른 행동
+export { APIInstance, AuthAPIInstance };
 
-  const hasToken = token.has();
-  const validToken = token.expired();
-
-  if (hasToken && validToken) {
-    return config;
-  }
-
-  return config;
-
-  // TODO: refresh token api call
-};
-
-const tokenVerifyErrorHandler = (config: AxiosRequestConfig) => {
-  return config;
-};
-
-api.interceptors.request.use(tokenVerifyHandler, tokenVerifyErrorHandler);
-
-export const testAPI = {
-  login: async () => {
-    // login 진행 후 setCookie 해주는 부분
-    const response = await api.get('api/test/login');
-    return response;
-  },
-  logout: async () => {
-    // login 진행 후 setCookie 해주는 부분
-    const response = await api.get('api/test/logout');
-    return response;
-  },
-  write: async () => {
-    const response = await api.post('api/test/write');
-    return response;
-  },
-};
+export default APIInstance;

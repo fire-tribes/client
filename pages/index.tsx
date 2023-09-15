@@ -1,14 +1,13 @@
-import { Comp } from '@/components/comp';
+import BadgeTest from '@/components/BdageTest';
+
+import { mockNotifyModalItemModel, mockNotifyModalItemModel2 } from '@/mocks';
+
+import NotifyListModal from '@/components/common/Modal/NotifyListModal';
+import BarChart from '@/components/Chart';
 import Head from 'next/head';
-import { atom, useAtom } from 'jotai';
 import type { NextPage } from 'next';
 
-const countAtom = atom(0);
-
-const Home: NextPage = () => {
-  const [count, setCount] = useAtom(countAtom);
-  const onClickHandler = () => setCount((pre) => pre + 1);
-
+const IndexPage: NextPage = () => {
   return (
     <div>
       <Head>
@@ -17,15 +16,31 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <button onClick={onClickHandler}>버튼</button>
-        <div>{count}</div>
-        <h1>Welcome</h1>
-        <div>Next.js</div>
-        <Comp />
+        <NotifyListModal
+          modalTitle="배당 수익률"
+          items={mockNotifyModalItemModel}
+        >
+          <button>배당 수익률</button>
+        </NotifyListModal>
+        <NotifyListModal
+          modalTitle="납부할 세금"
+          items={mockNotifyModalItemModel2}
+        >
+          <button>납부할 세금</button>
+        </NotifyListModal>
+        <NotifyListModal
+          modalTitle="납부한 세금"
+          items={mockNotifyModalItemModel2}
+        >
+          <button>납부한 세금</button>
+        </NotifyListModal>
+        <BadgeTest />
+
+        <BarChart />
       </main>
-      <footer>footer</footer>
+      <footer></footer>
     </div>
   );
 };
 
-export default Home;
+export default IndexPage;
