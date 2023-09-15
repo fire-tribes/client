@@ -10,6 +10,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  console.log(req.method);
+  if (req.method === 'GET') {
+    return res.redirect('/404');
+  }
   // cunstom response method
   // const responseClientError = () =>
   //   res.status(400).send('클라이언트 측 에러입니다.');
