@@ -13,15 +13,23 @@ export const SignApi = {
       ...rest,
     };
 
-    return APIInstance.post('user/signup', body);
+    // const formData = new FormData();
+    // const paramsArray = Object.entries(body);
+    // paramsArray.forEach(([key, value]) => formData.append(key, value));
+
+    return APIInstance.post('user/signup', body, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
   },
-  signIn: (params: SignInRequestBody) => {
-    const formData = new FormData();
-    const paramsArray = Object.entries(params);
+  signIn: (body: SignInRequestBody) => {
+    // const formData = new FormData();
+    // paramsArray.forEach(([key, value]) => formData.append(key, value));
 
-    paramsArray.forEach(([key, [value]]) => formData.append(key, value));
-
-    return APIInstance.post('user/login', formData, {
+    // TODO: 왜 formData를 안넣어주고 js object를 넣어주면 정상적으로 동작하는가?
+    // headers: content-type에 따라 자동으로 변환해주는게 아닌가?
+    return APIInstance.post('user/login', body, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

@@ -1,78 +1,96 @@
 import { kakaoAPI } from '@/core/api/kakao';
 import { SignApi } from '@/core/api/sign';
+import { AxiosError } from 'axios';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
+
+// const createRandomString = () => Math.random().toString(36).substring(2, 10);
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  // cunstom response method
+  // const responseClientError = () =>
+  //   res.status(400).send('클라이언트 측 에러입니다.');
+  const responseSuccess = (data: unknown) => res.status(200).send(data);
+  const responseServerError = (err: AxiosError) =>
+    res.status(500).send({ data: '백엔드 서버 측 에러입니다.', err });
+  const responseKakaoError = (message?: string) =>
+    res.status(500).send({ data: `카카오 서버측 에러: ${message}` });
+
+  const throwUndefinedError = (params: string) => {
+    throw new Error(`UndefinedError: ${params}`);
+  };
+
   const { code } = req.query as { code?: string };
+  let email = '';
 
   try {
-    if (code) {
-      const accessResponse = await kakaoAPI.getAccessToken(code);
-      const { access_token } = accessResponse.data;
+    if (!code) {
+      throwUndefinedError('code');
+      return;
+    }
 
-      if (access_token) {
-        const userData = await kakaoAPI.getUserData(access_token);
-        const { kakao_account } = userData.data;
-        const {
-          // nickName,
-          email,
-        } = kakao_account;
+    // get Access Token By KaKao
+    const accessResponse = await kakaoAPI.getAccessToken(code);
+    const { access_token } = accessResponse.data;
+    if (!access_token) {
+      throwUndefinedError('access_token');
+    }
 
-        /*
-        TODO: 추후에 nickName을 받을 때 주석제거
-        if (!nickName) {
-          res.status(400).send({
-            success: false,
-            message: 'nickName undefined',
-            errorCode: 'ES2015',
-          } as CommonResponseError);
-        }
-        */
+    // get User Data By KaKao
+    const userData = await kakaoAPI.getUserData(access_token);
+    const { kakao_account } = userData.data;
+    if (!userData.data.kakao_account.email) {
+      throwUndefinedError('user kakao email');
+    }
 
-        // 여기서부터 서버와 통신 시
-        if (email) {
-          try {
-            const { data: isValid } = await SignApi.checkSignUp({ email });
-            const shouldSignUp = !isValid;
+    email = kakao_account.email;
+  } catch (err) {
+    // 2. await가 끝났으나 내가 원하는 로직을 실행하다가 문제가 생긴경우 (200 이나 내가 원하는 값이 없다.)
+    if (err instanceof Error) {
+      const { message } = err;
+      const isUndefinedError = /UndefinedError/g.test(message);
 
-            const userName = 'nickName';
-            const password = '';
-            const accessToken = 'secretKey';
-            console.log('checkSignup');
+      return isUndefinedError && responseKakaoError(message);
+    }
 
-            if (shouldSignUp) {
-              await SignApi.signUp({
-                userName,
-                password,
-                email,
-                accessToken,
-              }).then(({ status, data }) => {
-                res.redirect(307, '/login').end();
-                res.status(status).send(data);
-              });
-            }
+    // 1. await에서 넘어가지않고 바로 catch로 온 경우
+    return res.status(500).send(err);
+  }
 
-            await SignApi.signIn({
-              email,
-              password,
-              accessToken,
-            }).then(({ status, data }) => {
-              console.log('signIn');
-              res.redirect(307, '/login').end();
-              res.status(status).send(data);
-            });
-            //
-          } catch (err) {
-            res.redirect(307, '/login').end();
-          }
-        }
-      }
+  // 여기까지 왔다는거는 이메일이 있다는 것
+  try {
+    const defaultForm = {
+      email,
+      password: '',
+      accessToken: process.env.FRONT_SERVER_SECRET_KEY as string,
+    };
+
+    const defaultSignUpForm = {
+      ...defaultForm,
+      userName: '',
+    };
+
+    const { data: isValid } = await SignApi.checkSignUp({ email });
+    const shouldSignUp = !isValid;
+
+    if (shouldSignUp) {
+      const signUpResponse = await SignApi.signUp(defaultSignUpForm);
+
+      return responseSuccess(signUpResponse.data);
+      // 클라이언트측에서 response를 통해서 setting을 하고 redirect해준다. (메인으로 가면되겠지?)
+    }
+
+    const canSignIn = !shouldSignUp;
+    if (canSignIn) {
+      const signInResponse = await SignApi.signIn(defaultForm);
+
+      return responseSuccess(signInResponse.data);
     }
   } catch (err) {
-    res.status(500).send(err);
+    // console.log('여기는 ServerError가 발생한 곳입니다.', err);
+    responseServerError(err as AxiosError);
   }
 }
