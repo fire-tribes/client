@@ -1,6 +1,7 @@
 import Backward from '@/components/Backward';
 import FeedStockInfos from '@/components/FeedStockInfos';
 import BottomFixedButton from '@/components/common/Button/BottomFixedButton';
+import SearchLayout from '@/components/common/Layout/SearchLayout';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import axios from 'axios';
@@ -82,7 +83,7 @@ function Add() {
   const { mutate } = usePostStocksAtPortfolio(portfolioId);
 
   return (
-    <div>
+    <SearchLayout isDisabled={true} buttonName={'추가 완료'}>
       <section>
         <Backward title={'보유 주식 정보 입력'} />
       </section>
@@ -94,7 +95,7 @@ function Add() {
           추가 완료
         </BottomFixedButton>
       </section>
-    </div>
+    </SearchLayout>
   );
 }
 

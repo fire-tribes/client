@@ -1,18 +1,19 @@
 import { SearchInputUI } from './style';
 import SearchSvg from '@/public/icon/search.svg';
-import CloseSvg from '@/public/icon/close.svg';
 import Image from 'next/image';
 
 interface SearchInputProps {
   value: string;
   onFocus: () => void;
   handleShowSearchResult: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  children: React.ReactNode;
 }
 
 function SearchInput({
   value,
   onFocus,
   handleShowSearchResult,
+  children,
 }: SearchInputProps) {
   return (
     <SearchInputUI.Container>
@@ -32,9 +33,7 @@ function SearchInput({
             />
           </div>
         </SearchInputUI.InputContainer>
-        <div>
-          <Image src={CloseSvg} width={24} height={24} alt="Close Icon" />
-        </div>
+        <div>{children}</div>
       </SearchInputUI.Item>
     </SearchInputUI.Container>
   );

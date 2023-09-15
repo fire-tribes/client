@@ -3,7 +3,7 @@ import { fontSize } from '@/styles/typography';
 import styled from '@emotion/styled';
 
 const Container = styled.div`
-  padding: 10px 16px;
+  margin-bottom: 20px;
 `;
 
 const Item = styled.div`
@@ -14,10 +14,6 @@ const Item = styled.div`
   >div: first-child {
     flex: 1;
     margin-right: 10px;
-  }
-  div: last-child {
-    min-width: 24px;
-    height: 24px;
   }
 `;
 
