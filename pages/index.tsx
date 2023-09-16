@@ -11,13 +11,40 @@ import ExchangeRateBox from '@/components/ExchangeRate';
 import ModeController from '@/components/ModeController';
 import BadgeGroup from '@/components/BdageTest';
 import CommonBar from '@/components/common/Bar';
+import MyPortfolioSection from '@/components/MyPortfolioSection';
+import CommonBadge from '@/components/common/Badge';
 import styled from '@emotion/styled';
 import { Typography } from '@mui/material';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+
+const useMockLogin = () => {
+  const [isLogin, setIsLogin] = useState(true);
+  const login = () => setIsLogin(true);
+  const logout = () => setIsLogin(false);
+
+  return {
+    isLogin,
+    login,
+    logout,
+  };
+};
 
 const MainPage = () => {
+  const router = useRouter();
+  const { isLogin, logout } = useMockLogin();
+
+  useEffect(() => {
+    !isLogin && router.push('/login');
+  }, [isLogin, router]);
+
+  if (!isLogin) {
+    return null;
+  }
+
   return (
-    <main>
+    <>
       {
         // TODO: Should Change title, meta, link in Head Component
       }
@@ -30,11 +57,16 @@ const MainPage = () => {
       <Layout>
         <header style={{ paddingBottom: '20px' }}>
           <ModeController />
+
+          <CommonBadge onClick={logout} mainColor="point_blue01">
+            <div>로그아웃</div>
+          </CommonBadge>
         </header>
         <ExchangeRateBox />
         <Section textAlign="left" paddingTop="11px">
           <FlexBox justifyContent="space-between" paddingBottom="16px">
             <Section.Title>0000년 0월 배당금</Section.Title>
+
             <FlexBox justifyContent="space-between">
               <FlexBox gap="14px">
                 {
@@ -91,7 +123,11 @@ const MainPage = () => {
           <CommonBar />
         </Section>
 
+        {
+          // TODO: MyPortFolioSection 으로 분리해야함 @0min
+        }
         <Section textAlign="left" paddingTop="18px">
+          <MyPortfolioSection />
           <FlexBox justifyContent={'space-between'} paddingBottom="16px">
             <Section.Title>보유 주식</Section.Title>
             <BadgeGroup />
@@ -114,7 +150,7 @@ const MainPage = () => {
           </CommonFont>
         </StyledFooter>
       </Layout>
-    </main>
+    </>
   );
 };
 
