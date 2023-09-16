@@ -5,7 +5,6 @@ import {
   Box,
   List,
   ListItem,
-  ListItemButton,
   ListItemText,
   ListItemIcon,
   Avatar,
@@ -13,51 +12,6 @@ import {
 } from '@mui/material';
 
 // const titles = ['배당율', '배당주기', '보유수량', '자산가치'];
-// const mockAssetDetails: MyPortfolioAssetDetailModel[] = [
-//   {
-//     assetId: 0,
-//     tickerCode: 'apple2',
-//     stockCode: 'apple',
-//     count: 0,
-//     averagePrice: '10101010',
-//     currentPrice: '10101111',
-//     assetPriceChangeRate: '300',
-//     assetPriceChange: '200',
-//     value: 0,
-//     rateOfReturn: 0,
-//     dividendYield: 0,
-//     dividendMonth: [],
-//   },
-//   {
-//     assetId: 0,
-//     tickerCode: 'apple',
-//     stockCode: 'apple',
-//     count: 0,
-//     averagePrice: '10101010',
-//     currentPrice: '10101111',
-//     assetPriceChangeRate: '300',
-//     assetPriceChange: '200',
-//     value: 0,
-//     rateOfReturn: 0,
-//     dividendYield: 0,
-//     dividendMonth: [],
-//   },
-// ];
-
-// type MyPortfolioAssetDetailModel = {
-//   assetId: number;
-//   tickerCode: string;
-//   stockCode: string;
-//   count: number;
-//   averagePrice: string;
-//   currentPrice: string;
-//   assetPriceChangeRate: string;
-//   assetPriceChange: string;
-//   value: number;
-//   rateOfReturn: number;
-//   dividendYield: number;
-//   dividendMonth: number[];
-// };
 
 interface MyStockItemModel {
   symbol: string;
@@ -94,106 +48,134 @@ export function MyStockList() {
 
   return (
     <Box>
-      <StyledMyStockListContainer
-        disablePadding
-        // sx={{ display: 'flex', flexDirection: 'column', gap: '18px' }}
-      >
+      <StyledMyStockListContainer disablePadding>
         {datas.map(
           ({
             symbol,
-            // imgUrl,
             assetPurchasePrice,
             assetTotalPrice,
             assetTotalPriceDiffRate,
           }) => (
             <FlexBox key={symbol} flexDirection="column">
-              <ListItem disablePadding>
-                <ListItemButton sx={{ padding: 0, gap: '9px' }}>
-                  <ListItemIcon sx={{ minWidth: 0 }}>
-                    <Avatar />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={
-                      <CommonFont fontWeight="bold">{symbol}</CommonFont>
-                    }
-                    secondary={
-                      <CommonFont
-                        fontSize="caption"
-                        fontWeight="normal"
-                        color="gray5"
-                      >
-                        내 평균 ${assetPurchasePrice}원
-                      </CommonFont>
-                    }
-                    sx={{ textAlign: 'left' }}
-                  />
-                  <ListItemText
-                    primary={
-                      <CommonFont
-                        fontSize="body1"
-                        fontWeight="bold"
-                        color="gray7"
-                      >
-                        {assetTotalPrice}원
-                      </CommonFont>
-                    }
-                    secondary={
-                      <CommonFont
-                        fontSize="caption2"
-                        fontWeight="regular"
-                        color="point_red01"
-                      >
-                        {assetTotalPriceDiffRate}
-                      </CommonFont>
-                    }
-                    sx={{ textAlign: 'right' }}
-                  />
-                </ListItemButton>
+              {
+                // TODO: 데이터와 연동하면서 리팩토링 진행
+              }
+              <ListItem disablePadding sx={{ gap: '9px' }}>
+                <ListItemIcon sx={{ minWidth: 0 }}>
+                  <Avatar />
+                </ListItemIcon>
+                <ListItemText
+                  primary={<CommonFont fontWeight="bold">{symbol}</CommonFont>}
+                  secondary={
+                    <CommonFont
+                      fontSize="caption"
+                      fontWeight="normal"
+                      color="gray5"
+                    >
+                      내 평균 ${assetPurchasePrice}원
+                    </CommonFont>
+                  }
+                  sx={{ textAlign: 'left' }}
+                />
+                <ListItemText
+                  primary={
+                    <CommonFont
+                      fontSize="body1"
+                      fontWeight="bold"
+                      color="gray7"
+                    >
+                      {assetTotalPrice}원
+                    </CommonFont>
+                  }
+                  secondary={
+                    <CommonFont
+                      fontSize="caption2"
+                      fontWeight="regular"
+                      color="point_red01"
+                    >
+                      {assetTotalPriceDiffRate}
+                    </CommonFont>
+                  }
+                  sx={{ textAlign: 'right' }}
+                />
               </ListItem>
 
+              {
+                // TODO: 데이터와 연동하면서 리팩토링 진행
+              }
               <FlexBox width="100%" paddingLeft="49px">
                 <DetailList>
                   <DetailListItem>
                     <DetailListItemText
                       textAlign="left"
-                      primary={<CommonFont>배당율</CommonFont>}
+                      primary={
+                        <CommonFont fontSize="caption" color="gray6">
+                          배당율
+                        </CommonFont>
+                      }
                     ></DetailListItemText>
                     <DetailListItemText textAlign="right">
-                      <CommonFont>11.05%</CommonFont>
-                    </DetailListItemText>
-                  </DetailListItem>
-                  <DetailListItem>
-                    <DetailListItemText
-                      textAlign="left"
-                      primary={<CommonFont>배당주기</CommonFont>}
-                    ></DetailListItemText>
-                    <DetailListItemText textAlign="right">
-                      <CommonFont>월배당</CommonFont>
-                    </DetailListItemText>
-                  </DetailListItem>
-                  <DetailListItem>
-                    <DetailListItemText
-                      textAlign="left"
-                      primary={<CommonFont>보유수량</CommonFont>}
-                    ></DetailListItemText>
-                    <DetailListItemText textAlign="right">
-                      <CommonFont>53,000</CommonFont>
-                    </DetailListItemText>
-                  </DetailListItem>
-                  <DetailListItem>
-                    <DetailListItemText textAlign="left">
-                      자산가치
-                    </DetailListItemText>
-                    <DetailListItemText textAlign="right">
-                      2억 3521만원
-                      <CommonFont
-                        component="span"
-                        fontSize="body1"
-                        color="point_red01"
-                      >
-                        (+10.1%)
+                      <CommonFont fontSize="caption" color="gray8">
+                        11.05%
                       </CommonFont>
                     </DetailListItemText>
+                  </DetailListItem>
+                  <DetailListItem>
+                    <DetailListItemText
+                      textAlign="left"
+                      primary={
+                        <CommonFont fontSize="caption" color="gray6">
+                          배당주기
+                        </CommonFont>
+                      }
+                    ></DetailListItemText>
+                    <DetailListItemText textAlign="right">
+                      <CommonFont fontSize="caption" color="gray8">
+                        월배당
+                      </CommonFont>
+                    </DetailListItemText>
+                  </DetailListItem>
+                  <DetailListItem>
+                    <DetailListItemText
+                      textAlign="left"
+                      primary={
+                        <CommonFont fontSize="caption" color="gray6">
+                          보유수량
+                        </CommonFont>
+                      }
+                    ></DetailListItemText>
+                    <DetailListItemText textAlign="right">
+                      <CommonFont fontSize="caption" color="gray8">
+                        53,000
+                      </CommonFont>
+                    </DetailListItemText>
+                  </DetailListItem>
+                  <DetailListItem>
+                    <DetailListItemText
+                      textAlign="left"
+                      primary={
+                        <CommonFont fontSize="caption" color="gray6">
+                          자산가치
+                        </CommonFont>
+                      }
+                    ></DetailListItemText>
+                    <DetailListItemText
+                      textAlign="right"
+                      primary={
+                        <>
+                          <CommonFont fontSize="caption" color="gray8">
+                            2억 3521만원
+                          </CommonFont>
+                          <CommonFont
+                            fontSize="caption"
+                            component="span"
+                            color="point_red01"
+                          >
+                            (+10.1%)
+                          </CommonFont>
+                        </>
+                      }
+                    ></DetailListItemText>
                   </DetailListItem>
                 </DetailList>
               </FlexBox>

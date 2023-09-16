@@ -7,7 +7,7 @@ const Container = styled.div`
   border-radius: 30px;
   ${({ theme }) => `
     border: 1px solid ${theme.palette.basic.gray4};
-    font-size: ${theme.font.body2};
+    font-size: ${theme.font.size.body2}
   `}
 `;
 
