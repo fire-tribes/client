@@ -1,17 +1,17 @@
 {
-  "theme_color": "#f69435",
-  "background_color": "#f69435",
+  "name": "SnowBall",
+  "short_name": "SnowBall",
+  "description": "주식 배당 전문 서비스를 제공합니다.",
   "display": "standalone",
-  "orientation" : "portrait",
+  "orientation": "portrait",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
   "scope": "/",
   "start_url": "/",
-  "name": "fires",
-  "short_name": "fs",
-  "description": "fires-app",
   "icons": [
     {
-      "src": "/money_wing.png",
-      "sizes": "192x192",
+      "src": "/snowball_icon-512x512.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ]
