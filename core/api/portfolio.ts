@@ -1,17 +1,24 @@
-import { ExchangeRateModel } from '@/@types/models/exchangeRate';
-// import APIInstance from '@/core/api/instance';
-import axios from 'axios';
+import APIInstance from '@/core/api/instance';
+import type { ExchangeRateModel } from '@/@types/models/exchangeRate';
+import type { MyPortfolioModel } from '@/@types/models/portfolio';
 import type { ResponseSuccess } from '@/@types/models/response';
 
 export const portFolioAPI = {
   getExchangeRate: () => {
-    return axios.get<ResponseSuccess<ExchangeRateModel>>(
-      'http://fire-env-1.eba-xhu334c9.ap-northeast-2.elasticbeanstalk.com/api/v1/exchange-rate',
+    return APIInstance.get<ResponseSuccess<ExchangeRateModel>>(
+      'exchange-rate',
       {
         headers: {
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
         },
       },
     );
+  },
+  getMyPortFolio: () => {
+    return APIInstance.get<ResponseSuccess<MyPortfolioModel>>('portfolio', {
+      headers: {
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
+      },
+    });
   },
 };

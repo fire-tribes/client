@@ -8,7 +8,6 @@ export default function ModeController() {
   const { modeData, toggleMode } = useControlMode();
   const { isSimple: isChecked, modeText } = modeData;
 
-  console.log(modeData);
   return (
     <FlexBox justifyContent="space-between">
       <Image src="/icon/snow_logo.png" width={32} height={32} alt="snow" />
