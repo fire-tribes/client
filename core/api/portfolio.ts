@@ -1,13 +1,17 @@
 import { ExchangeRateModel } from '@/@types/models/exchangeRate';
-import APIInstance from '@/core/api/instance';
+// import APIInstance from '@/core/api/instance';
+import axios from 'axios';
 import type { ResponseSuccess } from '@/@types/models/response';
 
 export const portFolioAPI = {
-  getExchangeRate: () =>
-    APIInstance.get<ResponseSuccess<ExchangeRateModel>>('exchange-rate', {
-      headers: {
-        Authorization:
-          'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJna3N3bjQ1QG5hdmVyLmNvbSIsInVzZXJJZCI6MywiZW1haWwiOiJna3N3bjQ1QG5hdmVyLmNvbSIsImV4cCI6MTY5NDg4NDcwOH0.5n8j1Bqz3DaT0EJUn2m5HPZTy_yKTr7Iy7X777mtnIkm4p3sJO7F-WlRBK4ZgSubfrmpllTncOcb35PK0auhEA',
+  getExchangeRate: () => {
+    return axios.get<ResponseSuccess<ExchangeRateModel>>(
+      'http://fire-env-1.eba-xhu334c9.ap-northeast-2.elasticbeanstalk.com/api/v1/exchange-rate',
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
+        },
       },
-    }),
+    );
+  },
 };
