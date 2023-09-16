@@ -11,7 +11,7 @@ export default function ExchangeRateBox() {
         달러환율
       </CommonFont>
       <CommonFont fontSize={'caption'} color={'point_blue02'}>
-        {exchangeRate}
+        {exchangeRate && exchangeRate}
       </CommonFont>
     </FlexBox>
   );

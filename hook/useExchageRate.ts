@@ -2,18 +2,30 @@ import { ExchangeRateSymbolTable } from '@/@types/models/exchangeRate';
 import { useExchangeRateQuery } from '@/hook/useQueryHook/useExchangeRateQuery';
 
 const exchangeRateSymbol: ExchangeRateSymbolTable = {
-  KRW: '원',
+  USD: '원',
+  KRW: '$',
 };
 
 export const useExchageRate = () => {
   const query = useExchangeRateQuery();
+
   const data = query?.data?.data?.data;
+  console.log(data);
 
   const rate = data?.value;
-  const symbol = data?.currentType;
+  const currencyType = data?.currencyType;
+  const symbol = currencyType ? exchangeRateSymbol[currencyType] : undefined;
+  const exchangeRate = undefined;
 
-  const exchangeRate =
-    rate && symbol ? `${rate}${exchangeRateSymbol[symbol]}` : '';
+  if (rate && currencyType && symbol) {
+    const exchangeRate = `${rate}${symbol}`;
+
+    return {
+      query,
+      data,
+      exchangeRate,
+    };
+  }
 
   return {
     query,

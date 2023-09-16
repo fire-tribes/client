@@ -1,8 +1,8 @@
-type ExchangeRateSymbol = 'KRW';
+type ExchangeRateSymbol = 'KRW' | 'USD';
 type ExchangeRateSymbolTable = Record<ExchangeRateSymbol, string>;
 type ExchangeRateModel = {
   value: number;
-  currentType: ExchangeRateSymbol;
+  currencyType: ExchangeRateSymbol;
 };
 
 export type { ExchangeRateSymbol, ExchangeRateModel, ExchangeRateSymbolTable };
