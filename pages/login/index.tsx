@@ -1,12 +1,12 @@
 import { KakaoLoginButton } from '@/components/oauth/KakaoLoginButton';
+import Layout from '@/components/common/Layout';
 import Image from 'next/image';
 
 const GUIDE_TEXT = `배당주 계산과 관리를 가장 쉽고 편하게 하는 방법`;
 
 const LoginPage = () => {
-  // TODO: Layout Component 적용할예정
   return (
-    <LoginPageUI.Layout>
+    <Layout>
       <LoginPageUI.Content>
         <Image
           src={'/images/snowball_label.png'}
@@ -22,18 +22,13 @@ const LoginPage = () => {
           <KakaoLoginButton />
         </LoginPageUI.Padding>
       </LoginPageUI.Content>
-    </LoginPageUI.Layout>
+    </Layout>
   );
 };
 
 export default LoginPage;
 
 import styled from '@emotion/styled';
-
-const Layout = styled.div`
-  height: 100vh;
-  text-align: center;
-`;
 
 const Content = styled.div`
   display: flex;
@@ -59,7 +54,6 @@ const Padding = styled.div`
 `;
 
 const LoginPageUI = {
-  Layout,
   Content,
   Title,
   SubTitle,
