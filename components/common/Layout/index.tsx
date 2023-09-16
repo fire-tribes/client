@@ -9,7 +9,9 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => {
   return (
     <StyledLayout>
-      <StyledContent>{children}</StyledContent>
+      <StyledContent>
+        <main>{children}</main>
+      </StyledContent>
       <CommonBottomNavigatior />
     </StyledLayout>
   );
@@ -21,13 +23,14 @@ const StyledLayout = styled.main`
   height: 100vh;
   margin: 0 auto;
   position: relative;
-
   text-align: center;
 `;
 
 const StyledContent = styled.section`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   min-height: 100vh;
-
   padding: 16px 16px 56px 16px;
 `;
 
