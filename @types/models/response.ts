@@ -1,10 +1,12 @@
-type ResponseSuccess<T> = ResponseError & {
+import { ServiceErrorCodeKey } from '@/@types/models/errorCode';
+
+type ResponseSuccess<T> = ResponseLayout & {
   data: T;
 };
-type ResponseError = {
+type ResponseLayout = {
   success: boolean;
-  errorCode: string;
+  errorCode: ServiceErrorCodeKey;
   message: string;
 };
 
-export type { ResponseSuccess, ResponseError };
+export type { ResponseSuccess, ResponseLayout };
