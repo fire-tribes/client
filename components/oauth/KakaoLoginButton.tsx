@@ -1,3 +1,4 @@
+import { Cookie } from '@/core/api/cookie';
 import { useKakaoLogin } from '@/hook/useKakaoLogin';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -14,10 +15,17 @@ export const KakaoLoginButton = () => {
   useEffect(() => {
     if (code && code.length > 0) {
       start(code)
-        .then((response) => console.log(response, 'success login'))
+        .then((response) => {
+          const accessToken = response?.data.data.login.token.accessToken;
+          if (accessToken) {
+            const cookie = new Cookie();
+            cookie.set('accessToken', accessToken);
+            router.push('/');
+          }
+        })
         .catch((err) => console.error(err));
     }
-  }, [code, start]);
+  }, [code, router, start]);
 
   return (
     <a id="kakao_login_button" onClick={open}>
