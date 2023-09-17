@@ -60,12 +60,11 @@ export default async function handler(
     const defaultForm = {
       email,
       password: '',
-      accessToken: process.env.FRONT_SERVER_SECRET_KEY as string,
     };
 
     const defaultSignUpForm = {
-      ...defaultForm,
       userName: '',
+      ...defaultForm,
     };
 
     const { data: isValid } = await SignApi.checkSignUp({ email });
@@ -85,8 +84,10 @@ export default async function handler(
       return responseSuccess(data);
     }
   } catch (err) {
+    console.log(err);
     responseServerError(err as AxiosError);
+    return;
   }
 
-  res.status(400).send({ message: '여기까지 오면 안되는데 와버렸네요' });
+  return res.status(400).send({ message: '여기까지 오면 안되는데 와버렸네요' });
 }

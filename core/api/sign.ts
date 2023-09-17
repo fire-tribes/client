@@ -1,14 +1,16 @@
-import APIInstance, { AuthAPIInstance } from '@/core/api/instance';
+import { AuthAPIInstance } from '@/core/api/instance';
 
+import axios from 'axios';
 import type {
   CheckSignUpRequestBody,
   SignInRequestBody,
+  SignResponseModel,
   SignUpRequestBody,
 } from '@/@types/models/signUp';
 
 export const SignApi = {
   start: (code: string) => {
-    return AuthAPIInstance.get('', {
+    return axios.get<SignResponseModel>('api/login', {
       params: {
         code,
       },
@@ -20,23 +22,13 @@ export const SignApi = {
       ...rest,
     };
 
-    return APIInstance.post('user/signup', body, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    return AuthAPIInstance.post('signup', body, {});
   },
   signIn: (body: SignInRequestBody) => {
-    // TODO: 왜 formData를 안넣어주고 js object를 넣어주면 정상적으로 동작하는가?
-    // headers: content-type에 따라 자동으로 변환해주는게 아닌가?
-    return APIInstance.post('user/login', body, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    return AuthAPIInstance.post('login', body, {});
   },
   checkSignUp: ({ email }: CheckSignUpRequestBody) => {
-    return APIInstance.get(`user/email`, {
+    return AuthAPIInstance.get(`email`, {
       params: {
         email,
       },
