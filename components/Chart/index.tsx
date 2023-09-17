@@ -13,7 +13,7 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, ChartDataLabels);
 
 const labels = Array.from({ length: 12 }, (_, index) => ({
   label: index + 1,
-  data: (index + 1) * 100,
+  data: Math.ceil((index + 1) * 100 * Math.sqrt(Math.random())),
 }));
 
 export default function CommonChart() {
@@ -28,7 +28,9 @@ export default function CommonChart() {
         // TODO: 차트의 크기를 고정하고 싶다면 해당 tag 활성화
         // maintainAspectRatio: false,
         layout: {
-          padding: 20,
+          padding: {
+            top: 20,
+          },
         },
         scales: {
           y: {
@@ -61,7 +63,7 @@ export default function CommonChart() {
             align: 'top',
             offset: 0,
             // TODO: number type value에 특정 단위를 붙이고 싶을경우
-            // formatter: (value) => `${value}만`,
+            formatter: (value) => `${value}만`,
             // color: '#36A2EB',
           },
         },

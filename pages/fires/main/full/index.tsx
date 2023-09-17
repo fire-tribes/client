@@ -1,6 +1,11 @@
+import Layout from '@/components/common/Layout';
+
 const FullPage = () => {
-  // Comp;
-  return <div>full page</div>;
+  return (
+    <Layout>
+      <div>ssd</div>
+    </Layout>
+  );
 };
 
 export default FullPage;
