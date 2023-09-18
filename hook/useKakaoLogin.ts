@@ -1,3 +1,4 @@
+import { SignApi } from '@/core/api/sign';
 import { useEffect, useState } from 'react';
 
 export const useKakaoLogin = () => {
@@ -14,12 +15,24 @@ export const useKakaoLogin = () => {
 
   const open = () => {
     kakao?.Auth.authorize({
-      redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_FRONT_SERVER_URI_TEST,
+      redirectUri:
+        process.env.NODE_ENV === 'development'
+          ? process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI_DEV
+          : process.env.NODE_ENV === 'production' &&
+            process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI_PRODUCTION,
     });
+  };
+
+  const start = async (code: string) => {
+    if (!code) return;
+
+    const resposne = await SignApi.start(code);
+    return resposne;
   };
 
   return {
     init,
     open,
+    start,
   };
 };
