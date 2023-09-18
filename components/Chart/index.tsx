@@ -80,6 +80,7 @@ export default function CommonChart() {
             backgroundColor: [theme.palette.basic.point_red01],
             borderColor: [theme.palette.basic.point_red01],
             borderRadius: 5,
+            borderSkipped: false, // 양쪽 다 둥글게
           },
         ],
       }}
