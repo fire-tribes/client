@@ -5,7 +5,6 @@ import { ScheduleList } from '@/components/List/ScheduleList';
 import Section from '@/components/Section';
 import FlexBox from '@/components/common/FlexBox';
 import CommonChart from '@/components/Chart';
-import CommonIcon from '@/components/common/Icon';
 import CommonFont from '@/components/Font';
 import ExchangeRateBox from '@/components/ExchangeRate';
 import ModeController from '@/components/ModeController';
@@ -14,12 +13,16 @@ import CommonBar from '@/components/common/Bar';
 import MyPortfolioSection from '@/components/MyPortfolioSection';
 import { useMyPortFolio } from '@/hook/useMyPortFolio';
 import CommonCenter from '@/components/common/Center';
+import DividendDate from '@/components/DividendDate';
+import CommonCheckButton from '@/components/common/CheckButton';
 import styled from '@emotion/styled';
 import { CircularProgress, Typography } from '@mui/material';
 import Head from 'next/head';
 
 const MainPage = () => {
   const { data } = useMyPortFolio();
+
+  console.log(data);
 
   if (!data) {
     return (
@@ -49,25 +52,11 @@ const MainPage = () => {
         <ExchangeRateBox />
         <Section textAlign="left" paddingTop="11px">
           <FlexBox justifyContent="space-between" paddingBottom="16px">
-            <Section.Title>0000년 0월 배당금</Section.Title>
-
+            <DividendDate />
             <FlexBox justifyContent="space-between">
               <FlexBox gap="14px">
-                {
-                  //TODO: 버튼별로 별도의 컴포넌트로 분리
-                }
-                <button>
-                  <FlexBox gap="4px">
-                    <CommonIcon iconName={'checked'} />
-                    <CommonFont fontSize={'body3'}>소득세</CommonFont>
-                  </FlexBox>
-                </button>
-                <button>
-                  <FlexBox gap="4px">
-                    <CommonIcon iconName={'checked_none'} />
-                    <CommonFont fontSize={'body3'}>4대보험</CommonFont>
-                  </FlexBox>
-                </button>
+                <CommonCheckButton fontSize="body3">소득세</CommonCheckButton>
+                <CommonCheckButton fontSize="body3">4대보험</CommonCheckButton>
               </FlexBox>
             </FlexBox>
           </FlexBox>
