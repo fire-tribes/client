@@ -17,7 +17,7 @@ interface AlertModalProps
   title: string;
   message: string;
   onClickEvent?: () => void;
-  toastMessage: string;
+  toastMessage?: string;
 }
 
 function AlertModal({

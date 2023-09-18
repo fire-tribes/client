@@ -1,7 +1,7 @@
 import useControlToast from '@/hook/useControlToast';
 
 interface ToastProps {
-  toastMessage: string;
+  toastMessage?: string;
   children: React.ReactNode;
 }
 
