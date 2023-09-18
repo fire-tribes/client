@@ -12,14 +12,25 @@ import ModeController from '@/components/ModeController';
 import BadgeGroup from '@/components/BdageTest';
 import CommonBar from '@/components/common/Bar';
 import MyPortfolioSection from '@/components/MyPortfolioSection';
-// import CommonBadge from '@/components/common/Badge';
+import { useMyPortFolio } from '@/hook/useMyPortFolio';
+import CommonCenter from '@/components/common/Center';
 import styled from '@emotion/styled';
-import { Typography } from '@mui/material';
+import { CircularProgress, Typography } from '@mui/material';
 import Head from 'next/head';
-import { GetServerSideProps } from 'next';
-import Cookies from 'universal-cookie';
 
 const MainPage = () => {
+  const { data } = useMyPortFolio();
+
+  if (!data) {
+    return (
+      <Layout>
+        <CommonCenter>
+          <CircularProgress />
+        </CommonCenter>
+      </Layout>
+    );
+  }
+
   return (
     <>
       {
@@ -132,25 +143,3 @@ const StyledFooter = styled.footer`
 `;
 
 export default MainPage;
-
-export const getServerSideProps: GetServerSideProps<object> = async (
-  context,
-) => {
-  const { cookie } = context.req.headers;
-  const cookies = new Cookies(cookie);
-  const accessToken = cookies.get('accessToken');
-
-  // TODO: valie 함수 추가
-  if (!accessToken) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {},
-  };
-};
