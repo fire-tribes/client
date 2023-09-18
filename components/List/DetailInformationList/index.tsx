@@ -1,72 +1,45 @@
-import { ItemModelKR } from '@/mocks';
+import { badangDetailText, items } from '@/mocks';
 import FlexBox from '@/components/common/FlexBox';
 import NotifyListModal from '@/components/common/Modal/NotifyListModal';
 import CommonIcon from '@/components/common/Icon';
 import { S } from '@/components/List/DetailInformationList/styles';
 import CommonFont from '@/components/Font';
+import { useAnnualDividend } from '@/hook/useAnnualDividend';
 import { ListItem, ListItemButton } from '@mui/material';
-import type { BasicColorKeys } from '@/styles/palette';
-
-type badgeDetailText = {
-  key: keyof typeof ItemModelKR;
-  title: string;
-  content: string;
-  color: BasicColorKeys;
-  iconName: string;
-};
-
-const badangDetailTexts: badgeDetailText[] = [
-  {
-    key: 'annualDividend',
-    title: '연간 총 배당금',
-    content: '8810만원',
-    color: 'gray9',
-    iconName: '',
-  },
-  {
-    key: 'dividendPriceRatio',
-    title: '배당수익률',
-    content: '6.9%',
-    color: 'point_red01',
-    iconName: 'expand_more',
-  },
-  {
-    key: 'paidPax',
-    title: '납부한 세금',
-    content: '104만원',
-    color: 'point_blue02',
-    iconName: 'expand_more',
-  },
-  {
-    key: 'unPaidTax',
-    title: '납부할 세금',
-    content: '49만원 예상',
-    color: 'point_blue02',
-    iconName: 'expand_more',
-  },
-];
+import type { BadgeDetailText, DetailInformationKeys } from '@/mocks';
 
 export default function DetailInformationList() {
   // useHooks get data
+  const { data } = useAnnualDividend();
+  const responseData = data?.data.data;
+
+  const detailInformationData = {
+    annualDividend: responseData?.annualDividend,
+    dividendPriceRatio: responseData?.dividendPriceRatio,
+    unPaidTax: responseData?.unPaidTax,
+    paidTax: responseData?.paidTax,
+  };
+
+  const texts = Object.entries(badangDetailText) as [
+    DetailInformationKeys,
+    BadgeDetailText,
+  ][];
+
+  const paddingTop = '9px';
+  const paddingBottom = '9px';
 
   return (
     <>
-      {badangDetailTexts.map(({ key, title, content, color, iconName }) => {
-        const paddingTop = '9px';
-        const paddingBottom = '9px';
-
-        const items = ItemModelKR[key];
-        const shouldOpenModal = items.length > 0;
-
-        if (shouldOpenModal) {
+      {texts.map(([key, value]) => {
+        if (value.shouldOpenModal) {
           return (
             <NotifyListModal
-              key={title}
-              modalTitle={title}
-              items={ItemModelKR[key]}
+              key={key}
+              modalTitle={value.title}
+              items={items[key]}
             >
               <ListItemButton sx={{ padding: 0 }}>
-                <ListItem disablePadding sx={{ display: 'block' }}>
+                <ListItem key={key} disablePadding sx={{ display: 'block' }}>
                   <FlexBox
                     justifyContent="space-between"
                     alignItems="center"
@@ -75,10 +48,10 @@ export default function DetailInformationList() {
                   >
                     <S.Title>
                       <FlexBox alignItems="center" gap="4px">
-                        <CommonFont fontSize="body1">{title}</CommonFont>
-                        {iconName && (
+                        <CommonFont fontSize="body1">{value.title}</CommonFont>
+                        {value.iconName && (
                           <CommonIcon
-                            iconName={iconName}
+                            iconName={value.iconName}
                             width={12}
                             height={12}
                           />
@@ -87,11 +60,13 @@ export default function DetailInformationList() {
                     </S.Title>
                     <S.Content>
                       <CommonFont
-                        color={color}
+                        color={value.color}
                         fontSize="body1"
                         fontWeight="bold"
                       >
-                        {content}
+                        {detailInformationData[key]
+                          ? detailInformationData[key]
+                          : value.defaultValue}
                       </CommonFont>
                     </S.Content>
                   </FlexBox>
@@ -111,15 +86,25 @@ export default function DetailInformationList() {
             >
               <S.Title>
                 <FlexBox alignItems="center" gap="4px">
-                  <CommonFont fontSize="body1">{title}</CommonFont>
-                  {iconName && (
-                    <CommonIcon iconName={iconName} width={12} height={12} />
+                  <CommonFont fontSize="body1">{value.title}</CommonFont>
+                  {value.iconName && (
+                    <CommonIcon
+                      iconName={value.iconName}
+                      width={12}
+                      height={12}
+                    />
                   )}
                 </FlexBox>
               </S.Title>
               <S.Content>
-                <CommonFont color={color} fontSize="body1" fontWeight="bold">
-                  {content}
+                <CommonFont
+                  color={value.color}
+                  fontSize="body1"
+                  fontWeight="bold"
+                >
+                  {detailInformationData[key]
+                    ? detailInformationData[key]
+                    : value.defaultValue}
                 </CommonFont>
               </S.Content>
             </FlexBox>
