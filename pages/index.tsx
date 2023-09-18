@@ -12,37 +12,14 @@ import ModeController from '@/components/ModeController';
 import BadgeGroup from '@/components/BdageTest';
 import CommonBar from '@/components/common/Bar';
 import MyPortfolioSection from '@/components/MyPortfolioSection';
-import CommonBadge from '@/components/common/Badge';
+// import CommonBadge from '@/components/common/Badge';
 import styled from '@emotion/styled';
 import { Typography } from '@mui/material';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-
-const useMockLogin = () => {
-  const [isLogin, setIsLogin] = useState(true);
-  const login = () => setIsLogin(true);
-  const logout = () => setIsLogin(false);
-
-  return {
-    isLogin,
-    login,
-    logout,
-  };
-};
+import { GetServerSideProps } from 'next';
+import Cookies from 'universal-cookie';
 
 const MainPage = () => {
-  const router = useRouter();
-  const { isLogin, logout } = useMockLogin();
-
-  useEffect(() => {
-    !isLogin && router.push('/login');
-  }, [isLogin, router]);
-
-  if (!isLogin) {
-    return null;
-  }
-
   return (
     <>
       {
@@ -57,10 +34,6 @@ const MainPage = () => {
       <Layout>
         <header style={{ paddingBottom: '20px' }}>
           <ModeController />
-
-          <CommonBadge onClick={logout} mainColor="point_blue01">
-            <div>로그아웃</div>
-          </CommonBadge>
         </header>
         <ExchangeRateBox />
         <Section textAlign="left" paddingTop="11px">
@@ -158,11 +131,26 @@ const StyledFooter = styled.footer`
   padding: 18px 20px;
 `;
 
-// const S = {
-//   BarChartLayout: styled.div`
-//     height: 151px;
-//     border: 1px solid black;
-//   `,
-// };
-
 export default MainPage;
+
+export const getServerSideProps: GetServerSideProps<object> = async (
+  context,
+) => {
+  const { cookie } = context.req.headers;
+  const cookies = new Cookies(cookie);
+  const accessToken = cookies.get('accessToken');
+
+  // TODO: valie 함수 추가
+  if (!accessToken) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
