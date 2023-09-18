@@ -39,7 +39,7 @@ export default function CommonNewBottomNavigatior() {
       <S.NavigatorItems>
         {navagationItems.map(({ href, label, iconName }) => (
           <S.NavigationItem key={label}>
-            <Link href={href}>
+            <S.NavigationLink href={href}>
               <FlexBox flexDirection={'column'} gap={'4px'}>
                 <CommonIcon
                   iconName={
@@ -55,7 +55,7 @@ export default function CommonNewBottomNavigatior() {
                   {label}
                 </CommonFont>
               </FlexBox>
-            </Link>
+            </S.NavigationLink>
           </S.NavigationItem>
         ))}
       </S.NavigatorItems>
@@ -85,7 +85,12 @@ const S = {
     justify-content: center;
     align-items: center;
   `,
+  NavigationLink: styled(Link)``,
   NavigationItem: styled.li`
     flex: 1;
+    :hover {
+      cursor: pointer;
+      opacity: 0.8;
+    }
   `,
 };
