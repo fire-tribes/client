@@ -1,6 +1,10 @@
-import { BottomNavigation, BottomNavigationAction } from '@mui/material';
-import Image from 'next/image';
+import CommonFont from '@/components/Font';
+import FlexBox from '@/components/common/FlexBox';
+import CommonIcon from '@/components/common/Icon';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 interface NavagationItem {
   href: string;
@@ -11,54 +15,77 @@ interface NavagationItem {
 const navagationItems: NavagationItem[] = [
   {
     href: '/',
-    label: '',
+    label: '홈',
     iconName: 'home',
   },
   {
     href: '/caculate',
-    label: '',
+    label: '계산',
     iconName: 'chart',
   },
   {
     href: '/setting',
-    label: '',
+    label: '설정',
     iconName: 'setting',
   },
 ];
-// TODO: svg 파일을 클라이언트 단에서 url로 불러오는게 아니라 SSR을 통해 인라인되서 오게하면 어떨까?
-const CommonBottomNavigatior = () => {
-  return (
-    <BottomNavigation
-      showLabels={false}
-      sx={{
-        position: 'fixed',
-        minWidth: '320px',
-        maxWidth: '430px',
-        bottom: 0,
-        width: 1.0,
-        borderTop: '1px solid gray',
-      }}
-    >
-      {navagationItems.map(({ label, href, iconName }) => (
-        <Link href={href} key={label}>
-          <BottomNavigationAction
-            label={label}
-            sx={{ margin: 0 }}
-            icon={
-              <Link href={href}>
-                <Image
-                  src={`/icon/emphasis_${iconName}.svg`}
-                  alt={label}
-                  width={20}
-                  height={20}
-                />
-              </Link>
-            }
-          />
-        </Link>
-      ))}
-    </BottomNavigation>
-  );
-};
 
-export default CommonBottomNavigatior;
+export default function CommonNewBottomNavigatior() {
+  const router = useRouter();
+  const { pathname } = router;
+
+  return (
+    <S.Navigator>
+      <S.NavigatorItems>
+        {navagationItems.map(({ href, label, iconName }) => (
+          <S.NavigationItem key={label}>
+            <Link href={href}>
+              <FlexBox flexDirection={'column'} gap={'4px'}>
+                <CommonIcon
+                  iconName={
+                    pathname === href ? `emphasis_${iconName}` : iconName
+                  }
+                  width={24}
+                  height={24}
+                />
+                <CommonFont
+                  fontSize="caption2"
+                  color={pathname === href ? 'gray9' : 'gray6'}
+                >
+                  {label}
+                </CommonFont>
+              </FlexBox>
+            </Link>
+          </S.NavigationItem>
+        ))}
+      </S.NavigatorItems>
+    </S.Navigator>
+  );
+}
+
+const S = {
+  Navigator: styled.nav`
+    position: fixed;
+    bottom: 0%;
+
+    min-width: 320px;
+    max-width: 430px;
+    width: 100vw;
+    height: 55px;
+    padding: 8px 34px;
+
+    ${({ theme }) => css`
+      background-color: ${theme.palette.sementic.bg_white};
+      border-top: ${`1px solid ${theme.palette.basic.gray1}`};
+    `}
+  `,
+  NavigatorItems: styled.ul`
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `,
+  NavigationItem: styled.li`
+    flex: 1;
+  `,
+};
