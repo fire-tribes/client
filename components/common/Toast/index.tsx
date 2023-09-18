@@ -1,17 +1,17 @@
-interface ToastCSSProps {
-  able: boolean; // default값은 false
+import useControlToast from '@/hook/useControlToast';
+
+interface ToastProps {
+  toastMessage: string;
+  children: React.ReactNode;
 }
 
-interface ToastProps extends ToastCSSProps {
-  message: React.ReactNode;
-}
-
-function Toast({ able = false, message }: ToastProps) {
+function Toast({ toastMessage, children }: ToastProps) {
+  const { isShow, openToast } = useControlToast();
   return (
-    <div>
-      if (!able) null;
-      {able && <b>{message}</b>}
-    </div>
+    <>
+      {isShow && <b>{toastMessage}</b>}
+      <span onClick={openToast}>{children}</span>
+    </>
   );
 }
 

@@ -1,4 +1,5 @@
 // import AlertModal from './style';
+import Toast from '../../Toast';
 import Modal, { TModalProps } from '@/components/common/Modal';
 import useControlModal from '@/hook/useControlModal';
 import { basic } from '@/styles/palette';
@@ -16,6 +17,7 @@ interface AlertModalProps
   title: string;
   message: string;
   onClickEvent?: () => void;
+  toastMessage: string;
 }
 
 function AlertModal({
@@ -26,13 +28,10 @@ function AlertModal({
   layout = 'fill',
   position = 'center',
   onClickEvent,
+  toastMessage,
 }: AlertModalProps) {
   const { isShow, openModal, closeModal } = useControlModal();
 
-  const clickConfirmButton = () => {
-    onClickEvent;
-    closeModal();
-  };
   return (
     <>
       <Modal show={isShow} layout={layout} position={position}>
@@ -51,13 +50,13 @@ function AlertModal({
                 취소
               </Modal.Button>
               <Modal.Button
-                onClick={clickConfirmButton}
+                onClick={onClickEvent}
                 style={{
                   backgroundColor: `${basic.gray_blue}`,
                   color: `${basic.white}`,
                 }}
               >
-                확인
+                <Toast toastMessage={toastMessage}>확인</Toast>
               </Modal.Button>
             </>
           )}
