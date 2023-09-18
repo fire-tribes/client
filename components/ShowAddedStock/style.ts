@@ -32,7 +32,7 @@ const ItemContainer = styled.div`
   }
 `;
 
-export const ShowAddedStocksUI = {
+export const ShowAddedStockUI = {
   Container,
   ItemContainer,
 } as const;

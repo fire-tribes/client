@@ -1,3 +1,5 @@
+import { basic } from '@/styles/palette';
+import { fontSize } from '@/styles/typography';
 import styled from '@emotion/styled';
 
 const Container = styled.div`
@@ -20,7 +22,14 @@ const StockContainer = styled.div`
   display: flex;
 
   > div:last-child {
+    flex: 1;
     margin: 10px;
+
+    >div: last-child {
+      font-size: ${fontSize.caption2};
+      color: ${basic.gray6};
+      font-weight: 100;
+    }
   }
 `;
 

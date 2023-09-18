@@ -2,7 +2,9 @@ import { basic } from '@/styles/palette';
 import { fontSize } from '@/styles/typography';
 import styled from '@emotion/styled';
 
-const Container = styled.div``;
+const Container = styled.div`
+  margin-bottom: 26px;
+`;
 
 const Item = styled.div``;
 
@@ -12,10 +14,18 @@ const TopContainer = styled.div`
   align-items: center;
 `;
 const NativeStockInfoContainer = styled.div`
+  flex: 1;
   display: flex;
 
   > div:last-child {
+    flex: 1;
     margin: 10px;
+
+    >div: last-child {
+      font-size: ${fontSize.caption2};
+      color: ${basic.gray6};
+      font-weight: 100;
+    }
   }
 `;
 

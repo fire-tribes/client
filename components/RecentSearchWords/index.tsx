@@ -1,4 +1,4 @@
-// import RecentSearchWord from '../RecentSearchWord';
+import RecentSearchWord from '../RecentSearchWord';
 import AlertModal from '../common/Modal/AlertModal';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import styled from '@emotion/styled';
@@ -9,7 +9,7 @@ interface GetRecentSearchWords {
   data: [
     {
       word: string;
-      date: '2023-09-14T10:53:37.717Z';
+      date: string;
     },
   ];
   errorCode: string;
@@ -17,8 +17,8 @@ interface GetRecentSearchWords {
 }
 
 interface DeleteRecentSearchWords {
-  success: true;
-  data: true;
+  success: boolean;
+  data: boolean;
   errorCode: string;
   message: string;
 }
@@ -86,10 +86,10 @@ function RecentSearchWords() {
         </AlertModal>
       </RecentSearchWordTitleContainer>
       <div>
-        {/* {getRecentSearchWords.data !== undefined &&
-          (getRecentSearchWords.data.data.length !== 0 ? (
+        {getRecentSearchWords.data !== undefined &&
+          (getRecentSearchWords.data.data.length !== 1 ? (
             getRecentSearchWords.data.data.map((item, id) => {
-              return <RecentSearchWord key={id} recentSearchWord={item.word} />;
+              return <RecentSearchWord key={id} item={item} />;
             })
           ) : (
             <div>
@@ -99,7 +99,7 @@ function RecentSearchWords() {
               <tr />
               (예: JEPI, SCHD)
             </div>
-          ))} */}
+          ))}
       </div>
     </>
   );

@@ -8,10 +8,9 @@ const Container = styled.div`
 
 const Item = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
 
-  > div first-child {
+  > div:first-child {
     flex: 1;
     margin-right: 10px;
   }
