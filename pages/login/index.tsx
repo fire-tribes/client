@@ -1,5 +1,6 @@
 import { KakaoLoginButton } from '@/components/oauth/KakaoLoginButton';
 import Layout from '@/components/common/Layout';
+import CommonCenter from '@/components/common/Center';
 import Image from 'next/image';
 
 const GUIDE_TEXT = `배당주 계산과 관리를 가장 쉽고 편하게 하는 방법`;
@@ -7,21 +8,23 @@ const GUIDE_TEXT = `배당주 계산과 관리를 가장 쉽고 편하게 하는
 const LoginPage = () => {
   return (
     <Layout>
-      <LoginPageUI.Content>
-        <Image
-          src={'/images/snowball_label.png'}
-          width={214}
-          height={40}
-          alt="snowball_label"
-        />
-        <LoginPageUI.Title>{GUIDE_TEXT}</LoginPageUI.Title>
-        <LoginPageUI.SubTitle>
-          카카오 톡으로 3초만에 시작하기
-        </LoginPageUI.SubTitle>
-        <LoginPageUI.Padding>
-          <KakaoLoginButton />
-        </LoginPageUI.Padding>
-      </LoginPageUI.Content>
+      <CommonCenter>
+        <LoginPageUI.Content>
+          <Image
+            src={'/images/snowball_label.png'}
+            width={214}
+            height={40}
+            alt="snowball_label"
+          />
+          <LoginPageUI.Title>{GUIDE_TEXT}</LoginPageUI.Title>
+          <LoginPageUI.SubTitle>
+            카카오 톡으로 3초만에 시작하기
+          </LoginPageUI.SubTitle>
+          <LoginPageUI.Padding>
+            <KakaoLoginButton />
+          </LoginPageUI.Padding>
+        </LoginPageUI.Content>
+      </CommonCenter>
     </Layout>
   );
 };
