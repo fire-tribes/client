@@ -11,7 +11,7 @@ const Item = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  >div: first-child {
+  > div first-child {
     flex: 1;
     margin-right: 10px;
   }
