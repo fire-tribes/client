@@ -12,7 +12,7 @@ export default function SettingPage() {
   return (
     <Layout>
       <StyledHeader>
-        <StyledTitle>계산</StyledTitle>
+        <StyledTitle>설정</StyledTitle>
       </StyledHeader>
       <List>
         <ListItem>
