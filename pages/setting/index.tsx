@@ -1,6 +1,5 @@
 import CommonIcon from '@/components/common/Icon';
 import Layout from '@/components/common/Layout';
-import { StyledHeader, StyledTitle } from '@/pages/setting/styles';
 import {
   List,
   ListItem,
@@ -42,3 +41,15 @@ export default function SettingPage() {
     </Layout>
   );
 }
+
+import styled from '@emotion/styled';
+
+export const StyledHeader = styled.header`
+  height: 31px;
+`;
+export const StyledTitle = styled.h2`
+  height: 100%;
+
+  font-weight: 900;
+  text-align: left;
+`;
