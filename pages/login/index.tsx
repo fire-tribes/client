@@ -7,7 +7,7 @@ const GUIDE_TEXT = `배당주 계산과 관리를 가장 쉽고 편하게 하는
 
 const LoginPage = () => {
   return (
-    <Layout>
+    <Layout showBottomNavigator={false}>
       <CommonCenter>
         <LoginPageUI.Content>
           <Image
