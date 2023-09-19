@@ -1,7 +1,9 @@
 import { Button, ButtonProps, styled } from '@mui/material';
+import { useRouter } from 'next/router';
 
 interface ButtonCSSProps extends ButtonProps {
   isDisabled: boolean;
+  buttonName?: string;
 }
 
 function BottomFixedButton({
@@ -9,8 +11,19 @@ function BottomFixedButton({
   color = 'primary',
   variant = 'contained',
   isDisabled = false,
+  buttonName,
   ...rest
 }: ButtonCSSProps) {
+  const router = useRouter();
+  const onMoveOtherPages = (buttonName: string | undefined) => {
+    if (buttonName !== undefined) {
+      buttonName === '다음' && router.push('/fires/add');
+      buttonName === '추가 완료' && router.push('/fires/main/full');
+      buttonName === '완료' && router.push('/fires/main/full');
+      buttonName === '수정 완료' && router.push('/fires/edit');
+    }
+  };
+
   return (
     <div>
       <span
@@ -48,6 +61,7 @@ function BottomFixedButton({
               fontSize: '16px',
               fontWeight: '700',
             }}
+            onClick={() => onMoveOtherPages(buttonName)}
           >
             {children}
           </StyledButton>

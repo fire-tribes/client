@@ -1,17 +1,20 @@
 import { SearchResultUI } from './style';
 import testCircleSvg from '@/public/icon/testCircle.svg';
+import checkFalseSvg from '@/public/icon/checkFalse.svg';
+import checkTrueSvg from '@/public/icon/checkTrue.svg';
+import { SelectedStocksAtomProps } from '@/hook/useAtom/state';
 import Image from 'next/image';
 
 interface SearchResultProps {
-  stockName: string; // default : 'apple'
-  stockTickerCode: string; // default : 'APPL'
-  children: React.ReactNode;
+  stock: SelectedStocksAtomProps;
+  isSelected: boolean;
+  toggleSelected: (stock: SelectedStocksAtomProps) => void;
 }
 
 function SearchResult({
-  stockName,
-  stockTickerCode,
-  children,
+  stock,
+  isSelected,
+  toggleSelected,
 }: SearchResultProps) {
   return (
     <SearchResultUI.Container>
@@ -19,11 +22,17 @@ function SearchResult({
         <SearchResultUI.StockContainer>
           <Image src={testCircleSvg} alt="testCircle Svg" />
           <div>
-            <div>{stockName}</div>
-            <div>{stockTickerCode}</div>
+            <div>{stock.name}</div>
+            <div>{stock.stockCode}</div>
           </div>
         </SearchResultUI.StockContainer>
-        <div>{children}</div>
+        <button onClick={() => toggleSelected(stock)}>
+          {isSelected ? (
+            <Image src={checkTrueSvg} alt="checkTrue Svg" />
+          ) : (
+            <Image src={checkFalseSvg} alt="checkFalse Svg" />
+          )}
+        </button>
       </SearchResultUI.Item>
     </SearchResultUI.Container>
   );

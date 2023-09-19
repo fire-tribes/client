@@ -1,21 +1,25 @@
 import { FeedStockInfoUI } from './style';
+import AlertModal from '../common/Modal/AlertModal';
+import { SelectedStocksAtomProps } from '@/hook/useAtom/state';
 import testCircleSvg from '@/public/icon/testCircle.svg';
 import trashSvg from '@/public/icon/trash.svg';
+import { basic } from '@/styles/palette';
+import APIInstance from '@/core/api/instance';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 
 interface FeedStockInfoProps {
-  stockName: string;
-  stockTickerCode: string;
+  stock: SelectedStocksAtomProps;
+  removeSelected: (stock: SelectedStocksAtomProps) => void;
+  // onClickPresentPriceButton?: (tickerCode: string) => void;
 }
 
 interface PresentPrice {
   success: true;
   data: [
     {
-      assetId: 0;
+      assetId: number;
       currentPrice: string;
       currencyType: string;
       accessTime: '2023-09-14T06:03:13.450Z';
@@ -28,19 +32,15 @@ interface PresentPrice {
   message: string;
 }
 
-const useGetPresentPrice = () => {
+const useGetPresentPrice = (assetIds: number) => {
   return useQuery({
-    queryKey: ['presentPrice'],
+    queryKey: ['presentPrice', assetIds],
     queryFn: () =>
-      axios.get<PresentPrice>(
-        'http://fire-env-1.eba-xhu334c9.ap-northeast-2.elasticbeanstalk.com/api/v1/asset/price',
+      APIInstance.get<PresentPrice>(
+        'http://project-snow.kro.kr/api/v1/asset/price',
         {
           params: {
-            assetIds: 123,
-          },
-          headers: {
-            Authorization:
-              'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwidXNlcklkIjoyLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJleHAiOjE2OTQ3NDM0NTB9.FZxDu0a7T0XDZLISeXq0GXQvzvfzerZNd6HUjayf7oUagz1XbtKl7FkxhMGNIKY3PIoY4cmBpq03oKUunHjvNA',
+            assetIds: assetIds,
           },
         },
       ),
@@ -50,24 +50,29 @@ const useGetPresentPrice = () => {
   });
 };
 
-function FeedStockInfo({ stockName, stockTickerCode }: FeedStockInfoProps) {
-  const getPresentPrice = useGetPresentPrice();
+function FeedStockInfo({
+  stock,
+  removeSelected, // onClickPresentPriceButton,
+}: FeedStockInfoProps) {
+  // 이 시점에서 한번 불러온다.
+  const { data: getPresentPrice, refetch } = useGetPresentPrice(stock.assetId);
 
   const [inputCountValue, setInputCountValue] = useState('');
   const [inputPriceValue, setInputPriceValue] = useState('');
   const [error, setError] = useState('');
 
-  const onClickPresentPrice = () => {
-    const priceValue = getPresentPrice.data?.data.data[0].currentPrice;
-    if (priceValue !== undefined) {
-      setInputPriceValue(priceValue);
-      // 오류 메시지 초기화
-      setError('');
-    }
-  };
+  const currentPrice = getPresentPrice?.data.data[0].currentPrice;
 
-  const onDeleteStock = () => {
-    // 삭제 내용 입력(Jotai)
+  const onClickPresentPrice = () => {
+    refetch();
+    // 이미 데이터는 버튼을 클릭하지 않아도 불러온 상태
+    // const currentPrice = getPresentPrice?.data.data[0].currentPrice;
+    // // 여기서는 refetch 해주면 된다.
+    // if (currentPrice !== undefined) {
+    //   setInputPriceValue(currentPrice);
+    //   // 오류 메시지 초기화
+    //   setError('');
+    // }
   };
 
   const handleInputCountChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -95,14 +100,23 @@ function FeedStockInfo({ stockName, stockTickerCode }: FeedStockInfoProps) {
           <FeedStockInfoUI.NativeStockInfoContainer>
             <Image src={testCircleSvg} alt="testCircle Svg" />
             <div>
-              <div>{stockName}</div>
-              <div>{stockTickerCode}</div>
+              <div>{stock.name}</div>
+              <div>{stock.stockCode}</div>
             </div>
           </FeedStockInfoUI.NativeStockInfoContainer>
-          <FeedStockInfoUI.ButtonContainer onClick={onDeleteStock}>
-            <Image src={trashSvg} alt="trash Svg" />
-            <button>삭제</button>
-          </FeedStockInfoUI.ButtonContainer>
+          <AlertModal
+            title={'종목 삭제'}
+            message={'이 종목을 정말 삭제하시겠어요?'}
+            onClickEvent={() => removeSelected(stock)}
+            toastMessage={'종목을 삭제하였습니다.'}
+          >
+            <FeedStockInfoUI.ButtonContainer>
+              <Image src={trashSvg} alt="trash Svg" />
+              <button style={{ color: `${basic.gray6}`, fontWeight: 500 }}>
+                삭제
+              </button>
+            </FeedStockInfoUI.ButtonContainer>
+          </AlertModal>
         </FeedStockInfoUI.TopContainer>
         <FeedStockInfoUI.BottomContainer>
           <div>
@@ -117,12 +131,18 @@ function FeedStockInfo({ stockName, stockTickerCode }: FeedStockInfoProps) {
           <div>
             <input
               type="text"
-              value={inputPriceValue}
+              // value={inputPriceValue} 경락님 원래 작업
+              value={currentPrice}
               placeholder="구매 가격($)"
               onChange={handleInputPriceChange}
               onBlur={handleInputBlur}
             />
-            <button onClick={onClickPresentPrice}>현재가 입력</button>
+            <button
+              style={{ color: `${basic.point_blue02}`, fontWeight: 500 }}
+              onClick={() => onClickPresentPrice()}
+            >
+              현재가 입력
+            </button>
           </div>
         </FeedStockInfoUI.BottomContainer>
         {error && (

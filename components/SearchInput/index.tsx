@@ -5,16 +5,11 @@ import Image from 'next/image';
 interface SearchInputProps {
   value: string;
   onFocus: () => void;
-  handleShowSearchResult: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   children: React.ReactNode;
 }
 
-function SearchInput({
-  value,
-  onFocus,
-  handleShowSearchResult,
-  children,
-}: SearchInputProps) {
+function SearchInput({ value, onFocus, onChange, children }: SearchInputProps) {
   return (
     <SearchInputUI.Container>
       <SearchInputUI.Item>
@@ -28,7 +23,7 @@ function SearchInput({
               id="searchInput"
               value={value}
               onFocus={onFocus}
-              onChange={handleShowSearchResult}
+              onChange={onChange}
               placeholder="주식 이름 혹은 티커 검색"
             />
           </div>

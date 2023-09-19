@@ -1,6 +1,6 @@
 import { PopularStocksUI } from './style';
 // import PopularStock from '@/components/PopularStock';
-import axios from 'axios';
+import APIInstance from '@/core/api/instance';
 import { useQuery } from '@tanstack/react-query';
 
 interface PopularStocks {
@@ -13,15 +13,11 @@ const useGetPopularStocks = () => {
   return useQuery({
     queryKey: ['popularStocks'],
     queryFn: () =>
-      axios.get<PopularStocks[]>(
+      APIInstance.get<PopularStocks[]>(
         'http://fire-env-1.eba-xhu334c9.ap-northeast-2.elasticbeanstalk.com/api/v1/popular-stock/list',
         {
           params: {
             size: 10,
-          },
-          headers: {
-            Authorization:
-              'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwidXNlcklkIjoyLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJleHAiOjE2OTQ3NDM0NTB9.FZxDu0a7T0XDZLISeXq0GXQvzvfzerZNd6HUjayf7oUagz1XbtKl7FkxhMGNIKY3PIoY4cmBpq03oKUunHjvNA',
           },
         },
       ),
