@@ -1,7 +1,7 @@
 import { ExchangeRateSymbolTable } from '@/@types/models/exchangeRate';
 import { useExchangeRateQuery } from '@/hook/useQueryHook/useExchangeRateQuery';
 
-const exchangeRateSymbol: ExchangeRateSymbolTable = {
+export const exchangeRateSymbol: ExchangeRateSymbolTable = {
   USD: '원',
   KRW: '$',
 };
