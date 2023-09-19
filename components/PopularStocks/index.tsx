@@ -13,14 +13,11 @@ const useGetPopularStocks = () => {
   return useQuery({
     queryKey: ['popularStocks'],
     queryFn: () =>
-      APIInstance.get<PopularStocks[]>(
-        'http://fire-env-1.eba-xhu334c9.ap-northeast-2.elasticbeanstalk.com/api/v1/popular-stock/list',
-        {
-          params: {
-            size: 10,
-          },
+      APIInstance.get<PopularStocks[]>('popular-stock/list', {
+        params: {
+          size: 10,
         },
-      ),
+      }),
     onError: (error) => console.log(error), // Toast로 확장 사용
     onSuccess: (response) => console.log(response), // Toast로 확장 사용
     // 포트폴리오 유무에 따라 다르게 처리하기 등도 가능

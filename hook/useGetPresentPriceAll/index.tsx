@@ -1,4 +1,4 @@
-import { selectedStocksAtom } from '../useAtom/state';
+import { selectedStocksAtom } from '../useGetSelectedStocks/state';
 import APIInstance from '@/core/api/instance';
 import { PresentPrice } from '@/components/FeedStockInfos';
 import { useQueries } from '@tanstack/react-query';
@@ -21,14 +21,11 @@ function useGetPresentPriceAll() {
   const queries = selectedStocksAssetIds.map((assetIds) => ({
     queryKey: ['presentPrice', assetIds], // 현재가가 캐싱될 queryKey
     queryFn: () =>
-      APIInstance.get<PresentPrice>(
-        'http://project-snow.kro.kr/api/v1/asset/price',
-        {
-          params: {
-            assetIds,
-          },
+      APIInstance.get<PresentPrice>('asset/price', {
+        params: {
+          assetIds,
         },
-      ),
+      }),
     enabled: !!start,
     // 현재가 받아오는 함수
   }));

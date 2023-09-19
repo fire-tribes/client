@@ -1,7 +1,7 @@
 import Backward from '@/components/Backward';
 import FeedStockInfos from '@/components/FeedStockInfos';
 import SearchLayout from '@/components/common/Layout/SearchLayout';
-import { selectedStocksAtom } from '@/hook/useAtom/state';
+import { selectedStocksAtom } from '@/hook/useGetSelectedStocks/state';
 import APIInstance from '@/core/api/instance';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
@@ -31,10 +31,7 @@ interface PostStocksAtPortfolio {
 const useMakePortfolio = () => {
   return useMutation({
     mutationKey: ['madePortfolio'],
-    mutationFn: () =>
-      APIInstance.post<MakePortfolio>(
-        'http://fire-env-1.eba-xhu334c9.ap-northeast-2.elasticbeanstalk.com/api/v1/portfolio',
-      ),
+    mutationFn: () => APIInstance.post<MakePortfolio>('portfolio'),
     onError: (error) => console.log(error), // Toast로 확장 사용
     onSuccess: (response) => console.log(response), // Toast로 확장 사용
     // 포트폴리오 유무에 따라 다르게 처리하기 등도 가능
@@ -46,7 +43,7 @@ const usePostStocksAtPortfolio = (PORTFOLIO_ID: number | undefined) => {
     mutationKey: ['postedStocksAtPortfolio'],
     mutationFn: () =>
       APIInstance.post<PostStocksAtPortfolio>(
-        `http://project-snow.kro.kr/api/v1/portfolio/${PORTFOLIO_ID}/asset`,
+        `portfolio/${PORTFOLIO_ID}/asset`,
       ),
     onError: (error) => console.log(error), // Toast로 확장 사용
     onSuccess: (response) => console.log(response), // Toast로 확장 사용

@@ -9,7 +9,7 @@ interface LayoutProps {
   isSearchActive?: boolean;
 }
 
-const Layout = ({
+const SearchLayout = ({
   children,
   isDisabled,
   buttonName,
@@ -43,4 +43,4 @@ const StyledContent = styled.section`
   padding: 16px 16px 56px 16px;
 `;
 
-export default Layout;
+export default SearchLayout;

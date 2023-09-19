@@ -2,7 +2,7 @@ import SearchResult from '../SearchResult';
 import {
   SelectedStocksAtomProps,
   selectedStocksAtom,
-} from '../../hook/useAtom/state';
+} from '../../hook/useGetSelectedStocks/state';
 import ShowAddedStocks from '../ShowAddedStocks';
 import APIInstance from '@/core/api/instance';
 import { useQuery } from '@tanstack/react-query';
@@ -36,7 +36,7 @@ const useGetSearchStocks = (word: string | undefined) => {
   return useQuery({
     queryKey: ['searchedStocks', word],
     queryFn: () =>
-      APIInstance.get<Stock>(`http://project-snow.kro.kr/api/v1/asset/find`, {
+      APIInstance.get<Stock>(`asset/find`, {
         params: {
           category: 'STOCK',
           word: word,
@@ -60,8 +60,6 @@ function SearchResults({ value }: SearchResultsProps) {
     isError,
   } = useGetSearchStocks(debouncedValue);
 
-  console.log('getSearchStocks?.data.data: ', getSearchStocks?.data.data);
-
   const containerStyle: React.CSSProperties = {
     height: 'calc(100vh - 72px - 53px - 68.5px)',
     padding: '16px',
@@ -72,7 +70,13 @@ function SearchResults({ value }: SearchResultsProps) {
   // Jotai의 selectedStocksAtom을 이용해서 선택된 주식을 관리
   const [selectedStocks, setSelectedStocks] = useAtom(selectedStocksAtom);
 
+  console.log('getSearchStocks?: ', getSearchStocks);
+  console.log('getSearchStocks?.data: ', getSearchStocks?.data);
   console.log('getSearchStocks?.data.data: ', getSearchStocks?.data.data);
+  console.log(
+    'getSearchStocks?.data.data.data: ',
+    getSearchStocks?.data.data.data,
+  );
   // 선택 상태를 토글하여 선택된 객체값 배열 핸들링
   const handleToggleSelected = (stock: SelectedStocksAtomProps) => {
     setSelectedStocks((prev: SelectedStocksAtomProps[]) => {
@@ -120,8 +124,8 @@ function SearchResults({ value }: SearchResultsProps) {
         <p>Error loading data</p>
       ) : (
         <div>
-          {getSearchStocks?.data.data.length !== 1 ? (
-            getSearchStocks?.data.data.map((stock) => {
+          {getSearchStocks?.data.data.data.length !== 1 ? (
+            getSearchStocks?.data.data.data.map((stock) => {
               return (
                 <SearchResult
                   key={stock.assetId}
