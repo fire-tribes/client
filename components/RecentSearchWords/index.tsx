@@ -27,14 +27,11 @@ const useGetRecentSearchWords = () => {
   return useQuery({
     queryKey: ['getRecentSearchWords'],
     queryFn: () =>
-      APIInstance.get<GetRecentSearchWords>(
-        `http://fire-env-1.eba-xhu334c9.ap-northeast-2.elasticbeanstalk.com/api/v1/user/recent-search-word/list`,
-        {
-          params: {
-            size: 10,
-          },
+      APIInstance.get<GetRecentSearchWords>(`user/recent-search-word/list`, {
+        params: {
+          size: 10,
         },
-      ),
+      }),
     onError: (error) => console.log('error: ', error),
     onSuccess: (response) => console.log('success: ', response),
   });
@@ -44,9 +41,7 @@ const useDeleteRecentSearchWords = () => {
   return useMutation({
     mutationKey: ['deleteRecentSearchWords'],
     mutationFn: () =>
-      APIInstance.post<DeleteRecentSearchWords>(
-        `http://fire-env-1.eba-xhu334c9.ap-northeast-2.elasticbeanstalk.com/api/v1/user/recent-search-word/clear-all`,
-      ),
+      APIInstance.post<DeleteRecentSearchWords>(`recent-search-word/clear-all`),
   });
 };
 
@@ -71,6 +66,7 @@ function RecentSearchWords() {
           title={'최근 검색어 삭제'}
           message={'최근 검색어를 모두 삭제하시겠어요?'}
           onClickEvent={() => mutate()}
+          toastMessage={'최근 검색어를 삭제하였습니다.'}
         >
           <button>전체 삭제</button>
         </AlertModal>

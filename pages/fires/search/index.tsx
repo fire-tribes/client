@@ -6,7 +6,7 @@ import CloseSvg from '@/public/icon/close.svg';
 import SearchLayout from '@/components/common/Layout/SearchLayout';
 // import FirstComp from '@/components/Test/firstComp';
 // import SecondComp from '@/components/Test/secondComp';
-import { selectedStocksAtom } from '@/hook/useAtom/state';
+import { selectedStocksAtom } from '@/hook/useGetSelectedStocks/state';
 import { useState } from 'react';
 import Image from 'next/image';
 import { useAtom } from 'jotai';

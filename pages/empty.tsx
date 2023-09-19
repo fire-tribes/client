@@ -52,9 +52,7 @@ const Item = styled.div`
     text-align: center;
   }
   >div: nth-child(2) {
-    font-family: Pretendard;
     font-size: 16px;
-    font-style: normal;
     font-weight: 700;
   }
   > div:last-child {
@@ -67,9 +65,7 @@ const Item = styled.div`
       background-color: ${basic.gray1};
 
       color: ${basic.point_blue02};
-      font-family: Pretendard;
       font-size: 17px;
-      font-style: normal;
       font-weight: 700;
       line-height: 26px;
 
