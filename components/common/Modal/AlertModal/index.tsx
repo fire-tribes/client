@@ -3,7 +3,7 @@ import Toast from '../../Toast';
 import Modal, { TModalProps } from '@/components/common/Modal';
 import useControlModal from '@/hook/useControlModal';
 import { basic } from '@/styles/palette';
-import type { PropsWithChildren } from 'react';
+import { useState, type PropsWithChildren, useEffect } from 'react';
 
 type PickTModalPropsType = Pick<TModalProps, 'layout' | 'position'>;
 interface AlertModalCSSProps {
@@ -31,6 +31,19 @@ function AlertModal({
   toastMessage,
 }: AlertModalProps) {
   const { isShow, openModal, closeModal } = useControlModal();
+  const [isShowToast, setIsShowToast] = useState(false);
+
+  const handleConfirmButton = () => {
+    if (onClickEvent !== undefined) onClickEvent();
+    setIsShowToast(true);
+    closeModal();
+  };
+
+  useEffect(() => {
+    if (isShowToast) {
+      setTimeout(() => setIsShowToast(false), 3000);
+    }
+  }, [isShowToast]);
 
   return (
     <>
@@ -50,13 +63,14 @@ function AlertModal({
                 취소
               </Modal.Button>
               <Modal.Button
-                onClick={onClickEvent}
+                onClick={() => handleConfirmButton()}
                 style={{
                   backgroundColor: `${basic.gray_blue}`,
                   color: `${basic.white}`,
+                  padding: 0,
                 }}
               >
-                <Toast toastMessage={toastMessage}>확인</Toast>
+                확인
               </Modal.Button>
             </>
           )}
@@ -66,6 +80,7 @@ function AlertModal({
         </Modal.Actions>
       </Modal>
       <span onClick={openModal}>{children}</span>
+      {isShowToast && <Toast toastMessage={toastMessage} />}
     </>
   );
 }
