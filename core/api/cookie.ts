@@ -4,7 +4,6 @@ export class Cookie {
   #cookie = new Cookies();
 
   get(name: string) {
-    console.log(this.#cookie.getAll());
     return this.#cookie.get(name);
   }
 

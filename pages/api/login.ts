@@ -58,12 +58,13 @@ export default async function handler(
   // 여기까지 왔다는거는 이메일이 있다는 것
   try {
     const defaultForm = {
-      email,
       password: '',
+      email,
     };
 
     const defaultSignUpForm = {
       userName: '',
+      oAuthChannelType: 'KAKAO' as const,
       ...defaultForm,
     };
 

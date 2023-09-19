@@ -31,6 +31,7 @@ export const sementic = {
     input_bg_gray: basic.gray2,
     font_gray: basic.gray5,
     font_section_title: basic.gray_blue,
+    ios_switch_background: basic.gray7,
   },
   dark: {
     bg_white: basic.white,
@@ -43,6 +44,7 @@ export const sementic = {
     input_bg_gray: basic.gray2,
     font_gray: basic.gray5,
     font_section_title: basic.gray_blue,
+    ios_switch_background: basic.gray7,
   },
 };
 
