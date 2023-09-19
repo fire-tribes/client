@@ -1,6 +1,6 @@
 import Backward from '@/components/Backward';
 import EditStocks from '@/components/EditStocks';
-import FeedStockInfo from '@/components/FeedStockInfo';
+// import FeedStockInfo from '@/components/FeedStockInfo';
 import CommonButton from '@/components/common/Button/CommonButton';
 
 function Edit() {
@@ -34,10 +34,10 @@ function Edit() {
             <Backward title={searchResults[0].name} />
           </section>
           <section>
-            <FeedStockInfo
-              stockName={searchResults[0].name}
+            {/* <FeedStockInfo
+              stockName={searchResults.name}
               stockTickerCode={searchResults[0].tickercode}
-            />
+            /> */}
           </section>
           <section>
             <CommonButton>수정 완료</CommonButton>

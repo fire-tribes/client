@@ -21,7 +21,7 @@ const Layout = ({
       {!isSearchActive ? (
         <div></div>
       ) : (
-        <BottomFixedButton isDisabled={isDisabled}>
+        <BottomFixedButton isDisabled={isDisabled} buttonName={buttonName}>
           {buttonName}
         </BottomFixedButton>
       )}

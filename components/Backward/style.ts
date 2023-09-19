@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 
-const Container = styled.div``;
+const Container = styled.div`
+  margin-bottom: 21px;
+`;
 
 const Item = styled.div``;
 

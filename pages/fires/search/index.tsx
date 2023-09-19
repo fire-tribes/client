@@ -6,28 +6,12 @@ import CloseSvg from '@/public/icon/close.svg';
 import SearchLayout from '@/components/common/Layout/SearchLayout';
 // import FirstComp from '@/components/Test/firstComp';
 // import SecondComp from '@/components/Test/secondComp';
+import { selectedStocksAtom } from '@/hook/useAtom/state';
 import { useState } from 'react';
 import Image from 'next/image';
+import { useAtom } from 'jotai';
 
 function Search() {
-  // 검색 결과 데이터
-  // const searchResults = [
-  //   { name: 'abca', tickercode: 'ABCA' },
-  //   { name: 'aaca', tickercode: 'AACA' },
-  //   { name: 'aaaa', tickercode: 'AAAA' },
-  //   { name: 'abbc', tickercode: 'ABBC' },
-  //   { name: 'abbb', tickercode: 'ABBB' },
-  //   { name: '가나다라', tickercode: '000001' },
-  //   { name: '가가다라', tickercode: '000011' },
-  //   { name: '가가가라', tickercode: '001122' },
-  //   { name: '가가가가', tickercode: '112233' },
-  //   { name: '가나나라', tickercode: '113344' },
-  // ];
-  // 최근 검색어 데이터
-  // const recentSearchWords = ['APPL', 'MSFT', 'JEPI'];
-
-  // const [pages, setPages] = useState('first');
-
   // 2-2에서 2-3으로 넘어가기
   const [value, setValue] = useState('');
   const [isSearchActive, setIsSearchActive] = useState(false);
@@ -47,13 +31,16 @@ function Search() {
   };
   const handleClickCancel = () => {
     setIsSearchActive(false);
+    // input창에 value값 초기화
+    setValue('');
   };
 
   // 결과값
-  const clickedStocks: string[] = [];
+  const [selectedStocks] = useAtom(selectedStocksAtom);
+
   return (
     <SearchLayout
-      isDisabled={clickedStocks.length !== 0 ? false : true}
+      isDisabled={selectedStocks.length !== 0 ? false : true}
       buttonName={'다음'}
       isSearchActive={isSearchActive}
     >
@@ -62,14 +49,12 @@ function Search() {
         <SearchInput
           value={value}
           onFocus={handleInputClick}
-          handleShowSearchResult={(e) => handleShowSearchResult(e)}
+          onChange={(e) => handleShowSearchResult(e)}
         >
           <button onClick={handleClickCancel} style={{ height: '52px' }}>
             <Image src={CloseSvg} width={24} height={24} alt="Close Icon" />
           </button>
         </SearchInput>
-        {/* <FirstComp />
-        <SecondComp /> */}
       </section>
       {!isSearchActive ? (
         <>

@@ -1,15 +1,15 @@
 // import RecentSearchWord from '../RecentSearchWord';
 import AlertModal from '../common/Modal/AlertModal';
+import APIInstance from '@/core/api/instance';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import styled from '@emotion/styled';
-import axios from 'axios';
 
 interface GetRecentSearchWords {
   success: true;
   data: [
     {
       word: string;
-      date: '2023-09-14T10:53:37.717Z';
+      date: string;
     },
   ];
   errorCode: string;
@@ -17,8 +17,8 @@ interface GetRecentSearchWords {
 }
 
 interface DeleteRecentSearchWords {
-  success: true;
-  data: true;
+  success: boolean;
+  data: boolean;
   errorCode: string;
   message: string;
 }
@@ -27,15 +27,11 @@ const useGetRecentSearchWords = () => {
   return useQuery({
     queryKey: ['getRecentSearchWords'],
     queryFn: () =>
-      axios.get<GetRecentSearchWords>(
+      APIInstance.get<GetRecentSearchWords>(
         `http://fire-env-1.eba-xhu334c9.ap-northeast-2.elasticbeanstalk.com/api/v1/user/recent-search-word/list`,
         {
           params: {
             size: 10,
-          },
-          headers: {
-            Authorization:
-              'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwidXNlcklkIjoyLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJleHAiOjE2OTQ3NDM0NTB9.FZxDu0a7T0XDZLISeXq0GXQvzvfzerZNd6HUjayf7oUagz1XbtKl7FkxhMGNIKY3PIoY4cmBpq03oKUunHjvNA',
           },
         },
       ),
@@ -48,14 +44,8 @@ const useDeleteRecentSearchWords = () => {
   return useMutation({
     mutationKey: ['deleteRecentSearchWords'],
     mutationFn: () =>
-      axios.post<DeleteRecentSearchWords>(
+      APIInstance.post<DeleteRecentSearchWords>(
         `http://fire-env-1.eba-xhu334c9.ap-northeast-2.elasticbeanstalk.com/api/v1/user/recent-search-word/clear-all`,
-        {
-          headers: {
-            Authorization:
-              'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwidXNlcklkIjoyLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJleHAiOjE2OTQ3NDM0NTB9.FZxDu0a7T0XDZLISeXq0GXQvzvfzerZNd6HUjayf7oUagz1XbtKl7FkxhMGNIKY3PIoY4cmBpq03oKUunHjvNA',
-          },
-        },
       ),
   });
 };
@@ -87,9 +77,9 @@ function RecentSearchWords() {
       </RecentSearchWordTitleContainer>
       <div>
         {/* {getRecentSearchWords.data !== undefined &&
-          (getRecentSearchWords.data.data.length !== 0 ? (
+          (getRecentSearchWords.data.data.length !== 1 ? (
             getRecentSearchWords.data.data.map((item, id) => {
-              return <RecentSearchWord key={id} recentSearchWord={item.word} />;
+              return <RecentSearchWord key={id} item={item} />;
             })
           ) : (
             <div>

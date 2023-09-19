@@ -5,10 +5,10 @@ import cancelDotSvg from '../../public/icon/closeDot.svg';
 import Image from 'next/image';
 
 interface RecentSearchWordProps {
-  recentSearchWord: string;
+  item: { word: string; date: string };
 }
 
-function RecentSearchWord({ recentSearchWord }: RecentSearchWordProps) {
+function RecentSearchWord({ item }: RecentSearchWordProps) {
   const handleAddRecentSearchWord = () => {
     // 검색창에 최근 검색어 추가하기
   };
@@ -21,10 +21,10 @@ function RecentSearchWord({ recentSearchWord }: RecentSearchWordProps) {
       <RecentSearchWordUI.Item>
         <RecentSearchWordUI.LeftContainer onClick={handleAddRecentSearchWord}>
           <Image src={searchSvg} width={18} height={18} alt="Search Icon" />
-          <button>{recentSearchWord}</button>
+          <button>{item.word}</button>
         </RecentSearchWordUI.LeftContainer>
         <RecentSearchWordUI.RightContainer>
-          <DateDisplay />
+          <DateDisplay dateString={item.date} />
           <Image
             src={cancelDotSvg}
             width={14}

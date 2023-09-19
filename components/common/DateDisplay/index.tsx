@@ -1,24 +1,19 @@
 import { DateDisplayUI } from './style';
 
-function DateDisplay() {
-  // 날짜 데이터
-  // const date = '2023-09-14T04:33:09.589Z';
-  const DateData = [
-    {
-      date: new Date().toLocaleString('ko-KR', {
-        month: 'long',
-        day: 'numeric',
-      }),
-    },
-  ];
+interface DateDisplayProps {
+  dateString: string;
+}
 
+function DateDisplay({ dateString }: DateDisplayProps) {
+  const date = new Date(dateString);
+
+  // 현재 날짜와 어제 날짜 생성
   const today = new Date();
   const yesterday = new Date(today);
-
-  // 어제 날짜 계산
   yesterday.setDate(today.getDate() - 1);
 
-  const todayDate = today.toLocaleString('ko-KR', {
+  // 날짜 포맷팅
+  const formattedDate = date.toLocaleString('ko-KR', {
     // year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -27,21 +22,17 @@ function DateDisplay() {
     // minute: 'numeric',
     // second: 'numeric',
   });
-  const yesterdayDate = yesterday.toLocaleString('ko-KR', {
-    month: 'long',
-    day: 'numeric',
-  });
 
-  return (
-    <DateDisplayUI.Container>
-      today
-      {DateData[0].date === todayDate
-        ? '오늘'
-        : DateData[0].date === yesterdayDate
-        ? '어제'
-        : DateData[0].date}
-    </DateDisplayUI.Container>
-  );
+  // 오늘, 어제 또는 실제 날짜를 결정
+  let displayDate = '';
+  if (date.toDateString() === today.toDateString()) {
+    displayDate = '오늘';
+  } else if (date.toDateString() === yesterday.toDateString()) {
+    displayDate = '어제';
+  } else {
+    displayDate = formattedDate;
+  }
+  return <DateDisplayUI.Container>{displayDate}</DateDisplayUI.Container>;
 }
 
 export default DateDisplay;

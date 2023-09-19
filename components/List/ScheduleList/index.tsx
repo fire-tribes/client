@@ -1,5 +1,4 @@
 import CommonFont from '@/components/Font';
-
 import {
   Box,
   List,
