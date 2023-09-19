@@ -4,7 +4,6 @@ import axios from 'axios';
 import type { AxiosRequestConfig } from 'axios';
 
 const AUTHORIZATION = 'Authorization';
-const SECRET_KEY = 'Secret-key';
 
 const createAPIInstance = (config: AxiosRequestConfig) => {
   const instance = axios.create({
@@ -22,7 +21,7 @@ const AuthAPIInstance = createAPIInstance({
   baseURL: process.env.NEXT_PUBLIC_SERVER_URL + '/api/v1/user/',
   withCredentials: true,
   headers: {
-    [SECRET_KEY]: process.env.SECRET_KEY as string,
+    [AUTHORIZATION]: process.env.SECRET_KEY as string,
   },
 });
 

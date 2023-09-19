@@ -1,4 +1,6 @@
-import CommonButton from '@/components/common/Button/CommonButton';
+import CommonButton, {
+  CommonButtonProps,
+} from '@/components/common/Button/CommonButton';
 import { fontSize } from '@/styles/typography';
 import styled from '@emotion/styled';
 import { css, keyframes } from '@emotion/react';
@@ -52,7 +54,7 @@ const Container = styled.div<{
   layout: 'fill' | 'initial';
   position: 'center' | 'bottom';
 }>`
-  padding: 24px 24px 24px 24px;
+  padding: 24px 16px;
 
   background-color: white;
   overflow: hidden;
@@ -111,14 +113,16 @@ const Content = styled.article<{ textAlign?: CSSProperties['textAlign'] }>`
 const Actions = styled.div`
   display: flex;
   gap: 10px;
-
-  /* padding: 0px 24px 24px 24px; */
 `;
 
-const Button = styled(CommonButton)`
-  flex-grow: 1;
-  height: 44px;
-`;
+const Button = styled((props: CommonButtonProps) => (
+  <CommonButton {...props} />
+))(
+  () => css`
+    line-height: 21px;
+    flex-grow: 1;
+  `,
+);
 
 export const ModalUI = {
   Dimmed,

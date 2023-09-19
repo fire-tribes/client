@@ -205,8 +205,10 @@ const DetailListItem = styled(ListItem)`
   padding: 0;
 `;
 
-const DetailListItemText = styled(ListItemText)<{
+type DetailListItemTextProps = {
   textAlign: 'left' | 'right';
-}>`
+};
+
+const DetailListItemText = styled(ListItemText)<DetailListItemTextProps>`
   text-align: ${({ textAlign }) => textAlign};
 `;
