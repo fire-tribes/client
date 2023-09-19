@@ -4,8 +4,8 @@ import { SelectedStocksAtomProps } from '@/hook/useAtom/state';
 import testCircleSvg from '@/public/icon/testCircle.svg';
 import trashSvg from '@/public/icon/trash.svg';
 import { basic } from '@/styles/palette';
+import APIInstance from '@/core/api/instance';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 
@@ -36,15 +36,14 @@ const useGetPresentPrice = (assetIds: number) => {
   return useQuery({
     queryKey: ['presentPrice', assetIds],
     queryFn: () =>
-      axios.get<PresentPrice>('http://project-snow.kro.kr/api/v1/asset/price', {
-        params: {
-          assetIds: assetIds,
+      APIInstance.get<PresentPrice>(
+        'http://project-snow.kro.kr/api/v1/asset/price',
+        {
+          params: {
+            assetIds: assetIds,
+          },
         },
-        headers: {
-          Authorization:
-            'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJna3N3bjQ1QG5hdmVyLmNvbSIsInVzZXJJZCI6MiwiZW1haWwiOiJna3N3bjQ1QG5hdmVyLmNvbSIsImV4cCI6MTY5NTEzMTIwOH0._acTIC5hMaZXs1oYiWOYAJBxhllXMndkrE_0lgNVHPaCKoaxIXQ-TB1kpGu3vE9B_EK085bfANhZ69YiLFELqA',
-        },
-      }),
+      ),
     onError: (error) => console.log(error), // Toast로 확장 사용
     onSuccess: (response) => console.log(response), // Toast로 확장 사용
     // 포트폴리오 유무에 따라 다르게 처리하기 등도 가능

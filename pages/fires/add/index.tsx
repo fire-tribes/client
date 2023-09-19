@@ -2,9 +2,9 @@ import Backward from '@/components/Backward';
 import FeedStockInfos from '@/components/FeedStockInfos';
 import SearchLayout from '@/components/common/Layout/SearchLayout';
 import { selectedStocksAtom } from '@/hook/useAtom/state';
+import APIInstance from '@/core/api/instance';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
-import axios from 'axios';
 import { useAtom } from 'jotai';
 
 interface MakePortfolio {
@@ -32,14 +32,8 @@ const useMakePortfolio = () => {
   return useMutation({
     mutationKey: ['madePortfolio'],
     mutationFn: () =>
-      axios.post<MakePortfolio>(
+      APIInstance.post<MakePortfolio>(
         'http://fire-env-1.eba-xhu334c9.ap-northeast-2.elasticbeanstalk.com/api/v1/portfolio',
-        {
-          headers: {
-            Authorization:
-              'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJna3N3bjQ1QG5hdmVyLmNvbSIsInVzZXJJZCI6MywiZW1haWwiOiJna3N3bjQ1QG5hdmVyLmNvbSIsImV4cCI6MTY5NDkxNTg1OX0.ZxcJH5xTGCTynDgOEcLPCfSOu8hRL-8vWeMYEPa9ksvVRU3ck_3aYvifka3XRT8EmzH98DMixfS2QxKhcsii4g',
-          },
-        },
       ),
     onError: (error) => console.log(error), // Toast로 확장 사용
     onSuccess: (response) => console.log(response), // Toast로 확장 사용
@@ -51,14 +45,8 @@ const usePostStocksAtPortfolio = (PORTFOLIO_ID: number | undefined) => {
   return useMutation({
     mutationKey: ['postedStocksAtPortfolio'],
     mutationFn: () =>
-      axios.post<PostStocksAtPortfolio>(
+      APIInstance.post<PostStocksAtPortfolio>(
         `http://project-snow.kro.kr/api/v1/portfolio/${PORTFOLIO_ID}/asset`,
-        {
-          headers: {
-            Authorization:
-              'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJna3N3bjQ1QG5hdmVyLmNvbSIsInVzZXJJZCI6MywiZW1haWwiOiJna3N3bjQ1QG5hdmVyLmNvbSIsImV4cCI6MTY5NDkxNTg1OX0.ZxcJH5xTGCTynDgOEcLPCfSOu8hRL-8vWeMYEPa9ksvVRU3ck_3aYvifka3XRT8EmzH98DMixfS2QxKhcsii4g',
-          },
-        },
       ),
     onError: (error) => console.log(error), // Toast로 확장 사용
     onSuccess: (response) => console.log(response), // Toast로 확장 사용

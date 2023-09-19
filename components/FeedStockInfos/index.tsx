@@ -8,8 +8,8 @@ import {
 } from '@/hook/useAtom/state';
 import CheckSvg from '@/public/icon/check.svg';
 import { basic } from '@/styles/palette';
+import APIInstance from '@/core/api/instance';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import { useAtom } from 'jotai';
 import Image from 'next/image';
 
@@ -34,15 +34,14 @@ const useGetPresentPrice = (assetIds: number) => {
   return useQuery({
     queryKey: ['presentPrice', assetIds],
     queryFn: () =>
-      axios.get<PresentPrice>('http://project-snow.kro.kr/api/v1/asset/price', {
-        params: {
-          assetIds: assetIds,
+      APIInstance.get<PresentPrice>(
+        'http://project-snow.kro.kr/api/v1/asset/price',
+        {
+          params: {
+            assetIds: assetIds,
+          },
         },
-        headers: {
-          Authorization:
-            'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJna3N3bjQ1QG5hdmVyLmNvbSIsInVzZXJJZCI6MiwiZW1haWwiOiJna3N3bjQ1QG5hdmVyLmNvbSIsImV4cCI6MTY5NTEzMTIwOH0._acTIC5hMaZXs1oYiWOYAJBxhllXMndkrE_0lgNVHPaCKoaxIXQ-TB1kpGu3vE9B_EK085bfANhZ69YiLFELqA',
-        },
-      }),
+      ),
     onError: (error) => console.log(error), // Toast로 확장 사용
     onSuccess: (response) => console.log(response), // Toast로 확장 사용
     // 포트폴리오 유무에 따라 다르게 처리하기 등도 가능

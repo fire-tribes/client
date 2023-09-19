@@ -4,8 +4,8 @@ import {
   selectedStocksAtom,
 } from '../../hook/useAtom/state';
 import ShowAddedStocks from '../ShowAddedStocks';
+import APIInstance from '@/core/api/instance';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import { useAtom } from 'jotai';
 import { useDebounce } from 'use-debounce';
 
@@ -36,16 +36,12 @@ const useGetSearchStocks = (word: string | undefined) => {
   return useQuery({
     queryKey: ['searchedStocks', word],
     queryFn: () =>
-      axios.get<Stock>(`http://project-snow.kro.kr/api/v1/asset/find`, {
+      APIInstance.get<Stock>(`http://project-snow.kro.kr/api/v1/asset/find`, {
         params: {
           category: 'STOCK',
           word: word,
           pageIndex: 1,
           pageSize: 10,
-        },
-        headers: {
-          Authorization:
-            'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJna3N3bjQ1QG5hdmVyLmNvbSIsInVzZXJJZCI6MiwiZW1haWwiOiJna3N3bjQ1QG5hdmVyLmNvbSIsImV4cCI6MTY5NTEzMTIwOH0._acTIC5hMaZXs1oYiWOYAJBxhllXMndkrE_0lgNVHPaCKoaxIXQ-TB1kpGu3vE9B_EK085bfANhZ69YiLFELqA',
         },
       }),
     onError: (error) => console.log(error), // Toast로 확장 사용
@@ -81,18 +77,21 @@ function SearchResults({ value }: SearchResultsProps) {
   const handleToggleSelected = (stock: SelectedStocksAtomProps) => {
     setSelectedStocks((prev: SelectedStocksAtomProps[]) => {
       // 이미 선택된 주식인지 아닌지 확인하고, 선택 상태 토글
-      if (
-        prev.some(
-          (selected: SelectedStocksAtomProps) =>
-            selected.stockCode === stock.stockCode,
-        )
-      ) {
-        return prev.filter(
+      const isNewSelectedStocks = prev.some(
+        (selected: SelectedStocksAtomProps) =>
+          selected.stockCode === stock.stockCode,
+      );
+      if (isNewSelectedStocks) {
+        const notMatchedStocks = prev.filter(
           (selected: SelectedStocksAtomProps) =>
             selected.stockCode !== stock.stockCode,
         );
+
+        return notMatchedStocks;
       } else {
-        return [...prev, stock];
+        const newAddedSelectedStocks = [...prev, stock];
+
+        return newAddedSelectedStocks;
       }
     });
   };

@@ -28,6 +28,8 @@ const InputContainer = styled.div`
   div:first-child {
     width: 24px;
     height: 24px;
+
+    margin-right: 5px;
   }
   div:last-child {
     flex: 1;
@@ -41,7 +43,7 @@ const Input = styled.input`
   background-color: ${basic.gray1};
   border: none;
 
-  font-size: ${fontSize.caption};
+  font-size: ${fontSize.body1};
 `;
 
 export const SearchInputUI = {

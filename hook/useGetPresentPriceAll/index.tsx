@@ -1,7 +1,7 @@
 import { selectedStocksAtom } from '../useAtom/state';
+import APIInstance from '@/core/api/instance';
 import { PresentPrice } from '@/components/FeedStockInfos';
 import { useQueries } from '@tanstack/react-query';
-import axios from 'axios';
 import { useAtom } from 'jotai';
 import { useState } from 'react';
 
@@ -21,15 +21,14 @@ function useGetPresentPriceAll() {
   const queries = selectedStocksAssetIds.map((assetIds) => ({
     queryKey: ['presentPrice', assetIds], // 현재가가 캐싱될 queryKey
     queryFn: () =>
-      axios.get<PresentPrice>('http://project-snow.kro.kr/api/v1/asset/price', {
-        params: {
-          assetIds,
+      APIInstance.get<PresentPrice>(
+        'http://project-snow.kro.kr/api/v1/asset/price',
+        {
+          params: {
+            assetIds,
+          },
         },
-        headers: {
-          Authorization:
-            'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJna3N3bjQ1QG5hdmVyLmNvbSIsInVzZXJJZCI6MiwiZW1haWwiOiJna3N3bjQ1QG5hdmVyLmNvbSIsImV4cCI6MTY5NTEzMTIwOH0._acTIC5hMaZXs1oYiWOYAJBxhllXMndkrE_0lgNVHPaCKoaxIXQ-TB1kpGu3vE9B_EK085bfANhZ69YiLFELqA',
-        },
-      }),
+      ),
     enabled: !!start,
     // 현재가 받아오는 함수
   }));

@@ -1,13 +1,11 @@
 import { ShowAddedStockUI } from './style';
+import { SelectedStocksAtomProps } from '@/hook/useAtom/state';
 import removeStockSvg from '@/public/icon/remove_stock.svg';
 import Image from 'next/image';
 
 interface ShowAddedStockProps {
-  stock: {
-    name: string;
-    tickerCode: string;
-  };
-  removeSelected: (stock: { name: string; tickerCode: string }) => void;
+  stock: SelectedStocksAtomProps;
+  removeSelected: (stock: SelectedStocksAtomProps) => void;
 }
 
 function ShowAddedStock({ stock, removeSelected }: ShowAddedStockProps) {
