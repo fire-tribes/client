@@ -73,10 +73,10 @@ function SearchResults({ value }: SearchResultsProps) {
   console.log('getSearchStocks?: ', getSearchStocks);
   console.log('getSearchStocks?.data: ', getSearchStocks?.data);
   console.log('getSearchStocks?.data.data: ', getSearchStocks?.data.data);
-  console.log(
-    'getSearchStocks?.data.data.data: ',
-    getSearchStocks?.data.data.data,
-  );
+  // console.log(
+  //   'getSearchStocks?.data.data.data: ',
+  //   getSearchStocks?.data.data.data,
+  // );
   // 선택 상태를 토글하여 선택된 객체값 배열 핸들링
   const handleToggleSelected = (stock: SelectedStocksAtomProps) => {
     setSelectedStocks((prev: SelectedStocksAtomProps[]) => {
@@ -124,8 +124,8 @@ function SearchResults({ value }: SearchResultsProps) {
         <p>Error loading data</p>
       ) : (
         <div>
-          {getSearchStocks?.data.data.data.length !== 1 ? (
-            getSearchStocks?.data.data.data.map((stock) => {
+          {getSearchStocks?.data.data.length !== 1 ? (
+            getSearchStocks?.data.data.map((stock) => {
               return (
                 <SearchResult
                   key={stock.assetId}

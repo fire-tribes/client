@@ -1,6 +1,6 @@
 import { ShowAddedStocksUI } from './style';
 import ShowAddedStock from '../ShowAddedStock';
-import { SelectedStocksAtomProps } from '@/hook/useAtom/state';
+import { SelectedStocksAtomProps } from '@/hook/useGetSelectedStocks/state';
 
 interface ShowAddedStocksProps {
   selectedStocks: SelectedStocksAtomProps[];

@@ -2,7 +2,7 @@ import { SearchResultUI } from './style';
 import testCircleSvg from '@/public/icon/testCircle.svg';
 import checkFalseSvg from '@/public/icon/checkFalse.svg';
 import checkTrueSvg from '@/public/icon/checkTrue.svg';
-import { SelectedStocksAtomProps } from '@/hook/useAtom/state';
+import { SelectedStocksAtomProps } from '@/hook/useGetSelectedStocks/state';
 import Image from 'next/image';
 
 interface SearchResultProps {

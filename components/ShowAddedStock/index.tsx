@@ -1,5 +1,5 @@
 import { ShowAddedStockUI } from './style';
-import { SelectedStocksAtomProps } from '@/hook/useAtom/state';
+import { SelectedStocksAtomProps } from '@/hook/useGetSelectedStocks/state';
 import removeStockSvg from '@/public/icon/remove_stock.svg';
 import Image from 'next/image';
 
