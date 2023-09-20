@@ -1,10 +1,10 @@
 import APIInstance from '@/core/api/instance';
-import type { YearDividendModel } from '@/@types/models/dividend';
+import type { AnnualDividendModel } from '@/@types/models/dividend';
 import type { ResponseSuccess } from '@/@types/models/response';
 
 export const dividendAPI = {
   getAnnualDividend: () => {
-    return APIInstance.get<ResponseSuccess<YearDividendModel>>(
+    return APIInstance.get<ResponseSuccess<AnnualDividendModel>>(
       'dividend/annual',
     );
   },
