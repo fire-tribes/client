@@ -1,4 +1,4 @@
-import BadgeGroup from '@/components/BdageTest';
+import BadgeGroup from '@/components/dividend/BadgeGroup';
 import { MyStockList } from '@/components/List/MyStockList';
 import Section from '@/components/Section';
 import FlexBox from '@/components/common/FlexBox';

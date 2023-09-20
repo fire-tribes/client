@@ -1,5 +1,5 @@
-import CommonFont from '@/components/Font';
-import { StyledNotifyMessageSection } from '@/components/PortFolioSections/NotifyMessageSection/styles';
+import CommonFont from '@/components/common/Font';
+import { StyledNotifyMessageSection } from '@/components/portfolio/portfolioSections/NotifyMessageSection/styles';
 
 const NOTIFY_MESSAGE =
   '현재 스노우볼에서 제공하는 배당 금액은 환율, 세법, 주식 시장 가격 변동으로 인해 일부 차이가 있을 수 있습니다.\n';
