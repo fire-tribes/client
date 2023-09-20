@@ -1,4 +1,4 @@
-import Backward from '@/components/Backward';
+import Backward from '@/components/common/Backward';
 // import FeedStockInfo from '@/components/FeedStockInfo';
 import SearchLayout from '@/components/common/Layout/SearchLayout';
 // import { assetDetailsAtomProps } from '@/hook/useGetAssetDetails/state';

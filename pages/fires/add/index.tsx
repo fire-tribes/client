@@ -2,10 +2,10 @@ import FeedStockInfos from '@/components/FeedStockInfos';
 import SearchLayout from '@/components/common/Layout/SearchLayout';
 import { selectedStocksAtom } from '@/hook/useGetSelectedStocks/state';
 import APIInstance from '@/core/api/instance';
+import Backward from '@/components/common/Backward';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useAtom } from 'jotai';
-import Backward from '@/components/Backward';
 
 interface MakePortfolio {
   success: true;

@@ -1,4 +1,4 @@
-import Backward from '@/components/Backward';
+import Backward from '@/components/common/Backward';
 // import EditStocks from '@/components/EditStocks';
 import NothingStocks from '@/components/NothingStocks';
 import SearchLayout from '@/components/common/Layout/SearchLayout';
