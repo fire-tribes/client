@@ -6,6 +6,12 @@ const Item = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  padding: 16px 0;
+
+  > div:first-child {
+    flex: 1;
+  }
 `;
 
 const StockContainer = styled.div`
@@ -14,6 +20,18 @@ const StockContainer = styled.div`
 
   div:last-child {
     margin: 10px;
+    > p {
+      ${({ theme }) => `
+        font-size: ${theme.font.size.body2};
+      `}
+    }
+    > a {
+      ${({ theme }) => `
+        font-size: ${theme.font.size.caption};
+        color: ${theme.palette.basic.point_blue01};
+      `}
+      font-weight: 500;
+    }
   }
 `;
 
