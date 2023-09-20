@@ -1,4 +1,4 @@
-import { KakaoLoginButton } from '@/components/oauth/KakaoLoginButton';
+import { KakaoLoginButton } from '@/components/Oauth/KakaoLoginButton';
 import Layout from '@/components/common/Layout';
 import CommonCenter from '@/components/common/Center';
 import Image from 'next/image';

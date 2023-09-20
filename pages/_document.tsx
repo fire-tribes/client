@@ -1,4 +1,4 @@
-import { KakaoSDK } from '@/components/oauth/KakaoSDK';
+import { KakaoSDK } from '@/components/Oauth/KakaoSDK';
 import { Html, Head, Main, NextScript } from 'next/document';
 
 export default function Document() {
