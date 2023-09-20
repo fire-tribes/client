@@ -14,21 +14,14 @@ export const useExchageRate = () => {
   const currencyType = data?.currencyType;
 
   const symbol = currencyType ? exchangeRateSymbol[currencyType] : undefined;
-  const exchangeRate = undefined;
 
-  if (rate && currencyType && symbol) {
-    const exchangeRate = `${rate}${symbol}`;
-
-    return {
-      query,
-      data,
-      exchangeRate,
-    };
-  }
+  const exchangeRate = rate;
+  const exchangeRateText = `${rate}${symbol}`;
 
   return {
     query,
     data,
     exchangeRate,
+    exchangeRateText,
   };
 };

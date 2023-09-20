@@ -6,10 +6,5 @@ export const useMyPortFolioQuery = (portfolioId?: number) => {
   return useQuery(
     queryKeys.myPortFolio(portfolioId),
     portFolioAPI.getMyPortFolio,
-    {
-      onSuccess: (response) => {
-        return response;
-      },
-    },
   );
 };

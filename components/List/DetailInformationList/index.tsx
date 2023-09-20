@@ -3,20 +3,57 @@ import FlexBox from '@/components/common/FlexBox';
 import NotifyListModal from '@/components/common/Modal/NotifyListModal';
 import CommonIcon from '@/components/common/Icon';
 import { S } from '@/components/List/DetailInformationList/styles';
-import CommonFont from '@/components/Font';
+import CommonFont from '@/components/common/Font';
 import { useAnnualDividend } from '@/hook/useAnnualDividend';
+import { useExchageRate } from '@/hook/useExchageRate';
+import { transferPrice } from '@/core/utils/transferPrice';
 import { ListItem, ListItemButton } from '@mui/material';
 import type { BadgeDetailText, DetailInformationKeys } from '@/mocks';
 
 export default function DetailInformationList() {
   // useHooks get data
   const { annualDividendData } = useAnnualDividend();
+  const { exchangeRate } = useExchageRate();
+
+  transferPrice({
+    exchangeRate,
+    currentPrice: annualDividendData?.annualDividend,
+    outputSymbol: 'KRW',
+  });
+
+  transferPrice({
+    exchangeRate,
+    currentPrice: annualDividendData?.paidTax,
+    outputSymbol: 'KRW',
+  });
+
+  transferPrice({
+    exchangeRate,
+    currentPrice: annualDividendData?.unPaidTax,
+    outputSymbol: 'KRW',
+  });
 
   const detailInformationData = {
-    annualDividend: annualDividendData?.annualDividend,
-    dividendPriceRatio: annualDividendData?.dividendPriceRatio,
-    unPaidTax: annualDividendData?.unPaidTax,
-    paidTax: annualDividendData?.paidTax,
+    annualDividend: `${transferPrice({
+      exchangeRate,
+      currentPrice: annualDividendData?.annualDividend,
+      outputSymbol: 'KRW',
+      defaultText: '0원',
+    })}`,
+    dividendPriceRatio: annualDividendData?.dividendPriceRatio || '0%',
+    paidTax: `${transferPrice({
+      exchangeRate,
+      currentPrice: annualDividendData?.paidTax,
+      outputSymbol: 'KRW',
+      defaultText: '없음',
+    })}`,
+    unPaidTax: `${transferPrice({
+      exchangeRate,
+      currentPrice: annualDividendData?.unPaidTax,
+      outputSymbol: 'KRW',
+      optionText: ' 예상',
+      defaultText: '없음',
+    })}`,
   };
 
   const texts = Object.entries(badangDetailText) as [
@@ -63,10 +100,7 @@ export default function DetailInformationList() {
                         fontSize="body1"
                         fontWeight="bold"
                       >
-                        {detailInformationData[key] &&
-                        detailInformationData[key] !== 'NaN'
-                          ? detailInformationData[key]
-                          : value.defaultValue}
+                        {detailInformationData[key]}
                       </CommonFont>
                     </S.Content>
                   </FlexBox>
@@ -102,9 +136,7 @@ export default function DetailInformationList() {
                   fontSize="body1"
                   fontWeight="bold"
                 >
-                  {detailInformationData[key]
-                    ? detailInformationData[key]
-                    : value.defaultValue}
+                  {detailInformationData[key]}
                 </CommonFont>
               </S.Content>
             </FlexBox>
