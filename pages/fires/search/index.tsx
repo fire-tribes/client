@@ -2,59 +2,73 @@ import PopluarStocks from '@/components/PopularStocks';
 import RecentSearchWords from '@/components/RecentSearchWords';
 import SearchInput from '@/components/SearchInput';
 import SearchResults from '@/components/SearchResults';
-import CloseSvg from '@/public/icon/close.svg';
 import SearchLayout from '@/components/common/Layout/SearchLayout';
-// import FirstComp from '@/components/Test/firstComp';
-// import SecondComp from '@/components/Test/secondComp';
 import { selectedStocksAtom } from '@/hook/useGetSelectedStocks/state';
+import BiggerCloseSvg from '@/public/icon/biggerClose.svg';
+import SmallerCloseSvg from '@/public/icon/smallerClose.svg';
 import { useState } from 'react';
 import Image from 'next/image';
 import { useAtom } from 'jotai';
+import Link from 'next/link';
 
 function Search() {
-  // 2-2에서 2-3으로 넘어가기
   const [value, setValue] = useState('');
   const [isSearchActive, setIsSearchActive] = useState(false);
-  // const [isBottomButton, setIsBottomButton] = useState('');
 
+  /** Input창에 Value가 생기면, SearchResult 화면으로 변경하는 함수 */
   const handleShowSearchResult = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
+  /** Input창을 클릭하는 함수 */
   const handleInputClick = () => {
     const searchInput = document.getElementById(
       'searchInput',
     ) as HTMLInputElement;
     searchInput.focus();
-
-    // 검색창이 활성화되면 검색 활성 상태를 true로 변경
     setIsSearchActive(true);
   };
-  const handleClickCancel = () => {
+  /** Input 태그가 활성화되면 작은 취소 버튼이 생김 */
+  const handlButtonHidden: React.CSSProperties = {
+    display: isSearchActive ? 'inline' : 'none',
+  };
+  /** 작은 취소 버튼을 눌렀을 때, Input의 검색어 초기화 함수 */
+  const handleClickSmallerCancelButton = () => {
     setIsSearchActive(false);
-    // input창에 value값 초기화
     setValue('');
   };
 
-  // 결과값
   const [selectedStocks] = useAtom(selectedStocksAtom);
 
   return (
     <SearchLayout
+      hasButton={isSearchActive}
       isDisabled={selectedStocks.length !== 0 ? false : true}
       buttonName={'다음'}
-      isSearchActive={isSearchActive}
     >
-      {/* 2-2 주식 검색 시작/최근 검색어 보기, 2-3 주식 추가하기 */}
       <section>
         <SearchInput
           value={value}
           onFocus={handleInputClick}
           onChange={(e) => handleShowSearchResult(e)}
-        >
-          <button onClick={handleClickCancel} style={{ height: '52px' }}>
-            <Image src={CloseSvg} width={24} height={24} alt="Close Icon" />
-          </button>
-        </SearchInput>
+          smallerCancelButton={
+            <button
+              onClick={handleClickSmallerCancelButton}
+              style={handlButtonHidden}
+            >
+              <Image src={SmallerCloseSvg} alt="smalelrClose Svg" />
+            </button>
+          }
+          biggerCancelButton={
+            <Link href={'main/empty'} style={{ height: '52px' }}>
+              <Image
+                src={BiggerCloseSvg}
+                width={24}
+                height={24}
+                alt="Close Icon"
+              />
+            </Link>
+          }
+        />
       </section>
       {!isSearchActive ? (
         <>

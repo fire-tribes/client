@@ -18,30 +18,13 @@ const useGetPopularStocks = () => {
           size: 10,
         },
       }),
-    onError: (error) => console.log(error), // Toast로 확장 사용
-    onSuccess: (response) => console.log(response), // Toast로 확장 사용
-    // 포트폴리오 유무에 따라 다르게 처리하기 등도 가능
+    onError: (error) => console.log(error), // TODO: 404 에러 페이지로 이동
+    onSuccess: (response) => console.log(response), // TODO: Toast로 확장 사용
   });
 };
 
 function PopularStocks() {
   const getPopularStocks = useGetPopularStocks();
-  // data
-  // 인기 주식 데이터
-  // const popularStocks = [
-  //   { name: 'JEPI', fluctuation: true },
-  //   { name: 'SCHD', fluctuation: false },
-  //   { name: 'AAPL', fluctuation: true },
-  //   { name: 'AAPL', fluctuation: true },
-  //   { name: 'AAPL', fluctuation: true },
-  //   { name: 'AAPL', fluctuation: true },
-  //   { name: 'AAPL', fluctuation: true },
-  //   { name: 'AAPL', fluctuation: true },
-  //   { name: 'AAPL', fluctuation: true },
-  //   { name: 'AAPL', fluctuation: true },
-  //   { name: 'AAPL', fluctuation: true },
-  //   { name: 'AAPL', fluctuation: true },
-  // ];
 
   console.log('getPopularStocks.data?: ', getPopularStocks.data);
   console.log('getPopularStocks.data?.data: ', getPopularStocks.data?.data);

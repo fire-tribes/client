@@ -1,8 +1,8 @@
 // import RecentSearchWord from '../RecentSearchWord';
+import { RecentSearchWordsUI } from './style';
 import AlertModal from '../common/Modal/AlertModal';
 import APIInstance from '@/core/api/instance';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import styled from '@emotion/styled';
 
 interface GetRecentSearchWords {
   success: true;
@@ -32,8 +32,8 @@ const useGetRecentSearchWords = () => {
           size: 10,
         },
       }),
-    onError: (error) => console.log('error: ', error),
-    onSuccess: (response) => console.log('success: ', response),
+    onError: (error) => console.log('error: ', error), // TODO: 404 에러 페이지로 이동
+    onSuccess: (response) => console.log('success: ', response), // TODO: Toast로 확장 사용
   });
 };
 
@@ -46,7 +46,6 @@ const useDeleteRecentSearchWords = () => {
 };
 
 function RecentSearchWords() {
-  // 서버로부터 최근 검색어 GET
   const getRecentSearchWords = useGetRecentSearchWords();
   console.log(
     'getRecentSearchWords.data?.data:',
@@ -54,13 +53,10 @@ function RecentSearchWords() {
   );
 
   const { mutate } = useDeleteRecentSearchWords();
-  // 서버에게 모든 최근 검색어 DELETE
-
-  // 서버에게 개별 최근 검색어 DELETE
 
   return (
     <>
-      <RecentSearchWordTitleContainer>
+      <RecentSearchWordsUI.TopContainer>
         <h6>최근 검색</h6>
         <AlertModal
           title={'최근 검색어 삭제'}
@@ -70,7 +66,7 @@ function RecentSearchWords() {
         >
           <button>전체 삭제</button>
         </AlertModal>
-      </RecentSearchWordTitleContainer>
+      </RecentSearchWordsUI.TopContainer>
       <div>
         {/* {getRecentSearchWords.data !== undefined &&
           (getRecentSearchWords.data.data.length !== 1 ? (
@@ -90,13 +86,5 @@ function RecentSearchWords() {
     </>
   );
 }
-
-const RecentSearchWordTitleContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  white-space: nowrap;
-`;
 
 export default RecentSearchWords;

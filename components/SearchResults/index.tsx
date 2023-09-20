@@ -10,6 +10,7 @@ import { useAtom } from 'jotai';
 import { useDebounce } from 'use-debounce';
 
 interface SearchResultsProps {
+  /** 입력한 검색어 */
   value: string | undefined;
 }
 
@@ -44,15 +45,13 @@ const useGetSearchStocks = (word: string | undefined) => {
           pageSize: 10,
         },
       }),
-    onError: (error) => console.log(error), // Toast로 확장 사용
-    onSuccess: (response) => console.log(response), // Toast로 확장 사용
-    // 포트폴리오 유무에 따라 다르게 처리하기 등도 가능
-    // post, delete는 useMutation
+    onError: (error) => console.log(error), // TODO: Toast로 확장 사용
+    onSuccess: (response) => console.log(response), // TODO: Toast로 확장 사용
   });
 };
 
 function SearchResults({ value }: SearchResultsProps) {
-  // value를 debounce 처리하여, 일정 시간동안 값이 바뀌면 서버에 get 요청
+  /** value를 debounce 처리하여, 일정 시간동안 값이 바뀌면 서버에 get 요청 */
   const [debouncedValue] = useDebounce(value, 1000);
   const {
     data: getSearchStocks,
@@ -67,7 +66,7 @@ function SearchResults({ value }: SearchResultsProps) {
     lineHeight: 'calc(100vh - 72px - 53px - 68.5px)',
   };
 
-  // Jotai의 selectedStocksAtom을 이용해서 선택된 주식을 관리
+  /** Jotai의 selectedStocksAtom을 이용해서 선택된 주식을 관리 */
   const [selectedStocks, setSelectedStocks] = useAtom(selectedStocksAtom);
 
   console.log('getSearchStocks?: ', getSearchStocks);
@@ -77,10 +76,11 @@ function SearchResults({ value }: SearchResultsProps) {
   //   'getSearchStocks?.data.data.data: ',
   //   getSearchStocks?.data.data.data,
   // );
-  // 선택 상태를 토글하여 선택된 객체값 배열 핸들링
+
+  /** 선택 상태를 토글하여 선택된 객체값 배열 핸들링 */
   const handleToggleSelected = (stock: SelectedStocksAtomProps) => {
     setSelectedStocks((prev: SelectedStocksAtomProps[]) => {
-      // 이미 선택된 주식인지 아닌지 확인하고, 선택 상태 토글
+      /** 이미 선택된 주식인지 아닌지 확인하고, 선택 상태 토글 */
       const isNewSelectedStocks = prev.some(
         (selected: SelectedStocksAtomProps) =>
           selected.stockCode === stock.stockCode,
@@ -100,7 +100,7 @@ function SearchResults({ value }: SearchResultsProps) {
     });
   };
 
-  // 취소버튼 클릭 시, selectedStocks에서 해당 객체값 제거
+  /** 취소버튼 클릭 시, selectedStocks에서 해당 객체값 제거 */
   const handleRemoveSelected = (stock: SelectedStocksAtomProps) => {
     setSelectedStocks((prev: SelectedStocksAtomProps[]) => {
       return prev.filter(
@@ -109,6 +109,7 @@ function SearchResults({ value }: SearchResultsProps) {
       );
     });
   };
+
   return (
     <>
       <ShowAddedStocks

@@ -4,7 +4,9 @@ import removeStockSvg from '@/public/icon/remove_stock.svg';
 import Image from 'next/image';
 
 interface ShowAddedStockProps {
+  /** 선택한 주식 종목 배열 내 주식 종목 객체 */
   stock: SelectedStocksAtomProps;
+  /** 선택 취소 함수 */
   removeSelected: (stock: SelectedStocksAtomProps) => void;
 }
 

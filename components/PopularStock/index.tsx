@@ -4,7 +4,9 @@ import decreaseSvg from '@/public/icon/decrease.svg';
 import Image from 'next/image';
 
 interface PopularStockProps {
-  increase?: boolean; // default: true
+  /** 전일 대비 등락 유무 */
+  increase?: boolean;
+  /** 인기 주식 종목 */
   popularStock: string;
 }
 

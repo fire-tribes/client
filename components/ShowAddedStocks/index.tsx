@@ -3,7 +3,9 @@ import ShowAddedStock from '../ShowAddedStock';
 import { SelectedStocksAtomProps } from '@/hook/useGetSelectedStocks/state';
 
 interface ShowAddedStocksProps {
+  /** 선택한 주식 종목 배열 */
   selectedStocks: SelectedStocksAtomProps[];
+  /** 선택 취소 함수 */
   removeSelected: (stock: SelectedStocksAtomProps) => void;
 }
 

@@ -6,8 +6,11 @@ import { SelectedStocksAtomProps } from '@/hook/useGetSelectedStocks/state';
 import Image from 'next/image';
 
 interface SearchResultProps {
+  /** 검색 결과에 해당하는 데이터 객체 */
   stock: SelectedStocksAtomProps;
+  /** 주식 종목 포트폴리오에 추가 선택 */
   isSelected: boolean;
+  /** 주식 종목 포트폴리오에 추가 선택 시, 실행할 함수 */
   toggleSelected: (stock: SelectedStocksAtomProps) => void;
 }
 

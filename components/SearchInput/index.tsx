@@ -3,13 +3,25 @@ import SearchSvg from '@/public/icon/search.svg';
 import Image from 'next/image';
 
 interface SearchInputProps {
+  /** 입력한 검색어 */
   value: string;
+  /** 검색창을 클릭하여 Active 상태 */
   onFocus: () => void;
+  /** value에 영향을 주는 함수 */
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  children: React.ReactNode;
+  /** SmallerButton 컴포넌트 */
+  smallerCancelButton: React.ReactNode;
+  /** BiggerButton 컴포넌트 */
+  biggerCancelButton: React.ReactNode;
 }
 
-function SearchInput({ value, onFocus, onChange, children }: SearchInputProps) {
+function SearchInput({
+  value,
+  onFocus,
+  onChange,
+  smallerCancelButton,
+  biggerCancelButton,
+}: SearchInputProps) {
   return (
     <SearchInputUI.Container>
       <SearchInputUI.Item>
@@ -27,8 +39,9 @@ function SearchInput({ value, onFocus, onChange, children }: SearchInputProps) {
               placeholder="주식 이름 혹은 티커 검색"
             />
           </div>
+          <div>{smallerCancelButton}</div>
         </SearchInputUI.InputContainer>
-        <div>{children}</div>
+        <div>{biggerCancelButton}</div>
       </SearchInputUI.Item>
     </SearchInputUI.Container>
   );
