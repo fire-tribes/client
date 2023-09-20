@@ -1,3 +1,4 @@
+/** 현재는 원화를 기준으로 변경만을 지원 */
 const formatChartValue = (value: string | number) => {
   const ZERO = 0;
   const MIN_LENGTH = 4;

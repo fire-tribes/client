@@ -1,4 +1,4 @@
-import { CommonFontUI } from '@/components/Font/styles';
+import { CommonFontUI } from '@/components/common/Font/styles';
 import styled from '@emotion/styled';
 
 export const S = {

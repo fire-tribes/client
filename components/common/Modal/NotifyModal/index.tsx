@@ -1,4 +1,4 @@
-import CommonFont from '@/components/Font';
+import CommonFont from '@/components/common/Font';
 import Modal, { TModalProps } from '@/components/common/Modal';
 import { StyledTitleAlign } from '@/components/common/Modal/NotifyModal/styles';
 import useControlModal from '@/hook/useControlModal';
