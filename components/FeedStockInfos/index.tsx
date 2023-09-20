@@ -5,7 +5,7 @@ import useGetPresentPriceAll from '@/hook/useGetPresentPriceAll';
 import {
   SelectedStocksAtomProps,
   selectedStocksAtom,
-} from '@/hook/useAtom/state';
+} from '@/hook/useGetSelectedStocks/state';
 import CheckSvg from '@/public/icon/check.svg';
 import { basic } from '@/styles/palette';
 import APIInstance from '@/core/api/instance';
@@ -34,14 +34,11 @@ const useGetPresentPrice = (assetIds: number) => {
   return useQuery({
     queryKey: ['presentPrice', assetIds],
     queryFn: () =>
-      APIInstance.get<PresentPrice>(
-        'http://project-snow.kro.kr/api/v1/asset/price',
-        {
-          params: {
-            assetIds: assetIds,
-          },
+      APIInstance.get<PresentPrice>('asset/price', {
+        params: {
+          assetIds: assetIds,
         },
-      ),
+      }),
     onError: (error) => console.log(error), // Toast로 확장 사용
     onSuccess: (response) => console.log(response), // Toast로 확장 사용
     // 포트폴리오 유무에 따라 다르게 처리하기 등도 가능

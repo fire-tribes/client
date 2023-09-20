@@ -1,6 +1,6 @@
 import { FeedStockInfoUI } from './style';
 import AlertModal from '../common/Modal/AlertModal';
-import { SelectedStocksAtomProps } from '@/hook/useAtom/state';
+import { SelectedStocksAtomProps } from '@/hook/useGetSelectedStocks/state';
 import testCircleSvg from '@/public/icon/testCircle.svg';
 import trashSvg from '@/public/icon/trash.svg';
 import { basic } from '@/styles/palette';
@@ -36,14 +36,11 @@ const useGetPresentPrice = (assetIds: number) => {
   return useQuery({
     queryKey: ['presentPrice', assetIds],
     queryFn: () =>
-      APIInstance.get<PresentPrice>(
-        'http://project-snow.kro.kr/api/v1/asset/price',
-        {
-          params: {
-            assetIds: assetIds,
-          },
+      APIInstance.get<PresentPrice>('asset/price', {
+        params: {
+          assetIds: assetIds,
         },
-      ),
+      }),
     onError: (error) => console.log(error), // Toast로 확장 사용
     onSuccess: (response) => console.log(response), // Toast로 확장 사용
     // 포트폴리오 유무에 따라 다르게 처리하기 등도 가능
@@ -54,8 +51,17 @@ function FeedStockInfo({
   stock,
   removeSelected, // onClickPresentPriceButton,
 }: FeedStockInfoProps) {
+  console.log('stock: ', stock);
+  console.log('stock.assetId: ', stock.assetId);
   // 이 시점에서 한번 불러온다.
   const { data: getPresentPrice, refetch } = useGetPresentPrice(stock.assetId);
+  console.log('getPresentPrice: ', getPresentPrice);
+  console.log('getPresentPrice?.data: ', getPresentPrice?.data);
+  console.log('getPresentPrice?.data.data[0]: ', getPresentPrice?.data.data[0]);
+  console.log(
+    'getPresentPrice?.data.data[0].assetId: ',
+    getPresentPrice?.data.data[0].assetId,
+  );
 
   const [inputCountValue, setInputCountValue] = useState('');
   const [inputPriceValue, setInputPriceValue] = useState('');
@@ -100,7 +106,7 @@ function FeedStockInfo({
           <FeedStockInfoUI.NativeStockInfoContainer>
             <Image src={testCircleSvg} alt="testCircle Svg" />
             <div>
-              <div>{stock.name}</div>
+              <div>{stock.stockCode}</div>
               <div>{stock.stockCode}</div>
             </div>
           </FeedStockInfoUI.NativeStockInfoContainer>
