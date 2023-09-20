@@ -1,16 +1,18 @@
 import CommonBottomNavigatior from '@/components/common/Navigator';
 import styled from '@emotion/styled';
-import type { ReactNode } from 'react';
+import type { PropsWithChildren } from 'react';
 
-interface LayoutProps {
-  children: ReactNode;
+interface LayoutProps extends PropsWithChildren {
+  showBottomNavigator?: boolean;
 }
 
-const Layout = ({ children }: LayoutProps) => {
+const Layout = ({ children, showBottomNavigator = true }: LayoutProps) => {
   return (
     <StyledLayout>
-      <StyledContent>{children}</StyledContent>
-      <CommonBottomNavigatior />
+      <StyledContent showBottomNavigator={showBottomNavigator}>
+        {children}
+      </StyledContent>
+      {showBottomNavigator && <CommonBottomNavigatior />}
     </StyledLayout>
   );
 };
@@ -25,10 +27,12 @@ const StyledLayout = styled.main`
   text-align: center;
 `;
 
-const StyledContent = styled.section`
+const StyledContent = styled.section<{ showBottomNavigator: boolean }>`
   min-height: 100vh;
 
-  padding: 16px 16px 56px 16px;
+  padding: ${({ showBottomNavigator }) =>
+    showBottomNavigator ? '16px 16px 56px 16px' : '16px'};
+  /* padding: 16px 16px 56px 16px; */
 `;
 
 export default Layout;

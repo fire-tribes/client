@@ -16,12 +16,7 @@ export const SignApi = {
       },
     });
   },
-  signUp: ({ oAuthChannelType = 'KAKAO', ...rest }: SignUpRequestBody) => {
-    const body: SignUpRequestBody = {
-      oAuthChannelType,
-      ...rest,
-    };
-
+  signUp: (body: SignUpRequestBody) => {
     return AuthAPIInstance.post('signup', body, {});
   },
   signIn: (body: SignInRequestBody) => {

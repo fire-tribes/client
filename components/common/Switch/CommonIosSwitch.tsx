@@ -32,7 +32,7 @@ const StyledIOSSwitch = styled((props: SwitchProps) => (
       transform: `translateX(${IOSSwitchStyleConfig.circleWidth}px)`,
       color: '#fff',
       '& + .MuiSwitch-track': {
-        backgroundColor: theme.palette.mode === 'dark' ? '#2ECA45' : '#65C466',
+        backgroundColor: theme.palette.sementic.ios_switch_background,
         opacity: 1,
         border: 0,
       },
