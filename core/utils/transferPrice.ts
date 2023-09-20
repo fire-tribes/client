@@ -6,15 +6,17 @@ type TransferPrice = (params: {
   inputSymbol: ExchangeRateSymbol;
 }) => void;
 
-// const attachSymbol = (price: number | string, symbol: string = '원') => {
-//   return price + symbol;
-// };
+/** 단위 부착 */
+export const attachSymbol = (price: number | string, symbol: string = '원') => {
+  return price + symbol;
+};
 
-// const attachPercentage = (price: number | string) => {
-//   return price + '%';
-// };
-// 숫자를 변환
-// 단위 부착
+/** 단위 부착 */
+export const attachPercentage = (price: number | string) => {
+  return price + '%';
+};
+
+/** 숫자 변환 */
 export const transferPrice: TransferPrice = ({
   currentPrice,
   exchangeRate,
