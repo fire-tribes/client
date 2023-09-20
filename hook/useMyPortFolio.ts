@@ -9,16 +9,15 @@ export const useMyPortFolio = (portFolioId?: number) => {
   const myPortFolioData = data?.data.data;
 
   useEffect(() => {
-    if (status === 'error') {
-      status;
-    }
-    const hasNotMyAssets = myPortFolioData?.assetDetails?.length === 0;
+    const hasNotPortFolio = status === 'success' && !myPortFolioData;
+    const hasNotAssets =
+      status === 'success' && !myPortFolioData?.assetDetails?.length;
 
-    if (status === 'success' && hasNotMyAssets) {
+    if ((hasNotPortFolio && hasNotAssets) || status === 'error') {
       redirectEmpty();
       return;
     }
-  }, [data, status, redirectEmpty]);
+  }, [status, redirectEmpty, myPortFolioData]);
 
   // TODO: 심플모드에 따라서 다르게 데이터를 내려주도록
 
