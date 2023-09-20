@@ -10,14 +10,13 @@ import type { BadgeDetailText, DetailInformationKeys } from '@/mocks';
 
 export default function DetailInformationList() {
   // useHooks get data
-  const { data } = useAnnualDividend();
-  const responseData = data?.data.data;
+  const { annualDividendData } = useAnnualDividend();
 
   const detailInformationData = {
-    annualDividend: responseData?.annualDividend,
-    dividendPriceRatio: responseData?.dividendPriceRatio,
-    unPaidTax: responseData?.unPaidTax,
-    paidTax: responseData?.paidTax,
+    annualDividend: annualDividendData?.annualDividend,
+    dividendPriceRatio: annualDividendData?.dividendPriceRatio,
+    unPaidTax: annualDividendData?.unPaidTax,
+    paidTax: annualDividendData?.paidTax,
   };
 
   const texts = Object.entries(badangDetailText) as [
@@ -64,7 +63,8 @@ export default function DetailInformationList() {
                         fontSize="body1"
                         fontWeight="bold"
                       >
-                        {detailInformationData[key]
+                        {detailInformationData[key] &&
+                        detailInformationData[key] !== 'NaN'
                           ? detailInformationData[key]
                           : value.defaultValue}
                       </CommonFont>
