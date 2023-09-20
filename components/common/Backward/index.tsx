@@ -5,12 +5,11 @@ import { useRouter } from 'next/router';
 
 interface BackwardProps {
   title: string;
-  object?: string | null;
 }
 
-function Backward({ title, object }: BackwardProps) {
+function Backward({ title }: BackwardProps) {
+  /** 버튼 클릭 시, 뒤로가기 */
   const router = useRouter();
-
   const handleGoBack = () => {
     router.back();
   };
@@ -25,7 +24,7 @@ function Backward({ title, object }: BackwardProps) {
           <div>{title}</div>
           <div></div>
         </BackwardUI.TopContainer>
-        <BackwardUI.BottomContainer>
+        {/* <BackwardUI.BottomContainer>
           {object === '보유 주식 편집' ? (
             <div>
               종목의 우측 버튼을 통해 순서를 조정하고 삭제할 수 있습니다. 종목을
@@ -36,7 +35,7 @@ function Backward({ title, object }: BackwardProps) {
           ) : (
             <div></div>
           )}
-        </BackwardUI.BottomContainer>
+        </BackwardUI.BottomContainer> */}
       </BackwardUI.Item>
     </BackwardUI.Container>
   );

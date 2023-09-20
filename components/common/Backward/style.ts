@@ -29,11 +29,8 @@ const TopContainer = styled.div`
   }
 `;
 
-const BottomContainer = styled.div``;
-
 export const BackwardUI = {
   Container,
   Item,
   TopContainer,
-  BottomContainer,
 } as const;
