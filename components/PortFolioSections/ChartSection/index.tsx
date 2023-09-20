@@ -34,7 +34,7 @@ export default function ChartSection() {
       </FlexBox>
 
       {
-        // TODO: 여기부터 진정한 ChartSection
+        // TODO: 여기부터 진정한 ChartSection 임으로 컴포넌트 분리진행
       }
       <FlexBox
         flexDirection="column"

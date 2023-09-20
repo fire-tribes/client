@@ -12,42 +12,46 @@ import {
   styled,
 } from '@mui/material';
 
-// const titles = ['배당율', '배당주기', '보유수량', '자산가치'];
+/**
+ *
+ * TODO: 해당 코드들은 사용될 예정입니다.
+ * const titles = ['배당율', '배당주기', '보유수량', '자산가치'];
 
-// interface MyStockItemModel {
-//   symbol: string;
-//   imgUrl: string;
-//   assetPurchasePrice: string;
-//   assetTotalPrice: string;
-//   assetTotalPriceDiffRate: string;
-//   currentAssetPrice?: string;
-//   dividendRate?: string;
-//   frequency?: 'ONE_TIME';
-//   assetCount?: number;
-//   diffRate?: string;
-// }
+interface MyStockItemModel {
+  symbol: string;
+  imgUrl: string;
+  assetPurchasePrice: string;
+  assetTotalPrice: string;
+  assetTotalPriceDiffRate: string;
+  currentAssetPrice?: string;
+  dividendRate?: string;
+  frequency?: 'ONE_TIME';
+  assetCount?: number;
+  diffRate?: string;
+}
 
-// const datas: MyStockItemModel[] = [
-//   {
-//     symbol: 'JEPI',
-//     imgUrl: '💥',
-//     assetPurchasePrice: '40105',
-//     assetTotalPrice: '40,402',
-//     assetTotalPriceDiffRate: '+0.1%',
-//   },
-//   {
-//     symbol: 'SCHD',
-//     imgUrl: '💥',
-//     assetPurchasePrice: '40105',
-//     assetTotalPrice: '100,402',
-//     assetTotalPriceDiffRate: '+0.1%',
-//   },
-// ];
+const datas: MyStockItemModel[] = [
+  {
+    symbol: 'JEPI',
+    imgUrl: '💥',
+    assetPurchasePrice: '40105',
+    assetTotalPrice: '40,402',
+    assetTotalPriceDiffRate: '+0.1%',
+  },
+  {
+    symbol: 'SCHD',
+    imgUrl: '💥',
+    assetPurchasePrice: '40105',
+    assetTotalPrice: '100,402',
+    assetTotalPriceDiffRate: '+0.1%',
+  },
+];
+
+ */
 
 export function MyStockList() {
   const { myPortFolioData } = useMyPortFolio();
   const myAssetDetails = myPortFolioData?.assetDetails;
-  // data를 받아오고 그 데이터를 뿌려주는 역할만한다. hook
 
   return (
     <Box>
@@ -189,7 +193,9 @@ export function MyStockList() {
           );
         })}
 
-        {/* {datas.map(
+        {/** TODO: 해당 코드들은 사용될 예정입니다.
+         *
+         *  {/* {datas.map(
           ({
             symbol,
             assetPurchasePrice,

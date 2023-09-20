@@ -44,7 +44,7 @@ export const variant: Record<
     border: none;
   `,
   outlined: (mainColor) => css`
-    // 투명
+    /** 투명 transparent */
     background-color: transparent;
     color: ${mainColor};
     border: 1px solid ${mainColor || mainColor};
@@ -74,7 +74,6 @@ const StyledBadge = styled.button<StyledBadgeProps>`
 
   ${({ size }) => BadgeStyleSheet.size[size]}
 
-  // variant
   ${({ theme, variant, mainColor, subColor }) => css`
     ${BadgeStyleSheet.variant[variant](
       theme.palette.basic[mainColor],

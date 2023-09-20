@@ -18,15 +18,18 @@ export default function AnnualDividendBarChart() {
 
   const { annualDividendData } = useAnnualDividend();
   const monthlyDividends = annualDividendData?.monthlyDividends;
+  monthlyDividends;
 
-  console.log(monthlyDividends);
-
-  // 응답값 보고 바꿔주자.
+  // TODO: 응답값 보고 바꿔주자.
   // dividends.map(())
 
   return (
-    // TODO: 차트의 크기를 고정하고 싶다면 해당 tag 활성화
-    // <div style={{ width: '328px', height: '181px' }}>
+    /**
+     * 
+     * // TODO: 차트의 크기를 고정하고 싶다면 해당 tag 활성화
+       // <div style={{ width: '328px', height: '181px' }}>
+     */
+
     <Bar
       options={options}
       data={{
@@ -38,11 +41,13 @@ export default function AnnualDividendBarChart() {
             backgroundColor: [theme.palette.basic.point_red01],
             borderColor: [theme.palette.basic.point_red01],
             borderRadius: 5,
-            borderSkipped: false, // 양쪽 다 둥글게
+            /** 한쪽만 적용 true, 양쪽 다 둥글게 false  */
+            borderSkipped: false,
           },
         ],
       }}
     />
+    // TODO: 차트의 크기를 고정하고 싶다면 해당 tag 활성화
     // </div>
   );
 }
