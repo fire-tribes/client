@@ -10,7 +10,9 @@ import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 
 interface FeedStockInfoProps {
+  /** 선택한 배열의 객체값 */
   stock: SelectedStocksAtomProps;
+  /** 선택한 값을 배열 삭제 */
   removeSelected: (stock: SelectedStocksAtomProps) => void;
   // onClickPresentPriceButton?: (tickerCode: string) => void;
 }
@@ -41,9 +43,8 @@ const useGetPresentPrice = (assetIds: number) => {
           assetIds: assetIds,
         },
       }),
-    onError: (error) => console.log(error), // Toast로 확장 사용
-    onSuccess: (response) => console.log(response), // Toast로 확장 사용
-    // 포트폴리오 유무에 따라 다르게 처리하기 등도 가능
+    onError: (error) => console.log(error), // TODO: Toast로 확장 사용
+    onSuccess: (response) => console.log(response), // TODO: Toast로 확장 사용
   });
 };
 
@@ -84,13 +85,12 @@ function FeedStockInfo({
   const handleInputCountChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setInputCountValue(value);
-    // 오류 메시지 초기화
     setError('');
   };
   const handleInputPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setInputPriceValue(value);
-    // 오류 메시지 초기화
+
     setError('');
   };
   const handleInputBlur = () => {

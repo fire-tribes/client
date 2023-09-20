@@ -1,4 +1,3 @@
-import Backward from '@/components/Backward';
 import FeedStockInfos from '@/components/FeedStockInfos';
 import SearchLayout from '@/components/common/Layout/SearchLayout';
 import { selectedStocksAtom } from '@/hook/useGetSelectedStocks/state';
@@ -6,6 +5,7 @@ import APIInstance from '@/core/api/instance';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useAtom } from 'jotai';
+import Backward from '@/components/Backward';
 
 interface MakePortfolio {
   success: true;
@@ -32,9 +32,8 @@ const useMakePortfolio = () => {
   return useMutation({
     mutationKey: ['madePortfolio'],
     mutationFn: () => APIInstance.post<MakePortfolio>('portfolio'),
-    onError: (error) => console.log(error), // Toast로 확장 사용
-    onSuccess: (response) => console.log(response), // Toast로 확장 사용
-    // 포트폴리오 유무에 따라 다르게 처리하기 등도 가능
+    onError: (error) => console.log(error), // TODO: Toast로 확장 사용
+    onSuccess: (response) => console.log(response), // TODO: Toast로 확장 사용
   });
 };
 
@@ -45,19 +44,19 @@ const usePostStocksAtPortfolio = (PORTFOLIO_ID: number | undefined) => {
       APIInstance.post<PostStocksAtPortfolio>(
         `portfolio/${PORTFOLIO_ID}/asset`,
       ),
-    onError: (error) => console.log(error), // Toast로 확장 사용
-    onSuccess: (response) => console.log(response), // Toast로 확장 사용
-    // 포트폴리오 유무에 따라 다르게 처리하기 등도 가능
+    onError: (error) => console.log(error), // TODO: Toast로 확장 사용
+    onSuccess: (response) => console.log(response), // TODO: Toast로 확장 사용
   });
 };
 
 function Add() {
+  /** URL 주소에서 query parameter로 portfolioId를 확인하여 신규 포트폴리오 생성인지, 기존 포트폴리오 추가인지 구분 */
   const router = useRouter();
   const { query } = router;
   const PORTFOLIO_ID = query.portfolioId;
   console.log('PORTFOLIO_ID: ', PORTFOLIO_ID);
 
-  // portfolioId 유무 확인(없으면 신규, 있으면 기존 포트폴리오)하고 신규일 경우, 포트폴리오 생성
+  /** 신규일 경우, 포트폴리오 생성 */
   const makePortfolio = useMakePortfolio();
   makePortfolio.data?.data.data.portfolioId;
   usePostStocksAtPortfolio(123123);
@@ -68,14 +67,14 @@ function Add() {
   //     : makePortfolio.data?.data.data.portfolioId;
   // const { mutate } = usePostStocksAtPortfolio(portfolioId);
 
-  // 결과값
+  /** 선택한 주식 종목 배열 */
   const [selectedStocks] = useAtom(selectedStocksAtom);
 
   return (
     <SearchLayout
+      hasButton={true}
       isDisabled={selectedStocks.length !== 0 ? false : true}
       buttonName={'추가 완료'}
-      isSearchActive={true}
     >
       <section>
         <Backward title={'보유 주식 정보 입력'} />

@@ -39,16 +39,17 @@ const useGetPresentPrice = (assetIds: number) => {
           assetIds: assetIds,
         },
       }),
-    onError: (error) => console.log(error), // Toast로 확장 사용
-    onSuccess: (response) => console.log(response), // Toast로 확장 사용
-    // 포트폴리오 유무에 따라 다르게 처리하기 등도 가능
+    onError: (error) => console.log(error), // TODO: Toast로 확장 사용
+    onSuccess: (response) => console.log(response), // TODO: Toast로 확장 사용
   });
 };
 
 function FeedStockInfos() {
-  // Jotai의 selectedStocksAtom을 이용해서 선택된 주식을 관리
+  /** Jotai의 selectedStocksAtom을 이용해서 선택된 주식을 관리 */
   const [selectedStocks, setSelectedStocks] = useAtom(selectedStocksAtom);
   // console.log('selectedStocks: ', selectedStocks);
+
+  /** [삭제 함수] Jotai로 만든 주식 종목 배열에서 해당 객체 삭제하는 함수 */
   const handleRemoveSelected = (stock: SelectedStocksAtomProps) => {
     setSelectedStocks((prev: SelectedStocksAtomProps[]) =>
       prev.filter(
@@ -58,6 +59,7 @@ function FeedStockInfos() {
     );
   };
 
+  /** 현재가 전체 자동 입력 함수 */
   // const handleClickPresentPriceButton = (id) => {
   //   const dataArray = getPresentPrice.data?.data.data;
   //   if (dataArray !== undefined) {
@@ -78,9 +80,9 @@ function FeedStockInfos() {
   //   console.log('newInputValues: ', newInputValues);
   //   setInputPriceValues(newInputValues);
   // };
-
   useGetPresentPrice(123123);
-  // assetId로 서버에 get 요청하여 개별적으로 받아온 presentPrice가 담긴 배열
+
+  /** assetId로 서버에 get 요청하여 개별적으로 받아온 presentPrice가 담긴 배열 */
   const { callStart } = useGetPresentPriceAll();
 
   return (
@@ -118,14 +120,5 @@ function FeedStockInfos() {
     </>
   );
 }
-
-// const handleClickPresentPriceButtonForAll = (
-//   selectedStocks: SelectedStocksAtomProps[],
-// ) => {
-//   selectedStocks.forEach((id) => {
-//     // 각 자식 컴포넌트의 버튼에 이벤트를 실행
-//     handleClickPresentPriceButton(id);
-//   });
-// };
 
 export default FeedStockInfos;
