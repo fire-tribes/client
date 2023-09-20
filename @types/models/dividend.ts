@@ -1,13 +1,13 @@
 /**
  * 이번년도의 총 배당금 Response Type
  */
-export type YearDividendModel = {
+export type AnnualDividendModel = {
   /** 이번달 배당금 */
   thisMonthDividend: number;
   /**지난 배당 대비[...], */
   dividendChange: number;
   /**연간 총 배당금[...], */
-  annualDividend: number | 'NaN';
+  annualDividend: number;
   /**투자 배당률[...], */
   dividendPriceRatio: number;
   /**시가 배당률(배당수익률)[...], */
