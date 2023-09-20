@@ -4,11 +4,11 @@ import NothingStocks from '../NothingStocks';
 import { portfolioList } from '@/pages/fires/edit';
 
 interface EditStocksProps {
+  /** 포트폴리오 객체 */
   portfolioList?: portfolioList;
 }
 
 function EditStocks({ portfolioList }: EditStocksProps) {
-  // 검색 결과 데이터
   return (
     <>
       <EditStocksUI.TopContainer>

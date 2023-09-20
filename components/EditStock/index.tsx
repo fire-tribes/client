@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 interface EditStockProps {
+  /** 포트폴리오 내 종목 객체 */
   stock: {
     assetId: number;
     tickerCode: string;

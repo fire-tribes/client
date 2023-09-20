@@ -40,13 +40,13 @@ const useGetPortfolioList = () => {
   return useQuery({
     queryKey: ['portfolioList'],
     queryFn: () => APIInstance.get<portfolioList>('portfolio'),
-    onError: (error) => console.log(error),
-    onSuccess: (response) => console.log(response),
+    onError: (error) => console.log(error), // TODO: 404 에러 페이지로 이동
+    onSuccess: (response) => console.log(response), // TODO: Toast 컴포넌트로 확장
   });
 };
 
 function Edit() {
-  // 검색 결과 데이터
+  /** 검색 결과 데이터 테스트 */
   // const getPortfolioList = {
   //   success: true,
   //   data: {
@@ -101,7 +101,7 @@ function Edit() {
     <SearchLayout
       isDisabled={false}
       buttonName={'완료'}
-      isSearchActive={!getPortfolioList ? true : false}
+      hasButton={!getPortfolioList ? true : false}
     >
       <section>
         <Backward title={'보유 주식 편집'} />
@@ -112,6 +112,7 @@ function Edit() {
           // <EditStocks portfolioList={getPortfolioList} />
           <div>{getPortfolioList?.data.data.data.portfolioId}</div>
         ) : (
+          /** 포트폴리오에 데이터가 없을 때, 빈 페이지를 보여주기 */
           <NothingStocks />
         )}
       </section>
