@@ -1,4 +1,4 @@
-import CommonFont from '@/components/Font';
+import CommonFont from '@/components/common/Font';
 import CommonCenter from '@/components/common/Center';
 import Layout from '@/components/common/Layout';
 import styled from '@emotion/styled';
