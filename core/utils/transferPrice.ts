@@ -25,7 +25,7 @@ type TransferPrice = (params: {
   outputSymbol: ExchangeRateSymbol;
   defaultText?: string;
   optionText?: string;
-}) => void;
+}) => string;
 
 /**
  * 숫자 변환

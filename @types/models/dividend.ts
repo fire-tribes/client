@@ -1,7 +1,7 @@
 /**
  * 이번년도의 총 배당금 Response Type
  */
-export type AnnualDividendModel = {
+type AnnualDividendModel = {
   /** 이번달 배당금 */
   thisMonthDividend: number;
   /**지난 배당 대비[...], */
@@ -35,3 +35,5 @@ type MonthlyDividends = {
   NOVEMBER?: number;
   DECEMBER?: number;
 };
+
+export { type AnnualDividendModel, type MonthlyDividends };

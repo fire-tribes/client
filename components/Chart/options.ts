@@ -1,4 +1,3 @@
-import { formatChartValue } from '@/components/Chart/utils';
 import type { ChartOptions } from 'chart.js';
 
 export const options: ChartOptions<'bar'> = {
@@ -33,26 +32,9 @@ export const options: ChartOptions<'bar'> = {
       },
     },
   },
-  plugins: {
-    datalabels: {
-      font: {
-        size: 9,
-      },
-      anchor: 'end',
-      clip: false,
-      align: 'top',
-      offset: 0,
-      // TODO: number type value에 특정 단위를 붙이고 싶을경우
-      formatter: (value: string | number) => formatChartValue(value),
-      /** color를 변경하고 싶을 떄
-       * color: '#36A2EB',
-       */
-    },
-  },
-
+  onClick: (e) => console.log(e),
   /**
    * events의 목록 (https://www.chartjs.org/docs/latest/configuration/interactions.html#index)
    * events: [''],
    */
-  onClick: (e) => console.log(e),
 };

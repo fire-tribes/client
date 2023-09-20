@@ -20,7 +20,7 @@ export default function ChartSection() {
       defaultText: '0원',
     })}`,
     subTitle: annualDividendData?.dividendChange
-      ? `지난 배당 대비 ${annualDividendData?.dividendChange}%`
+      ? `지난 배당 대비 ${Math.floor(annualDividendData?.dividendChange)}%`
       : '',
     isShowChart:
       annualDividendData?.monthlyDividends && annualDividendData?.annualDividend
