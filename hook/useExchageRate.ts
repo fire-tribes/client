@@ -10,9 +10,9 @@ export const useExchageRate = () => {
   const query = useExchangeRateQuery();
 
   const data = query?.data?.data?.data;
-
   const rate = data?.value;
   const currencyType = data?.currencyType;
+
   const symbol = currencyType ? exchangeRateSymbol[currencyType] : undefined;
   const exchangeRate = undefined;
 

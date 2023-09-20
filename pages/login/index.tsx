@@ -2,6 +2,7 @@ import { KakaoLoginButton } from '@/components/oauth/KakaoLoginButton';
 import Layout from '@/components/common/Layout';
 import CommonCenter from '@/components/common/Center';
 import Image from 'next/image';
+import styled from '@emotion/styled';
 
 const GUIDE_TEXT = `배당주 계산과 관리를 가장 쉽고 편하게 하는 방법`;
 
@@ -30,8 +31,6 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
-import styled from '@emotion/styled';
 
 const Content = styled.div`
   display: flex;

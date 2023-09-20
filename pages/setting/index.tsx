@@ -7,6 +7,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material';
+import styled from '@emotion/styled';
 
 export default function SettingPage() {
   return (
@@ -41,8 +42,6 @@ export default function SettingPage() {
     </Layout>
   );
 }
-
-import styled from '@emotion/styled';
 
 export const StyledHeader = styled.header`
   height: 31px;
