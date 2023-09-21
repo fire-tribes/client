@@ -1,3 +1,4 @@
+import { KakaoSDK } from '@/components/Oauth/KakaoSDK';
 import { Cookie } from '@/core/api/cookie';
 import { useKakaoLogin } from '@/hook/useKakaoLogin';
 import { useRouter } from 'next/router';
@@ -28,11 +29,14 @@ export const KakaoLoginButton = () => {
   }, [code, router, start]);
 
   return (
-    <a id="kakao_login_button" onClick={open}>
-      <img
-        src="images/kakao_login/ko/kakao_login_medium_narrow.png"
-        alt="카카오 로그인 버튼"
-      />
-    </a>
+    <>
+      <KakaoSDK />
+      <a id="kakao_login_button" onClick={open}>
+        <img
+          src="images/kakao_login/ko/kakao_login_medium_narrow.png"
+          alt="카카오 로그인 버튼"
+        />
+      </a>
+    </>
   );
 };
