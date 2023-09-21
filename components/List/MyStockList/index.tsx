@@ -1,4 +1,4 @@
-import CommonFont from '@/components/Font';
+import CommonFont from '@/components/common/Font';
 import FlexBox from '@/components/common/FlexBox';
 import { useMyPortFolio } from '@/hook/useMyPortFolio';
 
@@ -12,7 +12,10 @@ import {
   styled,
 } from '@mui/material';
 
-// const titles = ['배당율', '배당주기', '보유수량', '자산가치'];
+/**
+ *
+ * TODO: 해당 코드들은 사용될 예정입니다.
+ * const titles = ['배당율', '배당주기', '보유수량', '자산가치'];
 
 // interface MyStockItemModel {
 //   symbol: string;
@@ -44,10 +47,11 @@ import {
 //   },
 // ];
 
+ */
+
 export function MyStockList() {
   const { myPortFolioData } = useMyPortFolio();
   const myAssetDetails = myPortFolioData?.assetDetails;
-  // data를 받아오고 그 데이터를 뿌려주는 역할만한다. hook
 
   return (
     <Box>
@@ -189,7 +193,9 @@ export function MyStockList() {
           );
         })}
 
-        {/* {datas.map(
+        {/** TODO: 해당 코드들은 사용될 예정입니다.
+         *
+         *  {/* {datas.map(
           ({
             symbol,
             assetPurchasePrice,

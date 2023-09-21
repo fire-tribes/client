@@ -1,6 +1,6 @@
 import FlexBox from '@/components/common/FlexBox';
 import CommonIcon from '@/components/common/Icon';
-import CommonFont from '@/components/Font';
+import CommonFont from '@/components/common/Font';
 import { useOnAndOff } from '@/hook/useOnAndOff';
 import type { FontSizeKeys } from '@/styles/typography';
 import type { CSSProperties, PropsWithChildren } from 'react';

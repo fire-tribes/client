@@ -1,6 +1,11 @@
 import { options } from '@/components/Chart/options';
-import { dividends } from '@/components/Chart/utils';
+import {
+  createShowChartDividendDatas,
+  formatChartValue,
+} from '@/components/Chart/utils';
+import { transferPrice } from '@/core/utils/transferPrice';
 import { useAnnualDividend } from '@/hook/useAnnualDividend';
+import { useExchageRate } from '@/hook/useExchageRate';
 import { useTheme } from '@emotion/react';
 import {
   Chart as ChartJS,
@@ -15,34 +20,66 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, ChartDataLabels);
 
 export default function AnnualDividendBarChart() {
   const theme = useTheme();
-
   const { annualDividendData } = useAnnualDividend();
+  const { exchangeRate } = useExchageRate();
+
   const monthlyDividends = annualDividendData?.monthlyDividends;
+  const showChartDividendDatas = createShowChartDividendDatas(monthlyDividends);
 
-  console.log(monthlyDividends);
+  if (showChartDividendDatas) {
+    return (
+      /**
+     * 
+     * // TODO: 차트의 크기를 고정하고 싶다면 해당 tag 활성화
+       // <div style={{ width: '328px', height: '181px' }}>
+     */
+      <Bar
+        options={{
+          ...options,
+          plugins: {
+            datalabels: {
+              font: {
+                size: 9,
+              },
+              anchor: 'end',
+              clip: false,
+              align: 'top',
+              offset: 0,
+              // TODO: number type value에 특정 단위를 붙이고 싶을경우
+              formatter: (value: number) => {
+                const exchangedValue = transferPrice({
+                  currentPrice: value,
+                  exchangeRate,
+                  outputSymbol: 'KRW',
+                });
 
-  // 응답값 보고 바꿔주자.
-  // dividends.map(())
-
-  return (
-    // TODO: 차트의 크기를 고정하고 싶다면 해당 tag 활성화
-    // <div style={{ width: '328px', height: '181px' }}>
-    <Bar
-      options={options}
-      data={{
-        labels: dividends.map(({ month }) => month),
-        datasets: [
-          {
-            label: '',
-            data: dividends.map(({ dividend }) => dividend),
-            backgroundColor: [theme.palette.basic.point_red01],
-            borderColor: [theme.palette.basic.point_red01],
-            borderRadius: 5,
-            borderSkipped: false, // 양쪽 다 둥글게
+                return formatChartValue(exchangedValue);
+              },
+              /** color를 변경하고 싶을 떄
+               * color: '#36A2EB',
+               */
+            },
           },
-        ],
-      }}
-    />
-    // </div>
-  );
+        }}
+        data={{
+          labels: showChartDividendDatas.map(({ month }) => month),
+          datasets: [
+            {
+              label: '',
+              data: showChartDividendDatas.map(({ dividend }) => dividend),
+              backgroundColor: [theme.palette.basic.point_red01],
+              borderColor: [theme.palette.basic.point_red01],
+              borderRadius: 5,
+              /** 한쪽만 적용 true, 양쪽 다 둥글게 false  */
+              borderSkipped: false,
+            },
+          ],
+        }}
+      />
+      // TODO: 차트의 크기를 고정하고 싶다면 해당 tag 활성화
+      // </div>
+    );
+  }
+
+  return null;
 }

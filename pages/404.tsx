@@ -1,4 +1,4 @@
-import CommonFont from '@/components/Font';
+import CommonFont from '@/components/common/Font';
 import CommonButton from '@/components/common/Button/CommonButton';
 import CommonCenter from '@/components/common/Center';
 import FlexBox from '@/components/common/FlexBox';

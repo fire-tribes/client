@@ -3,8 +3,8 @@ import { fontSize, fontWeight } from '@/styles/typography';
 import { useEffect, useState } from 'react';
 
 type ThemeMode = keyof typeof sementic;
-const themeModes: ThemeMode[] = ['light', 'dark'];
 type CachedMode = ThemeMode | null;
+const themeModes: ThemeMode[] = ['light', 'dark'];
 
 export const useMode = () => {
   const [mode, setMode] = useState<ThemeMode>('light');
@@ -17,7 +17,6 @@ export const useMode = () => {
   };
 
   useEffect(() => {
-    // select mode
     const cachedMode = window?.localStorage.getItem('cachedMode') as CachedMode;
     setMode(cachedMode || themeModes[0]);
   }, []);

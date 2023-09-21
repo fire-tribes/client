@@ -1,4 +1,4 @@
-import { CommonFontUI } from '@/components/Font/styles';
+import { CommonFontUI } from '@/components/common/Font/styles';
 import type { BasicColorKeys } from '@/styles/palette';
 import type { FontSizeKeys, FontWeightKeys } from '@/styles/typography';
 import type { PropsWithChildren } from 'react';

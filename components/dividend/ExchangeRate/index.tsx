@@ -1,4 +1,4 @@
-import CommonFont from '@/components/Font';
+import CommonFont from '@/components/common/Font';
 import FlexBox from '@/components/common/FlexBox';
 import { useExchageRate } from '@/hook/useExchageRate';
 

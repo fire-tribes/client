@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
-import type { CommonFontProps } from '@/components/Font';
+import type { CommonFontProps } from '@/components/common/Font';
 
 type StyledFontProps = Pick<
   CommonFontProps,

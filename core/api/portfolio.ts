@@ -15,10 +15,13 @@ export const portFolioAPI = {
     );
   },
   getMyPortFolio: () => {
-    return APIInstance.get<ResponseSuccess<MyPortfolioModel>>('portfolio', {
-      headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
+    return APIInstance.get<ResponseSuccess<MyPortfolioModel>>(
+      'portfolio/list',
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
+        },
       },
-    });
+    );
   },
 };
