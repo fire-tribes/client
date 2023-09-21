@@ -15,6 +15,7 @@ const KAKAO_API_URLS = {
   KAPI_V2: 'https://kapi.kakao.com/v2',
 };
 const POST_CONTENT_TYPE = 'application/x-www-form-urlencoded;charset=utf-8';
+const CONTENT_TYPE = 'Content-type';
 
 export const kakaoAPI = {
   getAccessToken: (code: string) => {
@@ -23,7 +24,7 @@ export const kakaoAPI = {
       {},
       {
         headers: {
-          'Content-type': POST_CONTENT_TYPE,
+          [CONTENT_TYPE]: POST_CONTENT_TYPE,
         },
         params: {
           grant_type: 'authorization_code',
@@ -42,7 +43,7 @@ export const kakaoAPI = {
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          'Content-type': POST_CONTENT_TYPE,
+          [CONTENT_TYPE]: POST_CONTENT_TYPE,
         },
       },
     );

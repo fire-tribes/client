@@ -27,14 +27,14 @@ export default async function handler(
       return;
     }
 
-    // get Access Token By KaKao
+    /** get Access Token By KaKao */
     const accessResponse = await kakaoAPI.getAccessToken(code);
     const { access_token } = accessResponse.data;
     if (!access_token) {
       throwUndefinedError('access_token');
     }
 
-    // get User Data By KaKao
+    /** get User Data By KaKao */
     const userData = await kakaoAPI.getUserData(access_token);
     const { kakao_account } = userData.data;
     if (!userData.data.kakao_account.email) {
@@ -43,7 +43,7 @@ export default async function handler(
 
     email = kakao_account.email;
   } catch (err) {
-    // 2. await가 끝났으나 내가 원하는 로직을 실행하다가 문제가 생긴경우 (200 이나 내가 원하는 값이 없다.)
+    /** await가 끝났으나 내가 원하는 로직을 실행하다가 문제가 생긴경우 (200 이나 내가 원하는 값이 없다.) */
     if (err instanceof Error) {
       const { message } = err;
       const isUndefinedError = /UndefinedError/g.test(message);
@@ -51,19 +51,20 @@ export default async function handler(
       return isUndefinedError && responseKakaoError(message);
     }
 
-    // 1. await에서 넘어가지않고 바로 catch로 온 경우
+    /** await에서 넘어가지않고 바로 catch로 온 경우  */
     return res.status(500).send(err);
   }
 
-  // 여기까지 왔다는거는 이메일이 있다는 것
+  /** 여기까지 왔다는거는 이메일이 있다는 것 */
   try {
     const defaultForm = {
-      email,
       password: '',
+      email,
     };
 
     const defaultSignUpForm = {
       userName: '',
+      oAuthChannelType: 'KAKAO' as const,
       ...defaultForm,
     };
 
@@ -89,5 +90,6 @@ export default async function handler(
     return;
   }
 
-  return res.status(400).send({ message: '여기까지 오면 안되는데 와버렸네요' });
+  /** 예상대로라면 여기에 도달하기전에 res 가 반환이 되어야 한다. */
+  return res.status(400).send({ message: '잘못된 요청입니다.' });
 }

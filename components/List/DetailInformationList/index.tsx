@@ -1,95 +1,146 @@
-import { mockNotifyModalItemModel } from '@/mocks';
+import { badangDetailText, items } from '@/mocks';
 import FlexBox from '@/components/common/FlexBox';
 import NotifyListModal from '@/components/common/Modal/NotifyListModal';
 import CommonIcon from '@/components/common/Icon';
 import { S } from '@/components/List/DetailInformationList/styles';
-import CommonFont from '@/components/Font';
+import CommonFont from '@/components/common/Font';
+import { useAnnualDividend } from '@/hook/useAnnualDividend';
+import { useExchageRate } from '@/hook/useExchageRate';
+import { transferPrice } from '@/core/utils/transferPrice';
 import { ListItem, ListItemButton } from '@mui/material';
-import type { BasicColorKeys } from '@/styles/palette';
-
-type badgeDetailText = {
-  title: string;
-  content: string;
-  color: BasicColorKeys;
-  iconName: string;
-};
-
-const badangDetailTexts: badgeDetailText[] = [
-  {
-    title: '연간 총 배당금',
-    content: '8810만원',
-    color: 'gray9',
-    iconName: '',
-  },
-  {
-    title: '배당수익률',
-    content: '6.9%',
-    color: 'point_red01',
-    iconName: 'expand_more',
-  },
-  {
-    title: '납부한 세금',
-    content: '104만원',
-    color: 'point_blue02',
-    iconName: 'expand_more',
-  },
-  {
-    title: '납부할 세금',
-    content: '49만원 예상',
-    color: 'point_blue02',
-    iconName: 'expand_more',
-  },
-];
+import type { BadgeDetailText, DetailInformationKeys } from '@/mocks';
 
 export default function DetailInformationList() {
   // useHooks get data
+  const { annualDividendData } = useAnnualDividend();
+  const { exchangeRate } = useExchageRate();
+
+  transferPrice({
+    exchangeRate,
+    currentPrice: annualDividendData?.annualDividend,
+    outputSymbol: 'KRW',
+  });
+
+  transferPrice({
+    exchangeRate,
+    currentPrice: annualDividendData?.paidTax,
+    outputSymbol: 'KRW',
+  });
+
+  transferPrice({
+    exchangeRate,
+    currentPrice: annualDividendData?.unPaidTax,
+    outputSymbol: 'KRW',
+  });
+
+  const detailInformationData = {
+    annualDividend: `${transferPrice({
+      exchangeRate,
+      currentPrice: annualDividendData?.annualDividend,
+      outputSymbol: 'KRW',
+      defaultText: '0원',
+    })}`,
+    dividendPriceRatio: annualDividendData?.dividendPriceRatio || '0%',
+    paidTax: `${transferPrice({
+      exchangeRate,
+      currentPrice: annualDividendData?.paidTax,
+      outputSymbol: 'KRW',
+      defaultText: '없음',
+    })}`,
+    unPaidTax: `${transferPrice({
+      exchangeRate,
+      currentPrice: annualDividendData?.unPaidTax,
+      outputSymbol: 'KRW',
+      optionText: ' 예상',
+      defaultText: '없음',
+    })}`,
+  };
+
+  const texts = Object.entries(badangDetailText) as [
+    DetailInformationKeys,
+    BadgeDetailText,
+  ][];
+
+  const paddingTop = '9px';
+  const paddingBottom = '9px';
 
   return (
     <>
-      {badangDetailTexts.map(({ title, content, color, iconName }, index) => {
-        const shouldPaddingBottomZero = index === badangDetailTexts.length - 1;
-        const paddingTop = '8px';
-        const paddingBottom = shouldPaddingBottomZero ? 0 : '8px';
+      {texts.map(([key, value]) => {
+        if (value.shouldOpenModal) {
+          return (
+            <NotifyListModal
+              key={key}
+              modalTitle={value.title}
+              items={items[key]}
+            >
+              <ListItemButton sx={{ padding: 0 }}>
+                <ListItem key={key} disablePadding sx={{ display: 'block' }}>
+                  <FlexBox
+                    justifyContent="space-between"
+                    alignItems="center"
+                    paddingTop={paddingTop}
+                    paddingBottom={paddingBottom}
+                  >
+                    <S.Title>
+                      <FlexBox alignItems="center" gap="4px">
+                        <CommonFont fontSize="body1">{value.title}</CommonFont>
+                        {value.iconName && (
+                          <CommonIcon
+                            iconName={value.iconName}
+                            width={12}
+                            height={12}
+                          />
+                        )}
+                      </FlexBox>
+                    </S.Title>
+                    <S.Content>
+                      <CommonFont
+                        color={value.color}
+                        fontSize="body1"
+                        fontWeight="bold"
+                      >
+                        {detailInformationData[key]}
+                      </CommonFont>
+                    </S.Content>
+                  </FlexBox>
+                </ListItem>
+              </ListItemButton>
+            </NotifyListModal>
+          );
+        }
 
         return (
-          <NotifyListModal
-            key={title}
-            modalTitle={title}
-            items={mockNotifyModalItemModel}
-          >
-            <ListItemButton sx={{ padding: 0 }}>
-              <ListItem disablePadding sx={{ display: 'block' }}>
-                <FlexBox
-                  justifyContent="space-between"
-                  alignItems="center"
-                  paddingTop={paddingTop}
-                  paddingBottom={paddingBottom}
-                >
-                  <S.Title>
-                    <FlexBox alignItems="center" gap="4px">
-                      <CommonFont fontSize="body1">{title}</CommonFont>
-                      {iconName && (
-                        <CommonIcon
-                          iconName={iconName}
-                          width={12}
-                          height={12}
-                        />
-                      )}
-                    </FlexBox>
-                  </S.Title>
-                  <S.Content>
-                    <CommonFont
-                      color={color}
-                      fontSize="body1"
-                      fontWeight="bold"
-                    >
-                      {content}
-                    </CommonFont>
-                  </S.Content>
+          <ListItem key={key} disablePadding sx={{ display: 'block' }}>
+            <FlexBox
+              justifyContent="space-between"
+              alignItems="center"
+              paddingTop={paddingTop}
+              paddingBottom={paddingBottom}
+            >
+              <S.Title>
+                <FlexBox alignItems="center" gap="4px">
+                  <CommonFont fontSize="body1">{value.title}</CommonFont>
+                  {value.iconName && (
+                    <CommonIcon
+                      iconName={value.iconName}
+                      width={12}
+                      height={12}
+                    />
+                  )}
                 </FlexBox>
-              </ListItem>
-            </ListItemButton>
-          </NotifyListModal>
+              </S.Title>
+              <S.Content>
+                <CommonFont
+                  color={value.color}
+                  fontSize="body1"
+                  fontWeight="bold"
+                >
+                  {detailInformationData[key]}
+                </CommonFont>
+              </S.Content>
+            </FlexBox>
+          </ListItem>
         );
       })}
     </>

@@ -1,4 +1,6 @@
-// 기반이 되는 basic color
+/**
+ * Figma에서 정의된 Color Token 값들입니다.
+ */
 export const basic = {
   white: '#FFFFFF',
   gray0: '#F8F9FA',
@@ -18,7 +20,9 @@ export const basic = {
   gray_blue: '#2F7287',
 } as const;
 
-// ui에서 사용되는 의미상 컬러
+/**
+  UI 에서 사용되는 의미상 컬러
+*/
 export const sementic = {
   light: {
     bg_white: basic.white,
@@ -31,6 +35,7 @@ export const sementic = {
     input_bg_gray: basic.gray2,
     font_gray: basic.gray5,
     font_section_title: basic.gray_blue,
+    ios_switch_background: basic.gray7,
   },
   dark: {
     bg_white: basic.white,
@@ -43,6 +48,7 @@ export const sementic = {
     input_bg_gray: basic.gray2,
     font_gray: basic.gray5,
     font_section_title: basic.gray_blue,
+    ios_switch_background: basic.gray7,
   },
 };
 

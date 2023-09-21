@@ -18,12 +18,13 @@ function MyApp({ Component, pageProps }: AppProps) {
       defaultOptions: {
         queries: {
           retry: 1,
+          refetchOnWindowFocus: false,
+          staleTime: 10 * 1000,
         },
       },
     }),
   );
 
-  // emotionTheme를 쓸필요가 있나?? mui가 공식적으로 emotion을 지원하니까 provider가 중첩되기에 발생하는 묹는 어떻게세보면 당연한거아닐까?>
   const theme = useEmotionTheme();
   const muiTheme = createTheme({
     ...theme,

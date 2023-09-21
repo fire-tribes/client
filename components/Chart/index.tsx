@@ -1,3 +1,11 @@
+import { options } from '@/components/Chart/options';
+import {
+  createShowChartDividendDatas,
+  formatChartValue,
+} from '@/components/Chart/utils';
+import { transferPrice } from '@/core/utils/transferPrice';
+import { useAnnualDividend } from '@/hook/useAnnualDividend';
+import { useExchageRate } from '@/hook/useExchageRate';
 import { useTheme } from '@emotion/react';
 import {
   Chart as ChartJS,
@@ -6,84 +14,72 @@ import {
   BarElement,
 } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-
 import { Bar } from 'react-chartjs-2';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, ChartDataLabels);
 
-const labels = Array.from({ length: 12 }, (_, index) => ({
-  label: index + 1,
-  data: Math.ceil((index + 1) * 100 * Math.sqrt(Math.random())),
-}));
-
-export default function CommonChart() {
+export default function AnnualDividendBarChart() {
   const theme = useTheme();
+  const { annualDividendData } = useAnnualDividend();
+  const { exchangeRate } = useExchageRate();
 
-  return (
-    // TODO: 차트의 크기를 고정하고 싶다면 해당 tag 활성화
-    // <div style={{ width: '328px', height: '181px' }}>
-    <Bar
-      options={{
-        responsive: true,
-        // TODO: 차트의 크기를 고정하고 싶다면 해당 tag 활성화
-        // maintainAspectRatio: false,
-        layout: {
-          padding: {
-            top: 20,
-          },
-        },
-        scales: {
-          y: {
-            display: false,
-            grid: {
-              display: false,
-            },
-          },
-          x: {
-            ticks: {
+  const monthlyDividends = annualDividendData?.monthlyDividends;
+  const showChartDividendDatas = createShowChartDividendDatas(monthlyDividends);
+
+  if (showChartDividendDatas) {
+    return (
+      /**
+     * 
+     * // TODO: 차트의 크기를 고정하고 싶다면 해당 tag 활성화
+       // <div style={{ width: '328px', height: '181px' }}>
+     */
+      <Bar
+        options={{
+          ...options,
+          plugins: {
+            datalabels: {
               font: {
-                size: 10,
+                size: 9,
               },
-            },
-            border: {
-              display: false,
-            },
-            grid: {
-              display: false,
+              anchor: 'end',
+              clip: false,
+              align: 'top',
+              offset: 0,
+              // TODO: number type value에 특정 단위를 붙이고 싶을경우
+              formatter: (value: number) => {
+                const exchangedValue = transferPrice({
+                  currentPrice: value,
+                  exchangeRate,
+                  outputSymbol: 'KRW',
+                });
+
+                return formatChartValue(exchangedValue);
+              },
+              /** color를 변경하고 싶을 떄
+               * color: '#36A2EB',
+               */
             },
           },
-        },
-        plugins: {
-          datalabels: {
-            font: {
-              size: 9,
+        }}
+        data={{
+          labels: showChartDividendDatas.map(({ month }) => month),
+          datasets: [
+            {
+              label: '',
+              data: showChartDividendDatas.map(({ dividend }) => dividend),
+              backgroundColor: [theme.palette.basic.point_red01],
+              borderColor: [theme.palette.basic.point_red01],
+              borderRadius: 5,
+              /** 한쪽만 적용 true, 양쪽 다 둥글게 false  */
+              borderSkipped: false,
             },
-            anchor: 'end',
-            clip: false,
-            align: 'top',
-            offset: 0,
-            // TODO: number type value에 특정 단위를 붙이고 싶을경우
-            formatter: (value) => `${value}만`,
-            // color: '#36A2EB',
-          },
-        },
-        // TODO: https://www.chartjs.org/docs/latest/configuration/interactions.html#index
-        // events: [''],
-        onClick: (e) => console.log(e),
-      }}
-      data={{
-        labels: labels.map(({ label }) => label),
-        datasets: [
-          {
-            label: '',
-            data: labels.map(({ data }) => data),
-            backgroundColor: [theme.palette.basic.point_red01],
-            borderColor: [theme.palette.basic.point_red01],
-            borderRadius: 5,
-          },
-        ],
-      }}
-    />
-    // </div>
-  );
+          ],
+        }}
+      />
+      // TODO: 차트의 크기를 고정하고 싶다면 해당 tag 활성화
+      // </div>
+    );
+  }
+
+  return null;
 }

@@ -1,4 +1,6 @@
+import CommonFont from '@/components/common/Font';
 import Modal, { TModalProps } from '@/components/common/Modal';
+import { StyledTitleAlign } from '@/components/common/Modal/NotifyModal/styles';
 import useControlModal from '@/hook/useControlModal';
 import type { PropsWithChildren, ReactNode } from 'react';
 
@@ -23,10 +25,18 @@ export default function NotifyModal({
   return (
     <>
       <Modal show={isShow} layout={layout} position={position}>
-        <Modal.Title>{title}</Modal.Title>
+        <Modal.Title>
+          <StyledTitleAlign>
+            <CommonFont fontSize="h4" fontWeight="bold">
+              {title}
+            </CommonFont>
+          </StyledTitleAlign>
+        </Modal.Title>
         <Modal.Content>{content}</Modal.Content>
         <Modal.Actions>
-          <Modal.Button onClick={closeModal}>{buttonText}</Modal.Button>
+          <Modal.Button height={'54px'} onClick={closeModal}>
+            {buttonText}
+          </Modal.Button>
         </Modal.Actions>
       </Modal>
       <span onClick={openModal}>{children}</span>
