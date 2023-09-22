@@ -53,7 +53,7 @@ export default function AnnualDividendBarChart() {
                   outputSymbol: 'KRW',
                 });
 
-                return formatChartValue(exchangedValue);
+                return formatChartValue(exchangedValue.replace(/,/g, ''));
               },
               /** color를 변경하고 싶을 떄
                * color: '#36A2EB',

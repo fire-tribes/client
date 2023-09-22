@@ -20,6 +20,11 @@ type AnnualDividendModel = {
   monthlyDividends: MonthlyDividends;
 };
 
+type AnnualDividendByIncomeTax = Pick<
+  AnnualDividendModel,
+  'annualDividend' | 'thisMonthDividend' | 'dividendChange'
+>;
+
 /** 월별 배당금으로 들어올 수 있는 타입 */
 type MonthlyDividends = {
   JANUARY?: number;
@@ -36,4 +41,8 @@ type MonthlyDividends = {
   DECEMBER?: number;
 };
 
-export { type AnnualDividendModel, type MonthlyDividends };
+export {
+  type AnnualDividendModel,
+  type AnnualDividendByIncomeTax,
+  type MonthlyDividends,
+};

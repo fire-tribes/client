@@ -15,7 +15,7 @@ export default function ModeController() {
         <CommonFont fontSize="body3" color="gray7">
           {modeText}
         </CommonFont>
-        <IOSSwitch onClick={toggleMode} checked={isChecked} />
+        <IOSSwitch onClick={toggleMode} checked={isChecked ?? false} />
       </FlexBox>
     </FlexBox>
   );
