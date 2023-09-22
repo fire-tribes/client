@@ -3,7 +3,7 @@ import { MonthlyDividends } from '@/@types/models/dividend';
 /** 현재는 원화를 기준으로 변경만을 지원 */
 const formatChartValue = (value: string | number) => {
   const ZERO = 0;
-  const MIN_LENGTH = 4;
+  const MIN_LENGTH = 5;
   const MIDDLE_LENGTH = 7;
   const CHANGE_FONT_SIZE_LENGTH = 8;
   const MAX_LENGTH = 10;
