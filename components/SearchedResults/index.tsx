@@ -4,60 +4,24 @@ import {
   selectedStocksAtom,
 } from '../../hook/useGetSelectedStocks/state';
 import ShowAddedStocks from '../ShowAddedStocks';
-import APIInstance from '@/core/api/instance';
-import { useQuery } from '@tanstack/react-query';
+import { useGetSearchedResults } from '@/hook/useGetSearchedResults';
 import { useAtom } from 'jotai';
 import { useDebounce } from 'use-debounce';
 
 interface SearchResultsProps {
   /** 입력한 검색어 */
-  value: string | undefined;
+  value: string;
 }
 
-interface Stock {
-  data: [
-    {
-      assetId: 0;
-      tickerCode: string;
-      stockCode: string;
-      name: string;
-      category: {
-        countryType: 'KOR';
-        marketType: 'KRX';
-        assetCategoryType: 'STOCK';
-      };
-    },
-  ];
-  next: true;
-  currentPage: 0;
-  pageTotalSize: 0;
-}
-
-const useGetSearchStocks = (word: string | undefined) => {
-  return useQuery({
-    queryKey: ['searchedStocks', word],
-    queryFn: () =>
-      APIInstance.get<Stock>(`asset/find`, {
-        params: {
-          category: 'STOCK',
-          word: word,
-          pageIndex: 1,
-          pageSize: 10,
-        },
-      }),
-    onError: (error) => console.log(error), // TODO: Toast로 확장 사용
-    onSuccess: (response) => console.log(response), // TODO: Toast로 확장 사용
-  });
-};
-
-function SearchResults({ value }: SearchResultsProps) {
+function SearchedResults({ value }: SearchResultsProps) {
   /** value를 debounce 처리하여, 일정 시간동안 값이 바뀌면 서버에 get 요청 */
   const [debouncedValue] = useDebounce(value, 1000);
-  const {
-    data: getSearchStocks,
-    isLoading,
-    isError,
-  } = useGetSearchStocks(debouncedValue);
+
+  /** 검색 결과값을 배열로 가져오는 함수 */
+  const { getSearchedResultsData, isLoading } =
+    useGetSearchedResults(debouncedValue);
+  const searchedResultsArray = getSearchedResultsData;
+  console.log('searchedResultsArray: ', searchedResultsArray);
 
   const containerStyle: React.CSSProperties = {
     height: 'calc(100vh - 72px - 53px - 68.5px)',
@@ -68,14 +32,6 @@ function SearchResults({ value }: SearchResultsProps) {
 
   /** Jotai의 selectedStocksAtom을 이용해서 선택된 주식을 관리 */
   const [selectedStocks, setSelectedStocks] = useAtom(selectedStocksAtom);
-
-  console.log('getSearchStocks?: ', getSearchStocks);
-  console.log('getSearchStocks?.data: ', getSearchStocks?.data);
-  console.log('getSearchStocks?.data.data: ', getSearchStocks?.data.data);
-  // console.log(
-  //   'getSearchStocks?.data.data.data: ',
-  //   getSearchStocks?.data.data.data,
-  // );
 
   /** 선택 상태를 토글하여 선택된 객체값 배열 핸들링 */
   const handleToggleSelected = (stock: SelectedStocksAtomProps) => {
@@ -99,6 +55,7 @@ function SearchResults({ value }: SearchResultsProps) {
       }
     });
   };
+  console.log('handleToggleSelected: ', handleToggleSelected);
 
   /** 취소버튼 클릭 시, selectedStocks에서 해당 객체값 제거 */
   const handleRemoveSelected = (stock: SelectedStocksAtomProps) => {
@@ -121,21 +78,19 @@ function SearchResults({ value }: SearchResultsProps) {
         <div style={containerStyle}>검색어 결과가 없습니다.</div>
       ) : isLoading ? (
         <p>Loading...</p>
-      ) : isError ? (
-        <p>Error loading data</p>
       ) : (
         <div>
-          {getSearchStocks?.data.data.length !== 1 ? (
-            getSearchStocks?.data.data.map((stock) => {
+          {searchedResultsArray !== undefined ? (
+            searchedResultsArray.map((stock) => {
               return (
                 <SearchResult
                   key={stock.assetId}
-                  stock={stock}
+                  // stock={stock}
                   isSelected={selectedStocks.some(
                     (selected: SelectedStocksAtomProps) =>
                       selected.stockCode === stock.stockCode,
                   )}
-                  toggleSelected={() => handleToggleSelected(stock)}
+                  // toggleSelected={() => handleToggleSelected(stock)}
                 />
               );
             })
@@ -168,4 +123,4 @@ function SearchResults({ value }: SearchResultsProps) {
   );
 }
 
-export default SearchResults;
+export default SearchedResults;

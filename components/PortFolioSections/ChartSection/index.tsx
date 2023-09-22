@@ -1,6 +1,6 @@
 import AnnualDividendBarChart from '@/components/Chart';
 import DividendDate from '@/components/DividendDate';
-import CommonFont from '@/components/Font';
+import CommonFont from '@/components/common/Font';
 import Section from '@/components/Section';
 import CommonCheckButton from '@/components/common/CheckButton';
 import FlexBox from '@/components/common/FlexBox';

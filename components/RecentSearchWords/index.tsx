@@ -1,58 +1,25 @@
 // import RecentSearchWord from '../RecentSearchWord';
 import { RecentSearchWordsUI } from './style';
 import AlertModal from '../common/Modal/AlertModal';
-import APIInstance from '@/core/api/instance';
-import { useMutation, useQuery } from '@tanstack/react-query';
-
-interface GetRecentSearchWords {
-  success: true;
-  data: [
-    {
-      word: string;
-      date: string;
-    },
-  ];
-  errorCode: string;
-  message: string;
-}
-
-interface DeleteRecentSearchWords {
-  success: boolean;
-  data: boolean;
-  errorCode: string;
-  message: string;
-}
-
-const useGetRecentSearchWords = () => {
-  return useQuery({
-    queryKey: ['getRecentSearchWords'],
-    queryFn: () =>
-      APIInstance.get<GetRecentSearchWords>(`user/recent-search-word/list`, {
-        params: {
-          size: 10,
-        },
-      }),
-    onError: (error) => console.log('error: ', error), // TODO: 404 에러 페이지로 이동
-    onSuccess: (response) => console.log('success: ', response), // TODO: Toast로 확장 사용
-  });
-};
-
-const useDeleteRecentSearchWords = () => {
-  return useMutation({
-    mutationKey: ['deleteRecentSearchWords'],
-    mutationFn: () =>
-      APIInstance.post<DeleteRecentSearchWords>(`recent-search-word/clear-all`),
-  });
-};
+import { useGetRecentSearchWords } from '@/hook/useGetRecentSearchWords';
+import { useDeleteRecentSearchWord } from '@/hook/useDeleteRecentSearchWord';
+import { useRemoveRecentSearchWordsAll } from '@/hook/useRemoveRecentSearchWordsAll';
 
 function RecentSearchWords() {
-  const getRecentSearchWords = useGetRecentSearchWords();
-  console.log(
-    'getRecentSearchWords.data?.data:',
-    getRecentSearchWords.data?.data,
-  );
+  /** 최근 검색어 데이터 Get */
+  const { getRecentSearchWordsData } = useGetRecentSearchWords();
+  const recentSearchWordsDataArray = getRecentSearchWordsData;
+  console.log('recentSearchWordsDataArray: ', recentSearchWordsDataArray);
 
-  const { mutate } = useDeleteRecentSearchWords();
+  /** 특정 최근 검색어 Delete  */
+  const { deleteRecentSearchWordData } = useDeleteRecentSearchWord('삼성전자');
+  const isDeleteRecentSearchWord = deleteRecentSearchWordData?.data;
+  console.log('isDeleteRecentSearchWord: ', isDeleteRecentSearchWord);
+
+  /** 전체 최근 검색어 초기화 Post */
+  const { removeRecentSearchWordsAllData } = useRemoveRecentSearchWordsAll();
+  const isRemoveRecentSearchWordsAll = removeRecentSearchWordsAllData?.data;
+  console.log('isRemoveRecentSearchWordsAll: ', isRemoveRecentSearchWordsAll);
 
   return (
     <>
@@ -61,7 +28,7 @@ function RecentSearchWords() {
         <AlertModal
           title={'최근 검색어 삭제'}
           message={'최근 검색어를 모두 삭제하시겠어요?'}
-          onClickEvent={() => mutate()}
+          // onClickEvent={() => mutate()}
           toastMessage={'최근 검색어를 삭제하였습니다.'}
         >
           <button>전체 삭제</button>

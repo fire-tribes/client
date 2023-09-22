@@ -1,9 +1,9 @@
 import CommonFont from '@/components/common/Font';
 import FlexBox from '@/components/common/FlexBox';
-import { useExchageRate } from '@/hook/useExchageRate';
+import { useExchangeRate } from '@/hook/useExchangeRate';
 
 export default function ExchangeRateBox() {
-  const { exchangeRate } = useExchageRate();
+  const { exchangeRate } = useExchangeRate();
 
   return (
     <FlexBox justifyContent={'left'} gap="6px">

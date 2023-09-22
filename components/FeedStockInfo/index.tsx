@@ -4,8 +4,7 @@ import { SelectedStocksAtomProps } from '@/hook/useGetSelectedStocks/state';
 import testCircleSvg from '@/public/icon/testCircle.svg';
 import trashSvg from '@/public/icon/trash.svg';
 import { basic } from '@/styles/palette';
-import APIInstance from '@/core/api/instance';
-import { useQuery } from '@tanstack/react-query';
+import { useGetPresentPrice } from '@/hook/useGetPresentPrice';
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 
@@ -14,39 +13,7 @@ interface FeedStockInfoProps {
   stock: SelectedStocksAtomProps;
   /** 선택한 값을 배열 삭제 */
   removeSelected: (stock: SelectedStocksAtomProps) => void;
-  // onClickPresentPriceButton?: (tickerCode: string) => void;
 }
-
-interface PresentPrice {
-  success: true;
-  data: [
-    {
-      assetId: number;
-      currentPrice: string;
-      currencyType: string;
-      accessTime: '2023-09-14T06:03:13.450Z';
-      sign: string;
-      priceChange: string;
-      priceChangeRate: string;
-    },
-  ];
-  errorCode: string;
-  message: string;
-}
-
-const useGetPresentPrice = (assetIds: number) => {
-  return useQuery({
-    queryKey: ['presentPrice', assetIds],
-    queryFn: () =>
-      APIInstance.get<PresentPrice>('asset/price', {
-        params: {
-          assetIds: assetIds,
-        },
-      }),
-    onError: (error) => console.log(error), // TODO: Toast로 확장 사용
-    onSuccess: (response) => console.log(response), // TODO: Toast로 확장 사용
-  });
-};
 
 function FeedStockInfo({
   stock,
@@ -55,23 +22,16 @@ function FeedStockInfo({
   console.log('stock: ', stock);
   console.log('stock.assetId: ', stock.assetId);
   // 이 시점에서 한번 불러온다.
-  const { data: getPresentPrice, refetch } = useGetPresentPrice(stock.assetId);
-  console.log('getPresentPrice: ', getPresentPrice);
-  console.log('getPresentPrice?.data: ', getPresentPrice?.data);
-  console.log('getPresentPrice?.data.data[0]: ', getPresentPrice?.data.data[0]);
-  console.log(
-    'getPresentPrice?.data.data[0].assetId: ',
-    getPresentPrice?.data.data[0].assetId,
-  );
+  const { getPresentPriceData } = useGetPresentPrice(stock.assetId);
+  const presentPrice =
+    getPresentPriceData !== undefined && getPresentPriceData[0].currentPrice;
+  console.log('presentPrice: ', presentPrice);
 
   const [inputCountValue, setInputCountValue] = useState('');
   const [inputPriceValue, setInputPriceValue] = useState('');
   const [error, setError] = useState('');
 
-  const currentPrice = getPresentPrice?.data.data[0].currentPrice;
-
   const onClickPresentPrice = () => {
-    refetch();
     // 이미 데이터는 버튼을 클릭하지 않아도 불러온 상태
     // const currentPrice = getPresentPrice?.data.data[0].currentPrice;
     // // 여기서는 refetch 해주면 된다.
@@ -138,7 +98,7 @@ function FeedStockInfo({
             <input
               type="text"
               // value={inputPriceValue} 경락님 원래 작업
-              value={currentPrice}
+              value={inputPriceValue}
               placeholder="구매 가격($)"
               onChange={handleInputPriceChange}
               onBlur={handleInputBlur}

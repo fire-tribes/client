@@ -1,4 +1,4 @@
-import CommonFont from '@/components/Font';
+import CommonFont from '@/components/common/Font';
 import { StyledNotifyMessageSection } from '@/components/PortFolioSections/NotifyMessageSection/styles';
 
 const NOTIFY_MESSAGE =

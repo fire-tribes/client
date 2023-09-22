@@ -1,71 +1,56 @@
 import FeedStockInfos from '@/components/FeedStockInfos';
 import SearchLayout from '@/components/common/Layout/SearchLayout';
 import { selectedStocksAtom } from '@/hook/useGetSelectedStocks/state';
-import APIInstance from '@/core/api/instance';
 import Backward from '@/components/common/Backward';
-import { useMutation } from '@tanstack/react-query';
+import { useMakePortfolio } from '@/hook/useMakePortfolio';
+// import { useAddStocksAtPortfolio } from '@/hook/useAddStocksAtPortfolio';
+import { useAddStocksAtPortfolioQuery } from '@/hook/useQueryHook/useAddStocksAtPortfolioQuery';
 import { useRouter } from 'next/router';
 import { useAtom } from 'jotai';
-
-interface MakePortfolio {
-  success: true;
-  data: {
-    portfolioId: number;
-    userId: number;
-  };
-  errorCode: string;
-  message: string;
-}
-
-interface PostStocksAtPortfolio {
-  portfolioId: number;
-  assets: [
-    {
-      assetId: number;
-      price: string;
-      count: number;
-    },
-  ];
-}
-
-const useMakePortfolio = () => {
-  return useMutation({
-    mutationKey: ['madePortfolio'],
-    mutationFn: () => APIInstance.post<MakePortfolio>('portfolio'),
-    onError: (error) => console.log(error), // TODO: Toast로 확장 사용
-    onSuccess: (response) => console.log(response), // TODO: Toast로 확장 사용
-  });
-};
-
-const usePostStocksAtPortfolio = (PORTFOLIO_ID: number | undefined) => {
-  return useMutation({
-    mutationKey: ['postedStocksAtPortfolio'],
-    mutationFn: () =>
-      APIInstance.post<PostStocksAtPortfolio>(
-        `portfolio/${PORTFOLIO_ID}/asset`,
-      ),
-    onError: (error) => console.log(error), // TODO: Toast로 확장 사용
-    onSuccess: (response) => console.log(response), // TODO: Toast로 확장 사용
-  });
-};
 
 function Add() {
   /** URL 주소에서 query parameter로 portfolioId를 확인하여 신규 포트폴리오 생성인지, 기존 포트폴리오 추가인지 구분 */
   const router = useRouter();
   const { query } = router;
-  const PORTFOLIO_ID = query.portfolioId;
-  console.log('PORTFOLIO_ID: ', PORTFOLIO_ID);
+  const portfolioId = query.portfolioId;
+  console.log('portfolioId: ', portfolioId);
+  const PORTFOLIO_ID = Number(portfolioId);
 
   /** 신규일 경우, 포트폴리오 생성 */
-  const makePortfolio = useMakePortfolio();
-  makePortfolio.data?.data.data.portfolioId;
-  usePostStocksAtPortfolio(123123);
-  // portfolioId 기준으로 선택한 Stocks 추가
-  // const portfolioId =
-  //   typeof PORTFOLIO_ID === 'number'
-  //     ? PORTFOLIO_ID
-  //     : makePortfolio.data?.data.data.portfolioId;
-  // const { mutate } = usePostStocksAtPortfolio(portfolioId);
+  const { makePortfolioData } = useMakePortfolio();
+  const value = {
+    portfolioId: makePortfolioData?.portfolioId,
+    userId: makePortfolioData?.userId,
+  };
+  console.log('value: ', value);
+
+  /** 포트폴리오에 자산 추가 */
+  const exampleAssets = [
+    {
+      assetId: 0,
+      price: 0,
+      count: 0,
+      currencyType: 'USD',
+    },
+    {
+      assetId: 1,
+      price: 1,
+      count: 1,
+      currencyType: 'USD',
+    },
+    {
+      assetId: 2,
+      price: 2,
+      count: 2,
+      currencyType: 'USD',
+    },
+  ];
+  const formData = {
+    portfolioId: PORTFOLIO_ID,
+    assets: exampleAssets,
+  };
+  const { mutate } = useAddStocksAtPortfolioQuery();
+  console.log('() => mutate(formData): ', () => mutate(formData));
 
   /** 선택한 주식 종목 배열 */
   const [selectedStocks] = useAtom(selectedStocksAtom);

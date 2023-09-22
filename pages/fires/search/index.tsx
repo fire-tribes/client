@@ -1,7 +1,7 @@
 import PopluarStocks from '@/components/PopularStocks';
 import RecentSearchWords from '@/components/RecentSearchWords';
 import SearchInput from '@/components/SearchInput';
-import SearchResults from '@/components/SearchResults';
+import SearchedResults from '@/components/SearchedResults';
 import SearchLayout from '@/components/common/Layout/SearchLayout';
 import { selectedStocksAtom } from '@/hook/useGetSelectedStocks/state';
 import BiggerCloseSvg from '@/public/icon/biggerClose.svg';
@@ -82,7 +82,7 @@ function Search() {
       ) : (
         <>
           <section>
-            <SearchResults value={value} />
+            <SearchedResults value={value} />
           </section>
         </>
       )}

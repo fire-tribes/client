@@ -1,9 +1,9 @@
-import BadgeGroup from '@/components/BdageTest';
+import BadgeGroup from '@/components/dividend/BadgeGroup';
 import { MyStockList } from '@/components/List/MyStockList';
 import Section from '@/components/Section';
 import FlexBox from '@/components/common/FlexBox';
 // import { transferPrice } from '@/core/utils/transferPrice';
-// import { useExchageRate } from '@/hook/useExchageRate';
+// import { useExchangeRate } from '@/hook/useExchangeRate';
 import { useMyPortFolio } from '@/hook/useMyPortFolio';
 import { Typography } from '@mui/material';
 
