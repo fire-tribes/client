@@ -2,6 +2,8 @@ import CommonFont from '@/components/common/Font';
 import FlexBox from '@/components/common/FlexBox';
 import { useMyPortFolio } from '@/hook/useMyPortFolio';
 
+import { transferPrice } from '@/core/utils/transferPrice';
+import { useExchageRate } from '@/hook/useExchageRate';
 import {
   Box,
   List,
@@ -50,6 +52,7 @@ const datas: MyStockItemModel[] = [
  */
 
 export function MyStockList() {
+  const { exchangeRate } = useExchageRate();
   const { myPortFolioData } = useMyPortFolio();
   const myAssetDetails = myPortFolioData?.assetDetails;
 
@@ -57,13 +60,6 @@ export function MyStockList() {
     <Box>
       <StyledMyStockListContainer disablePadding>
         {myAssetDetails?.map((detail) => {
-          detail.tickerCode;
-          detail.averagePrice;
-          detail.currentPrice;
-          detail.dividendMonth;
-          detail.count;
-          detail.value;
-
           return (
             <FlexBox key={detail.tickerCode} flexDirection="column">
               <ListItem disablePadding sx={{ gap: '9px' }}>
@@ -73,9 +69,7 @@ export function MyStockList() {
                 <ListItemText
                   primary={
                     <CommonFont fontWeight="bold">
-                      {detail.tickerCode
-                        ? detail.tickerCode
-                        : detail.stockCode && detail.stockCode}
+                      {detail.tickerCode}
                     </CommonFont>
                   }
                   secondary={
@@ -84,8 +78,13 @@ export function MyStockList() {
                       fontWeight="normal"
                       color="gray5"
                     >
-                      내 평균 {detail.averagePrice}
-                      {detail.currencyType}
+                      내 평균{' '}
+                      {transferPrice({
+                        currentPrice: detail.averagePrice,
+                        outputSymbol: 'KRW',
+                        exchangeRate,
+                        defaultText: '0원',
+                      })}
                     </CommonFont>
                   }
                   sx={{ textAlign: 'left' }}
@@ -97,16 +96,29 @@ export function MyStockList() {
                       fontWeight="bold"
                       color="gray7"
                     >
-                      {detail.currentPrice}원
+                      {transferPrice({
+                        currentPrice: detail.currentPrice,
+                        outputSymbol: 'KRW',
+                        exchangeRate,
+                        defaultText: '0원',
+                      })}
                     </CommonFont>
                   }
                   secondary={
                     <CommonFont
                       fontSize="caption2"
                       fontWeight="regular"
-                      color="point_red01"
+                      color={
+                        detail.assetPriceChangeRate &&
+                        detail.assetPriceChangeRate > 0
+                          ? 'point_red01'
+                          : 'point_blue02'
+                      }
                     >
-                      {detail.assetPriceChangeRate}
+                      {detail.assetPriceChangeRate &&
+                      detail.assetPriceChangeRate > 0
+                        ? `+${detail.assetPriceChangeRate}%`
+                        : '0%'}
                     </CommonFont>
                   }
                   sx={{ textAlign: 'right' }}
@@ -126,7 +138,10 @@ export function MyStockList() {
                     ></DetailListItemText>
                     <DetailListItemText textAlign="right">
                       <CommonFont fontSize="caption" color="gray8">
-                        {detail.dividendYield}
+                        {detail.dividendPriceRatio > 0
+                          ? detail.dividendPriceRatio.toFixed(7)
+                          : detail.dividendPriceRatio}
+                        %
                       </CommonFont>
                     </DetailListItemText>
                   </DetailListItem>
@@ -141,7 +156,9 @@ export function MyStockList() {
                     ></DetailListItemText>
                     <DetailListItemText textAlign="right">
                       <CommonFont fontSize="caption" color="gray8">
-                        {detail.dividendMonth}
+                        {detail.dividendMonth.length
+                          ? detail.dividendMonth.join(',')
+                          : '없음'}
                       </CommonFont>
                     </DetailListItemText>
                   </DetailListItem>
@@ -174,14 +191,23 @@ export function MyStockList() {
                       primary={
                         <>
                           <CommonFont fontSize="caption" color="gray8">
-                            {detail.value}
+                            {transferPrice({
+                              currentPrice: detail.value,
+                              exchangeRate,
+                              outputSymbol: 'KRW',
+                              defaultText: '',
+                            })}{' '}
                           </CommonFont>
                           <CommonFont
                             fontSize="caption"
                             component="span"
-                            color="point_red01"
+                            color={
+                              detail.rateOfReturn && detail.rateOfReturn > 0
+                                ? 'point_red01'
+                                : 'point_blue02'
+                            }
                           >
-                            {detail.rateOfReturn}
+                            ({detail.rateOfReturn.toFixed(2) || 0}%)
                           </CommonFont>
                         </>
                       }

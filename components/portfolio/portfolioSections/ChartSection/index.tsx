@@ -50,7 +50,15 @@ export default function ChartSection() {
         paddingBottom={'18px'}
       >
         <h1 style={{ paddingBottom: '6px' }}>{title}</h1>
-        <CommonFont fontSize="body1" color="point_red01">
+        <CommonFont
+          fontSize="body1"
+          color={
+            annualDividendData?.dividendChange &&
+            annualDividendData?.dividendChange > 0
+              ? 'point_red01'
+              : 'point_blue02'
+          }
+        >
           {subTitle}
         </CommonFont>
       </FlexBox>

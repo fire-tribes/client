@@ -3,9 +3,12 @@ import { MyStockList } from '@/components/List/MyStockList';
 import Section from '@/components/Section';
 import FlexBox from '@/components/common/FlexBox';
 import { useMyPortFolio } from '@/hook/useMyPortFolio';
+import { transferPrice } from '@/core/utils/transferPrice';
+import { useExchageRate } from '@/hook/useExchageRate';
 import { Typography } from '@mui/material';
 
 export default function DetailStocksSection() {
+  const { exchangeRate } = useExchageRate();
   const { myPortFolioData } = useMyPortFolio();
 
   /**
@@ -20,15 +23,37 @@ export default function DetailStocksSection() {
         <Section.Title>보유 주식</Section.Title>
         <BadgeGroup />
       </FlexBox>
-      <h1>{myPortFolioData?.totalValue}</h1>
+      <h1>
+        {transferPrice({
+          currentPrice: myPortFolioData?.totalValue,
+          exchangeRate: exchangeRate,
+          outputSymbol: 'KRW',
+          defaultText: '0원',
+        })}
+      </h1>
       <Typography
-        color="error"
+        color={
+          myPortFolioData?.totalValueChangeRate &&
+          myPortFolioData?.totalValueChangeRate > 0
+            ? 'error'
+            : 'primary'
+        }
         sx={{ paddingTop: '6px', paddingBottom: '18px' }}
       >
-        {myPortFolioData?.totalValueChange + '원'}
-        {myPortFolioData?.totalValueChangeRate + '%'}
+        {transferPrice({
+          currentPrice: myPortFolioData?.totalValueChange,
+          exchangeRate: exchangeRate,
+          outputSymbol: 'KRW',
+        })}{' '}
+        {`(${myPortFolioData?.totalValueChangeRate || 0}%)`}
       </Typography>
       <MyStockList />
     </Section>
   );
 }
+
+transferPrice({
+  currentPrice: undefined,
+  exchangeRate: undefined,
+  outputSymbol: 'KRW',
+});
