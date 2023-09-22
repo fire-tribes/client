@@ -4,7 +4,6 @@ import ModeController from '@/components/ModeController';
 import CommonCenter from '@/components/common/Center';
 import CommonHeader from '@/components/common/Header';
 import DetailStocksSection from '@/components/portfolio/portfolioSections/DetailStocksSection';
-
 import ChartSection from '@/components/portfolio/portfolioSections/ChartSection';
 import TotalStatisticsSection from '@/components/portfolio/portfolioSections/TotalStatisticsSection';
 import { useMyPortFolio } from '@/hook/useMyPortFolio';
