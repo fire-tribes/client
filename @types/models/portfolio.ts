@@ -1,4 +1,4 @@
-import { ExchangeRateSymbol } from '@/@types/models/exchangeRate';
+import type { ExchangeRateSymbol } from '@/@types/models/exchangeRate';
 
 export type MyPortfolioModel = {
   /** 포트폴리오 id */
@@ -13,31 +13,31 @@ export type MyPortfolioModel = {
   assetDetails: MyportfoliAssetDetailModel[];
 };
 
-export type MyportfoliAssetDetailModel = {
+export interface MyportfoliAssetDetailModel {
   /** 자산Id */
+  portfolioAssetId: string;
+  /** 미국주식Id */
   assetId: number;
-  /** 미국주식코드 */
+  /** 미국주식 고유 문자 코드  ex) MSFT */
   tickerCode: string;
-  /** 한국주식코드 */
-  stockCode: string;
   /** 자산수량 */
   count: number;
   /** 평단가 */
-  averagePrice: string;
+  averagePrice: number;
   /** 현재가 */
-  currentPrice: string;
+  currentPrice: number;
   /** 등락율 */
-  assetPriceChangeRate: string;
+  assetPriceChangeRate: number;
   /** 등략 */
-  assetPriceChange: string;
+  assetPriceChange: number;
   /** 자산가치 */
   value: number;
   /** 수익률 */
   rateOfReturn: number;
   /** 배당수익률 */
-  dividendYield: number;
+  dividendPriceRatio: number;
   /** 배당주기 */
   dividendMonth: number[];
   /** 통화 */
   currencyType: ExchangeRateSymbol;
-};
+}

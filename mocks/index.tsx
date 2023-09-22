@@ -1,3 +1,4 @@
+import { badangDetailText } from '@/components/List/DetailInformationList';
 import CommonFont from '@/components/common/Font';
 import type { NotifyListItemProps } from '@/components/common/Modal/NotifyListModal';
 import type { BasicColorKeys } from '@/styles/palette';
@@ -10,37 +11,6 @@ type BadgeDetailText = {
   defaultValue: string;
 };
 type DetailInformationKeys = keyof typeof badangDetailText;
-
-const badangDetailText = {
-  annualDividend: {
-    shouldOpenModal: false,
-    title: '연간 총 배당금',
-    color: 'gray9',
-    iconName: '',
-    defaultValue: '0원',
-  },
-  dividendPriceRatio: {
-    shouldOpenModal: true,
-    title: '배당수익률',
-    color: 'point_red01',
-    iconName: 'expand_more',
-    defaultValue: '0%',
-  },
-  paidTax: {
-    shouldOpenModal: true,
-    title: '납부한 세금',
-    color: 'point_blue02',
-    iconName: 'expand_more',
-    defaultValue: '없음',
-  },
-  unPaidTax: {
-    shouldOpenModal: true,
-    title: '납부할 세금',
-    color: 'point_blue02',
-    iconName: 'expand_more',
-    defaultValue: '없음',
-  },
-};
 
 const items: Record<DetailInformationKeys, NotifyListItemProps[] | []> = {
   annualDividend: [],
@@ -146,9 +116,4 @@ const items: Record<DetailInformationKeys, NotifyListItemProps[] | []> = {
   ],
 };
 
-export {
-  type BadgeDetailText,
-  type DetailInformationKeys,
-  badangDetailText,
-  items,
-};
+export { type BadgeDetailText, type DetailInformationKeys, items };

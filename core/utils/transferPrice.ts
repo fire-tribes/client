@@ -45,7 +45,11 @@ export const transferPrice: TransferPrice = ({
     return defaultText;
   }
   if (outputSymbol === 'KRW') {
-    return Math.floor(currentPrice * exchangeRate) + '원' + optionText;
+    return (
+      Math.floor(currentPrice * exchangeRate).toLocaleString('ko-kr') +
+      '원' +
+      optionText
+    );
   }
   if (outputSymbol === 'USD') {
     return Math.floor(currentPrice / exchangeRate) + '$' + optionText;

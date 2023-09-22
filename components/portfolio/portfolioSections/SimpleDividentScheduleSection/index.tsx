@@ -1,7 +1,6 @@
 import CommonFont from '@/components/common/Font';
 import { ScheduleList } from '@/components/List/ScheduleList';
 import Section from '@/components/Section';
-import CommonBar from '@/components/common/Bar';
 import FlexBox from '@/components/common/FlexBox';
 import CommonIcon from '@/components/common/Icon';
 
@@ -22,7 +21,6 @@ export default function SimpleDividentScheduleSection() {
           </button>
         </FlexBox>
       </Section.Footer>
-      <CommonBar />
     </Section>
   );
 }
