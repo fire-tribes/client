@@ -9,38 +9,7 @@ type BadgeDetailText = {
   iconName: string;
   defaultValue: string;
 };
-type DetailInformationKeys = keyof typeof badangDetailText;
-
-const badangDetailText = {
-  annualDividend: {
-    shouldOpenModal: false,
-    title: '연간 총 배당금',
-    color: 'gray9',
-    iconName: '',
-    defaultValue: '0원',
-  },
-  dividendPriceRatio: {
-    shouldOpenModal: true,
-    title: '배당수익률',
-    color: 'point_red01',
-    iconName: 'expand_more',
-    defaultValue: '0%',
-  },
-  paidTax: {
-    shouldOpenModal: true,
-    title: '납부한 세금',
-    color: 'point_blue02',
-    iconName: 'expand_more',
-    defaultValue: '없음',
-  },
-  unPaidTax: {
-    shouldOpenModal: true,
-    title: '납부할 세금',
-    color: 'point_blue02',
-    iconName: 'expand_more',
-    defaultValue: '없음',
-  },
-};
+// type DetailInformationKeys = keyof typeof badangDetailText;
 
 const items: Record<DetailInformationKeys, NotifyListItemProps[] | []> = {
   annualDividend: [],
@@ -146,9 +115,4 @@ const items: Record<DetailInformationKeys, NotifyListItemProps[] | []> = {
   ],
 };
 
-export {
-  type BadgeDetailText,
-  type DetailInformationKeys,
-  badangDetailText,
-  items,
-};
+export { type BadgeDetailText, type DetailInformationKeys, items };
