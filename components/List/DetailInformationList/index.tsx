@@ -5,7 +5,7 @@ import CommonIcon from '@/components/common/Icon';
 import { S } from '@/components/List/DetailInformationList/styles';
 import CommonFont from '@/components/common/Font';
 import { useAnnualDividend } from '@/hook/useAnnualDividend';
-import { useExchageRate } from '@/hook/useExchageRate';
+import { useExchangeRate } from '@/hook/useExchangeRate';
 import { transferPrice } from '@/core/utils/transferPrice';
 import { ListItem, ListItemButton } from '@mui/material';
 import type { BadgeDetailText, DetailInformationKeys } from '@/mocks';
@@ -13,7 +13,7 @@ import type { BadgeDetailText, DetailInformationKeys } from '@/mocks';
 export default function DetailInformationList() {
   // useHooks get data
   const { annualDividendData } = useAnnualDividend();
-  const { exchangeRate } = useExchageRate();
+  const { exchangeRate } = useExchangeRate();
 
   transferPrice({
     exchangeRate,

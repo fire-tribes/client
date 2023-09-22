@@ -17,35 +17,35 @@ import {
  * TODO: 해당 코드들은 사용될 예정입니다.
  * const titles = ['배당율', '배당주기', '보유수량', '자산가치'];
 
-interface MyStockItemModel {
-  symbol: string;
-  imgUrl: string;
-  assetPurchasePrice: string;
-  assetTotalPrice: string;
-  assetTotalPriceDiffRate: string;
-  currentAssetPrice?: string;
-  dividendRate?: string;
-  frequency?: 'ONE_TIME';
-  assetCount?: number;
-  diffRate?: string;
-}
+// interface MyStockItemModel {
+//   symbol: string;
+//   imgUrl: string;
+//   assetPurchasePrice: string;
+//   assetTotalPrice: string;
+//   assetTotalPriceDiffRate: string;
+//   currentAssetPrice?: string;
+//   dividendRate?: string;
+//   frequency?: 'ONE_TIME';
+//   assetCount?: number;
+//   diffRate?: string;
+// }
 
-const datas: MyStockItemModel[] = [
-  {
-    symbol: 'JEPI',
-    imgUrl: '💥',
-    assetPurchasePrice: '40105',
-    assetTotalPrice: '40,402',
-    assetTotalPriceDiffRate: '+0.1%',
-  },
-  {
-    symbol: 'SCHD',
-    imgUrl: '💥',
-    assetPurchasePrice: '40105',
-    assetTotalPrice: '100,402',
-    assetTotalPriceDiffRate: '+0.1%',
-  },
-];
+// const datas: MyStockItemModel[] = [
+//   {
+//     symbol: 'JEPI',
+//     imgUrl: '💥',
+//     assetPurchasePrice: '40105',
+//     assetTotalPrice: '40,402',
+//     assetTotalPriceDiffRate: '+0.1%',
+//   },
+//   {
+//     symbol: 'SCHD',
+//     imgUrl: '💥',
+//     assetPurchasePrice: '40105',
+//     assetTotalPrice: '100,402',
+//     assetTotalPriceDiffRate: '+0.1%',
+//   },
+// ];
 
  */
 

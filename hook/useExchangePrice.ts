@@ -10,11 +10,11 @@
  */
 
 import { useAnnualDividend } from '@/hook/useAnnualDividend';
-import { useExchageRate } from '@/hook/useExchageRate';
+import { useExchangeRate } from '@/hook/useExchangeRate';
 import { useMyPortFolio } from '@/hook/useMyPortFolio';
 
 export const useExchangePriceAll = () => {
-  const { data } = useExchageRate();
+  const { data } = useExchangeRate();
   const { annualDividendData } = useAnnualDividend();
   const { myPortFolioData } = useMyPortFolio();
 
@@ -22,9 +22,9 @@ export const useExchangePriceAll = () => {
   annualDividendData;
   myPortFolioData;
 
-  const exchageRate = data?.value;
+  const exchangeRate = data?.value;
   const inputSymbol = data?.currencyType;
 
-  exchageRate;
+  exchangeRate;
   inputSymbol;
 };

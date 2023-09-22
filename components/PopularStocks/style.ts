@@ -9,10 +9,13 @@ const BottomContainer = styled.div`
 
   white-space: nowrap;
   overflow-x: scroll;
-  scrollbar-width: none; /* Firefox에서 스크롤바 숨김 */
-  -ms-overflow-style: none; /* IE/Edge에서 스크롤바 숨김 */
+  /** Firefox에서 스크롤바 숨김 */
+  scrollbar-width: none;
+  /** IE/Edge에서 스크롤바 숨김 */
+  -ms-overflow-style: none;
   ::-webkit-scrollbar {
-    width: 0; /* Chrome 및 Safari에서 스크롤바 숨김 */
+    /** Chrome 및 Safari에서 스크롤바 숨김 */
+    width: 0;
   }
 
   div {
