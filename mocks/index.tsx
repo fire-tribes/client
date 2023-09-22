@@ -1,3 +1,4 @@
+import { badangDetailText } from '@/components/List/DetailInformationList';
 import CommonFont from '@/components/common/Font';
 import type { NotifyListItemProps } from '@/components/common/Modal/NotifyListModal';
 import type { BasicColorKeys } from '@/styles/palette';
@@ -9,7 +10,7 @@ type BadgeDetailText = {
   iconName: string;
   defaultValue: string;
 };
-// type DetailInformationKeys = keyof typeof badangDetailText;
+type DetailInformationKeys = keyof typeof badangDetailText;
 
 const items: Record<DetailInformationKeys, NotifyListItemProps[] | []> = {
   annualDividend: [],

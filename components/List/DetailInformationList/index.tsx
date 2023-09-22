@@ -6,36 +6,36 @@ import { useExchageRate } from '@/hook/useExchageRate';
 import { transferPrice } from '@/core/utils/transferPrice';
 import type { BadgeDetailText } from '@/mocks';
 
+export const badangDetailText = {
+  annualDividend: {
+    shouldOpenModal: false,
+    title: '연간 총 배당금',
+    color: 'gray9',
+    iconName: '',
+  },
+  dividendPriceRatio: {
+    shouldOpenModal: true,
+    title: '투자 배당률',
+    color: 'point_red01',
+    iconName: 'expand_more',
+  },
+  paidTax: {
+    shouldOpenModal: true,
+    title: '납부한 세금',
+    color: 'point_blue02',
+    iconName: 'expand_more',
+  },
+  unPaidTax: {
+    shouldOpenModal: true,
+    title: '납부할 세금',
+    color: 'point_blue02',
+    iconName: 'expand_more',
+  },
+};
+
 export default function DetailInformationList() {
   const { annualDividendData } = useAnnualDividend();
   const { exchangeRate } = useExchageRate();
-
-  const badangDetailText = {
-    annualDividend: {
-      shouldOpenModal: false,
-      title: '연간 총 배당금',
-      color: 'gray9',
-      iconName: '',
-    },
-    dividendPriceRatio: {
-      shouldOpenModal: true,
-      title: '투자 배당률',
-      color: 'point_red01',
-      iconName: 'expand_more',
-    },
-    paidTax: {
-      shouldOpenModal: true,
-      title: '납부한 세금',
-      color: 'point_blue02',
-      iconName: 'expand_more',
-    },
-    unPaidTax: {
-      shouldOpenModal: true,
-      title: '납부할 세금',
-      color: 'point_blue02',
-      iconName: 'expand_more',
-    },
-  };
 
   const detailInformationData = {
     annualDividend: `${transferPrice({
