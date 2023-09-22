@@ -4,11 +4,12 @@ import ModeController from '@/components/ModeController';
 import CommonCenter from '@/components/common/Center';
 import CommonHeader from '@/components/common/Header';
 import DetailStocksSection from '@/components/portfolio/portfolioSections/DetailStocksSection';
-import SimpleDividentScheduleSection from '@/components/portfolio/portfolioSections/SimpleDividentScheduleSection';
+
 import ChartSection from '@/components/portfolio/portfolioSections/ChartSection';
 import TotalStatisticsSection from '@/components/portfolio/portfolioSections/TotalStatisticsSection';
 import { useMyPortFolio } from '@/hook/useMyPortFolio';
 import NotifyMessageSection from '@/components/portfolio/portfolioSections/NotifyMessageSection';
+import CommonBar from '@/components/common/Bar';
 import { CircularProgress } from '@mui/material';
 
 import Head from 'next/head';
@@ -43,7 +44,11 @@ const MainPage = () => {
           <ExchangeRateBox />
           <ChartSection />
           <TotalStatisticsSection />
-          <SimpleDividentScheduleSection />
+          {
+            // TODO: 배당달력뷰 진행시 추가
+            // <SimpleDividentScheduleSection />
+          }
+          <CommonBar />
           <DetailStocksSection />
           <NotifyMessageSection />
         </Layout>
