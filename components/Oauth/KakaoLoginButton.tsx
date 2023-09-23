@@ -1,42 +1,44 @@
 import { KakaoSDK } from '@/components/Oauth/KakaoSDK';
-import { Cookie } from '@/core/api/cookie';
 import { useKakaoLogin } from '@/hook/useKakaoLogin';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { Snackbar } from '@mui/material';
+import Image from 'next/image';
 
 export const KakaoLoginButton = () => {
-  const router = useRouter();
-  const { code } = router.query as { code?: string };
-  const { init, open, start } = useKakaoLogin();
-
-  useEffect(() => {
-    init();
-  }, [init]);
-
-  useEffect(() => {
-    if (code && code.length > 0) {
-      start(code)
-        .then((response) => {
-          const accessToken = response?.data.data.login.token.accessToken;
-          if (accessToken) {
-            const cookie = new Cookie();
-            cookie.set('accessToken', accessToken);
-            router.push('/');
-          }
-        })
-        .catch((err) => console.error(err));
-    }
-  }, [code, router, start]);
+  const { open, isError, setIsError } = useKakaoLogin();
 
   return (
     <>
       <KakaoSDK />
       <a id="kakao_login_button" onClick={open}>
-        <img
-          src="images/kakao_login/ko/kakao_login_medium_narrow.png"
+        <Image
+          src="/images/kakao_login/ko/kakao_login_medium_narrow.png"
           alt="카카오 로그인 버튼"
+          width={183}
+          height={45}
+          quality={100}
         />
       </a>
+      {isError && (
+        <Snackbar
+          open={isError}
+          message={'로그인 오류가 발생했습니다. 다시 시도해 주세요.'}
+          autoHideDuration={6000}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          ContentProps={{
+            sx: {
+              justifyContent: 'center',
+            },
+          }}
+          onClose={() => setIsError(false)}
+          sx={{
+            bottom: '72px',
+          }}
+        ></Snackbar>
+        // <Toast toastMessage="로그인 오류가 발생했습니다. 다시 시도해 주세요." />
+      )}
     </>
   );
 };

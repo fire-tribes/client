@@ -12,9 +12,9 @@ const LoginPage = () => {
       <CommonCenter>
         <LoginPageUI.Content>
           <Image
-            src={'/images/snowball_label.png'}
-            width={214}
-            height={40}
+            src={'/images/LOGO.png'}
+            width={237}
+            height={55}
             alt="snowball_label"
           />
           <LoginPageUI.Title>{GUIDE_TEXT}</LoginPageUI.Title>
