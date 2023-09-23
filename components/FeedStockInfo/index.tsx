@@ -1,70 +1,37 @@
 import { FeedStockInfoUI } from './style';
 import AlertModal from '../common/Modal/AlertModal';
-import { SelectedStocksAtomProps } from '@/hook/useAtom/state';
+import { SelectedStocksAtomProps } from '@/hook/useGetSelectedStocks/state';
 import testCircleSvg from '@/public/icon/testCircle.svg';
 import trashSvg from '@/public/icon/trash.svg';
 import { basic } from '@/styles/palette';
-import APIInstance from '@/core/api/instance';
-import { useQuery } from '@tanstack/react-query';
+import { useGetPresentPrice } from '@/hook/useGetPresentPrice';
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 
 interface FeedStockInfoProps {
+  /** 선택한 배열의 객체값 */
   stock: SelectedStocksAtomProps;
+  /** 선택한 값을 배열 삭제 */
   removeSelected: (stock: SelectedStocksAtomProps) => void;
-  // onClickPresentPriceButton?: (tickerCode: string) => void;
 }
-
-interface PresentPrice {
-  success: true;
-  data: [
-    {
-      assetId: number;
-      currentPrice: string;
-      currencyType: string;
-      accessTime: '2023-09-14T06:03:13.450Z';
-      sign: string;
-      priceChange: string;
-      priceChangeRate: string;
-    },
-  ];
-  errorCode: string;
-  message: string;
-}
-
-const useGetPresentPrice = (assetIds: number) => {
-  return useQuery({
-    queryKey: ['presentPrice', assetIds],
-    queryFn: () =>
-      APIInstance.get<PresentPrice>(
-        'http://project-snow.kro.kr/api/v1/asset/price',
-        {
-          params: {
-            assetIds: assetIds,
-          },
-        },
-      ),
-    onError: (error) => console.log(error), // Toast로 확장 사용
-    onSuccess: (response) => console.log(response), // Toast로 확장 사용
-    // 포트폴리오 유무에 따라 다르게 처리하기 등도 가능
-  });
-};
 
 function FeedStockInfo({
   stock,
   removeSelected, // onClickPresentPriceButton,
 }: FeedStockInfoProps) {
+  console.log('stock: ', stock);
+  console.log('stock.assetId: ', stock.assetId);
   // 이 시점에서 한번 불러온다.
-  const { data: getPresentPrice, refetch } = useGetPresentPrice(stock.assetId);
+  const { getPresentPriceData } = useGetPresentPrice(stock.assetId);
+  const presentPrice =
+    getPresentPriceData !== undefined && getPresentPriceData[0].currentPrice;
+  console.log('presentPrice: ', presentPrice);
 
   const [inputCountValue, setInputCountValue] = useState('');
   const [inputPriceValue, setInputPriceValue] = useState('');
   const [error, setError] = useState('');
 
-  const currentPrice = getPresentPrice?.data.data[0].currentPrice;
-
   const onClickPresentPrice = () => {
-    refetch();
     // 이미 데이터는 버튼을 클릭하지 않아도 불러온 상태
     // const currentPrice = getPresentPrice?.data.data[0].currentPrice;
     // // 여기서는 refetch 해주면 된다.
@@ -78,13 +45,12 @@ function FeedStockInfo({
   const handleInputCountChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setInputCountValue(value);
-    // 오류 메시지 초기화
     setError('');
   };
   const handleInputPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setInputPriceValue(value);
-    // 오류 메시지 초기화
+
     setError('');
   };
   const handleInputBlur = () => {
@@ -100,7 +66,7 @@ function FeedStockInfo({
           <FeedStockInfoUI.NativeStockInfoContainer>
             <Image src={testCircleSvg} alt="testCircle Svg" />
             <div>
-              <div>{stock.name}</div>
+              <div>{stock.stockCode}</div>
               <div>{stock.stockCode}</div>
             </div>
           </FeedStockInfoUI.NativeStockInfoContainer>
@@ -132,7 +98,7 @@ function FeedStockInfo({
             <input
               type="text"
               // value={inputPriceValue} 경락님 원래 작업
-              value={currentPrice}
+              value={inputPriceValue}
               placeholder="구매 가격($)"
               onChange={handleInputPriceChange}
               onBlur={handleInputBlur}

@@ -5,7 +5,7 @@ import {
 } from '@/components/Chart/utils';
 import { transferPrice } from '@/core/utils/transferPrice';
 import { useAnnualDividend } from '@/hook/useAnnualDividend';
-import { useExchageRate } from '@/hook/useExchageRate';
+import { useExchangeRate } from '@/hook/useExchangeRate';
 import { useTheme } from '@emotion/react';
 import {
   Chart as ChartJS,
@@ -21,7 +21,7 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, ChartDataLabels);
 export default function AnnualDividendBarChart() {
   const theme = useTheme();
   const { annualDividendData } = useAnnualDividend();
-  const { exchangeRate } = useExchageRate();
+  const { exchangeRate } = useExchangeRate();
 
   const monthlyDividends = annualDividendData?.monthlyDividends;
   const showChartDividendDatas = createShowChartDividendDatas(monthlyDividends);

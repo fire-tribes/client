@@ -1,6 +1,4 @@
-import { basic } from '@/styles/palette';
 import CommonButton from '@/components/common/Button/CommonButton';
-// import MoneyBagImage from '@/public/Money_bag.png';
 import CloudImage from '@/public/Cloud.png';
 import PlusSvg from '@/public/icon/plus.svg';
 import Layout from '@/components/common/Layout';
@@ -52,10 +50,10 @@ const Item = styled.div`
     text-align: center;
   }
   >div: nth-child(2) {
-    font-family: Pretendard;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
+    ${({ theme }) => `
+      font-size: ${theme.font.size.body1};
+      font-weight: ${theme.font.weight.bold};
+    `}
   }
   > div:last-child {
     margin-bottom: 0;
@@ -64,14 +62,14 @@ const Item = styled.div`
       padding: 10px 18px;
 
       border-radius: 30px;
-      background-color: ${basic.gray1};
 
-      color: ${basic.point_blue02};
-      font-family: Pretendard;
-      font-size: 17px;
-      font-style: normal;
-      font-weight: 700;
-      line-height: 26px;
+      ${({ theme }) => `
+        background-color: ${theme.palette.basic.gray1};
+        
+        color: ${theme.palette.basic.point_blue02};
+        font-size: ${theme.font.size.h5};
+        font-weight: ${theme.font.weight.bold};
+      `}
 
       > span {
         margin-left: 8px;

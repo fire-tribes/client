@@ -6,11 +6,11 @@ import CommonCheckButton from '@/components/common/CheckButton';
 import FlexBox from '@/components/common/FlexBox';
 import { transferPrice } from '@/core/utils/transferPrice';
 import { useAnnualDividend } from '@/hook/useAnnualDividend';
-import { useExchageRate } from '@/hook/useExchageRate';
+import { useExchangeRate } from '@/hook/useExchangeRate';
 
 export default function ChartSection() {
   const { annualDividendData } = useAnnualDividend();
-  const { exchangeRate } = useExchageRate();
+  const { exchangeRate } = useExchangeRate();
 
   const chartSectionTexts = {
     title: `${transferPrice({

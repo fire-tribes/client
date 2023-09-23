@@ -14,6 +14,14 @@ const Item = styled.div`
     flex: 1;
     margin-right: 10px;
   }
+
+  > div:last-child:hover {
+    cursor: pointer;
+    opacity: 0.7;
+
+    display: flex;
+    align-items: center;
+  }
 `;
 
 const InputContainer = styled.div`
@@ -31,11 +39,21 @@ const InputContainer = styled.div`
 
     margin-right: 5px;
   }
-  div:last-child {
+  div:nth-child(2) {
     flex: 1;
+
+    input {
+      width: 100%;
+    }
   }
-  div:last-child input {
-    width: 100%;
+
+  div:last-child {
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
+    button {
+      height: 16px;
+    }
   }
 `;
 const Input = styled.input`

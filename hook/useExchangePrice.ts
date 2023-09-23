@@ -11,7 +11,8 @@
 
 // import { AnnualDividendByIncomeTax } from '@/@types/models/dividend';
 // import { useAnnualDividend } from '@/hook/useAnnualDividend';
-import { useExchageRate } from '@/hook/useExchageRate';
+
+import { useExchangeRate } from '@/hook/useExchangeRate';
 // import { useMyPortFolio } from '@/hook/useMyPortFolio';
 
 // 나는 원본을 받고싶어
@@ -35,7 +36,7 @@ type useExchangePriceAllProps = {
 // }
 
 export const useExchangePriceAll = ({ options }: useExchangePriceAllProps) => {
-  const { data: exchangeRateData } = useExchageRate();
+  const { data: exchangeRateData } = useExchangeRate();
   // const { annualDividendData } = useAnnualDividend();
   // const { myPortFolioData } = useMyPortFolio();
 
@@ -59,9 +60,6 @@ export const useExchangePriceAll = ({ options }: useExchangePriceAllProps) => {
 
   const exchageRate = exchangeRateData?.value;
   const inputSymbol = exchangeRateData?.currencyType;
-
-  exchageRate;
-  inputSymbol;
 
   return {
     exchageRateData: {

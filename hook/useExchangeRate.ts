@@ -6,7 +6,7 @@ export const exchangeRateSymbol: ExchangeRateSymbolTable = {
   KRW: '$',
 };
 
-export const useExchageRate = () => {
+export const useExchangeRate = () => {
   const query = useExchangeRateQuery();
 
   const data = query?.data?.data?.data;

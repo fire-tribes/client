@@ -2,23 +2,27 @@ import BottomFixedButton from '../../Button/BottomFixedButton';
 import styled from '@emotion/styled';
 import type { ReactNode } from 'react';
 
-interface LayoutProps {
+interface SearchLayoutProps {
+  /** Layout이 반영될 영역 */
   children: ReactNode;
+  /** 하단 버튼의 존재 유무 */
+  hasButton?: boolean;
+  /** 하단 버튼의 비활성화 유무 */
   isDisabled: boolean;
+  /** 하단 버튼에 들어갈 이름(Content) */
   buttonName: '다음' | '추가 완료' | '완료' | '수정 완료';
-  isSearchActive?: boolean;
 }
 
-const Layout = ({
+const SearchLayout = ({
   children,
+  hasButton,
   isDisabled,
   buttonName,
-  isSearchActive,
-}: LayoutProps) => {
+}: SearchLayoutProps) => {
   return (
     <StyledLayout>
       <StyledContent>{children}</StyledContent>
-      {!isSearchActive ? (
+      {!hasButton ? (
         <div></div>
       ) : (
         <BottomFixedButton isDisabled={isDisabled} buttonName={buttonName}>
@@ -43,4 +47,4 @@ const StyledContent = styled.section`
   padding: 16px 16px 56px 16px;
 `;
 
-export default Layout;
+export default SearchLayout;

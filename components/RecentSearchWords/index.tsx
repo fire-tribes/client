@@ -1,80 +1,39 @@
 // import RecentSearchWord from '../RecentSearchWord';
+import { RecentSearchWordsUI } from './style';
 import AlertModal from '../common/Modal/AlertModal';
-import APIInstance from '@/core/api/instance';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import styled from '@emotion/styled';
-
-interface GetRecentSearchWords {
-  success: true;
-  data: [
-    {
-      word: string;
-      date: string;
-    },
-  ];
-  errorCode: string;
-  message: string;
-}
-
-interface DeleteRecentSearchWords {
-  success: boolean;
-  data: boolean;
-  errorCode: string;
-  message: string;
-}
-
-const useGetRecentSearchWords = () => {
-  return useQuery({
-    queryKey: ['getRecentSearchWords'],
-    queryFn: () =>
-      APIInstance.get<GetRecentSearchWords>(
-        `http://fire-env-1.eba-xhu334c9.ap-northeast-2.elasticbeanstalk.com/api/v1/user/recent-search-word/list`,
-        {
-          params: {
-            size: 10,
-          },
-        },
-      ),
-    onError: (error) => console.log('error: ', error),
-    onSuccess: (response) => console.log('success: ', response),
-  });
-};
-
-const useDeleteRecentSearchWords = () => {
-  return useMutation({
-    mutationKey: ['deleteRecentSearchWords'],
-    mutationFn: () =>
-      APIInstance.post<DeleteRecentSearchWords>(
-        `http://fire-env-1.eba-xhu334c9.ap-northeast-2.elasticbeanstalk.com/api/v1/user/recent-search-word/clear-all`,
-      ),
-  });
-};
+import { useGetRecentSearchWords } from '@/hook/useGetRecentSearchWords';
+import { useDeleteRecentSearchWord } from '@/hook/useDeleteRecentSearchWord';
+import { useRemoveRecentSearchWordsAll } from '@/hook/useRemoveRecentSearchWordsAll';
 
 function RecentSearchWords() {
-  // 서버로부터 최근 검색어 GET
-  const getRecentSearchWords = useGetRecentSearchWords();
-  console.log(
-    'getRecentSearchWords.data?.data:',
-    getRecentSearchWords.data?.data,
-  );
+  /** 최근 검색어 데이터 Get */
+  const { getRecentSearchWordsData } = useGetRecentSearchWords();
+  const recentSearchWordsDataArray = getRecentSearchWordsData;
+  console.log('recentSearchWordsDataArray: ', recentSearchWordsDataArray);
 
-  const { mutate } = useDeleteRecentSearchWords();
-  // 서버에게 모든 최근 검색어 DELETE
+  /** 특정 최근 검색어 Delete  */
+  const { deleteRecentSearchWordData } = useDeleteRecentSearchWord('삼성전자');
+  const isDeleteRecentSearchWord = deleteRecentSearchWordData?.data;
+  console.log('isDeleteRecentSearchWord: ', isDeleteRecentSearchWord);
 
-  // 서버에게 개별 최근 검색어 DELETE
+  /** 전체 최근 검색어 초기화 Post */
+  const { removeRecentSearchWordsAllData } = useRemoveRecentSearchWordsAll();
+  const isRemoveRecentSearchWordsAll = removeRecentSearchWordsAllData?.data;
+  console.log('isRemoveRecentSearchWordsAll: ', isRemoveRecentSearchWordsAll);
 
   return (
     <>
-      <RecentSearchWordTitleContainer>
+      <RecentSearchWordsUI.TopContainer>
         <h6>최근 검색</h6>
         <AlertModal
           title={'최근 검색어 삭제'}
           message={'최근 검색어를 모두 삭제하시겠어요?'}
-          onClickEvent={() => mutate()}
+          // onClickEvent={() => mutate()}
+          toastMessage={'최근 검색어를 삭제하였습니다.'}
         >
           <button>전체 삭제</button>
         </AlertModal>
-      </RecentSearchWordTitleContainer>
+      </RecentSearchWordsUI.TopContainer>
       <div>
         {/* {getRecentSearchWords.data !== undefined &&
           (getRecentSearchWords.data.data.length !== 1 ? (
@@ -94,13 +53,5 @@ function RecentSearchWords() {
     </>
   );
 }
-
-const RecentSearchWordTitleContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  white-space: nowrap;
-`;
 
 export default RecentSearchWords;

@@ -2,7 +2,7 @@ import CommonIcon from '@/components/common/Icon';
 import CommonFont from '@/components/common/Font';
 import { AnnualDividendListItem } from '@/components/List/DetailInformationList/AnnualDividendListItem';
 import { useAnnualDividend } from '@/hook/useAnnualDividend';
-import { useExchageRate } from '@/hook/useExchageRate';
+import { useExchangeRate } from '@/hook/useExchangeRate';
 import { transferPrice } from '@/core/utils/transferPrice';
 import type { BadgeDetailText } from '@/mocks';
 
@@ -35,7 +35,7 @@ export const badangDetailText = {
 
 export default function DetailInformationList() {
   const { annualDividendData } = useAnnualDividend();
-  const { exchangeRate } = useExchageRate();
+  const { exchangeRate } = useExchangeRate();
 
   const detailInformationData = {
     annualDividend: `${transferPrice({
