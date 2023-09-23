@@ -9,22 +9,64 @@
   Value, Price인데 Rate가 없으면 USD인 경우 원화로 변환해주고 원을 붙여준다.
  */
 
-import { useAnnualDividend } from '@/hook/useAnnualDividend';
+// import { AnnualDividendByIncomeTax } from '@/@types/models/dividend';
+// import { useAnnualDividend } from '@/hook/useAnnualDividend';
 import { useExchageRate } from '@/hook/useExchageRate';
-import { useMyPortFolio } from '@/hook/useMyPortFolio';
+// import { useMyPortFolio } from '@/hook/useMyPortFolio';
 
-export const useExchangePriceAll = () => {
-  const { data } = useExchageRate();
-  const { annualDividendData } = useAnnualDividend();
-  const { myPortFolioData } = useMyPortFolio();
+// 나는 원본을 받고싶어
+// 나는 변형본을 받고싶어
+// 근데 옵션을 이거야
 
-  data;
-  annualDividendData;
-  myPortFolioData;
+type useExchangePriceAllProps = {
+  options: {
+    isComma: boolean;
+    outputSymbol: 'USD' | 'KRW';
+    소득세적용: boolean;
+  };
+};
 
-  const exchageRate = data?.value;
-  const inputSymbol = data?.currencyType;
+// // useExchagePriceAllReturnValue = {
+//   data: {
+//     annualDividend: object,
+//     monthlyDividend: object,
+//     portFolio: object
+//   }
+// }
+
+export const useExchangePriceAll = ({ options }: useExchangePriceAllProps) => {
+  const { data: exchangeRateData } = useExchageRate();
+  // const { annualDividendData } = useAnnualDividend();
+  // const { myPortFolioData } = useMyPortFolio();
+
+  if (options.outputSymbol === 'KRW') {
+    // 핸들링해주는 함수
+  }
+
+  if (options.isComma) {
+    // 콤마부여주는 핸들링 함수
+    // toLocaleString('ko')
+  }
+
+  // if (options.소득세적용) {
+  //   const 소득세적용key값: AnnualDividendByIncomeTax = {
+  //     annualDividend: 0,
+  //     thisMonthDividend: 0,
+  //     dividendChange: 0,
+  //   };
+  //   // 배당금부분에서 15% 감소 적용
+  // }
+
+  const exchageRate = exchangeRateData?.value;
+  const inputSymbol = exchangeRateData?.currencyType;
 
   exchageRate;
   inputSymbol;
+
+  return {
+    exchageRateData: {
+      exchageRate,
+      inputSymbol,
+    },
+  };
 };
