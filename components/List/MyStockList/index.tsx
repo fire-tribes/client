@@ -1,9 +1,8 @@
 import CommonFont from '@/components/common/Font';
-import FlexBox from '@/components/common/FlexBox';
 import { useMyPortFolio } from '@/hook/useMyPortFolio';
-
 import { transferPrice } from '@/core/utils/transferPrice';
-import { useExchageRate } from '@/hook/useExchageRate';
+import FlexBox from '@/components/common/FlexBox';
+import { useExchangeRate } from '@/hook/useExchangeRate';
 import {
   Box,
   List,
@@ -52,7 +51,7 @@ import {
  */
 
 export function MyStockList() {
-  const { exchangeRate } = useExchageRate();
+  const { exchangeRate } = useExchangeRate();
   const { myPortFolioData } = useMyPortFolio();
   const myAssetDetails = myPortFolioData?.assetDetails;
 
