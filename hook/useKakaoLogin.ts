@@ -1,20 +1,49 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { Cookie } from '@/core/api/cookie';
 import { SignApi } from '@/core/api/sign';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 export const useKakaoLogin = () => {
-  const [kakao, setKakao] = useState<typeof window.Kakao>(null);
+  const router = useRouter();
+  const { code } = router.query as { code?: string };
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    if (window?.Kakao) setKakao(window?.Kakao);
+    if (code) return;
+    init();
   }, []);
 
+  useEffect(() => {
+    if (isError) {
+      router.push('/login');
+    }
+  }, [isError]);
+
+  useEffect(() => {
+    if (code && code.length > 0) {
+      start(code)
+        .then((response) => {
+          const accessToken = response?.data.data.login.token.accessToken;
+          if (accessToken) {
+            const cookie = new Cookie();
+            cookie.set('accessToken', accessToken);
+            router.push('/');
+          }
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [code]);
+
+  console.log('useKakao');
+
   const init = () => {
-    if (kakao?.isInitialized()) return;
-    kakao?.init(process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY);
+    if (window.Kakao?.isInitialized()) return;
+    window.Kakao?.init(process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY);
   };
 
   const open = () => {
-    kakao?.Auth.authorize({
+    window.Kakao?.Auth.authorize({
       redirectUri:
         process.env.NODE_ENV === 'development'
           ? process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI_DEV
@@ -24,15 +53,21 @@ export const useKakaoLogin = () => {
   };
 
   const start = async (code: string) => {
-    if (!code) return;
+    if (!code || (code && isError)) return;
 
-    const resposne = await SignApi.start(code);
-    return resposne;
+    try {
+      const resposne = await SignApi.start(code);
+      return resposne;
+    } catch (err) {
+      setIsError(true);
+    }
   };
 
   return {
     init,
     open,
     start,
+    isError,
+    setIsError,
   };
 };
