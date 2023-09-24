@@ -1,0 +1,21 @@
+/**
+  "${TM_DIRECTORY/.*[\\\\|\\/](.*)/$1/}" 현재 파일의 폴더명을 추출 맥과 윈도우 모두
+*/
+//
+
+{
+  "render Function Component": {
+    "prefix": "fc",
+    "body": [
+      "interface ${TM_DIRECTORY/.*[\\\\|\\/](.*)/$1/}Props {",
+      "$1",
+      "}",
+      "",
+      "export default function ${TM_DIRECTORY/.*[\\\\|\\/](.*)/$1/}({$2}: ${TM_DIRECTORY/.*[\\\\|\\/](.*)/$1/}Props) {",
+      "  $3",
+      "  return ($4);",
+      "}"
+    ],
+    "description": "rendering Function Component By FolderName"
+  }
+}
