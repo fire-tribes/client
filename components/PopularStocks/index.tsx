@@ -1,24 +1,72 @@
 import { PopularStocksUI } from './style';
+import PopularStock from '../PopularStock';
+import { useGetPopularStocks } from '@/hook/useGetPopularStocks';
 // import PopularStock from '@/components/PopularStock';
 
 function PopularStocks() {
+  /** exampleDatas */
+  const exampleDatas = [
+    {
+      tickerCode: 'tickerCode',
+      stockCode: 'stockCode',
+      name: 'name',
+    },
+    {
+      tickerCode: 'tickerCode',
+      stockCode: 'stockCode',
+      name: 'name',
+    },
+    {
+      tickerCode: 'tickerCode',
+      stockCode: 'stockCode',
+      name: 'name',
+    },
+    {
+      tickerCode: 'tickerCode',
+      stockCode: 'stockCode',
+      name: 'name',
+    },
+    {
+      tickerCode: 'tickerCode',
+      stockCode: 'stockCode',
+      name: 'name',
+    },
+    {
+      tickerCode: 'tickerCode',
+      stockCode: 'stockCode',
+      name: 'name',
+    },
+    {
+      tickerCode: 'tickerCode',
+      stockCode: 'stockCode',
+      name: 'name',
+    },
+    {
+      tickerCode: 'tickerCode',
+      stockCode: 'stockCode',
+      name: 'name',
+    },
+    {
+      tickerCode: 'tickerCode',
+      stockCode: 'stockCode',
+      name: 'name',
+    },
+  ];
+
   /** 인기주식 호출하기 삭제(PopularStock 컴포넌트로 이동) */
-  // const getPopularStocks = useGetPopularStocks();
-  // console.log('getPopularStocks.data?: ', getPopularStocks.data);
-  // console.log('getPopularStocks.data?.data: ', getPopularStocks.data?.data);
+  const getPopularStocks = useGetPopularStocks();
+  console.log('getPopularStocks?: ', getPopularStocks);
 
   return (
-    <PopularStocksUI.Container>
+    <>
       <PopularStocksUI.Header>인기 주식</PopularStocksUI.Header>
       <PopularStocksUI.BottomContainer>
-        {/* {getPopularStocks.data !== undefined &&
-          getPopularStocks.data.data.map((item, id) => {
-            return (
-              <PopularStock key={id} increase={true} popularStock={item.name} />
-            );
-          })} */}
+        {exampleDatas !== undefined &&
+          exampleDatas.map((stock, id) => {
+            return <PopularStock key={id} increase={true} stock={stock} />;
+          })}
       </PopularStocksUI.BottomContainer>
-    </PopularStocksUI.Container>
+    </>
   );
 }
 

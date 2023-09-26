@@ -1,11 +1,13 @@
 import styled from '@emotion/styled';
 
-const Container = styled.article`
-  padding: 16px;
+const Container = styled.div`
+  padding-top: 10px;
+  padding-bottom: 10px;
 `;
 const Item = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const LeftContainer = styled.div`
@@ -19,6 +21,11 @@ const LeftContainer = styled.div`
 const RightContainer = styled.div`
   display: flex;
   align-items: center;
+
+  > button {
+    height: 19px;
+    line-height: 19px;
+  }
 `;
 
 export const RecentSearchWordUI = {

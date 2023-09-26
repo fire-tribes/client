@@ -46,49 +46,6 @@ export interface portfolioList {
 
 function Edit() {
   /** 검색 결과 데이터 테스트 */
-  // const getPortfolioList = {
-  //   success: true,
-  //   data: {
-  //     portfolioId: 0,
-  //     totalValue: 0,
-  //     totalValueChange: 0,
-  //     totalValueChangeRate: 0,
-  //     assetDetails: [
-  //       {
-  //         assetId: 0,
-  //         tickerCode: 'string',
-  //         stockCode: 'string',
-  //         count: 0,
-  //         averagePrice: 'string',
-  //         currentPrice: 'string',
-  //         assetPriceChangeRate: 'string',
-  //         assetPriceChange: 'string',
-  //         value: 0,
-  //         rateOfReturn: 0,
-  //         dividendPriceRatio: 0,
-  //         dividendMonth: [0],
-  //         currencyType: 'KRW',
-  //       },
-  //       {
-  //         assetId: 1,
-  //         tickerCode: 'string',
-  //         stockCode: 'string',
-  //         count: 0,
-  //         averagePrice: 'string',
-  //         currentPrice: 'string',
-  //         assetPriceChangeRate: 'string',
-  //         assetPriceChange: 'string',
-  //         value: 0,
-  //         rateOfReturn: 0,
-  //         dividendPriceRatio: 0,
-  //         dividendMonth: [0],
-  //         currencyType: 'KRW',
-  //       },
-  //     ],
-  //   },
-  //   errorCode: 'string',
-  //   message: 'string',
-  // };
 
   /** 포트폴리오 Get 요청 함수 */
   const { getPortfolioData } = useGetPortfolio();

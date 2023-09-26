@@ -15,6 +15,9 @@ const Item = styled.div`
     margin-right: 10px;
   }
 
+  > div:last-child {
+    height: 24px;
+  }
   > div:last-child:hover {
     cursor: pointer;
     opacity: 0.7;

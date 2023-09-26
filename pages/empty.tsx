@@ -35,7 +35,7 @@ function Empty() {
 }
 
 const Container = styled.div`
-  height: 100vh;
+  height: calc(100vh - 55px - 17px);
   position: relative;
 `;
 

@@ -2,13 +2,16 @@ import styled from '@emotion/styled';
 
 const Container = styled.div``;
 
-const Header = styled.h6``;
+const Header = styled.h6`
+  margin-bottom: 6px;
+`;
 
 const BottomContainer = styled.div`
-  height: 36px;
+  width: 100%;
+  line-height: 38px;
 
   white-space: nowrap;
-  overflow-x: scroll;
+  overflow-x: auto;
   /** Firefox에서 스크롤바 숨김 */
   scrollbar-width: none;
   /** IE/Edge에서 스크롤바 숨김 */
@@ -18,10 +21,11 @@ const BottomContainer = styled.div`
     width: 0;
   }
 
+  margin-bottom: 18px;
   div {
     display: inline-block;
   }
-  div:last-child span {
+  div:last-child {
     margin-right: 0px;
   }
 `;

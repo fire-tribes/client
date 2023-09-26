@@ -4,11 +4,11 @@ import Section from '@/components/Section';
 import FlexBox from '@/components/common/FlexBox';
 import { useMyPortFolio } from '@/hook/useMyPortFolio';
 import { transferPrice } from '@/core/utils/transferPrice';
+import { useExchangeRate } from '@/hook/useExchangeRate';
 import { Typography } from '@mui/material';
-import { useExchageRate } from '@/hook/useExchageRate';
 
 export default function DetailStocksSection() {
-  const { exchangeRate } = useExchageRate();
+  const { exchangeRate } = useExchangeRate();
   const { myPortFolioData } = useMyPortFolio();
 
   /**

@@ -4,7 +4,7 @@ import { SelectedStocksAtomProps } from '@/hook/useGetSelectedStocks/state';
 import testCircleSvg from '@/public/icon/testCircle.svg';
 import trashSvg from '@/public/icon/trash.svg';
 import { basic } from '@/styles/palette';
-import { useGetPresentPrice } from '@/hook/useGetPresentPrice';
+// import { useGetCurrentPrice } from '@/hook/useGetCurrentPrice';
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 
@@ -13,61 +13,77 @@ interface FeedStockInfoProps {
   stock: SelectedStocksAtomProps;
   /** 선택한 값을 배열 삭제 */
   removeSelected: (stock: SelectedStocksAtomProps) => void;
+  /** 현재가 입력 버튼 */
+  currentPriceButton: () => void;
+  // /** Count에 값을 입력하고, Error를 제거하는 함수 */
+  // handleInputCountChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  /** Price에 값을 입력하고, Error를 제거하는 함수 */
+  // handleInputPriceChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  // /** 값을 입력하지 않았을 때, 발생시킬 Error 함수 */
+  // handleInputBlur: () => void;
+  // /** 가격 input */
+  inputCountValue: string;
+  /** 가격 input */
+  inputPriceValue: string;
+  // /** error 내용 */
+  // errorText: string;
+  /** 수량이 변화했을 때, 발생하는 Event */
+  changeCountEventHandle: (e: ChangeEvent<HTMLInputElement>) => void;
+  /** 가격이 변화했을 때, 발생하는 Event */
+  changePriceEventHandle: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 function FeedStockInfo({
   stock,
-  removeSelected, // onClickPresentPriceButton,
+  removeSelected,
+  currentPriceButton,
+  // handleInputCountChange,
+  // handleInputPriceChange,
+  // handleInputBlur,
+  inputCountValue,
+  inputPriceValue, // errorText,
+  changeCountEventHandle,
+  changePriceEventHandle,
 }: FeedStockInfoProps) {
-  console.log('stock: ', stock);
-  console.log('stock.assetId: ', stock.assetId);
-  // 이 시점에서 한번 불러온다.
-  const { getPresentPriceData } = useGetPresentPrice(stock.assetId);
-  const presentPrice =
-    getPresentPriceData !== undefined && getPresentPriceData[0].currentPrice;
-  console.log('presentPrice: ', presentPrice);
+  const STOCK_NAME = stock.name;
+  const STOCK_TICKERCODE = stock.tickerCode;
+  const STOCK_STOCKCODE = stock.stockCode;
+  // const STOCK_ASSETID = stock.assetId;
 
-  const [inputCountValue, setInputCountValue] = useState('');
-  const [inputPriceValue, setInputPriceValue] = useState('');
-  const [error, setError] = useState('');
+  // const [inputCountValue, setInputCountValue] = useState('');
+  // const [inputPriceValue, setInputPriceValue] = useState('');
+  const [errorText, setErrorText] = useState('');
 
-  const onClickPresentPrice = () => {
-    // 이미 데이터는 버튼을 클릭하지 않아도 불러온 상태
-    // const currentPrice = getPresentPrice?.data.data[0].currentPrice;
-    // // 여기서는 refetch 해주면 된다.
-    // if (currentPrice !== undefined) {
-    //   setInputPriceValue(currentPrice);
-    //   // 오류 메시지 초기화
-    //   setError('');
-    // }
-  };
-
-  const handleInputCountChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setInputCountValue(value);
-    setError('');
-  };
-  const handleInputPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setInputPriceValue(value);
-
-    setError('');
-  };
+  /** Count에 값을 입력하고, Error를 제거하는 함수 */
+  // const handleInputCountChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const value = e.target.value;
+  //   setInputCountValue(value);
+  //   setErrorText('');
+  // };
+  /** Price에 값을 입력하고, Error를 제거하는 함수 */
+  // const handleInputPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const value = e.target.value;
+  //   setInputPriceValue(value);
+  //   setErrorText('');
+  // };
+  /** 값을 입력하지 않았을 때, 발생시킬 Error 함수 */
   const handleInputBlur = () => {
     if (inputCountValue.trim() === '' || inputPriceValue.trim() === '') {
-      setError('* 보유 수량 및 가격을 정확히 입력해주세요.');
+      setErrorText('* 보유 수량 및 가격을 정확히 입력해주세요.');
     }
   };
-
   return (
     <FeedStockInfoUI.Container>
       <FeedStockInfoUI.Item>
         <FeedStockInfoUI.TopContainer>
           <FeedStockInfoUI.NativeStockInfoContainer>
-            <Image src={testCircleSvg} alt="testCircle Svg" />
             <div>
-              <div>{stock.stockCode}</div>
-              <div>{stock.stockCode}</div>
+              <div>{STOCK_NAME.split('')[0]}</div>
+              <Image src={testCircleSvg} alt="testCircle Svg" />
+            </div>
+            <div>
+              <div>{STOCK_NAME}</div>
+              <div>{STOCK_TICKERCODE ? STOCK_TICKERCODE : STOCK_STOCKCODE}</div>
             </div>
           </FeedStockInfoUI.NativeStockInfoContainer>
           <AlertModal
@@ -90,30 +106,29 @@ function FeedStockInfo({
               type="text"
               value={inputCountValue}
               placeholder="보유 수량"
-              onChange={handleInputCountChange}
+              onChange={changeCountEventHandle}
               onBlur={handleInputBlur}
             />
           </div>
           <div>
             <input
               type="text"
-              // value={inputPriceValue} 경락님 원래 작업
-              value={inputPriceValue}
+              value={String(inputPriceValue)}
               placeholder="구매 가격($)"
-              onChange={handleInputPriceChange}
+              onChange={changePriceEventHandle}
               onBlur={handleInputBlur}
             />
             <button
               style={{ color: `${basic.point_blue02}`, fontWeight: 500 }}
-              onClick={() => onClickPresentPrice()}
+              onClick={currentPriceButton}
             >
               현재가 입력
             </button>
           </div>
         </FeedStockInfoUI.BottomContainer>
-        {error && (
+        {errorText && (
           <FeedStockInfoUI.ErrorContainer>
-            {error}
+            {errorText}
           </FeedStockInfoUI.ErrorContainer>
         )}
       </FeedStockInfoUI.Item>
