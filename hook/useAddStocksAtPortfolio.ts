@@ -1,33 +1,26 @@
 import { useAddStocksAtPortfolioQuery } from '@/hook/useQueryHook/useAddStocksAtPortfolioQuery';
 
-export const useAddStocksAtPortfolio = () => {
-  const { mutate, isLoading } = useAddStocksAtPortfolioQuery();
+interface feededStockInfos {
+  portfolioId: number;
+  assets: assets[];
+}
+interface assets {
+  assetId: number;
+  price: number;
+  count: number;
+  currencyType: string;
+}
 
-  const exampleAssets = [
-    {
-      assetId: 0,
-      price: 0,
-      count: 0,
-      currencyType: 'USD',
-    },
-    {
-      assetId: 1,
-      price: 1,
-      count: 1,
-      currencyType: 'USD',
-    },
-    {
-      assetId: 2,
-      price: 2,
-      count: 2,
-      currencyType: 'USD',
-    },
-  ];
-  const formData = {
-    portfolioId: 1,
-    assets: exampleAssets,
+export const useAddStocksAtPortfolio = () => {
+  const { mutateAsync, isLoading } = useAddStocksAtPortfolioQuery();
+
+  // const formData: feededStockInfos;
+  // const addStocksAtPortfolioData = mutate(formData);
+
+  const addStocksAtPortfolioData = async (formData: feededStockInfos) => {
+    const response = await mutateAsync(formData);
+    return response;
   };
-  const addStocksAtPortfolioData = mutate(formData);
 
   return {
     addStocksAtPortfolioData,

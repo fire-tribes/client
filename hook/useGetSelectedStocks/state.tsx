@@ -4,12 +4,21 @@ export interface SelectedStocksAtomProps {
   assetId: number;
   tickerCode: string;
   stockCode: string;
+  debouncedValue: string;
+  count: string;
+  price: string;
   name: string;
-  category: {
-    countryType: 'KOR';
-    marketType: 'KRX';
-    assetCategoryType: 'STOCK';
-  };
+  countryType: 'KOR' | 'USA';
+  marketType:
+    | 'KRX'
+    | 'KRX_KOSPI'
+    | 'KRX_KOSDAQ'
+    | 'KRX_KONEX'
+    | 'NYSE'
+    | 'AMEX'
+    | 'NASDAQ'
+    | 'UNKNOWN';
+  assetCategoryType: 'STOCK' | 'ETF' | 'ETN';
 }
 
 // jotai atom 생성

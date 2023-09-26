@@ -1,4 +1,4 @@
-import { addStocksAtPortfolioAPI } from '@/core/api/addStocksAtPortfolio';
+import { portfolioAPI } from '@/core/api/portfolio';
 import { mutationKeys } from '@/hook/useQueryHook/mutationKeys';
 import { useMutation } from '@tanstack/react-query';
 
@@ -29,9 +29,6 @@ export const useAddStocksAtPortfolioQuery = () => {
         currencyType: string;
       }>;
     }) =>
-      addStocksAtPortfolioAPI.addStocksAtPortfolio(
-        formData.portfolioId,
-        formData.assets,
-      ),
+      portfolioAPI.addStocksAtPortfolio(formData.portfolioId, formData.assets),
   );
 };

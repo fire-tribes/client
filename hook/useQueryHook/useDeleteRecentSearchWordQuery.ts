@@ -1,11 +1,10 @@
 import { mutationKeys } from '@/hook/useQueryHook/mutationKeys';
-import { deleteRecentSearchWordAPI } from '@/core/api/deleteRecentSearchWord';
+import { userAPI } from '@/core/api/user';
 import { useMutation } from '@tanstack/react-query';
 
-export const useDeleteRecentSearchWordQuery = (searchWord: string) => {
-  return useMutation({
-    mutationKey: mutationKeys.deleteRecentSearchWord(searchWord),
-    mutationFn: () =>
-      deleteRecentSearchWordAPI.deleteRecentSearchWord(searchWord),
-  });
+export const useDeleteRecentSearchWordQuery = () => {
+  return useMutation(
+    mutationKeys.deleteRecentSearchWord(),
+    (searchWord: string) => userAPI.deleteRecentSearchWord(searchWord),
+  );
 };

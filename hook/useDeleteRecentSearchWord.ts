@@ -1,10 +1,12 @@
 import { useDeleteRecentSearchWordQuery } from '@/hook/useQueryHook/useDeleteRecentSearchWordQuery';
 
-export const useDeleteRecentSearchWord = (searchWord: string) => {
-  /** isLoading은 어떻게 분리하지? */
-  const { data, isLoading } = useDeleteRecentSearchWordQuery(searchWord);
+export const useDeleteRecentSearchWord = () => {
+  const { mutateAsync, isLoading } = useDeleteRecentSearchWordQuery();
 
-  const deleteRecentSearchWordData = data?.data.data;
+  const deleteRecentSearchWordData = async (searchWord: string) => {
+    const response = await mutateAsync(searchWord);
+    return response;
+  };
 
   return {
     deleteRecentSearchWordData,

@@ -1,9 +1,7 @@
 export const mutationKeys = {
-  deleteRecentSearchWord: (searchWord: string) => [
-    'deleteRecentSearchWord',
-    searchWord,
-  ],
+  deleteRecentSearchWord: () => ['deleteRecentSearchWord'],
   removeRecentSearchWordsAll: () => ['removeRecentSearchWordsAll'],
   makePortfolio: () => ['makePortfolio'],
   addStocksAtPortfolio: () => ['addStocksAtPortfolio'],
+  addRecentSearchWord: () => ['addRecentSearchWord'],
 };

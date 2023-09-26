@@ -1,9 +1,9 @@
 import { useRemoveRecentSearchWordsAllQuery } from '@/hook/useQueryHook/useRemoveRecentSearchWordsAllQuery';
 
 export const useRemoveRecentSearchWordsAll = () => {
-  const { data, isLoading } = useRemoveRecentSearchWordsAllQuery();
+  const { mutate, isLoading } = useRemoveRecentSearchWordsAllQuery();
 
-  const removeRecentSearchWordsAllData = data?.data.data;
+  const removeRecentSearchWordsAllData = mutate();
 
   return {
     removeRecentSearchWordsAllData,

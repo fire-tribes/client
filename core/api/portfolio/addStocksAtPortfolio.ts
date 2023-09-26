@@ -13,8 +13,8 @@ export const addStocksAtPortfolioAPI = {
       currencyType: string;
     }>,
   ) => {
-    return APIInstance.post<ResponseSuccess<AddStocksAtPortfolio>>(
-      `portfolio/asset`,
+    return APIInstance.post<ResponseSuccess<AddStocksAtPortfolio[]>>(
+      `portfolio/asset/add`,
       {
         portfolioId: portfolioId,
         assets: assets,
