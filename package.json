@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "format": "eslint './' --ext .ts,.tsx --fix && prettier --write ."
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
