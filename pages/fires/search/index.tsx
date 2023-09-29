@@ -72,7 +72,7 @@ function Search() {
       </section>
       {!isSearchActive ? (
         <>
-          <section style={{ height: '100px' }}>
+          <section>
             <PopluarStocks />
           </section>
           <section>

@@ -1,11 +1,11 @@
 // import { selectedStocksAtom } from '../useGetSelectedStocks/state';
 import { selectedStocksAtom } from './useGetSelectedStocks/state';
-import { useGetCurrentPriceQuery } from '@/hook/useQueryHook/useGetCurrentPriceQuery';
+import { useGetCurrentPriceInSelectedStocksQuery } from '@/hook/useQueryHook/useGetCurrentPriceInSelectedStocksQuery';
 import { queryKeys } from '@/hook/useQueryHook/queryKeys';
 import { useQueryClient } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 
-export const useGetCurrentPrice = (
+export const useGetCurrentPriceInSelectedStocks = (
   isPressAllButton: boolean[],
   newIsPressAllButton: boolean,
 ) => {
@@ -13,21 +13,19 @@ export const useGetCurrentPrice = (
 
   // initial Atom
   const { oldQueries: getCurrentPriceDatas, newQueires } =
-    useGetCurrentPriceQuery(isPressAllButton, newIsPressAllButton);
+    useGetCurrentPriceInSelectedStocksQuery(
+      isPressAllButton,
+      newIsPressAllButton,
+    );
 
   const shouldSetAtom = getCurrentPriceDatas.every(
     (query) => query.fetchStatus !== 'fetching',
   );
-  /**
-   * 하나라도 fetching이라면, false를 반환하고, 모두 idle이어야 한다.
-   */
-  // get currentPrice hook
 
-  // return 최종 atom
-
+  /** invalidation(무효화) */
+  /** 전체 무효화하고 전체 현재가 가져오기 */
   const queryClient = useQueryClient();
   const invalidateCurrentPrices = () => {
-    // [1, 2, 3] 부분을 여기서 받아올수있는가?
     queryClient.invalidateQueries(
       queryKeys.currentPrices(
         selectedStocks.map((selectedStock) => selectedStock.assetId),
@@ -35,6 +33,7 @@ export const useGetCurrentPrice = (
     );
   };
 
+  /** 개별 무요화하고 개별 현재가 가져오기 */
   const invalidateCurrentPrice = (assetId: number) => {
     queryClient.invalidateQueries(queryKeys.currentPrice(assetId));
   };

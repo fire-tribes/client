@@ -4,6 +4,7 @@ import type { AddStocksAtPortfolio } from '@/@types/models/addStocksAtPortfolio'
 import type { ExchangeRateModel } from '@/@types/models/exchangeRate';
 import type { MakePortfolio } from '@/@types/models/makePortfolio';
 import type { MyPortfolioModel } from '@/@types/models/portfolio';
+import type { UpdatePortfolio } from '@/@types/models/updatePortfolio';
 import type { ResponseSuccess } from '@/@types/models/response';
 
 export const portfolioAPI = {
@@ -44,6 +45,23 @@ export const portfolioAPI = {
         headers: {
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
         },
+      },
+    );
+  },
+  updatePortfolio: (
+    portfolioId: number,
+    assets: Array<{
+      portfolioAssetId: number;
+      price: number;
+      count: number;
+      currencyType: string;
+    }>,
+  ) => {
+    return APIInstance.post<ResponseSuccess<UpdatePortfolio>>(
+      'portfolio/asset/update',
+      {
+        portfolioId: portfolioId,
+        assets: assets,
       },
     );
   },

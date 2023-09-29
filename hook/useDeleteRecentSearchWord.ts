@@ -7,6 +7,7 @@ export const useDeleteRecentSearchWord = () => {
     const response = await mutateAsync(searchWord);
     return response;
   };
+  console.log('useDeleteRecentSearchWord');
 
   return {
     deleteRecentSearchWordData,
