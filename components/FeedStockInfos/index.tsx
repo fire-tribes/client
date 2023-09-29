@@ -8,7 +8,7 @@ import {
 } from '@/hook/useGetSelectedStocks/state';
 import CheckSvg from '@/public/icon/check.svg';
 import { basic } from '@/styles/palette';
-import { useGetCurrentPrice } from '@/hook/useGetCurrentPrice';
+import { useGetCurrentPriceInSelectedStocks } from '@/hook/useGetCurrentPriceInSelectedStocks';
 // import { useAddStocksAtPortfolio } from '@/hook/useAddStocksAtPortfolio';
 // import { useMakePortfolio } from '@/hook/useMakePortfolio';
 // import { formDataAtom } from '@/hook/useMakeFormData/state';
@@ -81,12 +81,13 @@ function FeedStockInfos() {
     // newQueires,
     invalidateCurrentPrices,
     invalidateCurrentPrice,
-  } = useGetCurrentPrice(isPressAllButton, newIsPressAllButton);
+  } = useGetCurrentPriceInSelectedStocks(isPressAllButton, newIsPressAllButton);
+  // isPressAllButton, newIsPressAllButton
   // console.log('start getCurrentPriceDatas');
   // console.log('getCurrentPriceDatas: ', getCurrentPriceDatas);
 
   /**
-  // TODO: befoe
+  // TODO: before
   useEffect(() => {
     if (shouldSetAtom) {
       console.log('start useEffect');
@@ -142,7 +143,7 @@ function FeedStockInfos() {
   /** 현재가 전체 버튼 함수 */
   const handleCurrentPriceAllButton = () => {
     refetchAll();
-    setNewIsPressAllButton((pre) => !pre);
+    setNewIsPressAllButton((prev) => !prev);
     // setIsPressAllButton((prev) => {
     //   const newArray = prev.map(() => true);
     //   return newArray;

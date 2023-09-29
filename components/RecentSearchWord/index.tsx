@@ -9,11 +9,12 @@ interface RecentSearchWordProps {
   /** 최근 검색어 데이터 객체 */
   stock: RecentSearchWordsAtomProps;
   /** 버튼을 클릭했을 때, 해당 index에 위치한 값을 삭제하는 함수 */
-  // handleDeleteRecentSearchWord: () => void;
+  handleDeleteRecentSearchWord: () => void;
 }
 
 function RecentSearchWord({
-  stock, // handleDeleteRecentSearchWord,
+  stock,
+  handleDeleteRecentSearchWord,
 }: RecentSearchWordProps) {
   // useEffect(() => {}, []);
   // TODO: 최근 검색어에 있는 데이터 클릭 시, Input창에 검색어 추가하는 함수
@@ -21,6 +22,13 @@ function RecentSearchWord({
     // 검색창에 최근 검색어 추가하기
   };
 
+  /** 특정 최근 검색어 Delete  */
+  // const { deleteRecentSearchWordData } = useDeleteRecentSearchWord();
+  // const onDeleteClick = async () => {
+  //   await deleteRecentSearchWordData(stock.word);
+  //   handleDeleteRecentSearchWord(stock.word);
+  // };
+  console.log('RecentSearchWord: ', RecentSearchWord);
   return (
     <RecentSearchWordUI.Container>
       <RecentSearchWordUI.Item>
@@ -32,7 +40,7 @@ function RecentSearchWord({
           <DateDisplay dateString={stock.date} />
           <button
             style={{ display: 'block' }}
-            // onClick={handleDeleteRecentSearchWord}
+            onClick={handleDeleteRecentSearchWord}
           >
             <Image
               src={cancelDotSvg}

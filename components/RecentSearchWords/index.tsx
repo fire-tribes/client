@@ -2,11 +2,14 @@ import { RecentSearchWordsUI } from './style';
 import AlertModal from '../common/Modal/AlertModal';
 import RecentSearchWord from '../RecentSearchWord';
 import { useGetRecentSearchWords } from '@/hook/useGetRecentSearchWords';
-// import { useRemoveRecentSearchWordsAll } from '@/hook/useRemoveRecentSearchWordsAll';
-import { recentSearchWordsAtom } from '@/hook/useRecentSearchWords/state';
-// import { useDeleteRecentSearchWord } from '@/hook/useDeleteRecentSearchWord';
-import { useAtom } from 'jotai';
-// import { useEffect } from 'react';
+import { useDeleteRecentSearchWord } from '@/hook/useDeleteRecentSearchWord';
+import { useRemoveRecentSearchWordsAll } from '@/hook/useRemoveRecentSearchWordsAll';
+import { CircularProgress } from '@mui/material';
+
+interface RecentSearchWords {
+  word: string;
+  date: string;
+}
 
 function RecentSearchWords() {
   /** exampleDatas */
@@ -21,32 +24,33 @@ function RecentSearchWords() {
   // ];
 
   /** 최근 검색어 데이터 Get */
-  const { getRecentSearchWordsData } = useGetRecentSearchWords();
+  const { getRecentSearchWordsData, isLoading } = useGetRecentSearchWords();
   const recentSearchWordsDataArray = getRecentSearchWordsData?.data;
   console.log('recentSearchWordsDataArray: ', recentSearchWordsDataArray);
 
-  const [recentSearchWords, setRecentSearchWords] = useAtom(
-    recentSearchWordsAtom,
-  );
-  recentSearchWordsDataArray !== undefined &&
-    recentSearchWordsDataArray.length !== 0 &&
-    setRecentSearchWords(recentSearchWordsDataArray);
-  console.log('recentSearchWords: ', recentSearchWords);
+  // const [recentSearchWords, setRecentSearchWords] = useState(
+  //   recentSearchWordsDataArray,
+  // );
+  // console.log('recentSearchWords: ', recentSearchWords);
+
+  // useEffect(() => {
+  //   const refetchRecentSearchWords = async () => {
+  //     const array = await getRecentSearchWordsData?.data;
+  //     setRecentSearchWords(array);
+  //   };
+  //   refetchRecentSearchWords();
+  // }, []);
 
   /** 특정 최근 검색어 Delete  */
-  // const { deleteRecentSearchWordData } = useDeleteRecentSearchWord();
-  // const onDeleteRecentSearchWord = (index: number) => {
-  //   // if (index < 0 || index > recentSearchWords.length) {}
-  //   // deleteRecentSearchWordData(recentSearchWords[index].word);
-  //   recentSearchWords.splice(index, 1);
-  //   console.log('recentSearchWords: ', recentSearchWords);
-  //   setRecentSearchWords(recentSearchWords);
-  // };
+  const { deleteRecentSearchWordData } = useDeleteRecentSearchWord();
+  const handleDeleteRecentSearchWord = (index: number) => {
+    recentSearchWordsDataArray !== undefined &&
+      deleteRecentSearchWordData(recentSearchWordsDataArray[index].word);
+  };
 
-  // useEffect(() => {}, [recentSearchWords]);
   /** 전체 최근 검색어 초기화 Post */
-  // const { removeRecentSearchWordsAllData } = useRemoveRecentSearchWordsAll();
-  // console.log('isRemoveRecentSearchWordsAll: ', removeRecentSearchWordsAllData);
+  const { mutate } = useRemoveRecentSearchWordsAll();
+  // console.log('isRemoveRecentSearchWordsAll: ', mutate());
 
   return (
     <>
@@ -55,14 +59,16 @@ function RecentSearchWords() {
         <AlertModal
           title={'최근 검색어 삭제'}
           message={'최근 검색어를 모두 삭제하시겠어요?'}
-          // onClickEvent={() => mutate()}
+          onClickEvent={() => mutate()}
           toastMessage={'최근 검색어를 삭제하였습니다.'}
         >
-          <button disabled={recentSearchWords === undefined}>전체 삭제</button>
+          <button disabled={recentSearchWordsDataArray === undefined}>
+            전체 삭제
+          </button>
         </AlertModal>
       </RecentSearchWordsUI.TopContainer>
       <div>
-        {recentSearchWords === undefined && (
+        {recentSearchWordsDataArray === undefined ? (
           <RecentSearchWordsUI.NothingRecentSearchWordsContainer>
             <div>
               최근 검색 기록이 없어요.
@@ -72,19 +78,21 @@ function RecentSearchWords() {
               (예: JEPI, SCHD)
             </div>
           </RecentSearchWordsUI.NothingRecentSearchWordsContainer>
-        )}
-        {recentSearchWords !== undefined &&
-          recentSearchWords.map((stock, id) => {
+        ) : isLoading ? (
+          <CircularProgress />
+        ) : (
+          recentSearchWordsDataArray.map((stock, id) => {
             return (
               <RecentSearchWord
                 key={id}
                 stock={stock}
-                // handleDeleteRecentSearchWord={() =>
-                //   onDeleteRecentSearchWord(id)
-                // }
+                handleDeleteRecentSearchWord={() =>
+                  handleDeleteRecentSearchWord(id)
+                }
               />
             );
-          })}
+          })
+        )}
       </div>
     </>
   );

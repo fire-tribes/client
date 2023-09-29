@@ -5,66 +5,70 @@ import { useGetPopularStocks } from '@/hook/useGetPopularStocks';
 
 function PopularStocks() {
   /** exampleDatas */
-  const exampleDatas = [
-    {
-      tickerCode: 'tickerCode',
-      stockCode: 'stockCode',
-      name: 'name',
-    },
-    {
-      tickerCode: 'tickerCode',
-      stockCode: 'stockCode',
-      name: 'name',
-    },
-    {
-      tickerCode: 'tickerCode',
-      stockCode: 'stockCode',
-      name: 'name',
-    },
-    {
-      tickerCode: 'tickerCode',
-      stockCode: 'stockCode',
-      name: 'name',
-    },
-    {
-      tickerCode: 'tickerCode',
-      stockCode: 'stockCode',
-      name: 'name',
-    },
-    {
-      tickerCode: 'tickerCode',
-      stockCode: 'stockCode',
-      name: 'name',
-    },
-    {
-      tickerCode: 'tickerCode',
-      stockCode: 'stockCode',
-      name: 'name',
-    },
-    {
-      tickerCode: 'tickerCode',
-      stockCode: 'stockCode',
-      name: 'name',
-    },
-    {
-      tickerCode: 'tickerCode',
-      stockCode: 'stockCode',
-      name: 'name',
-    },
-  ];
+  // const exampleDatas = [
+  //   {
+  //     tickerCode: 'tickerCode',
+  //     stockCode: 'stockCode',
+  //     name: 'name',
+  //   },
+  //   {
+  //     tickerCode: 'tickerCode',
+  //     stockCode: 'stockCode',
+  //     name: 'name',
+  //   },
+  //   {
+  //     tickerCode: 'tickerCode',
+  //     stockCode: 'stockCode',
+  //     name: 'name',
+  //   },
+  //   {
+  //     tickerCode: 'tickerCode',
+  //     stockCode: 'stockCode',
+  //     name: 'name',
+  //   },
+  //   {
+  //     tickerCode: 'tickerCode',
+  //     stockCode: 'stockCode',
+  //     name: 'name',
+  //   },
+  //   {
+  //     tickerCode: 'tickerCode',
+  //     stockCode: 'stockCode',
+  //     name: 'name',
+  //   },
+  //   {
+  //     tickerCode: 'tickerCode',
+  //     stockCode: 'stockCode',
+  //     name: 'name',
+  //   },
+  //   {
+  //     tickerCode: 'tickerCode',
+  //     stockCode: 'stockCode',
+  //     name: 'name',
+  //   },
+  //   {
+  //     tickerCode: 'tickerCode',
+  //     stockCode: 'stockCode',
+  //     name: 'name',
+  //   },
+  // ];
 
-  /** 인기주식 호출하기 삭제(PopularStock 컴포넌트로 이동) */
-  const getPopularStocks = useGetPopularStocks();
-  console.log('getPopularStocks?: ', getPopularStocks);
+  /** 인기주식 호출 */
+  const { getPopularStocksData } = useGetPopularStocks();
+  const popularStocksArray = getPopularStocksData?.data;
+  console.log('getPopularStocksData?: ', getPopularStocksData);
 
   return (
     <>
       <PopularStocksUI.Header>인기 주식</PopularStocksUI.Header>
       <PopularStocksUI.BottomContainer>
-        {exampleDatas !== undefined &&
-          exampleDatas.map((stock, id) => {
+        {popularStocksArray !== undefined ? (
+          popularStocksArray.map((stock, id) => {
             return <PopularStock key={id} increase={true} stock={stock} />;
-          })}
+          })
+        ) : (
+          <div style={{ width: '100%', height: '41px' }}></div>
+        )}
       </PopularStocksUI.BottomContainer>
     </>
   );

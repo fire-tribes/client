@@ -4,7 +4,6 @@ import { SelectedStocksAtomProps } from '@/hook/useGetSelectedStocks/state';
 import testCircleSvg from '@/public/icon/testCircle.svg';
 import trashSvg from '@/public/icon/trash.svg';
 import { basic } from '@/styles/palette';
-// import { useGetCurrentPrice } from '@/hook/useGetCurrentPrice';
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 
@@ -15,18 +14,10 @@ interface FeedStockInfoProps {
   removeSelected: (stock: SelectedStocksAtomProps) => void;
   /** 현재가 입력 버튼 */
   currentPriceButton: () => void;
-  // /** Count에 값을 입력하고, Error를 제거하는 함수 */
-  // handleInputCountChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  /** Price에 값을 입력하고, Error를 제거하는 함수 */
-  // handleInputPriceChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  // /** 값을 입력하지 않았을 때, 발생시킬 Error 함수 */
-  // handleInputBlur: () => void;
-  // /** 가격 input */
+  /** 가격 input */
   inputCountValue: string;
   /** 가격 input */
   inputPriceValue: string;
-  // /** error 내용 */
-  // errorText: string;
   /** 수량이 변화했을 때, 발생하는 Event */
   changeCountEventHandle: (e: ChangeEvent<HTMLInputElement>) => void;
   /** 가격이 변화했을 때, 발생하는 Event */
@@ -37,35 +28,13 @@ function FeedStockInfo({
   stock,
   removeSelected,
   currentPriceButton,
-  // handleInputCountChange,
-  // handleInputPriceChange,
-  // handleInputBlur,
   inputCountValue,
-  inputPriceValue, // errorText,
+  inputPriceValue,
   changeCountEventHandle,
   changePriceEventHandle,
 }: FeedStockInfoProps) {
-  const STOCK_NAME = stock.name;
-  const STOCK_TICKERCODE = stock.tickerCode;
-  const STOCK_STOCKCODE = stock.stockCode;
-  // const STOCK_ASSETID = stock.assetId;
-
-  // const [inputCountValue, setInputCountValue] = useState('');
-  // const [inputPriceValue, setInputPriceValue] = useState('');
   const [errorText, setErrorText] = useState('');
 
-  /** Count에 값을 입력하고, Error를 제거하는 함수 */
-  // const handleInputCountChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const value = e.target.value;
-  //   setInputCountValue(value);
-  //   setErrorText('');
-  // };
-  /** Price에 값을 입력하고, Error를 제거하는 함수 */
-  // const handleInputPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const value = e.target.value;
-  //   setInputPriceValue(value);
-  //   setErrorText('');
-  // };
   /** 값을 입력하지 않았을 때, 발생시킬 Error 함수 */
   const handleInputBlur = () => {
     if (inputCountValue.trim() === '' || inputPriceValue.trim() === '') {
@@ -78,12 +47,12 @@ function FeedStockInfo({
         <FeedStockInfoUI.TopContainer>
           <FeedStockInfoUI.NativeStockInfoContainer>
             <div>
-              <div>{STOCK_NAME.split('')[0]}</div>
+              <div>{stock.name.split('')[0]}</div>
               <Image src={testCircleSvg} alt="testCircle Svg" />
             </div>
             <div>
-              <div>{STOCK_NAME}</div>
-              <div>{STOCK_TICKERCODE ? STOCK_TICKERCODE : STOCK_STOCKCODE}</div>
+              <div>{stock.name}</div>
+              <div>{stock.tickerCode ? stock.tickerCode : stock.stockCode}</div>
             </div>
           </FeedStockInfoUI.NativeStockInfoContainer>
           <AlertModal

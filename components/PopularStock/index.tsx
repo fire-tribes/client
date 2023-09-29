@@ -1,7 +1,6 @@
 import { PopularStockUI } from './style';
 import increaseSvg from '@/public/icon/increase.svg';
 import decreaseSvg from '@/public/icon/decrease.svg';
-import { useGetPopularStocks } from '@/hook/useGetPopularStocks';
 import Image from 'next/image';
 
 interface PopularStockProps {
@@ -14,9 +13,6 @@ interface PopularStockProps {
 }
 
 function PopularStock({ increase = true, stock }: PopularStockProps) {
-  const { getPopularStocksData } = useGetPopularStocks();
-  console.log('getPopularStocksData', getPopularStocksData);
-
   return (
     <PopularStockUI.Container>
       <PopularStockUI.Item>

@@ -2,20 +2,36 @@ import { SearchedResultUI } from './style';
 import testCircleSvg from '@/public/icon/testCircle.svg';
 import checkFalseSvg from '@/public/icon/checkFalse.svg';
 import checkTrueSvg from '@/public/icon/checkTrue.svg';
-import { SelectedStocksAtomProps } from '@/hook/useGetSelectedStocks/state';
 import { basic } from '@/styles/palette';
 import Image from 'next/image';
 // import { css } from '@emotion/react';
 
+interface Stock {
+  assetId: number;
+  tickerCode: string;
+  stockCode: string;
+  name: string;
+  countryType: 'KOR' | 'USA';
+  marketType:
+    | 'KRX'
+    | 'KRX_KOSPI'
+    | 'KRX_KOSDAQ'
+    | 'KRX_KONEX'
+    | 'NYSE'
+    | 'AMEX'
+    | 'NASDAQ'
+    | 'UNKNOWN';
+  assetCategoryType: 'STOCK' | 'ETF' | 'ETN';
+}
 interface SearchedResultProps {
   /** 검색 결과에 해당하는 데이터 객체 */
-  stock: SelectedStocksAtomProps;
+  stock: Stock;
   /** 검색 결과 */
   debouncedValue: string;
   /** 주식 종목 포트폴리오에 추가 선택 */
   isSelected: boolean;
   /** 주식 종목 포트폴리오에 추가 선택 시, 실행할 함수 */
-  toggleSelected: (stock: SelectedStocksAtomProps) => void;
+  toggleSelected: (stock: Stock) => void;
 }
 
 // // 스타일링할 클래스
