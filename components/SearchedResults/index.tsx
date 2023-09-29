@@ -113,10 +113,9 @@ function SearchedResults({ value }: SearchResultsProps) {
                 />
               );
             })}
-          {searchedResultsArray !== undefined &&
-            searchedResultsArray.length === 0 && (
-              <div style={containerStyle}>검색어 결과가 없습니다.</div>
-            )}
+          {searchedResultsArray !== undefined && (
+            <div style={containerStyle}>검색어 결과가 없습니다.</div>
+          )}
           <div style={{ height: 'calc(92px - 56px)' }}></div>
         </div>
       )}

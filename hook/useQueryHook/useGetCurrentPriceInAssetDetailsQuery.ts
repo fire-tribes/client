@@ -16,8 +16,6 @@ interface Response {
 export const useGetCurrentPriceInAssetDetailsQuery = (
   assetId: number,
   isPressButton: boolean,
-  // isPressAllButton: boolean[],
-  // newIsPressAllButton?: boolean,
 ) => {
   const [, setEditedAssetDetails] = useAtom(editedAssetDetailsAtom);
   /** 개별 현재가 가져오기 */

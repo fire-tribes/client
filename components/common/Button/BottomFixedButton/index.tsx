@@ -1,11 +1,12 @@
 import { useAddRecentSearchWord } from '@/hook/useAddRecentSearchWord';
 import { useAddStocksAtPortfolio } from '@/hook/useAddStocksAtPortfolio';
+import { useEditPortfolio } from '@/hook/useEditPortfolio';
 import {
   SelectedStocksAtomProps,
   selectedStocksAtom,
 } from '@/hook/useGetSelectedStocks/state';
 import { useMakePortfolio } from '@/hook/useMakePortfolio';
-import { Button, ButtonProps, styled } from '@mui/material';
+import { Button, ButtonProps, CircularProgress, styled } from '@mui/material';
 import { useAtom } from 'jotai';
 import { useRouter } from 'next/router';
 
@@ -86,6 +87,7 @@ function BottomFixedButton({
 
   /** 다음 버튼을 눌렀을 때, 최근 검색어 데이터 값을 POST 요청하는 함수 */
   const { addRecentSearchWordData } = useAddRecentSearchWord();
+  const { isLoading, updatePort } = useEditPortfolio();
 
   /** 다른 페이지로 이동하는 함수 */
   const onMoveOtherPages = (buttonName: string) => {
@@ -107,7 +109,16 @@ function BottomFixedButton({
       router.push('/fires/main/full');
     }
     if (buttonName === '수정 완료') {
-      router.push('/fires/edit');
+      updatePort()
+        .then((response) => {
+          if (response?.data.success) {
+            router.push('/fires/edit');
+          }
+        })
+        .catch((err) => {
+          alert(`error 발생 : ${err}`);
+        });
+      // router.push('/fires/edit');
     }
   };
 
@@ -150,7 +161,7 @@ function BottomFixedButton({
             }}
             onClick={() => onMoveOtherPages(buttonName)}
           >
-            {children}
+            {isLoading ? <CircularProgress /> : children}
           </StyledButton>
         </div>
       </div>
