@@ -16,7 +16,27 @@ const Item = styled.div`
 
 const StockContainer = styled.div`
   display: flex;
-  align-items: center;
+
+  > div:first-child {
+    position: relative;
+    > div:first-child {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+
+      ${({ theme }) => `
+        color: ${theme.palette.basic.point_blue01};
+      `}
+    }
+    > span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
 
   div:last-child {
     margin: 10px;
@@ -25,7 +45,7 @@ const StockContainer = styled.div`
         font-size: ${theme.font.size.body2};
       `}
     }
-    > a {
+    > button {
       ${({ theme }) => `
         font-size: ${theme.font.size.caption};
         color: ${theme.palette.basic.point_blue01};
