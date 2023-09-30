@@ -22,11 +22,6 @@ export const useEditPortfolio = () => {
   // makeAssets
   const makeAssets = (array: AssetDetailsAtomProps[]) => {
     return array.map((stock) => {
-      // console.log('stock.portfolioAssetId: ', stock.portfolioAssetId);
-      // console.log(
-      //   'editedAssetDetails.portfolioAssetId: ',
-      //   editedAssetDetails.portfolioAssetId,
-      // );
       console.log('stock.assetId: ', stock.assetId);
       console.log('editedAssetDetails.assetId: ', editedAssetDetails.assetId);
       if (stock.assetId === editedAssetDetails.assetId) {
@@ -70,10 +65,4 @@ export const useEditPortfolio = () => {
     isLoading,
     updatePort,
   };
-  // const formData = {
-  //   portfolioId: Number(portfolioId),
-  //   assets: makeAssets(assetDetails),
-  // };
-  // console.log('madePortfolio formData: ', formData);
-  // updatePortfolioData(formData);
 };

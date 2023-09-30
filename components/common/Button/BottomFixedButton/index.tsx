@@ -79,7 +79,7 @@ function BottomFixedButton({
       router.push('/');
     }
     if (buttonName === '완료') {
-      router.push('/fires/main/full');
+      router.push('/');
     }
     if (buttonName === '수정 완료') {
       try {

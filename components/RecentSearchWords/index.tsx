@@ -14,15 +14,6 @@ interface RecentSearchWords {
 
 function RecentSearchWords() {
   /** exampleDatas */
-  // const exampleDatas = [
-  //   { word: '일', date: '2023-09-22T13:54:18.239Z' },
-  //   { word: '이', date: '2023-09-22T13:54:18.239Z' },
-  //   { word: '삼', date: '2023-09-22T13:54:18.239Z' },
-  //   { word: '사', date: '2023-09-22T13:54:18.239Z' },
-  //   { word: '오', date: '2023-09-22T13:54:18.239Z' },
-  //   { word: '육', date: '2023-09-22T13:54:18.239Z' },
-  //   { word: '칠', date: '2023-09-22T13:54:18.239Z' },
-  // ];
 
   /** 최근 검색어 데이터 Get */
   const { getRecentSearchWordsData, isLoading } = useGetRecentSearchWords();

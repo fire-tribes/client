@@ -4,6 +4,7 @@ import type { AddRecentSearchWord } from '@/@types/models/addRecentSearchWord';
 import type { DeleteRecentSearchWord } from '@/@types/models/deleteRecentSearchWord';
 import type { GetRecentSearchWords } from '@/@types/models/getRecentSearchWords';
 import type { RemoveRecentSearchWordsAll } from '@/@types/models/removeRecentSearchWordsAll';
+import type { DeleteAssetDetail } from '@/@types/models/deleteAssetDetail';
 
 import type { ResponseSuccess } from '@/@types/models/response';
 
@@ -31,6 +32,14 @@ export const userAPI = {
   removeRecentSearchWordsAll: () => {
     return APIInstance.post<ResponseSuccess<RemoveRecentSearchWordsAll>>(
       'user/recent-search-word/clear-all',
+    );
+  },
+  deleteAssetDetails: (formData: {
+    portfolioId: number;
+    portfolioAssetId: number;
+  }) => {
+    return APIInstance.post<ResponseSuccess<DeleteAssetDetail[]>>(
+      `asset/delete?portfolioId=${formData.portfolioId}&portfolioAssetId=${formData.portfolioAssetId}`,
     );
   },
 };

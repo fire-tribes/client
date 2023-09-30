@@ -6,6 +6,8 @@ import { basic } from '@/styles/palette';
 import { assetDetailsAtom } from '@/hook/useGetAssetDetails/state';
 import { useGetCurrentPriceInAssetDetails } from '@/hook/useGetCurrentPriceInAssetDetails';
 import { editedAssetDetailsAtom } from '@/hook/useEditedAssetDetails/state';
+import useDeleteAssetDetails from '@/hook/useDeleteAssetDetails';
+import { useMyPortFolio } from '@/hook/useMyPortFolio';
 import Image from 'next/image';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -92,12 +94,6 @@ export default function EditStockInfo() {
     // setInputPriceValue(value);
   };
 
-  // const [inputCountValue, setInputCountValue] = useState(
-  //   String(assetDetails[index!].count),
-  // );
-  // const [inputPriceValue, setInputPriceValue] = useState(
-  //   String(assetDetails[index!].averagePrice),
-  // );
   /** 값을 입력하지 않았을 때, 발생시킬 Error 함수 */
   const [errorText, setErrorText] = useState('');
   const handleInputBlur = () => {
@@ -133,11 +129,17 @@ export default function EditStockInfo() {
   };
 
   /** [삭제 함수] Jotai로 만든 주식 종목 배열에서 해당 객체 삭제하는 함수 */
+  const { deleteAssetDetailsData } = useDeleteAssetDetails();
+  const { myPortFolioData } = useMyPortFolio();
   const handleRemoveSelected = () => {
-    // if (assetDetails !== undefined) {
-    //   assetDetails.splice(index!, 1);
-    // }
-    // setAssetDetails(assetDetails);
+    router.push('/fires/edit');
+
+    const requestObject = {
+      portfolioId:
+        myPortFolioData !== undefined ? myPortFolioData.portfolioId : 0,
+      portfolioAssetId: object !== undefined ? object.portfolioAssetId : 0,
+    };
+    deleteAssetDetailsData(requestObject);
   };
 
   return (
