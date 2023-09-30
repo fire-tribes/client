@@ -18,6 +18,8 @@ export default function NotifyListModal({
   items,
   children,
 }: StockNotifyModalProps) {
+  if (!items || items.length === 0) return <>{children}</>;
+
   return (
     <NotifyModal
       title={modalTitle}

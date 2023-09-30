@@ -34,12 +34,20 @@ export const useAnnualDividendExchangeQuery = () => {
 
       return {
         ...annualDividendData,
-        annualDividend: annualDividendData.annualDividend,
         dividendChange: annualDividendData.dividendChange,
-        paidTax: annualDividendData.paidTax,
-        unPaidTax: annualDividendData.unPaidTax,
-        thisMonthDividend: annualDividendData.thisMonthDividend,
         monthlyDividends: newMonthlyDividends,
+        annualDividend: Math.floor(
+          annualDividendData.annualDividend * exchangeRate,
+        ).toLocaleString('ko-kr'),
+        paidTax: Math.floor(
+          annualDividendData.paidTax * exchangeRate,
+        ).toLocaleString('ko-kr'),
+        unPaidTax: Math.floor(
+          annualDividendData.unPaidTax * exchangeRate,
+        ).toLocaleString('ko-kr'),
+        thisMonthDividend: Math.floor(
+          annualDividendData.thisMonthDividend * exchangeRate,
+        ).toLocaleString('ko-kr'),
       };
     }
   };

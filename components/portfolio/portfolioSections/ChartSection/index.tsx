@@ -4,25 +4,17 @@ import CommonFont from '@/components/common/Font';
 import Section from '@/components/Section';
 import CommonCheckButton from '@/components/common/CheckButton';
 import FlexBox from '@/components/common/FlexBox';
-import { transferPrice } from '@/core/utils/transferPrice';
 import { useAnnualDividend } from '@/hook/useAnnualDividend';
-import { useExchangeRate } from '@/hook/useExchangeRate';
 import NormalNotifyModal from '@/components/common/Modal/NormalNotifyModal';
 import { Button } from '@mui/material';
 
 export default function ChartSection() {
   const { annualDividendData } = useAnnualDividend();
-  const { exchangeRate } = useExchangeRate();
 
   const chartSectionTexts = {
-    title: `${transferPrice({
-      currentPrice: annualDividendData?.thisMonthDividend,
-      exchangeRate,
-      outputSymbol: 'KRW',
-      defaultText: '0원',
-    })}`,
+    title: `${annualDividendData?.thisMonthDividend || 0}원`,
     subTitle: annualDividendData?.dividendChange
-      ? `지난 배당 대비 ${Math.floor(annualDividendData?.dividendChange)}%`
+      ? `지난 배당 대비 ${annualDividendData?.dividendChange}%`
       : '',
     isShowChart:
       annualDividendData?.monthlyDividends && annualDividendData?.annualDividend
