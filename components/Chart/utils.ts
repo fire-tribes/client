@@ -1,32 +1,5 @@
 import { MonthlyDividends } from '@/@types/models/dividend';
 
-/** 현재는 원화를 기준으로 변경만을 지원 */
-const formatChartValue = (value: string | number) => {
-  const ZERO = 0;
-  const MIN_LENGTH = 5;
-  const MIDDLE_LENGTH = 7;
-  const CHANGE_FONT_SIZE_LENGTH = 8;
-  const MAX_LENGTH = 10;
-
-  if (value === ZERO) return '';
-  const stringValue = typeof value === 'number' ? value.toString() : value;
-  const stringLength = stringValue.length;
-
-  if (stringLength <= MIN_LENGTH) return value;
-  if (stringLength <= MIDDLE_LENGTH) {
-    return stringValue.substring(0, stringLength - 4) + '만';
-  }
-  if (stringLength <= CHANGE_FONT_SIZE_LENGTH) {
-    // + 폰트사이즈 8px로 변경
-    return stringValue.substring(0, stringLength - 4) + '만';
-  }
-  if (stringLength <= MAX_LENGTH) {
-    return stringValue.substring(0, stringLength - 8) + '억';
-  }
-
-  return '';
-};
-
 /** 차트에서 사용되는 util 함수, 한국 기준 앞자리만 반환합니다.
  * ex) 9999999 => 999만
  * ex) 999999999 => 9억
@@ -40,7 +13,7 @@ export const getShortCurrencyKR = (value: number) => {
 
   // 1만 미만
   if (value < 10000) {
-    return value.toString();
+    return Math.floor(value).toString();
   }
 
   // 1억 미만
@@ -87,4 +60,7 @@ const createShowChartDividendDatas = (
   return showChartDividendDatas;
 };
 
-export { formatChartValue, createShowChartDividendDatas };
+export {
+  // formatChartValue,
+  createShowChartDividendDatas,
+};

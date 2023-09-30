@@ -19,6 +19,12 @@ describe('new test', () => {
     expect(result).toBe('100');
   });
 
+  it('소수점', () => {
+    const result = getShortCurrencyKR(100.1234214);
+
+    expect(result).toBe('100');
+  });
+
   it('1,000', () => {
     const result = getShortCurrencyKR(1000);
 
@@ -33,6 +39,12 @@ describe('new test', () => {
 
   it('1만', () => {
     const result = getShortCurrencyKR(10000);
+
+    expect(result).toBe('1만');
+  });
+
+  it('1만3천', () => {
+    const result = getShortCurrencyKR(13000);
 
     expect(result).toBe('1만');
   });

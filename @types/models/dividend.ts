@@ -44,10 +44,11 @@ type MonthlyDividends = {
 };
 
 type DividendCalanderModel = {
-  ticker: string;
   stockCode: string;
-  예상배당금지급일: Date;
-  예상배당금: number;
+  tickerCode: string;
+  exDividendDate: string;
+  expectedPayDate: string;
+  expectedDividends: number;
   currencyType: ExchangeRateSymbol;
 };
 
