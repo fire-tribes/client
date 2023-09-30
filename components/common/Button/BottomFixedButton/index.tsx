@@ -58,9 +58,8 @@ function BottomFixedButton({
     addStocksAtPortfolioData(formData);
   };
 
-  const { isLoading, updatePort } = useEditPortfolio();
-
   const { updateRecentSearchWords } = useUpdateRecentSearchWords();
+  const { isLoading, updatePort } = useEditPortfolio();
 
   /** 다른 페이지로 이동하는 함수 */
   const onMoveOtherPages = async (buttonName: string) => {
