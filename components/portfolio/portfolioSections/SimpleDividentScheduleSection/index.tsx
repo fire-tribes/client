@@ -14,7 +14,9 @@ export default function SimpleDividentScheduleSection() {
 
   return (
     <Section textAlign="left">
-      <Section.Title paddingBottom="18px">배당 달력(8월)</Section.Title>
+      <Section.Title paddingBottom="18px">{`배당 달력 (${
+        new Date().getMonth() + 1
+      }월)`}</Section.Title>
       <ScheduleList />
       <Section.Footer padding={'20px 0px'}>
         <FlexBox>

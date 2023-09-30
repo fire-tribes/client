@@ -23,7 +23,7 @@ export const useMonthlyCalanderDividendExchangeQuery = () => {
       if (datas?.length && exchangeRate) {
         return datas.map((data) => ({
           ...data,
-          예상배당금: data.예상배당금 * exchangeRate,
+          expectedDividends: data.expectedDividends * exchangeRate,
         }));
       }
 

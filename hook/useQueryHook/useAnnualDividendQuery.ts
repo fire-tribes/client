@@ -13,30 +13,32 @@ export const useAnnualDividendExchangeQuery = () => {
   const { data } = useAnnualDividendQuery();
   const { modeData } = useControlMode();
 
+  const getQueryFunction = () => {
+    const annualDividendData = data?.data.data;
+    if (annualDividendData && exchangeRate) {
+      annualDividendData.monthlyDividends;
+
+      const newMonthlyDividends = Object.entries(
+        annualDividendData.monthlyDividends,
+      ).reduce(
+        (acc, [key, value]) => ({ ...acc, [key]: value * exchangeRate }),
+        {},
+      );
+
+      return {
+        ...annualDividendData,
+        annualDividend: annualDividendData.annualDividend,
+        dividendChange: annualDividendData.dividendChange,
+        paidTax: annualDividendData.paidTax,
+        unPaidTax: annualDividendData.unPaidTax,
+        thisMonthDividend: annualDividendData.thisMonthDividend,
+        monthlyDividends: newMonthlyDividends,
+      };
+    }
+  };
+
   return useQuery(
     queryKeys.annualDividend(modeData.isSimple, exchangeRate),
-    () => {
-      const annualDividendData = data?.data.data;
-      if (annualDividendData && exchangeRate) {
-        annualDividendData.monthlyDividends;
-
-        const newMonthlyDividends = Object.entries(
-          annualDividendData.monthlyDividends,
-        ).reduce(
-          (acc, [key, value]) => ({ ...acc, [key]: value * exchangeRate }),
-          {},
-        );
-
-        return {
-          ...annualDividendData,
-          annualDividend: annualDividendData.annualDividend,
-          dividendChange: annualDividendData.dividendChange,
-          paidTax: annualDividendData.paidTax,
-          unPaidTax: annualDividendData.unPaidTax,
-          thisMonthDividend: annualDividendData.thisMonthDividend,
-          monthlyDividends: newMonthlyDividends,
-        };
-      }
-    },
+    getQueryFunction,
   );
 };

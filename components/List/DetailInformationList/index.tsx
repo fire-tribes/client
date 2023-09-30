@@ -3,7 +3,6 @@ import CommonFont from '@/components/common/Font';
 import { AnnualDividendListItem } from '@/components/List/DetailInformationList/AnnualDividendListItem';
 // import { useAnnualDividend } from '@/hook/useAnnualDividend';
 
-// import { useAnnualDividendExchangeQuery } from '@/hook/useQueryHook/useAnnualDividendQuery';
 import { useAnnualDividend } from '@/hook/useAnnualDividend';
 import { transferPrice } from '@/core/utils/transferPrice';
 import { useExchangeRate } from '@/hook/useExchangeRate';
