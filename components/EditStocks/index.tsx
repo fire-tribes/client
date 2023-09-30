@@ -1,14 +1,25 @@
 import { EditStocksUI } from './style';
 import EditStock from '../EditStock';
 import NothingStocks from '../NothingStocks';
-import { portfolioList } from '@/pages/fires/edit';
+import { useMyPortFolio } from '@/hook/useMyPortFolio';
+import { assetDetailsAtom } from '@/hook/useGetAssetDetails/state';
+import { useAtom } from 'jotai';
+import { CircularProgress } from '@mui/material';
 
-interface EditStocksProps {
-  /** 포트폴리오 객체 */
-  portfolioList?: portfolioList;
-}
+function EditStocks() {
+  /** Portfolio Get 요청 useFeatureHook (useMyPortfolio) */
+  const { myPortFolioData, isLoading, isFetching } = useMyPortFolio();
+  const assetDetailsArray = myPortFolioData?.assetDetails;
+  // console.log('assetDetailsArray: ', assetDetailsArray);
 
-function EditStocks({ portfolioList }: EditStocksProps) {
+  /** 수정하기 버튼 클릭 시, Jotai에 assetDetails 배열 데이터 담기 */
+  const [, setAssetDetails] = useAtom(assetDetailsAtom);
+  const createAssetDetailsJotai = () => {
+    if (assetDetailsArray !== undefined) {
+      setAssetDetails(assetDetailsArray);
+    }
+  };
+
   return (
     <>
       <EditStocksUI.TopContainer>
@@ -16,9 +27,19 @@ function EditStocks({ portfolioList }: EditStocksProps) {
         <tr /> 종목을 탭하면 보유 수량, 평단가를 수정할 수 있습니다.
       </EditStocksUI.TopContainer>
       <div>
-        {portfolioList?.data.assetDetails.length !== 1 ? (
-          portfolioList?.data.assetDetails.map((stock) => {
-            return <EditStock key={stock.assetId} stock={stock} />;
+        {isLoading || isFetching ? (
+          <EditStocksUI.LoadingContainer>
+            <CircularProgress />
+          </EditStocksUI.LoadingContainer>
+        ) : assetDetailsArray !== undefined ? (
+          assetDetailsArray.map((stock) => {
+            return (
+              <EditStock
+                key={stock.assetId}
+                stock={stock}
+                handleEditButton={createAssetDetailsJotai}
+              />
+            );
           })
         ) : (
           <NothingStocks />

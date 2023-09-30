@@ -22,12 +22,12 @@ const SearchLayout = ({
   return (
     <StyledLayout>
       <StyledContent>{children}</StyledContent>
-      {!hasButton ? (
-        <div></div>
-      ) : (
+      {hasButton ? (
         <BottomFixedButton isDisabled={isDisabled} buttonName={buttonName}>
           {buttonName}
         </BottomFixedButton>
+      ) : (
+        <div></div>
       )}
     </StyledLayout>
   );
@@ -38,11 +38,29 @@ const StyledLayout = styled.main`
   max-width: 430px;
   height: 100vh;
   margin: 0 auto;
+
   position: relative;
+  overflow-x: hidden;
+
+  /** Firefox에서 스크롤바 숨김 */
+  scrollbar-width: none;
+  /** IE/Edge에서 스크롤바 숨김 */
+  -ms-overflow-style: none;
+  ::-webkit-scrollbar {
+    /** Chrome 및 Safari에서 스크롤바 숨김 */
+    width: 0;
+  }
+
+  > div:last-child {
+    position: absolute;
+    z-index: 1;
+  }
 `;
 
 const StyledContent = styled.section`
   min-height: 100vh;
+
+  overflow-x: auto;
 
   padding: 16px 16px 56px 16px;
 `;

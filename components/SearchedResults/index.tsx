@@ -1,13 +1,34 @@
-import SearchResult from '../SearchResult';
+import { SearchedResultsUI } from './style';
+import SearchedResult from '../SearchedResult';
 import {
   SelectedStocksAtomProps,
   selectedStocksAtom,
 } from '../../hook/useGetSelectedStocks/state';
 import ShowAddedStocks from '../ShowAddedStocks';
 import { useGetSearchedResults } from '@/hook/useGetSearchedResults';
+import { basic } from '@/styles/palette';
 import { useAtom } from 'jotai';
 import { useDebounce } from 'use-debounce';
+import { CircularProgress } from '@mui/material';
+import { useCallback } from 'react';
 
+interface Stock {
+  assetId: number;
+  tickerCode: string;
+  stockCode: string;
+  name: string;
+  countryType: 'KOR' | 'USA';
+  marketType:
+    | 'KRX'
+    | 'KRX_KOSPI'
+    | 'KRX_KOSDAQ'
+    | 'KRX_KONEX'
+    | 'NYSE'
+    | 'AMEX'
+    | 'NASDAQ'
+    | 'UNKNOWN';
+  assetCategoryType: 'STOCK' | 'ETF' | 'ETN';
+}
 interface SearchResultsProps {
   /** 입력한 검색어 */
   value: string;
@@ -20,14 +41,14 @@ function SearchedResults({ value }: SearchResultsProps) {
   /** 검색 결과값을 배열로 가져오는 함수 */
   const { getSearchedResultsData, isLoading } =
     useGetSearchedResults(debouncedValue);
-  const searchedResultsArray = getSearchedResultsData;
-  console.log('searchedResultsArray: ', searchedResultsArray);
+  const searchedResultsArray = getSearchedResultsData?.data;
 
   const containerStyle: React.CSSProperties = {
     height: 'calc(100vh - 72px - 53px - 68.5px)',
     padding: '16px',
     textAlign: 'center',
     lineHeight: 'calc(100vh - 72px - 53px - 68.5px)',
+    color: `${basic.gray6}`,
   };
 
   /** Jotai의 selectedStocksAtom을 이용해서 선택된 주식을 관리 */
@@ -39,14 +60,17 @@ function SearchedResults({ value }: SearchResultsProps) {
       /** 이미 선택된 주식인지 아닌지 확인하고, 선택 상태 토글 */
       const isNewSelectedStocks = prev.some(
         (selected: SelectedStocksAtomProps) =>
-          selected.stockCode === stock.stockCode,
+          stock.tickerCode
+            ? selected.tickerCode === stock.tickerCode
+            : selected.stockCode === stock.stockCode,
       );
       if (isNewSelectedStocks) {
         const notMatchedStocks = prev.filter(
           (selected: SelectedStocksAtomProps) =>
-            selected.stockCode !== stock.stockCode,
+            stock.tickerCode
+              ? selected.tickerCode !== stock.tickerCode
+              : selected.stockCode !== stock.stockCode,
         );
-
         return notMatchedStocks;
       } else {
         const newAddedSelectedStocks = [...prev, stock];
@@ -55,14 +79,28 @@ function SearchedResults({ value }: SearchResultsProps) {
       }
     });
   };
-  console.log('handleToggleSelected: ', handleToggleSelected);
+
+  /** toggleSelected 함수를 useCallback으로 감싸서 debouncedValue가 변경될 때마다 함수가 새로 생성되도록 함 */
+  const toggleSelected = useCallback(
+    (stock: Stock) => (
+      console.log('debouncedValue in toggleSelected: ', debouncedValue),
+      handleToggleSelected({
+        ...stock,
+        count: '',
+        price: '',
+        debouncedValue: debouncedValue,
+      })
+    ),
+    [debouncedValue, handleToggleSelected],
+  );
 
   /** 취소버튼 클릭 시, selectedStocks에서 해당 객체값 제거 */
   const handleRemoveSelected = (stock: SelectedStocksAtomProps) => {
     setSelectedStocks((prev: SelectedStocksAtomProps[]) => {
-      return prev.filter(
-        (selected: SelectedStocksAtomProps) =>
-          selected.stockCode !== stock.stockCode,
+      return prev.filter((selected: SelectedStocksAtomProps) =>
+        stock.tickerCode
+          ? selected.tickerCode !== stock.tickerCode
+          : selected.stockCode !== stock.stockCode,
       );
     });
   };
@@ -77,46 +115,32 @@ function SearchedResults({ value }: SearchResultsProps) {
       {debouncedValue === '' ? (
         <div style={containerStyle}>검색어 결과가 없습니다.</div>
       ) : isLoading ? (
-        <p>Loading...</p>
+        <SearchedResultsUI.LoadingContainer>
+          <CircularProgress />
+        </SearchedResultsUI.LoadingContainer>
       ) : (
         <div>
-          {searchedResultsArray !== undefined ? (
+          {searchedResultsArray !== undefined &&
             searchedResultsArray.map((stock) => {
               return (
-                <SearchResult
+                <SearchedResult
                   key={stock.assetId}
-                  // stock={stock}
+                  stock={stock}
+                  debouncedValue={debouncedValue}
                   isSelected={selectedStocks.some(
                     (selected: SelectedStocksAtomProps) =>
-                      selected.stockCode === stock.stockCode,
+                      stock.tickerCode
+                        ? selected.tickerCode === stock.tickerCode
+                        : selected.stockCode === stock.stockCode,
                   )}
-                  // toggleSelected={() => handleToggleSelected(stock)}
+                  toggleSelected={() => toggleSelected(stock)}
                 />
               );
-            })
-          ) : (
+            })}
+          {searchedResultsArray !== undefined && (
             <div style={containerStyle}>검색어 결과가 없습니다.</div>
           )}
-          {/* {getSearchStocks.data !== undefined &&
-            getSearchStocks.data.data.map((item, id) => {
-              return (
-                <SearchResult
-                  key={item.data[id].assetId}
-                  stockName={item.data[id].name}
-                  stockTickerCode={item.data[id].tickerCode}
-                >
-                  {isAddStock ? (
-                    <button onClick={handleAddStocks}>
-                      <Image src={checkTrueSvg} alt="checkTrue Svg" />
-                    </button>
-                  ) : (
-                    <button onClick={handleAddStocks}>
-                      <Image src={checkFalseSvg} alt="checkFalse Svg" />
-                    </button>
-                  )}
-                </SearchResult>
-              );
-            })} */}
+          <div style={{ height: 'calc(92px - 56px)' }}></div>
         </div>
       )}
     </>

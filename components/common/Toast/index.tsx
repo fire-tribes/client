@@ -8,11 +8,7 @@ interface ToastProps {
 }
 
 function Toast({ toastMessage }: ToastProps) {
-  return (
-    <>
-      <Container>{toastMessage}</Container>
-    </>
-  );
+  return <Container>{toastMessage}</Container>;
 }
 
 const Container = styled.div`

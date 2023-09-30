@@ -1,9 +1,14 @@
 import { useMakePortfolioQuery } from '@/hook/useQueryHook/useMakePortfolioQuery';
 
 export const useMakePortfolio = () => {
-  const { data, isLoading } = useMakePortfolioQuery();
+  const { mutateAsync, isLoading } = useMakePortfolioQuery();
 
-  const makePortfolioData = data?.data.data.data;
+  const makePortfolioData = async () => {
+    const response = await mutateAsync();
+    // FIX:
+    console.log('useFeatureHook response: ', response);
+    return response.data.data;
+  };
 
   return {
     makePortfolioData,

@@ -8,33 +8,40 @@ import Link from 'next/link';
 interface EditStockProps {
   /** 포트폴리오 내 종목 객체 */
   stock: {
+    portfolioAssetId: number;
     assetId: number;
     tickerCode: string;
-    stockCode: string;
     count: number;
-    averagePrice: string;
-    currentPrice: string;
-    assetPriceChangeRate: string;
-    assetPriceChange: string;
+    averagePrice: number;
+    currentPrice: number;
+    assetPriceChangeRate: number;
+    assetPriceChange: number;
     value: number;
     rateOfReturn: number;
     dividendPriceRatio: number;
     dividendMonth: number[];
-    currencyType: 'KRW';
+    currencyType: string;
   };
+  /** 수정하기 버튼 클릭 시, Jotai에 useMyPortfolio의 배열 데이터 추가 */
+  handleEditButton: () => void;
 }
 
-function EditStock({ stock }: EditStockProps) {
+function EditStock({ stock, handleEditButton }: EditStockProps) {
   return (
     <EditStockUI.Container>
       <EditStockUI.Item>
         <EditStockUI.StockContainer>
           <div>
+            <div>{stock.tickerCode.split('')[0]}</div>
             <Image src={testCircleSvg} alt="testCircle Svg" />
           </div>
           <div>
-            <p>{stock.stockCode}</p>
-            <Link href={`edit/${stock.assetId}`}>수정하기</Link>
+            <div>{stock.tickerCode}</div>
+            <button onClick={handleEditButton}>
+              <Link href={`${stock.assetId}/${stock.portfolioAssetId}`}>
+                수정하기
+              </Link>
+            </button>
           </div>
         </EditStockUI.StockContainer>
         <EditStockUI.ButtonContainer>

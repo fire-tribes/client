@@ -1,10 +1,10 @@
-import { makePortfolioAPI } from '@/core/api/makePortfolio';
+import { portfolioAPI } from '@/core/api/portfolio';
 import { mutationKeys } from '@/hook/useQueryHook/mutationKeys';
 import { useMutation } from '@tanstack/react-query';
 
 export const useMakePortfolioQuery = () => {
   return useMutation({
     mutationKey: mutationKeys.makePortfolio(),
-    mutationFn: () => makePortfolioAPI.makePortfolio(),
+    mutationFn: () => portfolioAPI.makePortfolio(),
   });
 };

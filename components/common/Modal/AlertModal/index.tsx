@@ -34,7 +34,9 @@ function AlertModal({
   const [isShowToast, setIsShowToast] = useState(false);
 
   const handleConfirmButton = () => {
-    if (onClickEvent !== undefined) onClickEvent();
+    if (onClickEvent !== undefined) {
+      onClickEvent();
+    }
     setIsShowToast(true);
     closeModal();
   };
@@ -67,7 +69,7 @@ function AlertModal({
                 style={{
                   backgroundColor: `${basic.gray_blue}`,
                   color: `${basic.white}`,
-                  padding: 0,
+                  padding: '12px 16px',
                 }}
               >
                 확인

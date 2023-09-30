@@ -4,7 +4,8 @@ import { useCallback, useEffect } from 'react';
 
 export const useMyPortFolio = (portFolioId?: number) => {
   const router = useRouter();
-  const { data, status } = useMyPortFolioQuery(portFolioId);
+  const { data, status, isLoading, isFetching } =
+    useMyPortFolioQuery(portFolioId);
   const redirectEmpty = useCallback(() => router.push('/empty'), [router]);
   const myPortFolioData = data?.data.data;
 
@@ -24,5 +25,7 @@ export const useMyPortFolio = (portFolioId?: number) => {
   return {
     myPortFolioData,
     status,
+    isLoading,
+    isFetching,
   };
 };

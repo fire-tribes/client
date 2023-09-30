@@ -1,9 +1,20 @@
 import APIInstance from '@/core/api/instance';
 
+import type { GetCurrentPrice } from '@/@types/models/getCurrentPrice';
 import type { GetSearchedResults } from '@/@types/models/getSearchedResults';
 import type { ResponseSuccess } from '@/@types/models/response';
 
-export const getSearchedResultsAPI = {
+export const assetAPI = {
+  getCurrentPrice: (assetIds: number) => {
+    return APIInstance.get<ResponseSuccess<[GetCurrentPrice] | []>>(
+      'asset/price',
+      {
+        params: {
+          assetIds: assetIds,
+        },
+      },
+    );
+  },
   getSearchedResults: (word: string, pageIndex: number = 1) => {
     return APIInstance.get<ResponseSuccess<GetSearchedResults>>('asset/find', {
       params: {
