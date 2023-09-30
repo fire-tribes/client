@@ -10,7 +10,25 @@ import { basic } from '@/styles/palette';
 import { useAtom } from 'jotai';
 import { useDebounce } from 'use-debounce';
 import { CircularProgress } from '@mui/material';
+import { useCallback } from 'react';
 
+interface Stock {
+  assetId: number;
+  tickerCode: string;
+  stockCode: string;
+  name: string;
+  countryType: 'KOR' | 'USA';
+  marketType:
+    | 'KRX'
+    | 'KRX_KOSPI'
+    | 'KRX_KOSDAQ'
+    | 'KRX_KONEX'
+    | 'NYSE'
+    | 'AMEX'
+    | 'NASDAQ'
+    | 'UNKNOWN';
+  assetCategoryType: 'STOCK' | 'ETF' | 'ETN';
+}
 interface SearchResultsProps {
   /** 입력한 검색어 */
   value: string;
@@ -23,8 +41,7 @@ function SearchedResults({ value }: SearchResultsProps) {
   /** 검색 결과값을 배열로 가져오는 함수 */
   const { getSearchedResultsData, isLoading } =
     useGetSearchedResults(debouncedValue);
-  const searchedResultsArray = getSearchedResultsData;
-  console.log('searchedResultsArray: ', searchedResultsArray);
+  const searchedResultsArray = getSearchedResultsData?.data;
 
   const containerStyle: React.CSSProperties = {
     height: 'calc(100vh - 72px - 53px - 68.5px)',
@@ -62,6 +79,20 @@ function SearchedResults({ value }: SearchResultsProps) {
       }
     });
   };
+
+  /** toggleSelected 함수를 useCallback으로 감싸서 debouncedValue가 변경될 때마다 함수가 새로 생성되도록 함 */
+  const toggleSelected = useCallback(
+    (stock: Stock) => (
+      console.log('debouncedValue in toggleSelected: ', debouncedValue),
+      handleToggleSelected({
+        ...stock,
+        count: '',
+        price: '',
+        debouncedValue: debouncedValue,
+      })
+    ),
+    [debouncedValue, handleToggleSelected],
+  );
 
   /** 취소버튼 클릭 시, selectedStocks에서 해당 객체값 제거 */
   const handleRemoveSelected = (stock: SelectedStocksAtomProps) => {
@@ -102,14 +133,7 @@ function SearchedResults({ value }: SearchResultsProps) {
                         ? selected.tickerCode === stock.tickerCode
                         : selected.stockCode === stock.stockCode,
                   )}
-                  toggleSelected={() =>
-                    handleToggleSelected({
-                      ...stock,
-                      count: '',
-                      price: '',
-                      debouncedValue: debouncedValue,
-                    })
-                  }
+                  toggleSelected={() => toggleSelected(stock)}
                 />
               );
             })}

@@ -4,6 +4,7 @@ import RecentSearchWord from '../RecentSearchWord';
 import { useGetRecentSearchWords } from '@/hook/useGetRecentSearchWords';
 import { useDeleteRecentSearchWord } from '@/hook/useDeleteRecentSearchWord';
 import { useRemoveRecentSearchWordsAll } from '@/hook/useRemoveRecentSearchWordsAll';
+import { basic } from '@/styles/palette';
 import { CircularProgress } from '@mui/material';
 
 interface RecentSearchWords {
@@ -52,6 +53,7 @@ function RecentSearchWords() {
   const { mutate } = useRemoveRecentSearchWordsAll();
   // console.log('isRemoveRecentSearchWordsAll: ', mutate());
 
+  console.log('recentSearchWordsDataArray: ', recentSearchWordsDataArray);
   return (
     <>
       <RecentSearchWordsUI.TopContainer>
@@ -60,15 +62,26 @@ function RecentSearchWords() {
           title={'최근 검색어 삭제'}
           message={'최근 검색어를 모두 삭제하시겠어요?'}
           onClickEvent={() => mutate()}
-          toastMessage={'최근 검색어를 삭제하였습니다.'}
+          toastMessage={'최근 검색어를 모두 삭제하였습니다.'}
         >
-          <button disabled={recentSearchWordsDataArray === undefined}>
+          <button
+            disabled={
+              recentSearchWordsDataArray === undefined ||
+              recentSearchWordsDataArray.length === 0
+            }
+            style={{
+              color: `${basic.gray6}`,
+              fontWeight: 400,
+              fontSize: '14px',
+            }}
+          >
             전체 삭제
           </button>
         </AlertModal>
       </RecentSearchWordsUI.TopContainer>
       <div>
-        {recentSearchWordsDataArray === undefined ? (
+        {recentSearchWordsDataArray === undefined ||
+        recentSearchWordsDataArray.length === 0 ? (
           <RecentSearchWordsUI.NothingRecentSearchWordsContainer>
             <div>
               최근 검색 기록이 없어요.

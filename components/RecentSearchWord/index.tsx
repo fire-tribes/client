@@ -28,7 +28,6 @@ function RecentSearchWord({
   //   await deleteRecentSearchWordData(stock.word);
   //   handleDeleteRecentSearchWord(stock.word);
   // };
-  console.log('RecentSearchWord: ', RecentSearchWord);
   return (
     <RecentSearchWordUI.Container>
       <RecentSearchWordUI.Item>

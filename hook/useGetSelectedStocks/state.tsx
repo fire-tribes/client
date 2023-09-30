@@ -4,10 +4,10 @@ export interface SelectedStocksAtomProps {
   assetId: number;
   tickerCode: string;
   stockCode: string;
+  name: string;
   debouncedValue: string;
   count: string;
   price: string;
-  name: string;
   countryType: 'KOR' | 'USA';
   marketType:
     | 'KRX'

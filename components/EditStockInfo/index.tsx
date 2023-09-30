@@ -35,8 +35,8 @@ export default function EditStockInfo() {
   const router = useRouter();
   const { slug } = router.query as { slug: string[] };
 
-  const assetId = Number(slug[0]);
-  const portfolioAssetId = Number(slug[1]);
+  const assetId = Number(slug?.[0]);
+  const portfolioAssetId = Number(slug?.[1]);
   /** 만들어진 Jotai(assetDetails)에서 값 가져오기 */
   const [assetDetails] = useAtom(assetDetailsAtom);
   console.log('assetDetails: ', assetDetails);

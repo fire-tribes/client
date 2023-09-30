@@ -1,11 +1,9 @@
-import { useAddRecentSearchWord } from '@/hook/useAddRecentSearchWord';
 import { useAddStocksAtPortfolio } from '@/hook/useAddStocksAtPortfolio';
 import { useEditPortfolio } from '@/hook/useEditPortfolio';
-import {
-  SelectedStocksAtomProps,
-  selectedStocksAtom,
-} from '@/hook/useGetSelectedStocks/state';
+import { selectedStocksAtom } from '@/hook/useGetSelectedStocks/state';
+import useMakeAssets from '@/hook/useMakeAssets';
 import { useMakePortfolio } from '@/hook/useMakePortfolio';
+import useUpdateRecentSearchWords from '@/hook/useUpdateRecentSearchWords';
 import { Button, ButtonProps, CircularProgress, styled } from '@mui/material';
 import { useAtom } from 'jotai';
 import { useRouter } from 'next/router';
@@ -30,6 +28,9 @@ function BottomFixedButton({
   const { makePortfolioData } = useMakePortfolio();
   /** 포트폴리오 자산 추가 POST 요청 useFeatureHook */
   const { addStocksAtPortfolioData } = useAddStocksAtPortfolio();
+  /** POST 요청에 보낼 Assets 만들기 useMakeAssets */
+  const { makeAssets } = useMakeAssets();
+  const [selectedStocks] = useAtom(selectedStocksAtom);
   /** TODO: useFeatureHook으로 리팩토링 */
   const makePortfolio = () => {
     /** 1-1.포트폴리오가 없을 경우, 포트폴리오 생성하고 portfolioId 사용 */
@@ -57,43 +58,16 @@ function BottomFixedButton({
     addStocksAtPortfolioData(formData);
   };
 
-  const [selectedStocks] = useAtom(selectedStocksAtom);
-  /** 추가 완료 버튼을 눌렀을 때, 실행할 내용
-   * 1. 빈 값이 있는지 체크하기, 없을 경우 아래 로직 실행. 있으면 실행되면 안됨
-   * 2. 포트폴리오 생성(신규 시)
-   * 3. 포트폴리오에 들어갈 자산 배열 만들기
-   * 4. 만들어진 배열을 POST의 params 값으로 넣어 '포트폴리오 자산 추가' POST 요청
-   */
-
-  /** 2. 포트폴리오에 추가할 자산 목록 */
-  const makeAssets = (selectedStocks: SelectedStocksAtomProps[]) => {
-    const newAssets = selectedStocks.map((stock) => {
-      const newAsset = {
-        assetId: stock.assetId,
-        count: Number(stock.count),
-        price: Number(stock.price),
-        currencyType:
-          stock.countryType === 'KOR'
-            ? 'KRW'
-            : stock.countryType === 'USA'
-            ? 'USD'
-            : 'NONE',
-      };
-
-      return newAsset;
-    });
-    return newAssets;
-  };
-
-  /** 다음 버튼을 눌렀을 때, 최근 검색어 데이터 값을 POST 요청하는 함수 */
-  const { addRecentSearchWordData } = useAddRecentSearchWord();
   const { isLoading, updatePort } = useEditPortfolio();
 
+  const { updateRecentSearchWords } = useUpdateRecentSearchWords();
+
   /** 다른 페이지로 이동하는 함수 */
-  const onMoveOtherPages = (buttonName: string) => {
+  const onMoveOtherPages = async (buttonName: string) => {
     if (buttonName === '다음') {
+      console.log('selectedStocks for debouncdedValue: ', selectedStocks);
       if (selectedStocks[0].debouncedValue !== '') {
-        addRecentSearchWordData(selectedStocks[0].debouncedValue);
+        updateRecentSearchWords();
         router.push('/fires/add');
       }
     }
@@ -109,18 +83,15 @@ function BottomFixedButton({
       router.push('/fires/main/full');
     }
     if (buttonName === '수정 완료') {
-      updatePort()
-        .then((response) => {
-          if (response?.data.success) {
-            router.push('/fires/edit');
-          }
-        })
-        .catch((err) => {
-          alert(`error 발생 : ${err}`);
-        });
-      // router.push('/fires/edit');
+      try {
+        await updatePort();
+        router.push('/fires/edit');
+      } catch (err) {
+        alert(`error 발생 : ${err}`);
+      }
     }
   };
+  // console.log('isLoading: ', isLoading);
 
   return (
     <div>

@@ -53,8 +53,6 @@ function SearchedResult({
   isSelected,
   toggleSelected,
 }: SearchedResultProps) {
-  console.log('toggleSelected: ', toggleSelected);
-
   /** debounceValue를 jotai로 만들기 */
 
   // 결과 텍스트를 스타일 적용한 클래스로 감싸기
