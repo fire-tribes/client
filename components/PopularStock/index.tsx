@@ -1,17 +1,18 @@
 import { PopularStockUI } from './style';
 import increaseSvg from '@/public/icon/increase.svg';
 import decreaseSvg from '@/public/icon/decrease.svg';
-import { useGetPopularStocks } from '@/hook/useGetPopularStocks';
 import Image from 'next/image';
 
-function PopularStock({ increase = true }) {
-  const { getPopularStocksData } = useGetPopularStocks();
-  const value = {
-    tickerCode: getPopularStocksData?.tickerCode,
-    stockCode: getPopularStocksData?.stockCode,
-    name: getPopularStocksData?.name,
+interface PopularStockProps {
+  increase: boolean;
+  stock: {
+    tickerCode: string;
+    stockCode: string;
+    name: string;
   };
+}
 
+function PopularStock({ increase = true, stock }: PopularStockProps) {
   return (
     <PopularStockUI.Container>
       <PopularStockUI.Item>
@@ -20,7 +21,7 @@ function PopularStock({ increase = true }) {
         ) : (
           <Image src={decreaseSvg} alt="Decrease Svg" />
         )}
-        <span>{value.name}</span>
+        <span>{stock.name}</span>
       </PopularStockUI.Item>
     </PopularStockUI.Container>
   );

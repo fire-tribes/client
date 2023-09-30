@@ -7,7 +7,7 @@ const Container = styled.div`
     background-color: ${theme.palette.basic.gray9};
     color: ${theme.palette.basic.white};
   `}
-  width: 100%;
+  width: 400px;
   padding: 16px 20px;
   text-align: center;
 

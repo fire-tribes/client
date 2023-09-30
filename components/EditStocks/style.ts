@@ -11,6 +11,15 @@ const TopContainer = styled.div`
   margin-bottom: 17px;
 `;
 
+const LoadingContainer = styled.div`
+  height: calc(100vh - 16px - 52px - 40px - 19px - 52px - 56px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const EditStocksUI = {
   TopContainer,
+  LoadingContainer,
 } as const;

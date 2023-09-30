@@ -17,9 +17,37 @@ const NativeStockInfoContainer = styled.div`
   flex: 1;
   display: flex;
 
+  > div:first-child {
+    position: relative;
+    > div:first-child {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+
+      ${({ theme }) => `
+        color: ${theme.palette.basic.point_blue01};
+      `}
+    }
+    > span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
   > div:last-child {
     flex: 1;
     margin: 10px;
+
+    > div:first-child {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2; /* 2줄까지 표시 */
+      overflow: hidden;
+    }
 
     >div: last-child {
       font-size: ${fontSize.caption2};

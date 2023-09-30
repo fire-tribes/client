@@ -3,7 +3,7 @@ import { useGetRecentSearchWordsQuery } from '@/hook/useQueryHook/useGetRecentSe
 export const useGetRecentSearchWords = () => {
   const { data, isLoading } = useGetRecentSearchWordsQuery();
 
-  const getRecentSearchWordsData = data?.data.data;
+  const getRecentSearchWordsData = data?.data;
 
   return {
     getRecentSearchWordsData,

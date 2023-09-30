@@ -1,5 +1,5 @@
-import { getSearchedResultsAPI } from '@/core/api/getSearchedResults';
 import { queryKeys } from '@/hook/useQueryHook/queryKeys';
+import { assetAPI } from '@/core/api/asset';
 import { useQuery } from '@tanstack/react-query';
 
 export const useGetSearchedResultsQuery = (
@@ -8,6 +8,6 @@ export const useGetSearchedResultsQuery = (
 ) => {
   return useQuery({
     queryKey: queryKeys.searchedResults(word),
-    queryFn: () => getSearchedResultsAPI.getSearchedResults(word, pageIndex),
+    queryFn: () => assetAPI.getSearchedResults(word, pageIndex),
   });
 };
