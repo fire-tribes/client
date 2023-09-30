@@ -7,6 +7,8 @@ import FlexBox from '@/components/common/FlexBox';
 import { transferPrice } from '@/core/utils/transferPrice';
 import { useAnnualDividend } from '@/hook/useAnnualDividend';
 import { useExchangeRate } from '@/hook/useExchangeRate';
+import NormalNotifyModal from '@/components/common/Modal/NormalNotifyModal';
+import { Button } from '@mui/material';
 
 export default function ChartSection() {
   const { annualDividendData } = useAnnualDividend();
@@ -35,8 +37,24 @@ export default function ChartSection() {
         <DividendDate />
         <FlexBox justifyContent="space-between">
           <FlexBox gap="14px">
-            <CommonCheckButton fontSize="body3">소득세</CommonCheckButton>
-            <CommonCheckButton fontSize="body3">4대보험</CommonCheckButton>
+            <CommonCheckButton fontSize="body3" isWait={false}>
+              소득세
+            </CommonCheckButton>
+            <NormalNotifyModal
+              title={'준비중입니다'}
+              content={
+                '4대 보험을 제한 결과값 도출은 곧 출시 예정입니다. 조금만 기다려주세요!'
+              }
+              button={
+                <Button variant="contained" fullWidth size="large">
+                  확인
+                </Button>
+              }
+            >
+              <CommonCheckButton fontSize="body3" isWait>
+                4대보험
+              </CommonCheckButton>
+            </NormalNotifyModal>
           </FlexBox>
         </FlexBox>
       </FlexBox>

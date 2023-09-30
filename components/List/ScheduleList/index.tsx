@@ -1,3 +1,4 @@
+import { useMonthlyCalanderDividendExchangeQuery } from '@/hook/useQueryHook/useMonthlyCalanderDividendQuery';
 import CommonFont from '@/components/common/Font';
 import {
   Box,
@@ -8,53 +9,33 @@ import {
   Avatar,
 } from '@mui/material';
 
-interface ScheduleItemModel {
-  date: string;
-  icon: string;
-  ticker: string;
-  cost: string;
-  costDate: string;
-}
-
-const datas: ScheduleItemModel[] = [
-  {
-    date: '6일',
-    icon: '💥',
-    ticker: 'JEPI',
-    cost: '219만원',
-    costDate: '9월 3일 지급 예상',
-  },
-  {
-    date: '21일',
-    icon: '💥',
-    ticker: 'SCHD',
-    cost: '101만원',
-    costDate: '9월 9일 지급 예상',
-  },
-];
-
 export function ScheduleList() {
+  const { data } = useMonthlyCalanderDividendExchangeQuery();
+
   return (
     <Box>
       <List disablePadding>
-        {datas.map(({ date, ticker, cost, costDate }) => (
+        {data?.map(({ stockCode, 예상배당금지급일, 예상배당금 }) => (
           <>
             <ListItem disablePadding sx={{ gap: '9px' }}>
-              <ListItemText secondary={date} sx={{ maxWidth: 32 }} />
+              <ListItemText
+                secondary={예상배당금지급일.toLocaleDateString()}
+                sx={{ maxWidth: 32 }}
+              />
               <ListItemIcon sx={{ minWidth: 0 }}>
                 <Avatar />
               </ListItemIcon>
               <ListItemText
                 primary={
                   <CommonFont fontWeight="bold" color="gray9">
-                    {ticker}
+                    {stockCode}
                   </CommonFont>
                 }
               />
               <ListItemText
                 primary={
                   <CommonFont fontWeight="bold" color="gray7">
-                    {cost}
+                    {예상배당금}
                   </CommonFont>
                 }
                 secondary={
@@ -63,7 +44,7 @@ export function ScheduleList() {
                     fontWeight="regular"
                     color={'gray6'}
                   >
-                    {costDate}
+                    {'?'}
                   </CommonFont>
                 }
                 sx={{ textAlign: 'right' }}

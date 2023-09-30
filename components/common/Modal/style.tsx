@@ -58,7 +58,6 @@ const Container = styled.div<{
 
   background-color: white;
   overflow: hidden;
-
   ${({ layout, position, minWidth }) => css`
     min-width: ${layout === 'fill'
       ? '0px'
@@ -78,7 +77,7 @@ const Container = styled.div<{
           animation-name: ${fadeInUpKeyframes};
           animation-duration: 0.3s;
         `}
-  `}
+  `};
 `;
 
 const TitleWrapper = styled.div`
@@ -93,7 +92,6 @@ const Title = styled.strong`
 
 const ContentLabel = styled.div`
   font-size: ${fontSize.body3};
-  font-weight: 500;
   text-align: left;
   margin-bottom: 6px;
   margin-top: 12px;
@@ -106,6 +104,7 @@ const ContentLabel = styled.div`
 const Content = styled.article<{ textAlign?: CSSProperties['textAlign'] }>`
   padding-top: 8px;
   padding-bottom: 24px;
+  font-weight: 400;
 
   text-align: ${({ textAlign = 'center' }) => textAlign};
 `;

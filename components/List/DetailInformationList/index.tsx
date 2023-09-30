@@ -1,9 +1,12 @@
 import CommonIcon from '@/components/common/Icon';
 import CommonFont from '@/components/common/Font';
 import { AnnualDividendListItem } from '@/components/List/DetailInformationList/AnnualDividendListItem';
+// import { useAnnualDividend } from '@/hook/useAnnualDividend';
+
+// import { useAnnualDividendExchangeQuery } from '@/hook/useQueryHook/useAnnualDividendQuery';
 import { useAnnualDividend } from '@/hook/useAnnualDividend';
-import { useExchangeRate } from '@/hook/useExchangeRate';
 import { transferPrice } from '@/core/utils/transferPrice';
+import { useExchangeRate } from '@/hook/useExchangeRate';
 import type { BadgeDetailText } from '@/mocks';
 
 export const badangDetailText = {
@@ -37,6 +40,9 @@ export default function DetailInformationList() {
   const { annualDividendData } = useAnnualDividend();
   const { exchangeRate } = useExchangeRate();
 
+  // const { data } = useAnnualDividendExchangeQuery();
+  // const { annualDividendData } = useAnnualDividend();
+
   const detailInformationData = {
     annualDividend: `${transferPrice({
       exchangeRate,
@@ -61,6 +67,12 @@ export default function DetailInformationList() {
       defaultText: '없음',
     })}`,
   };
+  // const detailInformationData = {
+  //   annualDividend: data?.annualDividend,
+  //   dividendPriceRatio: data?.dividendPriceRatio,
+  //   paidTax: data?.paidTax,
+  //   unPaidTax: data?.unPaidTax,
+  // };
 
   const annualDividendListItemTexts = Object.entries(badangDetailText) as [
     keyof typeof detailInformationData,
