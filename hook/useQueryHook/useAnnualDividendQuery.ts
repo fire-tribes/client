@@ -5,7 +5,11 @@ import { queryKeys } from '@/hook/useQueryHook/queryKeys';
 import { useQuery } from '@tanstack/react-query';
 
 export const useAnnualDividendQuery = () => {
-  return useQuery(queryKeys.annualDividend(), dividendAPI.getAnnualDividend);
+  return useQuery({
+    queryKey: queryKeys.annualDividend(),
+    queryFn: dividendAPI.getAnnualDividend,
+    staleTime: 1000 * 5,
+  });
 };
 
 export const useAnnualDividendExchangeQuery = () => {
