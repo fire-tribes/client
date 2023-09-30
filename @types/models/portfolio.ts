@@ -15,7 +15,7 @@ export type MyPortfolioModel = {
 
 export interface MyportfoliAssetDetailModel {
   /** 자산Id */
-  portfolioAssetId: string;
+  portfolioAssetId: number;
   /** 미국주식Id */
   assetId: number;
   /** 미국주식 고유 문자 코드  ex) MSFT */

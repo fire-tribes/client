@@ -3,7 +3,7 @@ import { useGetPopularStocksQuery } from '@/hook/useQueryHook/useGetPopularStock
 export const useGetPopularStocks = () => {
   const { data, isLoading } = useGetPopularStocksQuery();
 
-  const getPopularStocksData = data?.data.data;
+  const getPopularStocksData = data?.data;
 
   return {
     getPopularStocksData,

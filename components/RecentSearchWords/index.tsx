@@ -1,46 +1,88 @@
-// import RecentSearchWord from '../RecentSearchWord';
 import { RecentSearchWordsUI } from './style';
 import AlertModal from '../common/Modal/AlertModal';
+import RecentSearchWord from '../RecentSearchWord';
 import { useGetRecentSearchWords } from '@/hook/useGetRecentSearchWords';
 import { useDeleteRecentSearchWord } from '@/hook/useDeleteRecentSearchWord';
 import { useRemoveRecentSearchWordsAll } from '@/hook/useRemoveRecentSearchWordsAll';
+import { basic } from '@/styles/palette';
+import { CircularProgress } from '@mui/material';
+
+interface RecentSearchWords {
+  word: string;
+  date: string;
+}
 
 function RecentSearchWords() {
+  /** exampleDatas */
+  // const exampleDatas = [
+  //   { word: '일', date: '2023-09-22T13:54:18.239Z' },
+  //   { word: '이', date: '2023-09-22T13:54:18.239Z' },
+  //   { word: '삼', date: '2023-09-22T13:54:18.239Z' },
+  //   { word: '사', date: '2023-09-22T13:54:18.239Z' },
+  //   { word: '오', date: '2023-09-22T13:54:18.239Z' },
+  //   { word: '육', date: '2023-09-22T13:54:18.239Z' },
+  //   { word: '칠', date: '2023-09-22T13:54:18.239Z' },
+  // ];
+
   /** 최근 검색어 데이터 Get */
-  const { getRecentSearchWordsData } = useGetRecentSearchWords();
-  const recentSearchWordsDataArray = getRecentSearchWordsData;
+  const { getRecentSearchWordsData, isLoading } = useGetRecentSearchWords();
+  const recentSearchWordsDataArray = getRecentSearchWordsData?.data;
   console.log('recentSearchWordsDataArray: ', recentSearchWordsDataArray);
 
+  // const [recentSearchWords, setRecentSearchWords] = useState(
+  //   recentSearchWordsDataArray,
+  // );
+  // console.log('recentSearchWords: ', recentSearchWords);
+
+  // useEffect(() => {
+  //   const refetchRecentSearchWords = async () => {
+  //     const array = await getRecentSearchWordsData?.data;
+  //     setRecentSearchWords(array);
+  //   };
+  //   refetchRecentSearchWords();
+  // }, []);
+
   /** 특정 최근 검색어 Delete  */
-  const { deleteRecentSearchWordData } = useDeleteRecentSearchWord('삼성전자');
-  const isDeleteRecentSearchWord = deleteRecentSearchWordData?.data;
-  console.log('isDeleteRecentSearchWord: ', isDeleteRecentSearchWord);
+  const { deleteRecentSearchWordData } = useDeleteRecentSearchWord();
+  const handleDeleteRecentSearchWord = (index: number) => {
+    recentSearchWordsDataArray !== undefined &&
+      deleteRecentSearchWordData(recentSearchWordsDataArray[index].word);
+  };
 
   /** 전체 최근 검색어 초기화 Post */
-  const { removeRecentSearchWordsAllData } = useRemoveRecentSearchWordsAll();
-  const isRemoveRecentSearchWordsAll = removeRecentSearchWordsAllData?.data;
-  console.log('isRemoveRecentSearchWordsAll: ', isRemoveRecentSearchWordsAll);
+  const { mutate } = useRemoveRecentSearchWordsAll();
+  // console.log('isRemoveRecentSearchWordsAll: ', mutate());
 
+  console.log('recentSearchWordsDataArray: ', recentSearchWordsDataArray);
   return (
     <>
       <RecentSearchWordsUI.TopContainer>
-        <h6>최근 검색</h6>
+        <h6>최근 추가 주식</h6>
         <AlertModal
           title={'최근 검색어 삭제'}
           message={'최근 검색어를 모두 삭제하시겠어요?'}
-          // onClickEvent={() => mutate()}
-          toastMessage={'최근 검색어를 삭제하였습니다.'}
+          onClickEvent={() => mutate()}
+          toastMessage={'최근 검색어를 모두 삭제하였습니다.'}
         >
-          <button>전체 삭제</button>
+          <button
+            disabled={
+              recentSearchWordsDataArray === undefined ||
+              recentSearchWordsDataArray.length === 0
+            }
+            style={{
+              color: `${basic.gray6}`,
+              fontWeight: 400,
+              fontSize: '14px',
+            }}
+          >
+            전체 삭제
+          </button>
         </AlertModal>
       </RecentSearchWordsUI.TopContainer>
       <div>
-        {/* {getRecentSearchWords.data !== undefined &&
-          (getRecentSearchWords.data.data.length !== 1 ? (
-            getRecentSearchWords.data.data.map((item, id) => {
-              return <RecentSearchWord key={id} item={item} />;
-            })
-          ) : (
+        {recentSearchWordsDataArray === undefined ||
+        recentSearchWordsDataArray.length === 0 ? (
+          <RecentSearchWordsUI.NothingRecentSearchWordsContainer>
             <div>
               최근 검색 기록이 없어요.
               <tr />
@@ -48,7 +90,22 @@ function RecentSearchWords() {
               <tr />
               (예: JEPI, SCHD)
             </div>
-          ))} */}
+          </RecentSearchWordsUI.NothingRecentSearchWordsContainer>
+        ) : isLoading ? (
+          <CircularProgress />
+        ) : (
+          recentSearchWordsDataArray.map((stock, id) => {
+            return (
+              <RecentSearchWord
+                key={id}
+                stock={stock}
+                handleDeleteRecentSearchWord={() =>
+                  handleDeleteRecentSearchWord(id)
+                }
+              />
+            );
+          })
+        )}
       </div>
     </>
   );

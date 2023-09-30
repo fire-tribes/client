@@ -65,7 +65,7 @@ const Container = styled.div<{
       ? `${minWidth}px`
       : minWidth};
 
-    width: ${layout === 'fill' && '100%'};
+    width: ${layout === 'fill' && '400px'};
 
     ${position === 'center'
       ? css`

@@ -18,6 +18,7 @@ export const queryKeys = {
   popularStocks: () => ['popularStocks'],
   recentSearchWords: () => ['getRecentSearchWords'],
   searchedResults: (word: string) => ['searchedResults', word],
-  presentPrice: (assetIds: number) => ['presentPrice', assetIds],
+  currentPrice: (assetIds: number) => ['currentPrice', assetIds],
+  currentPrices: (assetIds: number[]) => ['currentPrice', assetIds],
   portfolio: () => ['portfolio'],
 };

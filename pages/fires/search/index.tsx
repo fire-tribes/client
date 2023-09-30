@@ -55,11 +55,11 @@ function Search() {
               onClick={handleClickSmallerCancelButton}
               style={handlButtonHidden}
             >
-              <Image src={SmallerCloseSvg} alt="smalelrClose Svg" />
+              <Image src={SmallerCloseSvg} alt="smallerClose Svg" />
             </button>
           }
           biggerCancelButton={
-            <Link href={'main/empty'} style={{ height: '52px' }}>
+            <Link href={'/empty'} style={{ height: '52px' }}>
               <Image
                 src={BiggerCloseSvg}
                 width={24}
