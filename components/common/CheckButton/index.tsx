@@ -8,6 +8,7 @@ import type { CSSProperties, PropsWithChildren } from 'react';
 interface CommonCheckButtonProps extends PropsWithChildren {
   gap?: CSSProperties['gap'];
   fontSize: FontSizeKeys;
+  isWait: boolean;
 }
 
 const ICON_NAMES = {
@@ -18,14 +19,15 @@ const ICON_NAMES = {
 export default function CommonCheckButton({
   children,
   gap = '4px',
-
   fontSize,
+  isWait,
 }: CommonCheckButtonProps) {
   const { isOn, toggle } = useOnAndOff();
   const iconName = isOn ? ICON_NAMES.ON : ICON_NAMES.OFF;
 
+  const onClick = () => (!isWait ? toggle() : undefined);
   return (
-    <button onClick={toggle}>
+    <button onClick={onClick}>
       <FlexBox gap={gap}>
         <CommonIcon iconName={iconName} />
         <CommonFont fontSize={fontSize}>{children}</CommonFont>
