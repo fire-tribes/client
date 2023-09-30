@@ -25,7 +25,10 @@ export const useAnnualDividendExchangeQuery = () => {
       const newMonthlyDividends = Object.entries(
         annualDividendData.monthlyDividends,
       ).reduce(
-        (acc, [key, value]) => ({ ...acc, [key]: value * exchangeRate }),
+        (acc, [key, value]) => ({
+          ...acc,
+          [key]: value * exchangeRate,
+        }),
         {},
       );
 

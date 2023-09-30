@@ -8,7 +8,7 @@ import { useMonthlyCalanderDividendQuery } from '@/hook/useQueryHook/useMonthlyC
 export default function SimpleDividentScheduleSection() {
   const { success } = useMonthlyCalanderDividendQuery();
 
-  if (!success) {
+  if (success === false) {
     return <div>에러가 발생했습니다.</div>;
   }
 

@@ -16,7 +16,7 @@ export default function ChartSection() {
 
   const chartSectionTexts = {
     title: `${transferPrice({
-      currentPrice: annualDividendData?.annualDividend,
+      currentPrice: annualDividendData?.thisMonthDividend,
       exchangeRate,
       outputSymbol: 'KRW',
       defaultText: '0원',
