@@ -3,11 +3,20 @@ import { ScheduleList } from '@/components/List/ScheduleList';
 import Section from '@/components/Section';
 import FlexBox from '@/components/common/FlexBox';
 import CommonIcon from '@/components/common/Icon';
+import { useMonthlyCalanderDividendQuery } from '@/hook/useQueryHook/useMonthlyCalanderDividendQuery';
 
 export default function SimpleDividentScheduleSection() {
+  const { success } = useMonthlyCalanderDividendQuery();
+
+  if (success === false) {
+    return <div>에러가 발생했습니다.</div>;
+  }
+
   return (
     <Section textAlign="left">
-      <Section.Title paddingBottom="18px">배당 달력(8월)</Section.Title>
+      <Section.Title paddingBottom="18px">{`배당 달력 (${
+        new Date().getMonth() + 1
+      }월)`}</Section.Title>
       <ScheduleList />
       <Section.Footer padding={'20px 0px'}>
         <FlexBox>
