@@ -1,3 +1,5 @@
+import type { ExchangeRateSymbol } from '@/@types/models/exchangeRate';
+
 /**
  * 이번년도의 총 배당금 Response Type
  */
@@ -41,8 +43,18 @@ type MonthlyDividends = {
   DECEMBER?: number;
 };
 
+type DividendCalanderModel = {
+  stockCode: string;
+  tickerCode: string;
+  exDividendDate: string;
+  expectedPayDate: string;
+  expectedDividends: number;
+  currencyType: ExchangeRateSymbol;
+};
+
 export {
   type AnnualDividendModel,
   type AnnualDividendByIncomeTax,
   type MonthlyDividends,
+  type DividendCalanderModel,
 };

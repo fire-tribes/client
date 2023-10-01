@@ -1,30 +1,32 @@
 import { MonthlyDividends } from '@/@types/models/dividend';
 
-/** 현재는 원화를 기준으로 변경만을 지원 */
-const formatChartValue = (value: string | number) => {
-  const ZERO = 0;
-  const MIN_LENGTH = 5;
-  const MIDDLE_LENGTH = 7;
-  const CHANGE_FONT_SIZE_LENGTH = 8;
-  const MAX_LENGTH = 10;
+/** 차트에서 사용되는 util 함수, 한국 기준 앞자리만 반환합니다.
+ * ex) 9999999 => 999만
+ * ex) 999999999 => 9억
+ */
+export const getShortCurrencyKR = (value: number) => {
+  /** 최대 100억 */
+  const TEN_BLIILON = 10000000000;
 
-  if (value === ZERO) return '';
-  const stringValue = typeof value === 'number' ? value.toString() : value;
-  const stringLength = stringValue.length;
+  // 음수 또는 0
+  if (value <= 0) return '';
 
-  if (stringLength <= MIN_LENGTH) return value;
-  if (stringLength <= MIDDLE_LENGTH) {
-    return stringValue.substring(0, stringLength - 4) + '만';
-  }
-  if (stringLength <= CHANGE_FONT_SIZE_LENGTH) {
-    // + 폰트사이즈 8px로 변경
-    return stringValue.substring(0, stringLength - 4) + '만';
-  }
-  if (stringLength <= MAX_LENGTH) {
-    return stringValue.substring(0, stringLength - 8) + '억';
+  // 1만 미만
+  if (value < 10000) {
+    return Math.floor(value).toString();
   }
 
-  return '';
+  // 1억 미만
+  if (value < 10000 * 10000) {
+    return Math.floor(value / 10000) + '만';
+  }
+
+  /** 100억 미만 */
+  if (value < TEN_BLIILON) {
+    return Math.floor(value / (10000 * 10000)) + '억';
+  }
+
+  return '99억';
 };
 
 const createShowChartDividendDatas = (
@@ -58,4 +60,7 @@ const createShowChartDividendDatas = (
   return showChartDividendDatas;
 };
 
-export { formatChartValue, createShowChartDividendDatas };
+export {
+  // formatChartValue,
+  createShowChartDividendDatas,
+};

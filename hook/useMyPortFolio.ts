@@ -2,10 +2,9 @@ import { useMyPortFolioQuery } from '@/hook/useQueryHook/useMyPortFolioQuery';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect } from 'react';
 
-export const useMyPortFolio = (portFolioId?: number) => {
+export const useMyPortFolio = () => {
   const router = useRouter();
-  const { data, status, isLoading, isFetching } =
-    useMyPortFolioQuery(portFolioId);
+  const { data, status, isLoading, isFetching } = useMyPortFolioQuery();
   const redirectEmpty = useCallback(() => router.push('/empty'), [router]);
   const myPortFolioData = data?.data.data;
 
