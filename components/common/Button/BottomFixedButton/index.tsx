@@ -58,16 +58,21 @@ function BottomFixedButton({
     addStocksAtPortfolioData(formData);
   };
 
-  const { updateRecentSearchWords } = useUpdateRecentSearchWords();
   const { isLoading, updatePort } = useEditPortfolio();
+
+  const { updateRecentSearchWords } = useUpdateRecentSearchWords();
 
   /** 다른 페이지로 이동하는 함수 */
   const onMoveOtherPages = async (buttonName: string) => {
     if (buttonName === '다음') {
-      console.log('selectedStocks for debouncdedValue: ', selectedStocks);
+      /** 최근 검색어에 해당 검색어(debouncedValue) 추가 */
       if (selectedStocks[0].debouncedValue !== '') {
         updateRecentSearchWords();
-        router.push('/fires/add');
+        if (portfolioId) {
+          router.push(`/fires/add?portfolioId=${portfolioId}`);
+        } else {
+          router.push('/fires/add');
+        }
       }
     }
     if (buttonName === '추가 완료') {
@@ -76,10 +81,9 @@ function BottomFixedButton({
       } else {
         makePortfolio();
       }
-      router.push('/');
     }
     if (buttonName === '완료') {
-      router.push('/');
+      router.push('/fires/main/full');
     }
     if (buttonName === '수정 완료') {
       try {

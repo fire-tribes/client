@@ -10,8 +10,12 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { useAtom } from 'jotai';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 function Search() {
+  const router = useRouter();
+  const { portfolioId } = router.query;
+
   const [value, setValue] = useState('');
   const [isSearchActive, setIsSearchActive] = useState(false);
 
@@ -38,7 +42,6 @@ function Search() {
   };
 
   const [selectedStocks] = useAtom(selectedStocksAtom);
-
   return (
     <SearchLayout
       hasButton={isSearchActive}
@@ -59,7 +62,10 @@ function Search() {
             </button>
           }
           biggerCancelButton={
-            <Link href={'/empty'} style={{ height: '52px' }}>
+            <Link
+              href={portfolioId ? '/' : '/empty'}
+              style={{ height: '52px' }}
+            >
               <Image
                 src={BiggerCloseSvg}
                 width={24}

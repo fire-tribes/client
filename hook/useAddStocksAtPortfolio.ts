@@ -1,4 +1,5 @@
 import { useAddStocksAtPortfolioQuery } from '@/hook/useQueryHook/useAddStocksAtPortfolioQuery';
+import { useRouter } from 'next/router';
 
 interface feededStockInfos {
   portfolioId: number;
@@ -12,14 +13,15 @@ interface assets {
 }
 
 export const useAddStocksAtPortfolio = () => {
+  const router = useRouter();
   const { mutateAsync, isLoading } = useAddStocksAtPortfolioQuery();
 
   // const formData: feededStockInfos;
   // const addStocksAtPortfolioData = mutate(formData);
 
   const addStocksAtPortfolioData = async (formData: feededStockInfos) => {
-    const response = await mutateAsync(formData);
-    return response;
+    await mutateAsync(formData);
+    router.push('/');
   };
 
   return {

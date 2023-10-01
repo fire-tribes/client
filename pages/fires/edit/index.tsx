@@ -7,7 +7,7 @@ function Edit() {
   const { myPortFolioData } = useMyPortFolio();
   console.log(myPortFolioData);
   return (
-    <SearchLayout isDisabled={false} buttonName={'완료'} hasButton={true}>
+    <SearchLayout isDisabled={true} buttonName={'완료'} hasButton={true}>
       <section>
         <Backward title={'보유 주식 편집'} />
       </section>
