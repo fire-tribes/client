@@ -13,7 +13,7 @@ export const getShortCurrencyKR = (value: number) => {
 
   // 1만 미만
   if (value < 10000) {
-    return Math.floor(value).toString();
+    return Math.floor(value).toLocaleString('ko-kr');
   }
 
   // 1억 미만

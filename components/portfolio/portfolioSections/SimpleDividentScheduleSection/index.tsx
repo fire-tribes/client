@@ -9,7 +9,7 @@ export default function SimpleDividentScheduleSection() {
   const { success } = useMonthlyCalanderDividendQuery();
 
   if (success === false) {
-    return <div>에러가 발생했습니다.</div>;
+    return <div>이번달은 배당을 주는 주식이 없습니다.</div>;
   }
 
   return (

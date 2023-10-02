@@ -2,6 +2,7 @@ import { useControlMode } from '@/hook/useControlMode';
 import { useExchangeRate } from '@/hook/useExchangeRate';
 import { portfolioAPI } from '@/core/api/portfolio';
 import { queryKeys } from '@/hook/useQueryHook/queryKeys';
+import { getShortCurrencyKR } from '@/components/Chart/utils';
 import { useQuery } from '@tanstack/react-query';
 
 export const useMyPortFolioQuery = () => {
@@ -25,24 +26,31 @@ export const useMyPortFolioExchangeQuery = () => {
         return {
           ...useMyPortFolioQueryData,
           totalValue: modeData.isSimple
-            ? Math.floor(totalValue * exchangeRate).toLocaleString('ko-kr') +
-              '원'
+            ? getShortCurrencyKR(Math.floor(totalValue * exchangeRate)) + '원'
             : Math.floor(totalValue * exchangeRate).toLocaleString('ko-kr') +
               '원',
-          totalValueChange:
-            Math.floor(totalValueChange * exchangeRate).toLocaleString(
-              'ko-kr',
-            ) + '원',
+          totalValueChange: modeData.isSimple
+            ? getShortCurrencyKR(totalValueChange * exchangeRate) + '원'
+            : Math.floor(totalValueChange * exchangeRate).toLocaleString(
+                'ko-kr',
+              ) + '원',
           assetDetails: assetDetails.map((pre) => ({
             ...pre,
             averagePrice:
-              (pre.averagePrice * exchangeRate).toLocaleString('ko-kr') + '원',
+              Math.floor(pre.averagePrice * exchangeRate).toLocaleString(
+                'ko-kr',
+              ) + '원',
             currentPrice:
-              (pre.currentPrice * exchangeRate).toLocaleString('ko-kr') + '원',
+              Math.floor(pre.currentPrice * exchangeRate).toLocaleString(
+                'ko-kr',
+              ) + '원',
             assetPriceChange:
-              (pre.assetPriceChange * exchangeRate).toLocaleString('ko-kr') +
+              Math.floor(pre.assetPriceChange * exchangeRate).toLocaleString(
+                'ko-kr',
+              ) + '원',
+            value:
+              Math.floor(pre.value * exchangeRate).toLocaleString('ko-kr') +
               '원',
-            value: (pre.value * exchangeRate).toLocaleString('ko-kr') + '원',
           })),
         };
       }

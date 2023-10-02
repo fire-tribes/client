@@ -9,15 +9,18 @@ import NormalNotifyModal from '@/components/common/Modal/NormalNotifyModal';
 import { Button } from '@mui/material';
 
 export default function ChartSection() {
-  const { annualDividendData } = useAnnualDividend();
+  const { annualDividendExchangeWithSimpleData } = useAnnualDividend();
 
   const chartSectionTexts = {
-    title: `${annualDividendData?.thisMonthDividend || 0}원`,
-    subTitle: annualDividendData?.dividendChange
-      ? `지난 배당 대비 ${annualDividendData?.dividendChange}%`
+    title: `${annualDividendExchangeWithSimpleData?.thisMonthDividend || 0}`,
+    subTitle: annualDividendExchangeWithSimpleData?.dividendChange
+      ? `지난 배당 대비 ${annualDividendExchangeWithSimpleData?.dividendChange}%`
       : '',
     isShowChart:
-      annualDividendData?.monthlyDividends && annualDividendData?.annualDividend
+      annualDividendExchangeWithSimpleData?.monthlyDividends &&
+      Object.keys(annualDividendExchangeWithSimpleData?.monthlyDividends)
+        .length &&
+      annualDividendExchangeWithSimpleData?.annualDividend
         ? true
         : false,
   };
@@ -63,8 +66,8 @@ export default function ChartSection() {
         <CommonFont
           fontSize="body1"
           color={
-            annualDividendData?.dividendChange &&
-            annualDividendData?.dividendChange > 0
+            annualDividendExchangeWithSimpleData?.dividendChange &&
+            annualDividendExchangeWithSimpleData?.dividendChange > 0
               ? 'point_red01'
               : 'point_blue02'
           }

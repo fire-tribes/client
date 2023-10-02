@@ -1,11 +1,19 @@
-import { useAnnualDividendExchangeQuery } from '@/hook/useQueryHook/useAnnualDividendQuery';
+import {
+  useAnnualDividendExchangeQuery,
+  useAnnualDividendExchangeWithSimpleQuery,
+  useAnnualDividendQuery,
+} from '@/hook/useQueryHook/useAnnualDividendQuery';
 
 export const useAnnualDividend = () => {
-  const { data, isLoading } = useAnnualDividendExchangeQuery();
-  const annualDividendData = data;
+  const { data: annualDividendData, isLoading } = useAnnualDividendQuery();
+  const { data: annualDividendExchangeData } = useAnnualDividendExchangeQuery();
+  const { data: annualDividendExchangeWithSimpleData } =
+    useAnnualDividendExchangeWithSimpleQuery();
 
   return {
-    annualDividendData,
+    annualDividendData: annualDividendData?.data.data,
+    annualDividendExchangeData,
+    annualDividendExchangeWithSimpleData,
     isLoading,
   };
 };
