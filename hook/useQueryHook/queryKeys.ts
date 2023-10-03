@@ -1,20 +1,21 @@
 export const queryKeys = {
   exchangeRate: ['exchangeRate'],
   exampleItemGet: (title: string) => ['exampleItemGet', title],
-  myPortFolio: (isSimple?: boolean | null, exchangeRate?: number) => [
-    'myPortFolio',
-    isSimple,
-    exchangeRate,
-  ],
-  annualDividend: (isSimple?: boolean | null, exchangeRate?: number) => [
-    'annualDividend',
-    isSimple,
-    exchangeRate,
-  ],
+  myPortFolio: (
+    isSimple?: boolean | null,
+    exchangeRate?: number,
+    isTax?: boolean | null,
+  ) => ['myPortFolio', isSimple, isTax, exchangeRate],
+  annualDividend: (
+    isSimple?: boolean | null,
+    exchangeRate?: number,
+    isTax?: boolean | null,
+  ) => ['annualDividend', isSimple, isTax, exchangeRate],
   monthlyCalanderDividend: (
     isSimple?: boolean | null,
     exchangeRate?: number,
-  ) => ['monthlyCalanderDividend', isSimple, exchangeRate],
+    isTax?: boolean | null,
+  ) => ['monthlyCalanderDividend', isSimple, isTax, exchangeRate],
   popularStocks: () => ['popularStocks'],
   recentSearchWords: () => ['getRecentSearchWords'],
   searchedResults: (word: string) => ['searchedResults', word],

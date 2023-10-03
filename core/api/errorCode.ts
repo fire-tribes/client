@@ -32,3 +32,8 @@ export const SERVICE_ERROR_CODE = {
   E01501: '생성 가능한 포트폴리오 개수를 초과하였습니다.',
   E01502: '포트폴리오를 찾을 수 없습니다.',
 } as const;
+
+const SERVICE_ERROR_CODE_VALUES = Object.values(SERVICE_ERROR_CODE);
+
+export type ServiceErrorCodeKeyType = keyof typeof SERVICE_ERROR_CODE;
+export type ServiceErrorCodeType = typeof SERVICE_ERROR_CODE_VALUES;

@@ -19,8 +19,6 @@ export const useMyPortFolio = () => {
     }
   }, [status, redirectEmpty, myPortFolioData]);
 
-  // TODO: 심플모드에 따라서 다르게 데이터를 내려주도록
-
   return {
     myPortFolioData,
     status,
