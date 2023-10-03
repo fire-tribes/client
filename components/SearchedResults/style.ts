@@ -1,3 +1,4 @@
+import { basic } from '@/styles/palette';
 import styled from '@emotion/styled';
 
 const LoadingContainer = styled.div`
@@ -8,6 +9,22 @@ const LoadingContainer = styled.div`
   align-items: center;
 `;
 
+const Button = styled.button`
+  width: 100%;
+  display: block;
+  text-align: center;
+`;
+
+const ResearchNothingContainer = styled.div`
+  height: calc(100vh - 72px - 53px - 68.5px);
+  padding: 16px;
+  textalign: center;
+  lineheight: calc(100vh - 72px - 53px - 68.5px);
+  color: ${basic.gray6};
+`;
+
 export const SearchedResultsUI = {
   LoadingContainer,
+  ResearchNothingContainer,
+  Button,
 } as const;
