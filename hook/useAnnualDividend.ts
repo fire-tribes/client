@@ -11,7 +11,7 @@ export const useAnnualDividend = () => {
     useAnnualDividendExchangeWithSimpleQuery();
 
   return {
-    annualDividendData: annualDividendData?.data.data,
+    annualDividendData: annualDividendData?.data,
     annualDividendExchangeData,
     annualDividendExchangeWithSimpleData,
     isLoading,

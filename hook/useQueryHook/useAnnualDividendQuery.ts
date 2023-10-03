@@ -1,24 +1,43 @@
+import { AnnualDividendModel } from '@/@types/models/dividend';
+import { ResponseSuccess } from '@/@types/models/response';
 import { getShortCurrencyKR } from '@/components/Chart/utils';
 import { dividendAPI } from '@/core/api/dividend';
 import { useControlMode } from '@/hook/useControlMode';
 import { useExchangeRate } from '@/hook/useExchangeRate';
 import { queryKeys } from '@/hook/useQueryHook/queryKeys';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const useAnnualDividendQuery = () => {
+  const queryClient = useQueryClient();
+  const { exchangeRate } = useExchangeRate();
+  const { modeData } = useControlMode();
   return useQuery({
     queryKey: queryKeys.annualDividend(),
     queryFn: dividendAPI.getAnnualDividend,
     staleTime: 1000 * 5,
+    onSuccess: () => {
+      queryClient.invalidateQueries(
+        queryKeys.annualDividend(modeData.isSimple, exchangeRate),
+      );
+
+      queryClient.invalidateQueries(
+        queryKeys.annualDividend(null, exchangeRate),
+      );
+    },
   });
 };
 
 export const useAnnualDividendExchangeQuery = () => {
   const { exchangeRate } = useExchangeRate();
-  const { data } = useAnnualDividendQuery();
+  const queryClient = useQueryClient();
 
   const getQueryFunction = () => {
-    const annualDividendData = data?.data.data;
+    const annualDividendFullData:
+      | ResponseSuccess<AnnualDividendModel>
+      | undefined = queryClient.getQueryData(queryKeys.annualDividend());
+
+    const annualDividendData = annualDividendFullData?.data;
+
     if (annualDividendData && exchangeRate) {
       const newMonthlyDividends = Object.entries(
         annualDividendData.monthlyDividends,
@@ -62,11 +81,16 @@ export const useAnnualDividendExchangeQuery = () => {
 
 export const useAnnualDividendExchangeWithSimpleQuery = () => {
   const { exchangeRate } = useExchangeRate();
-  const { data } = useAnnualDividendQuery();
   const { modeData } = useControlMode();
+  const queryClient = useQueryClient();
 
   const getQueryFunction = () => {
-    const annualDividendData = data?.data.data;
+    const annualDividendFullData:
+      | ResponseSuccess<AnnualDividendModel>
+      | undefined = queryClient.getQueryData(queryKeys.annualDividend());
+
+    const annualDividendData = annualDividendFullData?.data;
+
     if (annualDividendData && exchangeRate) {
       const newMonthlyDividends = Object.entries(
         annualDividendData.monthlyDividends,
