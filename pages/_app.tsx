@@ -19,7 +19,7 @@ import {
 } from '@mui/material/styles';
 import Cookies from 'universal-cookie';
 import { useRouter } from 'next/router';
-import { AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import type { AppProps } from 'next/app';
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -35,6 +35,11 @@ function MyApp({ Component, pageProps }: AppProps) {
             const cookie = new Cookies();
             cookie.remove(ACCESS_TOKEN);
             router.push('/login');
+          }
+        },
+        onError: (error) => {
+          if (axios.isAxiosError(error)) {
+            console.error(error);
           }
         },
       }),
