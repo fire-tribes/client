@@ -1,9 +1,9 @@
-import { ServiceErrorCodeKey } from '@/@types/models/errorCode';
+import type { ServiceErrorCodeKeyType } from '@/core/api/errorCode';
 
 /** 백엔드 서버로부터 넘어오는 Response의 기본적인 필드 레이아웃 */
 type ResponseLayout = {
   success: boolean;
-  errorCode: ServiceErrorCodeKey;
+  errorCode: ServiceErrorCodeKeyType;
   message: string;
 };
 
