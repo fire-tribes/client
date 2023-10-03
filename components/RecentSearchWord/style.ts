@@ -18,6 +18,11 @@ const LeftContainer = styled.div`
     margin-left: 6px;
   }
 `;
+const Button = styled.button`
+  display: block;
+  flex: 1;
+  width: 150px;
+`;
 const RightContainer = styled.div`
   display: flex;
   align-items: center;
@@ -32,5 +37,6 @@ export const RecentSearchWordUI = {
   Container,
   Item,
   LeftContainer,
+  Button,
   RightContainer,
 } as const;

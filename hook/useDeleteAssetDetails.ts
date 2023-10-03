@@ -11,8 +11,7 @@ function useDeleteAssetDetails() {
   const deleteAssetDetailsData = async (
     deletePortfolioAssetDetail: DeletePortfolioAssetDetail,
   ) => {
-    const response = await mutateAsync(deletePortfolioAssetDetail);
-    return response;
+    await mutateAsync(deletePortfolioAssetDetail);
   };
   return {
     deleteAssetDetailsData,

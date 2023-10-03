@@ -5,29 +5,40 @@ import Layout from '@/components/common/Layout';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { useState } from 'react';
+import { CircularProgress } from '@mui/material';
 
 function Empty() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
   const onMoveSearchPage = () => {
-    router.push('/fires/search');
+    setLoading(true);
+    router.push('/snowball/search');
   };
   return (
     <Layout>
       <EmptyUI.Container>
         <EmptyUI.Item>
-          <div>
-            <Image src={CloudImage} alt="Cloud Image" />
-          </div>
-          <div>
-            배당 계산을 위해
-            <tr /> 첫 주식을 추가해주세요.
-          </div>
-          <div onClick={onMoveSearchPage}>
-            <CommonButton>
-              <Image src={PlusSvg} alt="plus Svg" />
-              <span>주식 추가하기</span>
-            </CommonButton>
-          </div>
+          {loading ? (
+            <CircularProgress />
+          ) : (
+            <>
+              <div>
+                <Image src={CloudImage} alt="Cloud Image" />
+              </div>
+              <div>
+                배당 계산을 위해
+                <tr /> 첫 주식을 추가해주세요.
+              </div>
+              <div>
+                <CommonButton onClick={() => onMoveSearchPage()}>
+                  <Image src={PlusSvg} alt="plus Svg" />
+                  <span>주식 추가하기</span>
+                </CommonButton>
+              </div>
+            </>
+          )}
         </EmptyUI.Item>
       </EmptyUI.Container>
     </Layout>

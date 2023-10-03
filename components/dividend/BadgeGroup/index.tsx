@@ -6,7 +6,7 @@ import Link from 'next/link';
 export default function BadgeGroup() {
   return (
     <FlexBox gap="6px">
-      <Link href={'/fires/edit'}>
+      <Link href={'/snowball/edit'}>
         <CommonBadge
           variant="contained"
           leftIcon={<CommonIcon iconName={'list_select'} />}
@@ -14,7 +14,7 @@ export default function BadgeGroup() {
           편집
         </CommonBadge>
       </Link>
-      <Link href={'/fires/search'}>
+      <Link href={'/snowball/search'}>
         <CommonBadge
           variant="contained"
           leftIcon={<CommonIcon iconName={'add_circle'} />}

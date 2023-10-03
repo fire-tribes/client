@@ -12,7 +12,13 @@ interface RecentSearchWords {
   date: string;
 }
 
-function RecentSearchWords() {
+interface RecentSearchWordsProps {
+  onClickRecentSearchWord: (word: string) => void;
+}
+
+function RecentSearchWords({
+  onClickRecentSearchWord,
+}: RecentSearchWordsProps) {
   /** exampleDatas */
 
   /** 최근 검색어 데이터 Get */
@@ -93,6 +99,7 @@ function RecentSearchWords() {
                 handleDeleteRecentSearchWord={() =>
                   handleDeleteRecentSearchWord(id)
                 }
+                onClickRecentSearchWord={onClickRecentSearchWord}
               />
             );
           })
