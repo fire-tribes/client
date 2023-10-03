@@ -4,13 +4,13 @@ describe('new test', () => {
   it('-100', () => {
     const result = getShortCurrencyKR(-100);
 
-    expect(result).toBe('');
+    expect(result).toBe(0);
   });
 
   it('0', () => {
     const result = getShortCurrencyKR(0);
 
-    expect(result).toBe('');
+    expect(result).toBe(0);
   });
 
   it('100', () => {
