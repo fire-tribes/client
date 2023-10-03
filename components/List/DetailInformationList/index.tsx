@@ -1,30 +1,33 @@
 import CommonIcon from '@/components/common/Icon';
 import CommonFont from '@/components/common/Font';
 import { AnnualDividendListItem } from '@/components/List/DetailInformationList/AnnualDividendListItem';
-// import { useAnnualDividend } from '@/hook/useAnnualDividend';
 
 import { useAnnualDividend } from '@/hook/useAnnualDividend';
-// import { transferPrice } from '@/core/utils/transferPrice';
-// import { useExchangeRate } from '@/hook/useExchangeRate';
+
 import NotifyListModal from '@/components/common/Modal/NotifyListModal';
 import type { BadgeDetailText } from '@/mocks';
 
 export default function DetailInformationList() {
-  const { annualDividendData } = useAnnualDividend();
-  // const { exchangeRate } = useExchangeRate();
+  const { annualDividendExchangeData, annualDividendExchangeWithSimpleData } =
+    useAnnualDividend();
 
   const detailInformationData = {
-    annualDividend: `${annualDividendData?.annualDividend || 0}원`,
+    annualDividend: `${
+      annualDividendExchangeWithSimpleData?.annualDividend || 0
+    }`,
     dividendPriceRatio: `${
-      annualDividendData?.dividendPriceRatio.toFixed(2) || 0
+      annualDividendExchangeWithSimpleData?.dividendPriceRatio.toFixed(2) || 0
     }%`,
-    paidTax: annualDividendData?.paidTax
-      ? `${annualDividendData?.paidTax}원`
+    paidTax: annualDividendExchangeWithSimpleData?.paidTax
+      ? `${annualDividendExchangeWithSimpleData?.paidTax}`
       : '없음',
-    unPaidTax: annualDividendData?.unPaidTax
-      ? `${annualDividendData?.unPaidTax}원 예상`
+    unPaidTax: annualDividendExchangeWithSimpleData?.unPaidTax
+      ? `${annualDividendExchangeWithSimpleData?.unPaidTax} 예상`
       : '없음',
   };
+
+  const today = new Date();
+  const thisYeaderFirstDay = new Date(today.getFullYear(), 1, 1);
 
   const badangDetailText: Record<
     'annualDividend' | 'dividendPriceRatio' | 'paidTax' | 'unPaidTax',
@@ -56,7 +59,7 @@ export default function DetailInformationList() {
           ),
           value: (
             <CommonFont fontSize="body1" fontWeight="bold" color="point_red01">
-              {annualDividendData?.dividendPriceRatio}%
+              {annualDividendExchangeWithSimpleData?.dividendPriceRatio}%
             </CommonFont>
           ),
         },
@@ -73,7 +76,7 @@ export default function DetailInformationList() {
           ),
           value: (
             <CommonFont fontSize="body1" fontWeight="bold" color="point_red01">
-              {annualDividendData?.dividendYieldRatio}%
+              {annualDividendExchangeWithSimpleData?.dividendYieldRatio}%
             </CommonFont>
           ),
         },
@@ -93,12 +96,12 @@ export default function DetailInformationList() {
           ),
           subTitle: (
             <CommonFont fontSize="body3" fontWeight="regular" color="gray6">
-              2023년 1월 ~ 현재
+              {`${thisYeaderFirstDay.getFullYear()}년 1월 ~ 현재`}
             </CommonFont>
           ),
           value: (
             <CommonFont fontSize="body1" fontWeight="bold" color="point_blue02">
-              {annualDividendData?.paidTax}원
+              {annualDividendExchangeData?.paidTax}
             </CommonFont>
           ),
         },
@@ -131,12 +134,12 @@ export default function DetailInformationList() {
           ),
           subTitle: (
             <CommonFont fontSize="body3" fontWeight="regular" color="gray6">
-              2023년 1월 ~ 현재
+              {`${thisYeaderFirstDay.getFullYear()}년 1월 ~ 현재`}
             </CommonFont>
           ),
           value: (
             <CommonFont fontSize="body1" fontWeight="bold" color="point_blue02">
-              {annualDividendData?.unPaidTax}원 예상
+              {annualDividendExchangeData?.unPaidTax} 예상
             </CommonFont>
           ),
         },

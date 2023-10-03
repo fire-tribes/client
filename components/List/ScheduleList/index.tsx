@@ -1,8 +1,4 @@
-// import {
-//   useMonthlyCalanderDividendExchangeQuery,
-//   useMonthlyCalanderDividendQuery,
-// } from '@/hook/useQueryHook/useMonthlyCalanderDividendQuery';
-import { DividendCalanderModel } from '@/@types/models/dividend';
+import { useMonthlyCalanderDividendExchangeQuery } from '@/hook/useQueryHook/useMonthlyCalanderDividendQuery';
 import CommonFont from '@/components/common/Font';
 
 import {
@@ -15,30 +11,59 @@ import {
 } from '@mui/material';
 
 export function ScheduleList() {
-  // const { data } = useMonthlyCalanderDividendExchangeQuery();
+  const { data } = useMonthlyCalanderDividendExchangeQuery();
+
   // const { data } = useMonthlyCalanderDividendQuery();
-  const mockData: DividendCalanderModel[] = [
-    {
-      tickerCode: 'JEPI',
-      stockCode: '',
-      expectedPayDate: '2022-09-07',
-      exDividendDate: '2022-09-01',
-      expectedDividends: 7.27,
-      currencyType: 'USD',
-    },
-    {
-      tickerCode: 'JEPI',
-      stockCode: '',
-      expectedPayDate: '2022-09-07',
-      exDividendDate: '2022-09-01',
-      expectedDividends: 7.27,
-      currencyType: 'USD',
-    },
-  ];
+  // const mockData: DividendCalanderModel[] = [
+  //   {
+  //     tickerCode: 'JEPI',
+  //     stockCode: '',
+  //     expectedPayDate: '2022-09-07',
+  //     exDividendDate: '2022-09-01',
+  //     expectedDividends: 7.27,
+  //     currencyType: 'USD',
+  //   },
+  //   {
+  //     tickerCode: 'JEPI',
+  //     stockCode: '',
+  //     expectedPayDate: '2022-09-07',
+  //     exDividendDate: '2022-09-01',
+  //     expectedDividends: 7.27,
+  //     currencyType: 'USD',
+  //   },
+  // ];
+
+  if (data?.success === true && !data?.data.length) {
+    return (
+      <CommonFont
+        component="p"
+        fontSize="caption2"
+        fontWeight="regular"
+        color="gray6"
+        textAlign="center"
+      >
+        이번달은 배당을 주는 주식이 없습니다.
+      </CommonFont>
+    );
+  }
+  if (data?.success === false) {
+    return (
+      <CommonFont
+        component="p"
+        fontSize="caption2"
+        fontWeight="regular"
+        color="gray6"
+        textAlign="center"
+      >
+        에러가 발생했습니다.
+      </CommonFont>
+    );
+  }
+
   return (
     <Box>
       <List disablePadding>
-        {mockData?.map(
+        {data?.data.map(
           ({
             tickerCode,
             stockCode,

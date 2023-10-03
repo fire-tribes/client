@@ -26,27 +26,13 @@ export const portfolioAPI = {
     );
   },
   getExchangeRate: () => {
-    return APIInstance.get<ResponseSuccess<ExchangeRateModel>>(
-      'exchange-rate',
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
-        },
-      },
-    );
+    return APIInstance.get<ResponseSuccess<ExchangeRateModel>>('exchange-rate');
   },
   makePortfolio: () => {
     return APIInstance.post<ResponseSuccess<MakePortfolio>>('portfolio/create');
   },
   getMyPortFolio: () => {
-    return APIInstance.get<ResponseSuccess<MyPortfolioModel>>(
-      'portfolio/list',
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
-        },
-      },
-    );
+    return APIInstance.get<ResponseSuccess<MyPortfolioModel>>('portfolio/list');
   },
   updatePortfolio: (
     portfolioId: number,

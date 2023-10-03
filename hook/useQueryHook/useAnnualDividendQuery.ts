@@ -1,33 +1,68 @@
+import { AnnualDividendModel } from '@/@types/models/dividend';
+import { ResponseSuccess } from '@/@types/models/response';
+import { getShortCurrencyKR } from '@/components/Chart/utils';
 import { dividendAPI } from '@/core/api/dividend';
 import { useControlMode } from '@/hook/useControlMode';
+import { useControlTax } from '@/hook/useControlTax';
 import { useExchangeRate } from '@/hook/useExchangeRate';
 import { queryKeys } from '@/hook/useQueryHook/queryKeys';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const useAnnualDividendQuery = () => {
+  const queryClient = useQueryClient();
+  const { exchangeRate } = useExchangeRate();
+  const { modeData } = useControlMode();
+  const { taxData } = useControlTax();
   return useQuery({
     queryKey: queryKeys.annualDividend(),
     queryFn: dividendAPI.getAnnualDividend,
     staleTime: 1000 * 5,
+    onSuccess: () => {
+      queryClient.invalidateQueries(
+        queryKeys.annualDividend(
+          modeData.isSimple,
+          exchangeRate,
+          taxData.isTax,
+        ),
+      );
+
+      queryClient.invalidateQueries(
+        queryKeys.annualDividend(null, exchangeRate, taxData.isTax),
+      );
+    },
   });
 };
 
 export const useAnnualDividendExchangeQuery = () => {
+  const queryClient = useQueryClient();
   const { exchangeRate } = useExchangeRate();
-  const { data } = useAnnualDividendQuery();
-  const { modeData } = useControlMode();
+  const { taxData } = useControlTax();
+
+  const divideByTax = (price: number) => Math.floor(price * (85 / 100));
+  const getPriceByTax = (price: number) => {
+    if (taxData.isTax) {
+      return divideByTax(price).toLocaleString('ko-kr') + '원';
+    }
+
+    return Math.floor(price).toLocaleString('ko-kr') + '원';
+  };
 
   const getQueryFunction = () => {
-    const annualDividendData = data?.data.data;
-    if (annualDividendData && exchangeRate) {
-      annualDividendData.monthlyDividends;
+    const annualDividendFullData:
+      | ResponseSuccess<AnnualDividendModel>
+      | undefined = queryClient.getQueryData(queryKeys.annualDividend());
 
+    const annualDividendData = annualDividendFullData?.data;
+
+    if (annualDividendData && exchangeRate) {
       const newMonthlyDividends = Object.entries(
         annualDividendData.monthlyDividends,
       ).reduce(
         (acc, [key, value]) => ({
           ...acc,
-          [key]: value * exchangeRate,
+          [key]: taxData.isTax
+            ? divideByTax(value * exchangeRate)
+            : value * exchangeRate,
         }),
         {},
       );
@@ -36,24 +71,89 @@ export const useAnnualDividendExchangeQuery = () => {
         ...annualDividendData,
         dividendChange: annualDividendData.dividendChange,
         monthlyDividends: newMonthlyDividends,
-        annualDividend: Math.floor(
+        annualDividend: getPriceByTax(
           annualDividendData.annualDividend * exchangeRate,
-        ).toLocaleString('ko-kr'),
-        paidTax: Math.floor(
-          annualDividendData.paidTax * exchangeRate,
-        ).toLocaleString('ko-kr'),
-        unPaidTax: Math.floor(
-          annualDividendData.unPaidTax * exchangeRate,
-        ).toLocaleString('ko-kr'),
-        thisMonthDividend: Math.floor(
+        ),
+        paidTax: getPriceByTax(annualDividendData.paidTax * exchangeRate),
+        unPaidTax: getPriceByTax(annualDividendData.unPaidTax * exchangeRate),
+        thisMonthDividend: getPriceByTax(
           annualDividendData.thisMonthDividend * exchangeRate,
-        ).toLocaleString('ko-kr'),
+        ),
       };
     }
   };
 
   return useQuery(
-    queryKeys.annualDividend(modeData.isSimple, exchangeRate),
+    queryKeys.annualDividend(null, exchangeRate, taxData.isTax),
+    getQueryFunction,
+  );
+};
+
+export const useAnnualDividendExchangeWithSimpleQuery = () => {
+  const queryClient = useQueryClient();
+  const { exchangeRate } = useExchangeRate();
+  const { modeData } = useControlMode();
+  const { taxData } = useControlTax();
+
+  const divideByTax = (price: number) => Math.floor(price * (85 / 100));
+  const divideSimple = (price: number) => getShortCurrencyKR(Math.floor(price));
+
+  const getPriceByTaxWithSimple = (price: number) => {
+    let newPrice: number = Math.floor(price);
+
+    if (taxData.isTax) {
+      newPrice = divideByTax(price);
+    }
+
+    if (modeData.isSimple) {
+      return divideSimple(newPrice) + '원';
+    }
+
+    return newPrice.toLocaleString('ko-kr') + '원';
+  };
+
+  const getQueryFunction = () => {
+    const annualDividendFullData:
+      | ResponseSuccess<AnnualDividendModel>
+      | undefined = queryClient.getQueryData(queryKeys.annualDividend());
+
+    const annualDividendData = annualDividendFullData?.data;
+
+    if (annualDividendData && exchangeRate) {
+      const newMonthlyDividends = Object.entries(
+        annualDividendData.monthlyDividends,
+      ).reduce(
+        (acc, [key, value]) => ({
+          ...acc,
+          [key]: taxData.isTax
+            ? divideByTax(value * exchangeRate)
+            : value * exchangeRate,
+        }),
+        {},
+      );
+
+      return {
+        ...annualDividendData,
+        dividendChange: annualDividendData.dividendChange,
+        monthlyDividends: newMonthlyDividends,
+        annualDividend: getPriceByTaxWithSimple(
+          annualDividendData.annualDividend * exchangeRate,
+        ),
+        paidTax: getPriceByTaxWithSimple(
+          annualDividendData.paidTax * exchangeRate,
+        ),
+        unPaidTax: getPriceByTaxWithSimple(
+          annualDividendData.unPaidTax * exchangeRate,
+        ),
+        thisMonthDividend: getPriceByTaxWithSimple(
+          annualDividendData.thisMonthDividend * exchangeRate,
+        ),
+      };
+    }
+  };
+
+  return useQuery(
+    queryKeys.annualDividend(modeData.isSimple, exchangeRate, taxData.isTax),
     getQueryFunction,
   );
 };

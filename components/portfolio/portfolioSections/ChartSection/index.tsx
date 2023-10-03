@@ -6,22 +6,31 @@ import CommonCheckButton from '@/components/common/CheckButton';
 import FlexBox from '@/components/common/FlexBox';
 import { useAnnualDividend } from '@/hook/useAnnualDividend';
 import NormalNotifyModal from '@/components/common/Modal/NormalNotifyModal';
-import { Button } from '@mui/material';
+import Modal from '@/components/common/Modal';
+import { useEmotionTheme } from '@/hook/useThemeHooks';
+import { useControlTax } from '@/hook/useControlTax';
 
 export default function ChartSection() {
-  const { annualDividendData } = useAnnualDividend();
+  const { annualDividendExchangeWithSimpleData } = useAnnualDividend();
+  const { palette } = useEmotionTheme();
 
   const chartSectionTexts = {
-    title: `${annualDividendData?.thisMonthDividend || 0}원`,
-    subTitle: annualDividendData?.dividendChange
-      ? `지난 배당 대비 ${annualDividendData?.dividendChange}%`
+    title: annualDividendExchangeWithSimpleData?.thisMonthDividend || '0원',
+    subTitle: annualDividendExchangeWithSimpleData?.dividendChange
+      ? `지난 배당 대비 ${annualDividendExchangeWithSimpleData?.dividendChange}%`
       : '',
     isShowChart:
-      annualDividendData?.monthlyDividends && annualDividendData?.annualDividend
+      annualDividendExchangeWithSimpleData?.monthlyDividends &&
+      Object.keys(annualDividendExchangeWithSimpleData?.monthlyDividends)
+        .length &&
+      annualDividendExchangeWithSimpleData?.annualDividend
         ? true
         : false,
   };
   const { title, subTitle, isShowChart } = chartSectionTexts;
+
+  const { taxData, toggleTax } = useControlTax();
+  console.log(taxData);
 
   return (
     <Section textAlign="left" paddingTop="11px">
@@ -29,7 +38,12 @@ export default function ChartSection() {
         <DividendDate />
         <FlexBox justifyContent="space-between">
           <FlexBox gap="14px">
-            <CommonCheckButton fontSize="body3" isWait={false}>
+            <CommonCheckButton
+              fontSize="body3"
+              isWait={false}
+              onClick={toggleTax}
+              checked={taxData.isTax ?? false}
+            >
               소득세
             </CommonCheckButton>
             <NormalNotifyModal
@@ -38,12 +52,20 @@ export default function ChartSection() {
                 '4대 보험을 제한 결과값 도출은 곧 출시 예정입니다. 조금만 기다려주세요!'
               }
               button={
-                <Button variant="contained" fullWidth size="large">
+                <Modal.Button
+                  height={'54px'}
+                  sx={{
+                    backgroundColor: palette.sementic.button_bg_gray_blue,
+                    ':hover': {
+                      backgroundColor: palette.sementic.button_bg_gray_blue,
+                    },
+                  }}
+                >
                   확인
-                </Button>
+                </Modal.Button>
               }
             >
-              <CommonCheckButton fontSize="body3" isWait>
+              <CommonCheckButton fontSize="body3" isWait checked={false}>
                 4대보험
               </CommonCheckButton>
             </NormalNotifyModal>
@@ -63,8 +85,8 @@ export default function ChartSection() {
         <CommonFont
           fontSize="body1"
           color={
-            annualDividendData?.dividendChange &&
-            annualDividendData?.dividendChange > 0
+            annualDividendExchangeWithSimpleData?.dividendChange &&
+            annualDividendExchangeWithSimpleData?.dividendChange > 0
               ? 'point_red01'
               : 'point_blue02'
           }
