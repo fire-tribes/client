@@ -1,8 +1,15 @@
 import { globalStyle } from '@/styles/global';
 import { useEmotionTheme } from '@/hook/useThemeHooks';
 import { fontFacePretendard } from '@/styles/fonts';
+import { ACCESS_TOKEN } from '@/core/api/token';
+
+import { ResponseSuccess } from '@/@types/models/response';
 import { Global, ThemeProvider as EmotionThemeProvider } from '@emotion/react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import {
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useState } from 'react';
 import {
@@ -10,16 +17,36 @@ import {
   StyledEngineProvider,
   createTheme,
 } from '@mui/material/styles';
+import Cookies from 'universal-cookie';
+import { useRouter } from 'next/router';
+import axios, { AxiosResponse } from 'axios';
 import type { AppProps } from 'next/app';
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const router = useRouter();
   const [queryClient] = useState(
     new QueryClient({
+      queryCache: new QueryCache({
+        onSuccess: (data) => {
+          const response = data as AxiosResponse<ResponseSuccess<unknown>>;
+          const errorCode = response.data.errorCode;
+
+          if (errorCode === 'E01106') {
+            const cookie = new Cookies();
+            cookie.remove(ACCESS_TOKEN);
+            router.push('/login');
+          }
+        },
+        onError: (error) => {
+          if (axios.isAxiosError(error)) {
+            console.error(error);
+          }
+        },
+      }),
       defaultOptions: {
         queries: {
           retry: 1,
           refetchOnWindowFocus: false,
-          // staleTime: 10 * 1000,
         },
       },
     }),

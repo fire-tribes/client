@@ -18,10 +18,11 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, ChartDataLabels);
 
 export default function AnnualDividendBarChart() {
   const theme = useTheme();
-  const { annualDividendData } = useAnnualDividend();
+  const { annualDividendExchangeWithSimpleData } = useAnnualDividend();
   // const { exchangeRate } = useExchangeRate();
 
-  const monthlyDividends = annualDividendData?.monthlyDividends;
+  const monthlyDividends =
+    annualDividendExchangeWithSimpleData?.monthlyDividends;
   const showChartDividendDatas = createShowChartDividendDatas(monthlyDividends);
 
   if (showChartDividendDatas) {
@@ -43,19 +44,8 @@ export default function AnnualDividendBarChart() {
               clip: false,
               align: 'top',
               offset: 0,
-              // TODO: number type value에 특정 단위를 붙이고 싶을경우
               formatter: (value: number) => {
-                // const exchangedValue = transferPrice({
-                //   currentPrice: value,
-                //   exchangeRate,
-                //   outputSymbol: 'KRW',
-                // });
-
                 return getShortCurrencyKR(value);
-
-                // return getShortCurrencyKR(exchangedValue.)
-
-                // return formatChartValue(exchangedValue.replace(/,/g, ''));
               },
               /** color를 변경하고 싶을 떄
                * color: '#36A2EB',

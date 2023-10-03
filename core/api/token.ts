@@ -1,7 +1,7 @@
 import { Cookie } from '@/core/api/cookie';
 import { HeadersDefaults } from 'axios';
 
-const ACCESS_TOKEN = 'accessToken';
+export const ACCESS_TOKEN = 'accessToken';
 const AUTHORIZATION = 'Authorization';
 
 /** 

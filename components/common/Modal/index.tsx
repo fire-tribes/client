@@ -6,6 +6,7 @@ interface TModalCSSProps {
   show: boolean;
   disableBackgroundClick?: boolean;
   minWidth?: CSSProperties['minWidth'];
+  maxWidth?: CSSProperties['maxWidth'];
   position?: 'center' | 'bottom';
   layout?: 'fill' | 'initial';
 }
@@ -21,6 +22,7 @@ const Modal = ({
   show,
   disableBackgroundClick = false,
   minWidth = 400,
+  maxWidth,
   position = 'center',
   layout = 'initial',
   children,
@@ -44,6 +46,7 @@ const Modal = ({
       >
         <ModalUI.Container
           minWidth={minWidth}
+          maxWidth={maxWidth}
           layout={layout}
           position={position}
         >

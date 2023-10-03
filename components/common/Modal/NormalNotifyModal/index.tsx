@@ -18,7 +18,7 @@ export default function NormalNotifyModal({
 
   return (
     <>
-      <Modal show={isShow} onClose={closeModal}>
+      <Modal show={isShow} onClose={closeModal} maxWidth={328}>
         <Modal.Title>{title}</Modal.Title>
         <Modal.Content>{content}</Modal.Content>
         <Modal.Actions>{button}</Modal.Actions>

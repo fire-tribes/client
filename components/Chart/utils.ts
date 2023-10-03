@@ -9,11 +9,11 @@ export const getShortCurrencyKR = (value: number) => {
   const TEN_BLIILON = 10000000000;
 
   // 음수 또는 0
-  if (value <= 0) return '';
+  if (value <= 0) return 0;
 
   // 1만 미만
   if (value < 10000) {
-    return Math.floor(value).toString();
+    return Math.floor(value).toLocaleString('ko-kr');
   }
 
   // 1억 미만

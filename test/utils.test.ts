@@ -4,13 +4,13 @@ describe('new test', () => {
   it('-100', () => {
     const result = getShortCurrencyKR(-100);
 
-    expect(result).toBe('');
+    expect(result).toBe(0);
   });
 
   it('0', () => {
     const result = getShortCurrencyKR(0);
 
-    expect(result).toBe('');
+    expect(result).toBe(0);
   });
 
   it('100', () => {
@@ -28,13 +28,13 @@ describe('new test', () => {
   it('1,000', () => {
     const result = getShortCurrencyKR(1000);
 
-    expect(result).toBe('1000');
+    expect(result).toBe('1,000');
   });
 
   it('9,999', () => {
     const result = getShortCurrencyKR(9999);
 
-    expect(result).toBe('9999');
+    expect(result).toBe('9,999');
   });
 
   it('1만', () => {
