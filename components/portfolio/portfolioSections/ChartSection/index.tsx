@@ -6,13 +6,15 @@ import CommonCheckButton from '@/components/common/CheckButton';
 import FlexBox from '@/components/common/FlexBox';
 import { useAnnualDividend } from '@/hook/useAnnualDividend';
 import NormalNotifyModal from '@/components/common/Modal/NormalNotifyModal';
-import { Button } from '@mui/material';
+import Modal from '@/components/common/Modal';
+import { useEmotionTheme } from '@/hook/useThemeHooks';
 
 export default function ChartSection() {
   const { annualDividendExchangeWithSimpleData } = useAnnualDividend();
+  const { palette } = useEmotionTheme();
 
   const chartSectionTexts = {
-    title: `${annualDividendExchangeWithSimpleData?.thisMonthDividend || 0}`,
+    title: annualDividendExchangeWithSimpleData?.thisMonthDividend || '0원',
     subTitle: annualDividendExchangeWithSimpleData?.dividendChange
       ? `지난 배당 대비 ${annualDividendExchangeWithSimpleData?.dividendChange}%`
       : '',
@@ -41,9 +43,17 @@ export default function ChartSection() {
                 '4대 보험을 제한 결과값 도출은 곧 출시 예정입니다. 조금만 기다려주세요!'
               }
               button={
-                <Button variant="contained" fullWidth size="large">
+                <Modal.Button
+                  height={'54px'}
+                  sx={{
+                    backgroundColor: palette.sementic.button_bg_gray_blue,
+                    ':hover': {
+                      backgroundColor: palette.sementic.button_bg_gray_blue,
+                    },
+                  }}
+                >
                   확인
-                </Button>
+                </Modal.Button>
               }
             >
               <CommonCheckButton fontSize="body3" isWait>

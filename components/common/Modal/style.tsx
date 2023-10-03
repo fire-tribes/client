@@ -51,6 +51,7 @@ const Dimmed = styled.section<{ position: 'center' | 'bottom' }>`
 
 const Container = styled.div<{
   minWidth: CSSProperties['minWidth'];
+  maxWidth: CSSProperties['maxWidth'];
   layout: 'fill' | 'initial';
   position: 'center' | 'bottom';
 }>`
@@ -58,7 +59,7 @@ const Container = styled.div<{
 
   background-color: white;
   overflow: hidden;
-  ${({ layout, position, minWidth }) => css`
+  ${({ layout, position, minWidth, maxWidth }) => css`
     min-width: ${layout === 'fill'
       ? '0px'
       : typeof minWidth === 'number'
@@ -66,6 +67,10 @@ const Container = styled.div<{
       : minWidth};
 
     width: ${layout === 'fill' && '400px'};
+
+    max-width: ${maxWidth && typeof maxWidth === 'number'
+      ? `${maxWidth}px`
+      : maxWidth};
 
     ${position === 'center'
       ? css`
@@ -76,7 +81,7 @@ const Container = styled.div<{
 
           animation-name: ${fadeInUpKeyframes};
           animation-duration: 0.3s;
-        `}
+        `};
   `};
 `;
 
