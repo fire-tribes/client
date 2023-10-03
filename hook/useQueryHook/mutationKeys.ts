@@ -5,4 +5,5 @@ export const mutationKeys = {
   addStocksAtPortfolio: () => ['addStocksAtPortfolio'],
   addRecentSearchWord: () => ['addRecentSearchWord'],
   updatePortfolio: () => ['updatePortfolio'],
+  deleteAssetDetails: () => ['deleteAssetDetails'],
 };

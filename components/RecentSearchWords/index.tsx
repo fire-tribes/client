@@ -12,17 +12,14 @@ interface RecentSearchWords {
   date: string;
 }
 
-function RecentSearchWords() {
+interface RecentSearchWordsProps {
+  onClickRecentSearchWord: (word: string) => void;
+}
+
+function RecentSearchWords({
+  onClickRecentSearchWord,
+}: RecentSearchWordsProps) {
   /** exampleDatas */
-  // const exampleDatas = [
-  //   { word: '일', date: '2023-09-22T13:54:18.239Z' },
-  //   { word: '이', date: '2023-09-22T13:54:18.239Z' },
-  //   { word: '삼', date: '2023-09-22T13:54:18.239Z' },
-  //   { word: '사', date: '2023-09-22T13:54:18.239Z' },
-  //   { word: '오', date: '2023-09-22T13:54:18.239Z' },
-  //   { word: '육', date: '2023-09-22T13:54:18.239Z' },
-  //   { word: '칠', date: '2023-09-22T13:54:18.239Z' },
-  // ];
 
   /** 최근 검색어 데이터 Get */
   const { getRecentSearchWordsData, isLoading } = useGetRecentSearchWords();
@@ -102,6 +99,7 @@ function RecentSearchWords() {
                 handleDeleteRecentSearchWord={() =>
                   handleDeleteRecentSearchWord(id)
                 }
+                onClickRecentSearchWord={onClickRecentSearchWord}
               />
             );
           })

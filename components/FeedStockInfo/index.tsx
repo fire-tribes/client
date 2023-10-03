@@ -39,6 +39,8 @@ function FeedStockInfo({
   const handleInputBlur = () => {
     if (inputCountValue.trim() === '' || inputPriceValue.trim() === '') {
       setErrorText('* 보유 수량 및 가격을 정확히 입력해주세요.');
+    } else {
+      setErrorText('');
     }
   };
   return (

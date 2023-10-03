@@ -2,8 +2,9 @@
 import Toast from '../../Toast';
 import Modal, { TModalProps } from '@/components/common/Modal';
 import useControlModal from '@/hook/useControlModal';
+import useControlToast from '@/hook/useControlToast';
 import { basic } from '@/styles/palette';
-import { useState, type PropsWithChildren, useEffect } from 'react';
+import { type PropsWithChildren, useEffect } from 'react';
 
 type PickTModalPropsType = Pick<TModalProps, 'layout' | 'position'>;
 interface AlertModalCSSProps {
@@ -31,7 +32,7 @@ function AlertModal({
   toastMessage,
 }: AlertModalProps) {
   const { isShow, openModal, closeModal } = useControlModal();
-  const [isShowToast, setIsShowToast] = useState(false);
+  const { isShowToast, setIsShowToast } = useControlToast();
 
   const handleConfirmButton = () => {
     if (onClickEvent !== undefined) {
@@ -42,8 +43,11 @@ function AlertModal({
   };
 
   useEffect(() => {
+    console.log('isShowToast: ', isShowToast);
     if (isShowToast) {
-      setTimeout(() => setIsShowToast(false), 3000);
+      setTimeout(() => {
+        setIsShowToast(false);
+      }, 3 * 1000);
     }
   }, [isShowToast]);
 

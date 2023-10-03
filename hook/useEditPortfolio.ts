@@ -5,14 +5,15 @@ import {
   AssetDetailsAtomProps,
   assetDetailsAtom,
 } from './useGetAssetDetails/state';
-import { useMyPortFolio } from './useMyPortFolio';
+import { useMyPortFolioQuery } from './useQueryHook/useMyPortFolioQuery';
 import { useUpdatePortfolio } from './useUpdatePortfolio';
 import { useAtom } from 'jotai';
 
 export const useEditPortfolio = () => {
   // 수정용 아톰
   const [assetDetails] = useAtom(assetDetailsAtom);
-  const { myPortFolioData } = useMyPortFolio();
+  const { data } = useMyPortFolioQuery();
+  const myPortFolioData = data?.data.data;
 
   // 폼으로 쓸 아톰
   const [editedAssetDetails] = useAtom(editedAssetDetailsAtom);

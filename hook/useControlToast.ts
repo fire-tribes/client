@@ -1,12 +1,14 @@
-import { useCallback, useState } from 'react';
+import { atom, useAtom } from 'jotai';
+
+export const showToastAtom = atom(false);
 
 const useControlToast = () => {
-  const [isShow, setIsShow] = useState(false);
+  const [isShowToast, setIsShowToast] = useAtom(showToastAtom);
 
   return {
-    isShow,
-    openToast: useCallback(() => setIsShow(true), []),
-  } as const;
+    isShowToast,
+    setIsShowToast,
+  };
 };
 
 export default useControlToast;

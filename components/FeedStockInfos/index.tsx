@@ -9,9 +9,6 @@ import {
 import CheckSvg from '@/public/icon/check.svg';
 import { basic } from '@/styles/palette';
 import { useGetCurrentPriceInSelectedStocks } from '@/hook/useGetCurrentPriceInSelectedStocks';
-// import { useAddStocksAtPortfolio } from '@/hook/useAddStocksAtPortfolio';
-// import { useMakePortfolio } from '@/hook/useMakePortfolio';
-// import { formDataAtom } from '@/hook/useMakeFormData/state';
 import { useAtom } from 'jotai';
 import Image from 'next/image';
 import { ChangeEvent, useEffect, useState } from 'react';

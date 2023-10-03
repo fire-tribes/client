@@ -65,10 +65,14 @@ function BottomFixedButton({
   /** 다른 페이지로 이동하는 함수 */
   const onMoveOtherPages = async (buttonName: string) => {
     if (buttonName === '다음') {
-      console.log('selectedStocks for debouncdedValue: ', selectedStocks);
+      /** 최근 검색어에 해당 검색어(debouncedValue) 추가 */
       if (selectedStocks[0].debouncedValue !== '') {
         updateRecentSearchWords();
-        router.push('/fires/add');
+        if (portfolioId) {
+          router.push(`/snowball/add?portfolioId=${portfolioId}`);
+        } else {
+          router.push('/snowball/add');
+        }
       }
     }
     if (buttonName === '추가 완료') {
@@ -77,15 +81,14 @@ function BottomFixedButton({
       } else {
         makePortfolio();
       }
-      router.push('/');
     }
     if (buttonName === '완료') {
-      router.push('/fires/main/full');
+      router.push('/');
     }
     if (buttonName === '수정 완료') {
       try {
         await updatePort();
-        router.push('/fires/edit');
+        router.push('/snowball/edit');
       } catch (err) {
         alert(`error 발생 : ${err}`);
       }
