@@ -42,7 +42,7 @@ const InputContainer = styled.div`
 
     margin-right: 5px;
   }
-  div:nth-child(2) {
+  div:nth-of-type(2) {
     flex: 1;
 
     input {

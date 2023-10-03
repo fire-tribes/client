@@ -14,7 +14,7 @@ function Empty() {
 
   const onMoveSearchPage = () => {
     setLoading(true);
-    router.push('/snowball/search');
+    router.push('/search');
   };
   return (
     <Layout>

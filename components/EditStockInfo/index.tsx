@@ -141,7 +141,7 @@ export default function EditStockInfo() {
     };
     console.log('requestObject: ', requestObject);
     deleteAssetDetailsData(requestObject);
-    router.push('/snowball/edit');
+    router.push('/edit');
   };
 
   return (

@@ -7,7 +7,9 @@ export const useGetSearchedResults = (word: string, pageIndex: number = 1) => {
   );
 
   const getSearchedResultsData = data?.data.data;
-  const refetchSearchedResultsData = refetch;
+  const refetchSearchedResultsData = async () => {
+    await refetch;
+  };
 
   return {
     getSearchedResultsData,

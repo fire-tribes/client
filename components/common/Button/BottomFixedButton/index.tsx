@@ -69,9 +69,9 @@ function BottomFixedButton({
       if (selectedStocks[0].debouncedValue !== '') {
         updateRecentSearchWords();
         if (portfolioId) {
-          router.push(`/snowball/add?portfolioId=${portfolioId}`);
+          router.push(`/add?portfolioId=${portfolioId}`);
         } else {
-          router.push('/snowball/add');
+          router.push('/add');
         }
       }
     }
@@ -88,7 +88,7 @@ function BottomFixedButton({
     if (buttonName === '수정 완료') {
       try {
         await updatePort();
-        router.push('/snowball/edit');
+        router.push('/edit');
       } catch (err) {
         alert(`error 발생 : ${err}`);
       }

@@ -10,7 +10,7 @@ export default function BadgeGroup() {
     <FlexBox gap="6px">
       <Link
         href={{
-          pathname: '/fires/edit',
+          pathname: '/edit',
           query: {
             portfolioId: myPortFolioData?.portfolioId,
           },
@@ -25,7 +25,7 @@ export default function BadgeGroup() {
       </Link>
       <Link
         href={{
-          pathname: '/fires/search',
+          pathname: '/search',
           query: {
             portfolioId: myPortFolioData?.portfolioId,
           },

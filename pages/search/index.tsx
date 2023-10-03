@@ -58,6 +58,13 @@ function Search() {
       setIsSearchActive(true);
     }
   };
+
+  /** 다음 쪽까지 렌더링 */
+  const [nextPageIndex, setNextPageIndex] = useState(2);
+  const incrementPageIndex = () => {
+    setNextPageIndex((prev) => prev + 1);
+  };
+
   return (
     <SearchLayout
       hasButton={isSearchActive}
@@ -113,7 +120,11 @@ function Search() {
           ) : (
             <>
               <section>
-                <SearchedResults value={value} />
+                <SearchedResults
+                  value={value}
+                  nextPageIndex={nextPageIndex}
+                  incrementPageIndex={incrementPageIndex}
+                />
               </section>
             </>
           )}

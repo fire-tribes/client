@@ -6,7 +6,6 @@ import {
 } from '../../hook/useGetSelectedStocks/state';
 import ShowAddedStocks from '../ShowAddedStocks';
 import { useGetSearchedResults } from '@/hook/useGetSearchedResults';
-import { basic } from '@/styles/palette';
 import { useAtom } from 'jotai';
 import { useDebounce } from 'use-debounce';
 import { CircularProgress } from '@mui/material';
@@ -32,23 +31,30 @@ interface Stock {
 interface SearchResultsProps {
   /** 입력한 검색어 */
   value: string;
+  /** 다음 쪽 값 */
+  nextPageIndex: number;
+  /** 다음 쪽 increment */
+  incrementPageIndex: () => void;
 }
 
-function SearchedResults({ value }: SearchResultsProps) {
+function SearchedResults({
+  value,
+  nextPageIndex = 1,
+  incrementPageIndex,
+}: SearchResultsProps) {
   /** value를 debounce 처리하여, 일정 시간동안 값이 바뀌면 서버에 get 요청 */
   const [debouncedValue] = useDebounce(value, 1000);
 
   /** 검색 결과값을 배열로 가져오는 함수 */
-  const { getSearchedResultsData, isLoading } =
-    useGetSearchedResults(debouncedValue);
+  const { getSearchedResultsData, isLoading, refetchSearchedResultsData } =
+    useGetSearchedResults(debouncedValue, nextPageIndex);
   const searchedResultsArray = getSearchedResultsData?.data;
 
-  const containerStyle: React.CSSProperties = {
-    height: 'calc(100vh - 72px - 53px - 68.5px)',
-    padding: '16px',
-    textAlign: 'center',
-    lineHeight: 'calc(100vh - 72px - 53px - 68.5px)',
-    color: `${basic.gray6}`,
+  const onClickLoadMoreButton = () => {
+    incrementPageIndex();
+    console.log('nextPageIndex:', nextPageIndex);
+    refetchSearchedResultsData();
+    console.log('refetchSearchedResultsData: ', refetchSearchedResultsData());
   };
 
   /** Jotai의 selectedStocksAtom을 이용해서 선택된 주식을 관리 */
@@ -113,7 +119,9 @@ function SearchedResults({ value }: SearchResultsProps) {
       />
       <h6>검색 결과</h6>
       {debouncedValue === '' ? (
-        <div style={containerStyle}>검색어 결과가 없습니다.</div>
+        <SearchedResultsUI.ResearchNothingContainer>
+          검색어 결과가 없습니다.
+        </SearchedResultsUI.ResearchNothingContainer>
       ) : isLoading ? (
         <SearchedResultsUI.LoadingContainer>
           <CircularProgress />
@@ -138,9 +146,18 @@ function SearchedResults({ value }: SearchResultsProps) {
               );
             })}
           {searchedResultsArray === undefined && (
-            <div style={containerStyle}>검색어 결과가 없습니다.</div>
+            <SearchedResultsUI.ResearchNothingContainer>
+              검색어 결과가 없습니다.
+            </SearchedResultsUI.ResearchNothingContainer>
           )}
-          <div style={{ height: 'calc(92px - 56px)' }}></div>
+          {isLoading ? (
+            <CircularProgress />
+          ) : (
+            <SearchedResultsUI.Button onClick={() => onClickLoadMoreButton()}>
+              더 보기
+            </SearchedResultsUI.Button>
+          )}
+          <div style={{ height: 'calc(92px - 40px)' }}></div>
         </div>
       )}
     </>
