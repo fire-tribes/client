@@ -8,6 +8,7 @@ import { useAnnualDividend } from '@/hook/useAnnualDividend';
 import NormalNotifyModal from '@/components/common/Modal/NormalNotifyModal';
 import Modal from '@/components/common/Modal';
 import { useEmotionTheme } from '@/hook/useThemeHooks';
+import { useControlTax } from '@/hook/useControlTax';
 
 export default function ChartSection() {
   const { annualDividendExchangeWithSimpleData } = useAnnualDividend();
@@ -28,13 +29,21 @@ export default function ChartSection() {
   };
   const { title, subTitle, isShowChart } = chartSectionTexts;
 
+  const { taxData, toggleTax } = useControlTax();
+  console.log(taxData);
+
   return (
     <Section textAlign="left" paddingTop="11px">
       <FlexBox justifyContent="space-between" paddingBottom="16px">
         <DividendDate />
         <FlexBox justifyContent="space-between">
           <FlexBox gap="14px">
-            <CommonCheckButton fontSize="body3" isWait={false}>
+            <CommonCheckButton
+              fontSize="body3"
+              isWait={false}
+              onClick={toggleTax}
+              checked={taxData.isTax ?? false}
+            >
               소득세
             </CommonCheckButton>
             <NormalNotifyModal
@@ -56,7 +65,7 @@ export default function ChartSection() {
                 </Modal.Button>
               }
             >
-              <CommonCheckButton fontSize="body3" isWait>
+              <CommonCheckButton fontSize="body3" isWait checked={false}>
                 4대보험
               </CommonCheckButton>
             </NormalNotifyModal>
