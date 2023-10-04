@@ -1,10 +1,10 @@
 import { SearchedResultsUI } from './style';
-import SearchedResult from '../SearchedResult';
+import SearchedResult from '@/components/SearchStockGroup/SearchedResult';
+import ShowAddedStocks from '@/components/SearchStockGroup/ShowAddedStocks';
 import {
   SelectedStocksAtomProps,
   selectedStocksAtom,
-} from '../../hook/useGetSelectedStocks/state';
-import ShowAddedStocks from '../ShowAddedStocks';
+} from '@/hook/useGetSelectedStocks/state';
 import { useGetSearchedResults } from '@/hook/useGetSearchedResults';
 import { useAtom } from 'jotai';
 import { useDebounce } from 'use-debounce';
@@ -119,9 +119,9 @@ function SearchedResults({
       />
       <h6>검색 결과</h6>
       {debouncedValue === '' ? (
-        <SearchedResultsUI.ResearchNothingContainer>
+        <SearchedResultsUI.SearchNothingContainer>
           검색어 결과가 없습니다.
-        </SearchedResultsUI.ResearchNothingContainer>
+        </SearchedResultsUI.SearchNothingContainer>
       ) : isLoading ? (
         <SearchedResultsUI.LoadingContainer>
           <CircularProgress />
@@ -146,9 +146,9 @@ function SearchedResults({
               );
             })}
           {searchedResultsArray === undefined && (
-            <SearchedResultsUI.ResearchNothingContainer>
+            <SearchedResultsUI.SearchNothingContainer>
               검색어 결과가 없습니다.
-            </SearchedResultsUI.ResearchNothingContainer>
+            </SearchedResultsUI.SearchNothingContainer>
           )}
           {isLoading ? (
             <CircularProgress />

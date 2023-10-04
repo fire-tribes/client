@@ -1,7 +1,7 @@
 import { RecentSearchWordUI } from './style';
-import DateDisplay from '../common/DateDisplay';
 import searchSvg from '../../public/icon/search.svg';
 import cancelDotSvg from '../../public/icon/closeDot.svg';
+import DateDisplay from '@/components/common/DateDisplay';
 import { RecentSearchWordsAtomProps } from '@/hook/useRecentSearchWords/state';
 import Image from 'next/image';
 

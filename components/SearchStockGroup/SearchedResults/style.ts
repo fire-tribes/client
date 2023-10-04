@@ -15,7 +15,7 @@ const Button = styled.button`
   text-align: center;
 `;
 
-const ResearchNothingContainer = styled.div`
+const SearchNothingContainer = styled.div`
   height: calc(100vh - 72px - 53px - 68.5px);
   padding: 16px;
   textalign: center;
@@ -25,6 +25,6 @@ const ResearchNothingContainer = styled.div`
 
 export const SearchedResultsUI = {
   LoadingContainer,
-  ResearchNothingContainer,
+  SearchNothingContainer,
   Button,
 } as const;
