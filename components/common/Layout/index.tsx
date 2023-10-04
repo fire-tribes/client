@@ -32,7 +32,6 @@ const StyledContent = styled.section<{ showBottomNavigator: boolean }>`
 
   padding: ${({ showBottomNavigator }) =>
     showBottomNavigator ? '16px 16px 56px 16px' : '16px'};
-  /* padding: 16px 16px 56px 16px; */
 `;
 
 export default Layout;
