@@ -1,11 +1,21 @@
 export const queryKeys = {
   exchangeRate: ['exchangeRate'],
   exampleItemGet: (title: string) => ['exampleItemGet', title],
-  myPortFolio: (
+  myPortFolio: () =>
+    // isSimple?: boolean | null,
+    // exchangeRate?: number,
+    // isTax?: boolean | null,
+    [
+      'myPortFolio',
+      // isSimple,
+      // isTax,
+      // exchangeRate
+    ],
+  changedMyPortfolio: (
     isSimple?: boolean | null,
     exchangeRate?: number,
     isTax?: boolean | null,
-  ) => ['myPortFolio', isSimple, isTax, exchangeRate],
+  ) => ['changedMyPortfolio', isSimple, isTax, exchangeRate],
   annualDividend: (
     isSimple?: boolean | null,
     exchangeRate?: number,

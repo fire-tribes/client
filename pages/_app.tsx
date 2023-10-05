@@ -4,7 +4,7 @@ import { fontFacePretendard } from '@/styles/fonts';
 import { ACCESS_TOKEN } from '@/core/api/token';
 
 import { ResponseSuccess } from '@/@types/models/response';
-// import { queryKeys } from '@/hook/useQueryHook/queryKeys';
+import { queryKeys } from '@/hook/useQueryHook/queryKeys';
 import { Global, ThemeProvider as EmotionThemeProvider } from '@emotion/react';
 import {
   QueryCache,
@@ -26,10 +26,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(
     new QueryClient({
       queryCache: new QueryCache({
-        onSuccess: (
-          data,
-          // query
-        ) => {
+        onSuccess: (data, query) => {
           const response = data as AxiosResponse<ResponseSuccess<unknown>>;
           const errorCode = response.data.errorCode;
 
@@ -40,16 +37,16 @@ function MyApp({ Component, pageProps }: AppProps) {
             window.location.href = '/login';
           }
 
-          // const { queryKey } = query.options;
-          // if (
-          //   JSON.stringify(queryKey) === JSON.stringify(queryKeys.myPortFolio())
-          // ) {
-          //   queryClient.invalidateQueries({
-          //     predicate: (query) => {
-          //       return query.queryKey[0] === queryKeys.changedMyPortfolio()[0];
-          //     },
-          //   });
-          // }
+          const { queryKey } = query.options;
+          if (
+            JSON.stringify(queryKey) === JSON.stringify(queryKeys.myPortFolio())
+          ) {
+            queryClient.invalidateQueries({
+              predicate: (query) => {
+                return query.queryKey[0] === queryKeys.changedMyPortfolio()[0];
+              },
+            });
+          }
         },
         onError: (error) => {
           if (axios.isAxiosError(error)) {
