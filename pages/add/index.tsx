@@ -1,4 +1,4 @@
-import FeedStockInfos from '@/components/FeedStockInfos';
+import FeedStockInfos from '@/components/FeedStockInfoGroup/FeedStockInfos';
 import SearchLayout from '@/components/common/Layout/SearchLayout';
 import { selectedStocksAtom } from '@/hook/useGetSelectedStocks/state';
 import Backward from '@/components/common/Backward';

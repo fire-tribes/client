@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 export default function BadgeGroup() {
   const { myPortFolioData } = useMyPortFolio();
+  console.log('BadgeGroup');
   return (
     <FlexBox gap="6px">
       <Link
@@ -15,6 +16,7 @@ export default function BadgeGroup() {
             portfolioId: myPortFolioData?.portfolioId,
           },
         }}
+        prefetch={false}
       >
         <CommonBadge
           variant="contained"
@@ -30,6 +32,7 @@ export default function BadgeGroup() {
             portfolioId: myPortFolioData?.portfolioId,
           },
         }}
+        prefetch={false}
       >
         <CommonBadge
           variant="contained"

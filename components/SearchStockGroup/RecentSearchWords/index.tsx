@@ -1,6 +1,6 @@
 import { RecentSearchWordsUI } from './style';
-import AlertModal from '../common/Modal/AlertModal';
-import RecentSearchWord from '../RecentSearchWord';
+import AlertModal from '@/components/common/Modal/AlertModal';
+import RecentSearchWord from '@/components/SearchStockGroup/RecentSearchWord';
 import { useGetRecentSearchWords } from '@/hook/useGetRecentSearchWords';
 import { useDeleteRecentSearchWord } from '@/hook/useDeleteRecentSearchWord';
 import { useRemoveRecentSearchWordsAll } from '@/hook/useRemoveRecentSearchWordsAll';
@@ -25,19 +25,6 @@ function RecentSearchWords({
   const { getRecentSearchWordsData, isLoading } = useGetRecentSearchWords();
   const recentSearchWordsDataArray = getRecentSearchWordsData?.data;
   console.log('recentSearchWordsDataArray: ', recentSearchWordsDataArray);
-
-  // const [recentSearchWords, setRecentSearchWords] = useState(
-  //   recentSearchWordsDataArray,
-  // );
-  // console.log('recentSearchWords: ', recentSearchWords);
-
-  // useEffect(() => {
-  //   const refetchRecentSearchWords = async () => {
-  //     const array = await getRecentSearchWordsData?.data;
-  //     setRecentSearchWords(array);
-  //   };
-  //   refetchRecentSearchWords();
-  // }, []);
 
   /** 특정 최근 검색어 Delete  */
   const { deleteRecentSearchWordData } = useDeleteRecentSearchWord();

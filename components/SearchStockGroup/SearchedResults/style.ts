@@ -15,16 +15,18 @@ const Button = styled.button`
   text-align: center;
 `;
 
-const ResearchNothingContainer = styled.div`
+const SearchNothingContainer = styled.div`
   height: calc(100vh - 72px - 53px - 68.5px);
   padding: 16px;
-  textalign: center;
-  lineheight: calc(100vh - 72px - 53px - 68.5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   color: ${basic.gray6};
 `;
 
 export const SearchedResultsUI = {
   LoadingContainer,
-  ResearchNothingContainer,
+  SearchNothingContainer,
   Button,
 } as const;

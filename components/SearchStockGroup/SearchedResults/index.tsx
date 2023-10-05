@@ -1,15 +1,16 @@
 import { SearchedResultsUI } from './style';
-import SearchedResult from '../SearchedResult';
+import SearchedResult from '@/components/SearchStockGroup/SearchedResult';
+import ShowAddedStocks from '@/components/SearchStockGroup/ShowAddedStocks';
 import {
   SelectedStocksAtomProps,
   selectedStocksAtom,
-} from '../../hook/useGetSelectedStocks/state';
-import ShowAddedStocks from '../ShowAddedStocks';
+} from '@/hook/useGetSelectedStocks/state';
 import { useGetSearchedResults } from '@/hook/useGetSearchedResults';
+import { searchedResultsAtom } from '@/hook/useGetSearchedResults/state';
 import { useAtom } from 'jotai';
 import { useDebounce } from 'use-debounce';
 import { CircularProgress } from '@mui/material';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 interface Stock {
   assetId: number;
@@ -31,30 +32,49 @@ interface Stock {
 interface SearchResultsProps {
   /** 입력한 검색어 */
   value: string;
-  /** 다음 쪽 값 */
-  nextPageIndex: number;
-  /** 다음 쪽 increment */
-  incrementPageIndex: () => void;
 }
 
-function SearchedResults({
-  value,
-  nextPageIndex = 1,
-  incrementPageIndex,
-}: SearchResultsProps) {
+function SearchedResults({ value }: SearchResultsProps) {
   /** value를 debounce 처리하여, 일정 시간동안 값이 바뀌면 서버에 get 요청 */
-  const [debouncedValue] = useDebounce(value, 1000);
+  const [debouncedValue] = useDebounce(value, 0.5 * 1000);
 
+  const [nextPageIndex, setNextPageIndex] = useState(1);
   /** 검색 결과값을 배열로 가져오는 함수 */
-  const { getSearchedResultsData, isLoading, refetchSearchedResultsData } =
-    useGetSearchedResults(debouncedValue, nextPageIndex);
+  const {
+    getSearchedResultsData,
+    isLoading,
+    hasNextPage,
+    invalidateSearchedResultsData,
+  } = useGetSearchedResults(debouncedValue, nextPageIndex);
   const searchedResultsArray = getSearchedResultsData?.data;
 
-  const onClickLoadMoreButton = () => {
-    incrementPageIndex();
-    console.log('nextPageIndex:', nextPageIndex);
-    refetchSearchedResultsData();
-    console.log('refetchSearchedResultsData: ', refetchSearchedResultsData());
+  const [searchedResults, setSearchedResults] = useAtom(searchedResultsAtom);
+
+  useEffect(() => {
+    if (searchedResultsArray !== undefined) {
+      if (nextPageIndex === 1) {
+        setSearchedResults(searchedResultsArray);
+      } else {
+        setSearchedResults([...searchedResults, ...searchedResultsArray]);
+      }
+    }
+  }, [nextPageIndex, searchedResultsArray, setSearchedResults]);
+
+  useEffect(() => {
+    setNextPageIndex(1);
+    setSearchedResults([]);
+    invalidateSearchedResultsData(debouncedValue, nextPageIndex);
+
+    const newSearchedResultsArray = getSearchedResultsData?.data;
+    if (newSearchedResultsArray !== undefined) {
+      setSearchedResults(newSearchedResultsArray);
+    }
+  }, [debouncedValue]);
+
+  const onClickLoadMoreButton = async () => {
+    if (!hasNextPage) return;
+
+    setNextPageIndex(nextPageIndex + 1);
   };
 
   /** Jotai의 selectedStocksAtom을 이용해서 선택된 주식을 관리 */
@@ -119,17 +139,17 @@ function SearchedResults({
       />
       <h6>검색 결과</h6>
       {debouncedValue === '' ? (
-        <SearchedResultsUI.ResearchNothingContainer>
+        <SearchedResultsUI.SearchNothingContainer>
           검색어 결과가 없습니다.
-        </SearchedResultsUI.ResearchNothingContainer>
+        </SearchedResultsUI.SearchNothingContainer>
       ) : isLoading ? (
         <SearchedResultsUI.LoadingContainer>
           <CircularProgress />
         </SearchedResultsUI.LoadingContainer>
       ) : (
         <div>
-          {searchedResultsArray !== undefined &&
-            searchedResultsArray.map((stock) => {
+          {searchedResults !== undefined &&
+            searchedResults.map((stock) => {
               return (
                 <SearchedResult
                   key={stock.assetId}
@@ -145,17 +165,19 @@ function SearchedResults({
                 />
               );
             })}
-          {searchedResultsArray === undefined && (
-            <SearchedResultsUI.ResearchNothingContainer>
+          {searchedResults === undefined && (
+            <SearchedResultsUI.SearchNothingContainer>
               검색어 결과가 없습니다.
-            </SearchedResultsUI.ResearchNothingContainer>
+            </SearchedResultsUI.SearchNothingContainer>
           )}
           {isLoading ? (
             <CircularProgress />
-          ) : (
-            <SearchedResultsUI.Button onClick={() => onClickLoadMoreButton()}>
+          ) : hasNextPage ? (
+            <SearchedResultsUI.Button onClick={onClickLoadMoreButton}>
               더 보기
             </SearchedResultsUI.Button>
+          ) : (
+            <></>
           )}
           <div style={{ height: 'calc(92px - 40px)' }}></div>
         </div>

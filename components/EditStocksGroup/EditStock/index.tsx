@@ -1,7 +1,7 @@
 import { EditStockUI } from './style';
 import testCircleSvg from '@/public/icon/testCircle.svg';
-// import downVectorSvg from '@/public/icon/downVector.svg';
-// import upVectorSvg from '@/public/icon/upVector.svg';
+// TODO: import downVectorSvg from '@/public/icon/downVector.svg';
+// TODO: import upVectorSvg from '@/public/icon/upVector.svg';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -38,14 +38,14 @@ function EditStock({ stock, handleEditButton }: EditStockProps) {
           <div>
             <div>{stock.tickerCode}</div>
             <button onClick={handleEditButton}>
-              <Link href={`${stock.assetId}/${stock.portfolioAssetId}`}>
+              <Link href={`stock/${stock.assetId}/${stock.portfolioAssetId}`}>
                 수정하기
               </Link>
             </button>
           </div>
         </EditStockUI.StockContainer>
         <EditStockUI.ButtonContainer>
-          {/* <button>
+          {/* TODO: <button>
             <Image src={downVectorSvg} alt="downVector Svg" />
           </button>
           <button>

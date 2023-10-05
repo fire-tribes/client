@@ -1,7 +1,7 @@
 // import { FeedStockInfosUI } from './style';
 import FeedStockInfo from '../FeedStockInfo';
-import CommonButton from '../common/Button/CommonButton';
-import NothingStocks from '../NothingStocks';
+import NothingStocks from '@/components/common/NothingStocks';
+import CommonButton from '@/components/common/Button/CommonButton';
 import {
   SelectedStocksAtomProps,
   selectedStocksAtom,

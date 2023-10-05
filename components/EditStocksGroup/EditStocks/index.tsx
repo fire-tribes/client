@@ -1,6 +1,6 @@
 import { EditStocksUI } from './style';
-import EditStock from '../EditStock';
-import NothingStocks from '../NothingStocks';
+import NothingStocks from '@/components/common/NothingStocks';
+import EditStock from '@/components/EditStocksGroup/EditStock';
 import { useMyPortFolio } from '@/hook/useMyPortFolio';
 import { assetDetailsAtom } from '@/hook/useGetAssetDetails/state';
 import { useAtom } from 'jotai';

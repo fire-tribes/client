@@ -21,6 +21,7 @@ export const useAddStocksAtPortfolio = () => {
 
   const addStocksAtPortfolioData = async (formData: feededStockInfos) => {
     await mutateAsync(formData);
+    console.log('mutate phase');
     router.push('/');
   };
 

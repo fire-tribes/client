@@ -76,6 +76,7 @@ function BottomFixedButton({
       }
     }
     if (buttonName === '추가 완료') {
+      console.log('portfolioId: ', portfolioId);
       if (portfolioId) {
         madePortfolio();
       } else {

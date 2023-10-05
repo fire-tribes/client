@@ -1,5 +1,5 @@
 import { EditStockInfoUI } from './styles';
-import AlertModal from '../common/Modal/AlertModal';
+import AlertModal from '@/components/common/Modal/AlertModal';
 import testCircleSvg from '@/public/icon/testCircle.svg';
 import trashSvg from '@/public/icon/trash.svg';
 import { basic } from '@/styles/palette';

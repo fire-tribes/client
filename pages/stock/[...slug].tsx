@@ -1,6 +1,6 @@
 import Backward from '@/components/common/Backward';
 import SearchLayout from '@/components/common/Layout/SearchLayout';
-import EditStockInfo from '@/components/EditStockInfo';
+import EditStockInfo from '@/components/EditStocksGroup/EditStockInfo';
 
 const Post = () => {
   return (

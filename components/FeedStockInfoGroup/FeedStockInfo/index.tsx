@@ -1,5 +1,5 @@
 import { FeedStockInfoUI } from './style';
-import AlertModal from '../common/Modal/AlertModal';
+import AlertModal from '@/components/common/Modal/AlertModal';
 import { SelectedStocksAtomProps } from '@/hook/useGetSelectedStocks/state';
 import testCircleSvg from '@/public/icon/testCircle.svg';
 import trashSvg from '@/public/icon/trash.svg';
