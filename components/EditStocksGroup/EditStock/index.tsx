@@ -38,7 +38,7 @@ function EditStock({ stock, handleEditButton }: EditStockProps) {
           <div>
             <div>{stock.tickerCode}</div>
             <button onClick={handleEditButton}>
-              <Link href={`${stock.assetId}/${stock.portfolioAssetId}`}>
+              <Link href={`stock/${stock.assetId}/${stock.portfolioAssetId}`}>
                 수정하기
               </Link>
             </button>

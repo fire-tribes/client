@@ -18,8 +18,10 @@ const Button = styled.button`
 const SearchNothingContainer = styled.div`
   height: calc(100vh - 72px - 53px - 68.5px);
   padding: 16px;
-  textalign: center;
-  lineheight: calc(100vh - 72px - 53px - 68.5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   color: ${basic.gray6};
 `;
 

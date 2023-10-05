@@ -1,19 +1,25 @@
 import { atom } from 'jotai';
 
-export interface SelectedStocksAtomProps {
+export interface SearchedResultsAtomProps {
   assetId: number;
   tickerCode: string;
   stockCode: string;
   name: string;
-  category: {
-    countryType: 'KOR';
-    marketType: 'KRX';
-    assetCategoryType: 'STOCK';
-  };
+  countryType: 'KOR' | 'USA';
+  marketType:
+    | 'KRX'
+    | 'KRX_KOSPI'
+    | 'KRX_KOSDAQ'
+    | 'KRX_KONEX'
+    | 'NYSE'
+    | 'AMEX'
+    | 'NASDAQ'
+    | 'UNKNOWN';
+  assetCategoryType: 'STOCK' | 'ETF' | 'ETN';
 }
 
 // jotai atom 생성
-export const selectedStocksAtom = atom<SelectedStocksAtomProps[]>([]);
+export const searchedResultsAtom = atom<SearchedResultsAtomProps[]>([]);
 
 // Provider를 통해 컨텍스트 생성
 // export const StateProvider = ({ children }) => {

@@ -7,7 +7,7 @@ export const useGetSearchedResultsQuery = (
   pageIndex: number = 1,
 ) => {
   return useQuery({
-    queryKey: queryKeys.searchedResults(word),
+    queryKey: [queryKeys.searchedResults(word, pageIndex)],
     queryFn: () => assetAPI.getSearchedResults(word, pageIndex),
   });
 };
