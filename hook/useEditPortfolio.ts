@@ -18,7 +18,8 @@ export const useEditPortfolio = () => {
   // 폼으로 쓸 아톰
   const [editedAssetDetails] = useAtom(editedAssetDetailsAtom);
   // 이함수 호출하면 수정 요청 보냄 (버튼에서 쓸예정)
-  const { updatePortfolioData, isLoading } = useUpdatePortfolio();
+  const { updatePortfolioData, isLoadingUpdatePortfolioData } =
+    useUpdatePortfolio();
 
   // makeAssets
   const makeAssets = (array: AssetDetailsAtomProps[]) => {
@@ -68,7 +69,7 @@ export const useEditPortfolio = () => {
   };
 
   return {
-    isLoading,
+    isLoadingUpdatePortfolioData,
     updatePort,
   };
   // const formData = {
