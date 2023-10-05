@@ -4,6 +4,7 @@ import { fontFacePretendard } from '@/styles/fonts';
 import { ACCESS_TOKEN } from '@/core/api/token';
 
 import { ResponseSuccess } from '@/@types/models/response';
+// import { queryKeys } from '@/hook/useQueryHook/queryKeys';
 import { Global, ThemeProvider as EmotionThemeProvider } from '@emotion/react';
 import {
   QueryCache,
@@ -18,24 +19,37 @@ import {
   createTheme,
 } from '@mui/material/styles';
 import Cookies from 'universal-cookie';
-import { useRouter } from 'next/router';
 import axios, { AxiosResponse } from 'axios';
 import type { AppProps } from 'next/app';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const router = useRouter();
   const [queryClient] = useState(
     new QueryClient({
       queryCache: new QueryCache({
-        onSuccess: (data) => {
+        onSuccess: (
+          data,
+          // query
+        ) => {
           const response = data as AxiosResponse<ResponseSuccess<unknown>>;
           const errorCode = response.data.errorCode;
 
           if (errorCode === 'E01106') {
             const cookie = new Cookies();
             cookie.remove(ACCESS_TOKEN);
-            router.push('/login');
+
+            window.location.href = '/login';
           }
+
+          // const { queryKey } = query.options;
+          // if (
+          //   JSON.stringify(queryKey) === JSON.stringify(queryKeys.myPortFolio())
+          // ) {
+          //   queryClient.invalidateQueries({
+          //     predicate: (query) => {
+          //       return query.queryKey[0] === queryKeys.changedMyPortfolio()[0];
+          //     },
+          //   });
+          // }
         },
         onError: (error) => {
           if (axios.isAxiosError(error)) {
