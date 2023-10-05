@@ -28,9 +28,7 @@ export default function ChartSection() {
         : false,
   };
   const { title, subTitle, isShowChart } = chartSectionTexts;
-
   const { taxData, toggleTax } = useControlTax();
-  console.log(taxData);
 
   return (
     <Section textAlign="left" paddingTop="11px">

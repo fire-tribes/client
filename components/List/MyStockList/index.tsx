@@ -87,7 +87,7 @@ export function MyStockList() {
                     <DetailListItemText textAlign="right">
                       <CommonFont fontSize="caption" color="gray8">
                         {detail?.dividendPriceRatio > 0
-                          ? detail?.dividendPriceRatio.toFixed(7)
+                          ? detail?.dividendPriceRatio.toFixed(2)
                           : detail?.dividendPriceRatio}
                         %
                       </CommonFont>
@@ -150,7 +150,11 @@ export function MyStockList() {
                                 : 'point_blue02'
                             }
                           >
-                            ({detail?.rateOfReturn.toFixed(2) || 0}%)
+                            (
+                            {detail?.rateOfReturn && detail.rateOfReturn > 0
+                              ? `+${detail.rateOfReturn.toFixed(2)}`
+                              : detail.rateOfReturn}
+                            %)
                           </CommonFont>
                         </>
                       }

@@ -1,10 +1,11 @@
 import { AnnualDividendModel } from '@/@types/models/dividend';
 import { ResponseSuccess } from '@/@types/models/response';
-import { getShortCurrencyKR } from '@/components/Chart/utils';
 import { dividendAPI } from '@/core/api/dividend';
+
 import { useControlMode } from '@/hook/useControlMode';
 import { useControlTax } from '@/hook/useControlTax';
 import { useExchangeRate } from '@/hook/useExchangeRate';
+import { useFormatPrice } from '@/hook/useFormatPrice';
 import { queryKeys } from '@/hook/useQueryHook/queryKeys';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -13,6 +14,7 @@ export const useAnnualDividendQuery = () => {
   const { exchangeRate } = useExchangeRate();
   const { modeData } = useControlMode();
   const { taxData } = useControlTax();
+
   return useQuery({
     queryKey: queryKeys.annualDividend(),
     queryFn: dividendAPI.getAnnualDividend,
@@ -38,14 +40,7 @@ export const useAnnualDividendExchangeQuery = () => {
   const { exchangeRate } = useExchangeRate();
   const { taxData } = useControlTax();
 
-  const divideByTax = (price: number) => Math.floor(price * (85 / 100));
-  const getPriceByTax = (price: number) => {
-    if (taxData.isTax) {
-      return divideByTax(price).toLocaleString('ko-kr') + '원';
-    }
-
-    return Math.floor(price).toLocaleString('ko-kr') + '원';
-  };
+  const { divideByTax, getPrice, getPriceByTax } = useFormatPrice();
 
   const getQueryFunction = () => {
     const annualDividendFullData:
@@ -74,8 +69,8 @@ export const useAnnualDividendExchangeQuery = () => {
         annualDividend: getPriceByTax(
           annualDividendData.annualDividend * exchangeRate,
         ),
-        paidTax: getPriceByTax(annualDividendData.paidTax * exchangeRate),
-        unPaidTax: getPriceByTax(annualDividendData.unPaidTax * exchangeRate),
+        paidTax: getPrice(annualDividendData.paidTax * exchangeRate),
+        unPaidTax: getPrice(annualDividendData.unPaidTax * exchangeRate),
         thisMonthDividend: getPriceByTax(
           annualDividendData.thisMonthDividend * exchangeRate,
         ),
@@ -94,9 +89,7 @@ export const useAnnualDividendExchangeWithSimpleQuery = () => {
   const { exchangeRate } = useExchangeRate();
   const { modeData } = useControlMode();
   const { taxData } = useControlTax();
-
-  const divideByTax = (price: number) => Math.floor(price * (85 / 100));
-  const divideSimple = (price: number) => getShortCurrencyKR(Math.floor(price));
+  const { divideByTax, divideSimple, getPriceBySimple } = useFormatPrice();
 
   const getPriceByTaxWithSimple = (price: number) => {
     let newPrice: number = Math.floor(price);
@@ -139,10 +132,8 @@ export const useAnnualDividendExchangeWithSimpleQuery = () => {
         annualDividend: getPriceByTaxWithSimple(
           annualDividendData.annualDividend * exchangeRate,
         ),
-        paidTax: getPriceByTaxWithSimple(
-          annualDividendData.paidTax * exchangeRate,
-        ),
-        unPaidTax: getPriceByTaxWithSimple(
+        paidTax: getPriceBySimple(annualDividendData.paidTax * exchangeRate),
+        unPaidTax: getPriceBySimple(
           annualDividendData.unPaidTax * exchangeRate,
         ),
         thisMonthDividend: getPriceByTaxWithSimple(
