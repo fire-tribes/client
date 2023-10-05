@@ -8,6 +8,5 @@ type BadgeDetailText = {
   iconName: string;
   items: NotifyListItemProps[] | [];
 };
-const test = 'test';
 
-export { type BadgeDetailText, test };
+export { type BadgeDetailText };
