@@ -1,5 +1,6 @@
-import { AuthAPIInstance } from '@/core/api/instance';
+import APIInstance, { AuthAPIInstance } from '@/core/api/instance';
 
+import { ResponseSuccess } from '@/@types/models/response';
 import axios from 'axios';
 import type {
   CheckSignUpRequestBody,
@@ -21,6 +22,11 @@ export const SignApi = {
   },
   signIn: (body: SignInRequestBody) => {
     return AuthAPIInstance.post('login', body, {});
+  },
+  signOut: async (): Promise<ResponseSuccess<Date>> => {
+    const { data } = await APIInstance.post('user/logout');
+
+    return data;
   },
   checkSignUp: ({ email }: CheckSignUpRequestBody) => {
     return AuthAPIInstance.get(`email`, {
