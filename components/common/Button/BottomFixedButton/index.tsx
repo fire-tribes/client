@@ -58,7 +58,7 @@ function BottomFixedButton({
     addStocksAtPortfolioData(formData);
   };
 
-  const { isLoading, updatePort } = useEditPortfolio();
+  const { isLoadingUpdatePortfolioData, updatePort } = useEditPortfolio();
 
   const { updateRecentSearchWords } = useUpdateRecentSearchWords();
 
@@ -136,7 +136,7 @@ function BottomFixedButton({
             }}
             onClick={() => onMoveOtherPages(buttonName)}
           >
-            {isLoading ? <CircularProgress /> : children}
+            {isLoadingUpdatePortfolioData ? <CircularProgress /> : children}
           </StyledButton>
         </div>
       </div>
