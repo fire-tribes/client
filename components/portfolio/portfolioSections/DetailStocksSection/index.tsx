@@ -24,7 +24,10 @@ export default function DetailStocksSection() {
         }
         sx={{ paddingTop: '6px', paddingBottom: '18px' }}
       >
-        {data?.totalValueChange} {`(${data?.totalValueChangeRate || 0}%)`}
+        {data?.totalValueChange && parseInt(data?.totalValueChange) > 0
+          ? `+${data?.totalValueChange}`
+          : `-${data?.totalValueChange}`}
+        {`(${data?.totalValueChangeRate || 0}%)`}
       </Typography>
       <MyStockList />
     </Section>

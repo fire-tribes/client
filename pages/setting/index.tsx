@@ -15,17 +15,15 @@ import {
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/router';
 
 const useLogoutQuery = () => {
-  const router = useRouter();
   return useMutation(() => SignApi.signOut(), {
     onSuccess: (response) => {
       if (response.success) {
         const cookie = new Cookie();
 
         cookie.remove(ACCESS_TOKEN);
-        router.push('/login');
+        window.location.href = '/login';
       }
     },
   });

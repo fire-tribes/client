@@ -1,3 +1,4 @@
+import HeadMeta from '@/components/HeadMeta';
 import CommonBottomNavigatior from '@/components/common/Navigator';
 import styled from '@emotion/styled';
 import type { PropsWithChildren } from 'react';
@@ -8,12 +9,15 @@ interface LayoutProps extends PropsWithChildren {
 
 const Layout = ({ children, showBottomNavigator = true }: LayoutProps) => {
   return (
-    <StyledLayout>
-      <StyledContent showBottomNavigator={showBottomNavigator}>
-        {children}
-      </StyledContent>
-      {showBottomNavigator && <CommonBottomNavigatior />}
-    </StyledLayout>
+    <>
+      <HeadMeta image={''} />
+      <StyledLayout>
+        <StyledContent showBottomNavigator={showBottomNavigator}>
+          {children}
+        </StyledContent>
+        {showBottomNavigator && <CommonBottomNavigatior />}
+      </StyledLayout>
+    </>
   );
 };
 
