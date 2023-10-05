@@ -1,0 +1,27 @@
+name: 'check_build'
+
+on:
+  pull_request:
+
+jobs:
+  check_build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
+      - name: Install Package
+        run: yarn
+
+      - name: Next build check
+        run: yarn build
+
+      - name: Jest test check
+        run: yarn test
