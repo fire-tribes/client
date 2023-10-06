@@ -4,9 +4,10 @@ export const useGetRecentSearchWords = () => {
   const { data, isLoading } = useGetRecentSearchWordsQuery();
 
   const getRecentSearchWordsData = data?.data;
+  const isLoadingGetRecentSearchWordsData = isLoading;
 
   return {
     getRecentSearchWordsData,
-    isLoading,
+    isLoadingGetRecentSearchWordsData,
   };
 };

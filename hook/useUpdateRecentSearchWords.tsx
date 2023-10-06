@@ -8,11 +8,16 @@ function useUpdateRecentSearchWords() {
   const [selectedStocks] = useAtom(selectedStocksAtom);
 
   /** 다음 버튼을 눌렀을 때, 최근 검색어 데이터 값을 POST 요청하는 함수 */
-  const { addRecentSearchWordData } = useAddRecentSearchWord();
+  const { addRecentSearchWordData, isLoadingAddRecentSearchWordData } =
+    useAddRecentSearchWord();
 
   /** 최근 검색어 Get 요청 */
-  const { getRecentSearchWordsData } = useGetRecentSearchWords();
+  const { getRecentSearchWordsData, isLoadingGetRecentSearchWordsData } =
+    useGetRecentSearchWords();
   const recentSearchWordsDataArray = getRecentSearchWordsData?.data;
+
+  const isLoadingUpdateRecentSearchWords =
+    isLoadingAddRecentSearchWordData || isLoadingGetRecentSearchWordsData;
 
   const updateRecentSearchWords = () => {
     if (recentSearchWordsDataArray === undefined) {
@@ -40,6 +45,7 @@ function useUpdateRecentSearchWords() {
 
   return {
     updateRecentSearchWords,
+    isLoadingUpdateRecentSearchWords,
   };
 }
 

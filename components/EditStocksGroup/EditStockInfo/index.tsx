@@ -111,10 +111,6 @@ export default function EditStockInfo() {
     isPressButton,
   );
 
-  // useEffect(() => {
-  //   getCurrentPriceDatas;
-  // }, [isPressButton]);
-
   const handleCurrentPriceButton = (assetId: number) => {
     invalidateCurrentPrice(assetId);
     setIsPressButton(true);
@@ -132,16 +128,12 @@ export default function EditStockInfo() {
   const { deleteAssetDetailsData } = useDeleteAssetDetails();
   const { myPortFolioData } = useMyPortFolio();
   const handleRemoveSelected = () => {
-    console.log('myPortFolioData.portfolioId: ', myPortFolioData?.portfolioId);
-    console.log('object.portfolioAssetId: ', object?.portfolioAssetId);
     const requestObject = {
       portfolioId:
         myPortFolioData !== undefined ? myPortFolioData.portfolioId : 0,
       portfolioAssetId: object !== undefined ? object.portfolioAssetId : 0,
     };
-    console.log('requestObject: ', requestObject);
     deleteAssetDetailsData(requestObject);
-    router.push('/edit');
   };
 
   return (
