@@ -22,7 +22,8 @@ function RecentSearchWords({
   /** exampleDatas */
 
   /** 최근 검색어 데이터 Get */
-  const { getRecentSearchWordsData, isLoading } = useGetRecentSearchWords();
+  const { getRecentSearchWordsData, isLoadingGetRecentSearchWordsData } =
+    useGetRecentSearchWords();
   const recentSearchWordsDataArray = getRecentSearchWordsData?.data;
   console.log('recentSearchWordsDataArray: ', recentSearchWordsDataArray);
 
@@ -36,6 +37,7 @@ function RecentSearchWords({
   /** 전체 최근 검색어 초기화 Post */
   const { mutate } = useRemoveRecentSearchWordsAll();
   // console.log('isRemoveRecentSearchWordsAll: ', mutate());
+  /** 수정 */
 
   console.log('recentSearchWordsDataArray: ', recentSearchWordsDataArray);
   return (
@@ -75,7 +77,7 @@ function RecentSearchWords({
               (예: JEPI, SCHD)
             </div>
           </RecentSearchWordsUI.NothingRecentSearchWordsContainer>
-        ) : isLoading ? (
+        ) : isLoadingGetRecentSearchWordsData ? (
           <CircularProgress />
         ) : (
           recentSearchWordsDataArray.map((stock, id) => {
