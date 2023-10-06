@@ -25,8 +25,10 @@ export const useAddStocksAtPortfolio = () => {
     router.push('/');
   };
 
+  const isLoadingAddStocksAtPortfolioData = isLoading;
+
   return {
     addStocksAtPortfolioData,
-    isLoading,
+    isLoadingAddStocksAtPortfolioData,
   };
 };
