@@ -35,6 +35,8 @@ const S = {
 
     padding-top: ${({ paddingTop }) => paddingTop};
     padding-bottom: ${({ paddingBottom }) => paddingBottom};
+
+    background-color: ${({ theme }) => theme.palette.sementic.bg_white};
   `,
   SectionTitle: styled.h4<SectionTitleProps>`
     color: ${({ theme }) => theme.palette.sementic.font_section_title};

@@ -1,10 +1,11 @@
 import { DividendCalanderModel } from '@/@types/models/dividend';
 import { ResponseSuccess } from '@/@types/models/response';
-import { getShortCurrencyKR } from '@/components/Chart/utils';
+// import { getShortCurrencyKR } from '@/components/Chart/utils';
 import { dividendAPI } from '@/core/api/dividend';
 import { useControlMode } from '@/hook/useControlMode';
 import { useControlTax } from '@/hook/useControlTax';
 import { useExchangeRate } from '@/hook/useExchangeRate';
+import { useFormatPrice } from '@/hook/useFormatPrice';
 import { queryKeys } from '@/hook/useQueryHook/queryKeys';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -45,22 +46,7 @@ export const useMonthlyCalanderDividendExchangeQuery = () => {
   const { modeData } = useControlMode();
   const { taxData } = useControlTax();
 
-  const divideByTax = (price: number) => Math.floor(price * (85 / 100));
-  const divideSimple = (price: number) => getShortCurrencyKR(Math.floor(price));
-
-  const getPriceByTaxWithSimple = (price: number) => {
-    let newPrice: number = Math.floor(price);
-
-    if (taxData.isTax) {
-      newPrice = divideByTax(price);
-    }
-
-    if (modeData.isSimple) {
-      return divideSimple(newPrice) + '원';
-    }
-
-    return newPrice.toLocaleString('ko-kr') + '원';
-  };
+  const { getPriceByTaxWithSimple } = useFormatPrice();
 
   const getQueryFunction = () => {
     const monthlyCalanderDividendData:
