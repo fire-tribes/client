@@ -15,15 +15,25 @@ const S = {
     position: relative;
 
     width: 100%;
-    min-width: 320px;
-    max-width: 430px;
 
+    max-height: initial;
+    min-height: initial;
     height: 100%;
-    min-height: 667px;
-    max-height: 932px;
 
     overflow: hidden;
-    border-radius: 8px;
+    border-radius: none;
+
+    @media (min-width: 430px) {
+      min-height: 667px;
+      max-height: 932px;
+      height: 100%;
+
+      min-width: 320px;
+      max-width: 430px;
+      width: 100%;
+
+      border-radius: 8px;
+    }
   `,
   LayoutContent: styled.main`
     min-height: inherit;
