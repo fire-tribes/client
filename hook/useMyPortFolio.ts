@@ -12,8 +12,9 @@ export const useMyPortFolio = () => {
     const hasNotPortFolio = status === 'success' && !myPortFolioData;
     const hasNotAssets =
       status === 'success' && !myPortFolioData?.assetDetails?.length;
+    const error = status === 'error';
 
-    if ((hasNotPortFolio && hasNotAssets) || status === 'error') {
+    if (hasNotPortFolio || hasNotAssets || error) {
       redirectEmpty();
       return;
     }
