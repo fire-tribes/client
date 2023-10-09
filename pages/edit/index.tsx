@@ -1,6 +1,6 @@
 import Backward from '@/components/common/Backward';
 import SearchLayout from '@/components/common/Layout/SearchLayout';
-import EditStocks from '@/components/EditStocks';
+import EditStocks from '@/components/EditStocksGroup/EditStocks';
 import { useMyPortFolio } from '@/hook/useMyPortFolio';
 
 function Edit() {

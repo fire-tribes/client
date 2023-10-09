@@ -8,8 +8,10 @@ export const useAddRecentSearchWord = () => {
     return response;
   };
 
+  const isLoadingAddRecentSearchWordData = isLoading;
+
   return {
     addRecentSearchWordData,
-    isLoading,
+    isLoadingAddRecentSearchWordData,
   };
 };

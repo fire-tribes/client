@@ -1,11 +1,11 @@
-import PopluarStocks from '@/components/PopularStocks';
-import RecentSearchWords from '@/components/RecentSearchWords';
-import SearchInput from '@/components/SearchInput';
-import SearchedResults from '@/components/SearchedResults';
+import SearchedResults from '@/components/SearchStockGroup/SearchedResults';
 import SearchLayout from '@/components/common/Layout/SearchLayout';
 import { selectedStocksAtom } from '@/hook/useGetSelectedStocks/state';
 import BiggerCloseSvg from '@/public/icon/biggerClose.svg';
 import SmallerCloseSvg from '@/public/icon/smallerClose.svg';
+import SearchInput from '@/components/SearchStockGroup/SearchInput';
+import RecentSearchWords from '@/components/SearchStockGroup/RecentSearchWords';
+import PopluarStocks from '@/components/SearchStockGroup/PopularStocks';
 import { useState } from 'react';
 import Image from 'next/image';
 import { useAtom } from 'jotai';
@@ -57,12 +57,6 @@ function Search() {
       searchInput.focus();
       setIsSearchActive(true);
     }
-  };
-
-  /** 다음 쪽까지 렌더링 */
-  const [nextPageIndex, setNextPageIndex] = useState(2);
-  const incrementPageIndex = () => {
-    setNextPageIndex((prev) => prev + 1);
   };
 
   return (
@@ -120,11 +114,7 @@ function Search() {
           ) : (
             <>
               <section>
-                <SearchedResults
-                  value={value}
-                  nextPageIndex={nextPageIndex}
-                  incrementPageIndex={incrementPageIndex}
-                />
+                <SearchedResults value={value} />
               </section>
             </>
           )}

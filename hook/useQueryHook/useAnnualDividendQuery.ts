@@ -89,21 +89,8 @@ export const useAnnualDividendExchangeWithSimpleQuery = () => {
   const { exchangeRate } = useExchangeRate();
   const { modeData } = useControlMode();
   const { taxData } = useControlTax();
-  const { divideByTax, divideSimple, getPriceBySimple } = useFormatPrice();
-
-  const getPriceByTaxWithSimple = (price: number) => {
-    let newPrice: number = Math.floor(price);
-
-    if (taxData.isTax) {
-      newPrice = divideByTax(price);
-    }
-
-    if (modeData.isSimple) {
-      return divideSimple(newPrice) + '원';
-    }
-
-    return newPrice.toLocaleString('ko-kr') + '원';
-  };
+  const { divideByTax, getPriceBySimple, getPriceByTaxWithSimple } =
+    useFormatPrice();
 
   const getQueryFunction = () => {
     const annualDividendFullData:

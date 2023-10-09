@@ -25,9 +25,15 @@ function BottomFixedButton({
   const { portfolioId } = router.query as { portfolioId?: string };
 
   /** 포트폴리오 생성 POST 요청 useFeatureHook */
-  const { makePortfolioData } = useMakePortfolio();
+  const {
+    makePortfolioData,
+    // isLoadingMakePortfolioData
+  } = useMakePortfolio();
   /** 포트폴리오 자산 추가 POST 요청 useFeatureHook */
-  const { addStocksAtPortfolioData } = useAddStocksAtPortfolio();
+  const {
+    addStocksAtPortfolioData,
+    // isLoadingAddStocksAtPortfolioData
+  } = useAddStocksAtPortfolio();
   /** POST 요청에 보낼 Assets 만들기 useMakeAssets */
   const { makeAssets } = useMakeAssets();
   const [selectedStocks] = useAtom(selectedStocksAtom);
@@ -58,9 +64,12 @@ function BottomFixedButton({
     addStocksAtPortfolioData(formData);
   };
 
-  const { isLoading, updatePort } = useEditPortfolio();
+  const { isLoadingUpdatePortfolioData, updatePort } = useEditPortfolio();
 
-  const { updateRecentSearchWords } = useUpdateRecentSearchWords();
+  const {
+    updateRecentSearchWords,
+    //  isLoadingUpdateRecentSearchWords
+  } = useUpdateRecentSearchWords();
 
   /** 다른 페이지로 이동하는 함수 */
   const onMoveOtherPages = async (buttonName: string) => {
@@ -76,6 +85,7 @@ function BottomFixedButton({
       }
     }
     if (buttonName === '추가 완료') {
+      console.log('portfolioId: ', portfolioId);
       if (portfolioId) {
         madePortfolio();
       } else {
@@ -96,6 +106,11 @@ function BottomFixedButton({
   };
   // console.log('isLoading: ', isLoading);
 
+  // const isLoading =
+  // isLoadingMakePortfolioData ||
+  // isLoadingAddStocksAtPortfolioData ||
+  // isLoadingUpdateRecentSearchWords ||
+  // isLoadingUpdatePortfolioData;
   return (
     <div>
       <span
@@ -135,7 +150,7 @@ function BottomFixedButton({
             }}
             onClick={() => onMoveOtherPages(buttonName)}
           >
-            {isLoading ? <CircularProgress /> : children}
+            {isLoadingUpdatePortfolioData ? <CircularProgress /> : children}
           </StyledButton>
         </div>
       </div>

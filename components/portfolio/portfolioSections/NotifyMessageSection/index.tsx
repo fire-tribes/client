@@ -11,7 +11,12 @@ export default function NotifyMessageSection() {
       <CommonFont color="gray6" fontWeight="regular" fontSize="caption">
         {NOTIFY_MESSAGE}
         <div>
-          <CommonFont color="gray6" fontWeight="regular" fontSize="caption">
+          <CommonFont
+            color="gray6"
+            fontWeight="regular"
+            fontSize="caption"
+            component="p"
+          >
             {CRITICAL_MESSAGE}
           </CommonFont>
         </div>

@@ -22,8 +22,10 @@ export const useUpdatePortfolio = () => {
     return response;
   };
 
+  const isLoadingUpdatePortfolioData = isLoading;
+
   return {
     updatePortfolioData,
-    isLoading,
+    isLoadingUpdatePortfolioData,
   };
 };

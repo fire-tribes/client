@@ -1,4 +1,4 @@
-import BottomFixedButton from '../../Button/BottomFixedButton';
+import BottomFixedButton from '@/components/common/Button/BottomFixedButton';
 import styled from '@emotion/styled';
 import type { ReactNode } from 'react';
 
