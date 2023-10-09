@@ -29,8 +29,6 @@ export const kakaoAPI = {
         params: {
           grant_type: 'authorization_code',
           client_id: process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY,
-          redirect_uri:
-            process.env.NEXT_PUBLIC_KAKAO_REDIRECT_FRONT_SERVER_URI_TEST,
           code: code,
         },
       },
