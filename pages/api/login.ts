@@ -32,6 +32,7 @@ export default async function handler(
     const { access_token } = accessResponse.data;
     if (!access_token) {
       throwUndefinedError('access_token');
+      return;
     }
 
     /** get User Data By KaKao */
@@ -39,6 +40,7 @@ export default async function handler(
     const { kakao_account } = userData.data;
     if (!userData.data.kakao_account.email) {
       throwUndefinedError('user kakao email');
+      return;
     }
 
     email = kakao_account.email;

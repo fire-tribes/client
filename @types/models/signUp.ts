@@ -15,16 +15,14 @@ export type CheckSignUpRequestBody = {
 };
 
 export type SignResponseModel = {
-  data: {
-    login: {
-      userType: 'ASSOCIATE';
-      token: {
-        grantType: string;
-        accessToken: string;
-        refreshToken: string;
-        accessTokenExpiresIn: Date;
-        refreshTokenExpiresIn: Date;
-      };
+  login: {
+    userType: 'ASSOCIATE';
+    token: {
+      grantType: string;
+      accessToken: string;
+      refreshToken: string;
+      accessTokenExpiresIn: Date;
+      refreshTokenExpiresIn: Date;
     };
   };
 };

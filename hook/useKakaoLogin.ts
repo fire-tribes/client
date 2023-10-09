@@ -8,6 +8,7 @@ export const useKakaoLogin = () => {
   const router = useRouter();
   const { code } = router.query as { code?: string };
   const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (code) return;
@@ -22,6 +23,8 @@ export const useKakaoLogin = () => {
 
   useEffect(() => {
     if (code && code.length > 0) {
+      setIsLoading(true);
+
       start(code)
         .then((response) => {
           const accessToken = response?.data.data.login.token.accessToken;
@@ -33,10 +36,19 @@ export const useKakaoLogin = () => {
             cookie.set('accessToken', accessToken, {
               expires: new Date(accessTokenExpiresIn),
             });
+
             router.push('/');
+            return;
           }
+
+          setIsLoading(false);
+          setIsError(true);
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          console.error(err);
+          setIsLoading(false);
+          setIsError(true);
+        });
     }
   }, [code]);
 
@@ -78,10 +90,15 @@ export const useKakaoLogin = () => {
     if (!code || (code && isError)) return;
 
     try {
-      const resposne = await SignApi.start(code);
-      return resposne;
+      const response = await SignApi.start(code);
+
+      if (!response.data.success) {
+        throw new Error();
+      }
+
+      return response;
     } catch (err) {
-      setIsError(true);
+      throw Error(JSON.stringify(err));
     }
   };
 
@@ -89,6 +106,8 @@ export const useKakaoLogin = () => {
     init,
     open,
     start,
+    isLoading,
+    setIsLoading,
     isError,
     setIsError,
   };
