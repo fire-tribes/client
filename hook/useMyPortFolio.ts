@@ -12,7 +12,7 @@ export const useMyPortFolio = () => {
     const hasNotPortFolio = status === 'success' && !myPortFolioData;
     const hasNotAssets =
       status === 'success' && !myPortFolioData?.assetDetails?.length;
-    const isError = status === 'error' || !data?.data.success;
+    const isError = status === 'error' || data?.data.success === false;
 
     if (isError) {
       router.push('500');
