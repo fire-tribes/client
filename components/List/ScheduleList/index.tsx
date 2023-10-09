@@ -13,26 +13,6 @@ import {
 export function ScheduleList() {
   const { data } = useMonthlyCalanderDividendExchangeQuery();
 
-  // const { data } = useMonthlyCalanderDividendQuery();
-  // const mockData: DividendCalanderModel[] = [
-  //   {
-  //     tickerCode: 'JEPI',
-  //     stockCode: '',
-  //     expectedPayDate: '2022-09-07',
-  //     exDividendDate: '2022-09-01',
-  //     expectedDividends: 7.27,
-  //     currencyType: 'USD',
-  //   },
-  //   {
-  //     tickerCode: 'JEPI',
-  //     stockCode: '',
-  //     expectedPayDate: '2022-09-07',
-  //     exDividendDate: '2022-09-01',
-  //     expectedDividends: 7.27,
-  //     currencyType: 'USD',
-  //   },
-  // ];
-
   if (data?.success === true && !data?.data.length) {
     return (
       <CommonFont
@@ -71,7 +51,7 @@ export function ScheduleList() {
             expectedDividends,
             exDividendDate,
           }) => (
-            <>
+            <div key={tickerCode || stockCode}>
               <ListItem disablePadding sx={{ gap: '9px' }}>
                 <ListItemText
                   secondary={`${new Date(expectedPayDate).getDate()}일`}
@@ -108,7 +88,7 @@ export function ScheduleList() {
                   sx={{ textAlign: 'right' }}
                 />
               </ListItem>
-            </>
+            </div>
           ),
         )}
       </List>
