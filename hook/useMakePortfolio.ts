@@ -10,8 +10,10 @@ export const useMakePortfolio = () => {
     return response.data.data;
   };
 
+  const isLoadingMakePortfolioData = isLoading;
+
   return {
     makePortfolioData,
-    isLoading,
+    isLoadingMakePortfolioData,
   };
 };

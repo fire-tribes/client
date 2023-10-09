@@ -38,11 +38,10 @@ export const userAPI = {
     portfolioId: number;
     portfolioAssetId: number;
   }) => {
-    return APIInstance.post<ResponseSuccess<DeleteAssetDetail[]>>(
+    return APIInstance.delete<ResponseSuccess<DeleteAssetDetail[]>>(
       `portfolio/asset/delete`,
       {
-        portfolioId: formData.portfolioId,
-        portfolioAssetId: formData.portfolioAssetId,
+        data: formData,
       },
     );
   },
