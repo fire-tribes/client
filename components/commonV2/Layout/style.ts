@@ -7,9 +7,12 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* height: 100vh; */
 
     height: ${({ vh }) => `calc(${vh}px * 100)`};
+
+    @media (min-width: 430px) {
+      height: 100vh;
+    }
 
     background-color: ${({ theme }) => theme.palette.basic.gray8};
   `,
