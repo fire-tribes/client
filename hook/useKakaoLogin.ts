@@ -25,17 +25,20 @@ export const useKakaoLogin = () => {
       start(code)
         .then((response) => {
           const accessToken = response?.data.data.login.token.accessToken;
-          if (accessToken) {
+          const accessTokenExpiresIn =
+            response?.data.data.login.token.accessTokenExpiresIn;
+
+          if (accessToken && accessTokenExpiresIn) {
             const cookie = new Cookie();
-            cookie.set('accessToken', accessToken);
+            cookie.set('accessToken', accessToken, {
+              expires: new Date(accessTokenExpiresIn),
+            });
             router.push('/');
           }
         })
         .catch((err) => console.error(err));
     }
   }, [code]);
-
-  console.log('useKakao');
 
   const init = () => {
     if (window.Kakao?.isInitialized()) return;
