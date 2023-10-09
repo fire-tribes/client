@@ -6,8 +6,10 @@ import { Snackbar } from '@mui/material';
 import Image from 'next/image';
 
 export default function KakaoLoginButtonV2() {
-  const { open, isError, setIsError } = useKakaoLogin();
+  const { open, isLoading, setIsLoading, isError, setIsError } =
+    useKakaoLogin();
 
+  console.log(isLoading, isError);
   return (
     <>
       <KakaoSDK />
@@ -17,11 +19,11 @@ export default function KakaoLoginButtonV2() {
           카카오톡 로그인
         </CommonFont>
       </S.KakaoLoginButtonContainer>
-      {isError && (
+      {isLoading && (
         <Snackbar
-          open={isError}
-          message={'로그인 오류가 발생했습니다. 다시 시도해 주세요.'}
-          autoHideDuration={6000}
+          open={isLoading}
+          message={'로그인 중입니다.'}
+          autoHideDuration={3000}
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'center',
@@ -31,11 +33,37 @@ export default function KakaoLoginButtonV2() {
               justifyContent: 'center',
             },
           }}
-          onClose={() => setIsError(false)}
+          onClose={() => {
+            setIsError(false);
+            setIsLoading(false);
+          }}
           sx={{
             bottom: '72px',
           }}
-        ></Snackbar>
+        />
+      )}
+      {isError && (
+        <Snackbar
+          open={isError}
+          message={'로그인 오류가 발생했습니다. 다시 시도해 주세요.'}
+          autoHideDuration={3000}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          ContentProps={{
+            sx: {
+              justifyContent: 'center',
+            },
+          }}
+          onClose={() => {
+            setIsError(false);
+            setIsLoading(false);
+          }}
+          sx={{
+            bottom: '72px',
+          }}
+        />
       )}
     </>
   );

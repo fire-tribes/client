@@ -38,31 +38,27 @@ export default function SettingPage() {
       <StyledRelative>
         <StyledHeader>
           <StyledTitle>설정</StyledTitle>
-        </StyledHeader>
-        <List>
-          <ListItem>
-            <ListItemText></ListItemText>
-          </ListItem>
-        </List>
-        <List>
-          <ListItem disablePadding>
-            <ListItemButton sx={{ padding: '14px 0', gap: '10px' }}>
-              <ListItemIcon sx={{ width: '24px', minWidth: '0' }}>
-                <CommonIcon iconName="note" width={24} height={24} />
-              </ListItemIcon>
-              <ListItemText primary="이용약관" />
-            </ListItemButton>
-          </ListItem>
+          <List sx={{ padding: '14px 0' }}>
+            <ListItem disablePadding>
+              <ListItemButton sx={{ padding: '10px 0', gap: '10px' }}>
+                <ListItemIcon sx={{ width: '24px', minWidth: '0' }}>
+                  <CommonIcon iconName="note" width={24} height={24} />
+                </ListItemIcon>
+                <ListItemText primary="이용약관" />
+              </ListItemButton>
+            </ListItem>
 
-          <ListItem disablePadding>
-            <ListItemButton sx={{ padding: '14px 0', gap: '10px' }}>
-              <ListItemIcon sx={{ width: '24px', minWidth: '0' }}>
-                <CommonIcon iconName="lock" width={24} height={24} />
-              </ListItemIcon>
-              <ListItemText primary="개인정보처리방침" />
-            </ListItemButton>
-          </ListItem>
-        </List>
+            <ListItem disablePadding>
+              <ListItemButton sx={{ padding: '10px 0', gap: '10px' }}>
+                <ListItemIcon sx={{ width: '24px', minWidth: '0' }}>
+                  <CommonIcon iconName="lock" width={24} height={24} />
+                </ListItemIcon>
+                <ListItemText primary="개인정보처리방침" />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </StyledHeader>
+
         <StyledAbsolute>
           <AlertModal
             title={'로그아웃'}
@@ -85,18 +81,24 @@ export default function SettingPage() {
 }
 
 export const StyledHeader = styled.header`
-  height: 31px;
+  /* height: 31px; */
 `;
 
 const StyledRelative = styled.div`
-  position: relative;
-  min-height: 100vh;
+  /* position: relative; */
+
+  min-height: calc(100vh - 65px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 40px;
 `;
 
 const StyledAbsolute = styled.div`
-  position: absolute;
-  bottom: 100px;
-  width: 100%;
+  /* padding-bottom: 60px; */
+  /* position: absolute; */
+  /* bottom: 100px; */
+  /* width: 100%; */
 `;
 
 const StyledLogoutButton = styled.button`

@@ -1,4 +1,5 @@
 import { fontFacePretendard } from '@/styles/fonts';
+
 import { fontSize, fontWeight } from '@/styles/typography';
 import { css } from '@emotion/react';
 
