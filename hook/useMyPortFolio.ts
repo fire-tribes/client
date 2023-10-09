@@ -12,13 +12,18 @@ export const useMyPortFolio = () => {
     const hasNotPortFolio = status === 'success' && !myPortFolioData;
     const hasNotAssets =
       status === 'success' && !myPortFolioData?.assetDetails?.length;
-    const error = status === 'error';
+    const isError = status === 'error' || !data?.data.success;
 
-    if (hasNotPortFolio || hasNotAssets || error) {
+    if (isError) {
+      router.push('500');
+      return;
+    }
+
+    if (hasNotPortFolio || hasNotAssets) {
       redirectEmpty();
       return;
     }
-  }, [status, redirectEmpty, myPortFolioData]);
+  }, [status, redirectEmpty, myPortFolioData, router, data?.data.success]);
 
   return {
     myPortFolioData,
