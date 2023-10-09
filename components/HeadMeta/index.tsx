@@ -1,6 +1,6 @@
 import Head from 'next/head';
 
-interface HeadMetaProps {
+export interface HeadMetaProps {
   title?: string;
   description?: string;
   url?: string;
