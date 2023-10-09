@@ -5,6 +5,7 @@ import type { ExchangeRateModel } from '@/@types/models/exchangeRate';
 import type { MakePortfolio } from '@/@types/models/makePortfolio';
 import type { MyPortfolioModel } from '@/@types/models/portfolio';
 import type { UpdatePortfolio } from '@/@types/models/updatePortfolio';
+import type { DeletePortfolio } from '@/@types/models/deletePortfolio';
 import type { ResponseSuccess } from '@/@types/models/response';
 
 export const portfolioAPI = {
@@ -49,6 +50,11 @@ export const portfolioAPI = {
         portfolioId: portfolioId,
         assets: assets,
       },
+    );
+  },
+  deletePortfolio: (portfolioId: number) => {
+    return APIInstance.delete<ResponseSuccess<DeletePortfolio>>(
+      `portfolio?portfolioId=${portfolioId}`,
     );
   },
 };

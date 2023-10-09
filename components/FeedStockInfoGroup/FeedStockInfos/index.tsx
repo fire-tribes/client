@@ -147,27 +147,6 @@ function FeedStockInfos() {
     // });
   };
 
-  // datas.map(({refetch}) => {
-  //   return <button onClick={refetch}></buttom>
-  //   datas[0].refetch = getCurrentPriceAPI.getCurrentPrice(1)
-  // })
-
-  /** TODO: 현재가 자동 입력 함수를 모든 Input에 적용 (현재가 전체 자동 입력 함수) */
-
-  /** 현재가 자동 입력 함수 */
-  // const [inputCountValue, setInputCountValue] = useState('');
-  // const [inputPriceValue, setInputPriceValue] = useState('');
-  // const [errorText, setErrorText] = useState('');
-
-  // const handleCurrentPriceButton = (stock: SelectedStocksAtomProps) => {
-  //   setIsPressButton(true);
-  //   const currentPrice = getCurrentPriceData[0].currentPrice;
-  //   console.log('currentPrice: ', currentPrice);
-  //   setInputPriceValue(currentPrice);
-  //   /** 오류 메시지 초기화 */
-  //   setError('');
-  // };
-
   return (
     <>
       {selectedStocks.length !== 0 && (
@@ -175,7 +154,7 @@ function FeedStockInfos() {
           <CommonButton
             style={{
               padding: '8px 10px',
-              borderRadius: '20px',
+              borderRadius: '25px',
               backgroundColor: `${basic.gray1}`,
               color: `${basic.point_blue02}`,
             }}
@@ -207,10 +186,19 @@ function FeedStockInfos() {
             const onChangePriceEventHandle = (
               e: ChangeEvent<HTMLInputElement>,
             ) => {
-              const { value } = e.target;
+              // const { value } = e.target;
+              /** 숫자 또는 소수점 외의 문자 제거 */
+              const value = e.target.value.replace(/[^0-9.]/g, '');
+
+              /** 소수점을 기준으로 2자리까지만 남기기 */
+              const formattedValue = value.split('.');
+              if (formattedValue[1]) {
+                formattedValue[1] = formattedValue[1].slice(0, 2);
+              }
+
               setSelectedStocks((stock) => {
                 const array = [...stock];
-                array[id].price = value;
+                array[id].price = formattedValue.join('.');
                 return array;
               });
             };

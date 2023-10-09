@@ -1,10 +1,14 @@
 // import AlertModal from './style';
-import Toast from '../../Toast';
+// import Toast from '../../Toast';
 import Modal, { TModalProps } from '@/components/common/Modal';
 import useControlModal from '@/hook/useControlModal';
-import useControlToast from '@/hook/useControlToast';
+// import useControlToast from '@/hook/useControlToast';
 import { basic } from '@/styles/palette';
-import { type PropsWithChildren, useEffect } from 'react';
+import * as React from 'react';
+import Snackbar from '@mui/material/Snackbar';
+import Slide, { SlideProps } from '@mui/material/Slide';
+import SnackbarContent from '@mui/material/SnackbarContent';
+// import Button from '@mui/material/Button';
 
 type PickTModalPropsType = Pick<TModalProps, 'layout' | 'position'>;
 interface AlertModalCSSProps {
@@ -13,12 +17,16 @@ interface AlertModalCSSProps {
 
 interface AlertModalProps
   extends AlertModalCSSProps,
-    PropsWithChildren,
+    React.PropsWithChildren,
     PickTModalPropsType {
   title: string;
   message: string;
   onClickEvent?: () => void;
   toastMessage?: string;
+}
+
+function SlideTransition(props: SlideProps) {
+  return <Slide {...props} direction="up" />;
 }
 
 function AlertModal({
@@ -32,24 +40,38 @@ function AlertModal({
   toastMessage,
 }: AlertModalProps) {
   const { isShow, openModal, closeModal } = useControlModal();
-  const { isShowToast, setIsShowToast } = useControlToast();
+  // const { isShowToast, setIsShowToast } = useControlToast();
 
-  const handleConfirmButton = () => {
+  const [showToast, setShowToast] = React.useState<{ open: boolean }>({
+    open: false,
+  });
+
+  const handleConfirmButton = () => () => {
+    setShowToast({
+      open: true,
+    });
     if (onClickEvent !== undefined) {
       onClickEvent();
     }
-    setIsShowToast(true);
+    // setIsShowToast(true);
     closeModal();
   };
 
-  useEffect(() => {
-    console.log('isShowToast: ', isShowToast);
-    if (isShowToast) {
-      setTimeout(() => {
-        setIsShowToast(false);
-      }, 3 * 1000);
-    }
-  }, [isShowToast]);
+  const handleClose = () => {
+    setShowToast({
+      ...showToast,
+      open: false,
+    });
+  };
+
+  // React.useEffect(() => {
+  //   console.log('isShowToast: ', isShowToast);
+  //   if (isShowToast) {
+  //     setTimeout(() => {
+  //       setIsShowToast(false);
+  //     }, 3 * 1000);
+  //   }
+  // }, [isShowToast]);
 
   return (
     <>
@@ -69,7 +91,7 @@ function AlertModal({
                 취소
               </Modal.Button>
               <Modal.Button
-                onClick={() => handleConfirmButton()}
+                onClick={handleConfirmButton()}
                 style={{
                   backgroundColor: `${basic.gray_blue}`,
                   color: `${basic.white}`,
@@ -86,7 +108,23 @@ function AlertModal({
         </Modal.Actions>
       </Modal>
       <span onClick={openModal}>{children}</span>
-      {isShowToast && <Toast toastMessage={toastMessage} />}
+      {/* {isShowToast && <Toast toastMessage={toastMessage} />} */}
+      <Snackbar
+        open={showToast.open}
+        onClose={handleClose}
+        autoHideDuration={3 * 1000}
+        anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
+        TransitionComponent={SlideTransition}
+        style={{ width: '398px', marginBottom: '100px', zIndex: '0' }}
+      >
+        <SnackbarContent
+          style={{
+            width: '100%',
+            justifyContent: 'center',
+          }}
+          message={<span id="client-snackbar">{toastMessage}</span>}
+        />
+      </Snackbar>
     </>
   );
 }

@@ -8,13 +8,16 @@ interface DeletePortfolioAssetDetail {
 
 function useDeleteAssetDetails() {
   const router = useRouter();
+  const { slug } = router.query as { slug: string[] };
+
+  const portfolioId = Number(slug?.[0]);
   const { mutateAsync, isLoading } = useDeleteAssetDetailsQuery();
 
   const deleteAssetDetailsData = async (
     deletePortfolioAssetDetail: DeletePortfolioAssetDetail,
   ) => {
     await mutateAsync(deletePortfolioAssetDetail);
-    router.push('/edit');
+    router.push(`/edit?portfolioId=${portfolioId}`);
   };
   return {
     deleteAssetDetailsData,
