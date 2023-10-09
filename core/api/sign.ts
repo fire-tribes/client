@@ -11,7 +11,7 @@ import type {
 
 export const SignApi = {
   start: (code: string) => {
-    return axios.get<SignResponseModel>('api/login', {
+    return axios.get<ResponseSuccess<SignResponseModel>>('api/login', {
       params: {
         code,
       },
