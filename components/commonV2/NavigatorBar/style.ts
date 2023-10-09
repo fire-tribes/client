@@ -1,7 +1,6 @@
 import { NAVIGATOR_HEIGHT } from '@/styles/constants';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import Link from 'next/link';
 
 const S = {
   Navigator: styled.nav`
@@ -29,7 +28,6 @@ const S = {
       opacity: 0.8;
     }
   `,
-  NavigationLink: styled(Link)``,
 };
 
 export default S;
