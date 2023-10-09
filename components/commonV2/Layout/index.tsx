@@ -2,25 +2,37 @@ import S from './style';
 import HeadMeta, { HeadMetaProps } from '@/components/HeadMeta';
 import CommonNewBottomNavigatior from '@/components/commonV2/NavigatorBar';
 
-import { PropsWithChildren, useEffect, useState } from 'react';
+import {
+  PropsWithChildren,
+  useEffect,
+  // useState
+} from 'react';
 
 const useMobileFullView = () => {
-  const [vh, setVh] = useState(0);
+  // const [vh, setVh] = useState(0);
+
+  // useEffect(() => {
+  //   if (vh === 0) {
+  //     setVh(window.innerHeight * 0.01);
+  //   }
+
+  //   const setScreenSize = () => {
+  //     const vh = window.innerHeight * 0.01;
+  //     setVh(vh);
+  //   };
+
+  //   window.addEventListener('resize', setScreenSize);
+
+  //   return () => window.removeEventListener('resize', setScreenSize);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+
+  let vh = 0;
 
   useEffect(() => {
-    if (vh === 0) {
-      setVh(window.innerHeight * 0.01);
-    }
-
-    const setScreenSize = () => {
-      const vh = window.innerHeight * 0.01;
-      setVh(vh);
-    };
-
-    window.addEventListener('resize', setScreenSize);
-
-    return () => window.removeEventListener('resize', setScreenSize);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    console.log('start');
+    vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
   }, []);
 
   return vh;

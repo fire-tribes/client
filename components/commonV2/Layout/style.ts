@@ -8,9 +8,8 @@ const S = {
     justify-content: center;
     align-items: center;
     /* height: 100vh; */
-
-    height: ${({ vh }) => `calc(${vh}px * 100)`};
-
+    height: calc(var(--vh, 1vh) * 100);
+    /*height:${({ vh }) => `calc(${vh}px * 100)`}*/
     background-color: ${({ theme }) => theme.palette.basic.gray8};
   `,
   LayoutMaxMin: styled.div`
