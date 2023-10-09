@@ -46,13 +46,32 @@ export const useKakaoLogin = () => {
   };
 
   const open = () => {
-    window.Kakao?.Auth.authorize({
-      redirectUri:
-        process.env.NODE_ENV === 'development'
-          ? process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI_DEV
-          : process.env.NODE_ENV === 'production' &&
-            process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI_PRODUCTION,
-    });
+    const origin = window.location.origin;
+    console.log(origin);
+
+    if (process.env.NEXT_PUBLIC_LOCAL_SERVER_ORIGIN === origin) {
+      window.Kakao?.Auth.authorize({
+        redirectUri: process.env.NEXT_PUBLIC_LOCAL_SERVER_KAKAO_REDIRECT_URL,
+      });
+
+      return;
+    }
+
+    if (process.env.NEXT_PUBLIC_DEV_SERVER_ORIGIN === origin) {
+      window.Kakao?.Auth.authorize({
+        redirectUri: process.env.NEXT_PUBLIC_DEV_SERVER_KAKAO_REDIRECT_URL,
+      });
+
+      return;
+    }
+
+    if (process.env.NEXT_PUBLIC_PRODUCT_SERVER_ORIGIN === origin) {
+      window.Kakao?.Auth.authorize({
+        redirectUri: process.env.NEXT_PUBLIC_PRODUCT_SERVER_KAKAO_REDIRECT_URL,
+      });
+
+      return;
+    }
   };
 
   const start = async (code: string) => {
