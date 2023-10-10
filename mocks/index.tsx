@@ -1,4 +1,4 @@
-import type { NotifyListItemProps } from '@/components/common/Modal/NotifyListModal';
+import type { NotifyListItemProps } from '@/components/common/Modal/AnnualDividendModal';
 import type { BasicColorKeys } from '@/styles/palette';
 
 type BadgeDetailText = {
