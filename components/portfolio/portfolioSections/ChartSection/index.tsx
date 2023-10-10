@@ -7,8 +7,9 @@ import FlexBox from '@/components/common/FlexBox';
 import { useAnnualDividend } from '@/hook/useAnnualDividend';
 import { useEmotionTheme } from '@/hook/useThemeHooks';
 import { useControlTax } from '@/hook/useControlTax';
-import { CenterModalV2 } from '@/components/commonV2/ModalV2';
+
 import Modal from '@/components/common/Modal';
+import { CenterModalV2 } from '@/components/commonV2/ModalV2/CenterModal';
 
 export default function ChartSection() {
   const { annualDividendExchangeWithSimpleData } = useAnnualDividend();

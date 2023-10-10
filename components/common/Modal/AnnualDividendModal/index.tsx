@@ -1,6 +1,7 @@
 import CommonFont from '@/components/common/Font';
 import Modal from '@/components/common/Modal';
-import { BottomSheetModalV2 } from '@/components/commonV2/ModalV2';
+import { BottomSheetModalV2 } from '@/components/commonV2/ModalV2/BottomSheetModal';
+
 import { List, ListItem, ListItemText } from '@mui/material';
 import { PropsWithChildren, ReactNode } from 'react';
 

@@ -5,7 +5,7 @@ import FlexBox from '@/components/common/FlexBox';
 import CommonIcon from '@/components/common/Icon';
 import Modal from '@/components/common/Modal';
 import { useEmotionPalette } from '@/hook/useThemeHooks';
-import { CenterModalV2 } from '@/components/commonV2/ModalV2';
+import { CenterModalV2 } from '@/components/commonV2/ModalV2/CenterModal';
 
 export default function SimpleDividentScheduleSection() {
   const palette = useEmotionPalette();
