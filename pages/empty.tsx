@@ -1,7 +1,7 @@
 import CommonButton from '@/components/common/Button/CommonButton';
 import CloudImage from '@/public/Cloud.png';
 import PlusSvg from '@/public/icon/plus.svg';
-import Layout from '@/components/common/Layout';
+import LayoutV2 from '@/components/commonV2/Layout';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -17,7 +17,13 @@ function Empty() {
     router.push('/search');
   };
   return (
-    <Layout>
+    <LayoutV2
+      showBottomNavigator
+      headMetaProps={{
+        title: '스노우볼 - 배당 모아보기',
+        image: '/icon/snow_logo.png',
+      }}
+    >
       <EmptyUI.Container>
         <EmptyUI.Item>
           {loading ? (
@@ -41,7 +47,7 @@ function Empty() {
           )}
         </EmptyUI.Item>
       </EmptyUI.Container>
-    </Layout>
+    </LayoutV2>
   );
 }
 

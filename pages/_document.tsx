@@ -5,6 +5,7 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" href="/snowflake_favicon.png" type="image/png" />
       </Head>
       <body>
         <Main />

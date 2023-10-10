@@ -179,7 +179,7 @@ function SearchedResults({ value }: SearchResultsProps) {
           ) : (
             <></>
           )}
-          <div style={{ height: 'calc(92px - 40px)' }}></div>
+          <div style={{ height: 'calc(100px)' }}></div>
         </div>
       )}
     </>
