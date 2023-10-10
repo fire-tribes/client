@@ -6,6 +6,8 @@ import SmallerCloseSvg from '@/public/icon/smallerClose.svg';
 import SearchInput from '@/components/SearchStockGroup/SearchInput';
 import RecentSearchWords from '@/components/SearchStockGroup/RecentSearchWords';
 import PopluarStocks from '@/components/SearchStockGroup/PopularStocks';
+import useUpdateRecentSearchWords from '@/hook/useUpdateRecentSearchWords';
+import BottomFixedButton from '@/components/common/Button/BottomFixedButton';
 import { useState } from 'react';
 import Image from 'next/image';
 import { useAtom } from 'jotai';
@@ -16,7 +18,7 @@ import styled from '@emotion/styled';
 
 function Search() {
   const router = useRouter();
-  const { portfolioId } = router.query;
+  const { portfolioId } = router.query as { portfolioId?: number };
 
   const [value, setValue] = useState('');
   const [isSearchActive, setIsSearchActive] = useState(false);
@@ -59,11 +61,35 @@ function Search() {
     }
   };
 
+  /** '다음' 관련 로직 */
+  const { updateRecentSearchWords, isLoadingUpdateRecentSearchWords } =
+    useUpdateRecentSearchWords();
+
+  /** 다른 페이지로 이동하는 함수 */
+  const onMoveOtherPages = async () => {
+    /** 최근 검색어에 해당 검색어(debouncedValue) 추가 */
+    if (selectedStocks[0].debouncedValue !== '') {
+      updateRecentSearchWords();
+      if (portfolioId) {
+        router.push(`/add?portfolioId=${portfolioId}`);
+      } else {
+        router.push('/add');
+      }
+    }
+  };
+
   return (
     <SearchLayout
+      buttomFixedButton={
+        <BottomFixedButton
+          isDisabled={selectedStocks.length !== 0 ? false : true}
+          onChange={onMoveOtherPages}
+          isLoading={isLoadingUpdateRecentSearchWords}
+        >
+          다음
+        </BottomFixedButton>
+      }
       hasButton={isSearchActive}
-      isDisabled={selectedStocks.length !== 0 ? false : true}
-      buttonName={'다음'}
     >
       {loading ? (
         <LoadingContainer>

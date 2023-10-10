@@ -16,7 +16,7 @@ function useUpdateRecentSearchWords() {
     useGetRecentSearchWords();
   const recentSearchWordsDataArray = getRecentSearchWordsData?.data;
 
-  const isLoadingUpdateRecentSearchWords =
+  const isLoadingUpdateRecentSearchWords: boolean =
     isLoadingAddRecentSearchWordData || isLoadingGetRecentSearchWordsData;
 
   const updateRecentSearchWords = () => {

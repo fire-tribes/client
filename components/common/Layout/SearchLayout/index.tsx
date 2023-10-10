@@ -1,4 +1,3 @@
-import BottomFixedButton from '@/components/common/Button/BottomFixedButton';
 import styled from '@emotion/styled';
 import type { ReactNode } from 'react';
 
@@ -8,27 +7,22 @@ interface SearchLayoutProps {
   /** 하단 버튼의 존재 유무 */
   hasButton?: boolean;
   /** 하단 버튼의 비활성화 유무 */
-  isDisabled: boolean;
+  // isDisabled: boolean;
   /** 하단 버튼에 들어갈 이름(Content) */
-  buttonName: '다음' | '추가 완료' | '완료' | '수정 완료';
+  // buttonName: '다음' | '추가 완료' | '완료' | '수정 완료';
+  /** 하단 고정 버튼 */
+  buttomFixedButton: React.ReactNode;
 }
 
 const SearchLayout = ({
   children,
   hasButton,
-  isDisabled,
-  buttonName,
+  buttomFixedButton,
 }: SearchLayoutProps) => {
   return (
     <StyledLayout>
       <StyledContent>{children}</StyledContent>
-      {hasButton ? (
-        <BottomFixedButton isDisabled={isDisabled} buttonName={buttonName}>
-          {buttonName}
-        </BottomFixedButton>
-      ) : (
-        <div></div>
-      )}
+      {hasButton ? buttomFixedButton : <div></div>}
     </StyledLayout>
   );
 };

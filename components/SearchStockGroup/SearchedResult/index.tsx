@@ -71,6 +71,10 @@ function SearchedResult({
   //   (match) => <span style={highlightedTextStyle}>{match}</span>,
   // );
 
+  /** 검색어가 주식 종목명이 아닌 Ticker에 있을 때 구분하기 */
+  const hasValueInTicker =
+    stock.name.toLowerCase().split(debouncedValue).length !== 1;
+
   return (
     <SearchedResultUI.Container>
       <SearchedResultUI.Item>
@@ -80,16 +84,27 @@ function SearchedResult({
             <Image src={testCircleSvg} alt="testCircle Svg" />
           </div>
           <div>
-            <div>
-              {stock.name.toLowerCase().split(debouncedValue)[0]}
-              <span style={{ color: `${basic.point_blue02}` }}>
-                {debouncedValue}
-              </span>
-              {stock.name.toLowerCase().split(debouncedValue)[1]}
-            </div>
-            {/* <span dangerouslySetInnerHTML={{ __html: truncatedText }} /> */}
-            {/* <div className={multilineTruncate}>{highlightedText}</div> */}
-            <div>{stock.tickerCode}</div>
+            {hasValueInTicker ? (
+              <>
+                <div>
+                  {stock.name.toLowerCase().split(debouncedValue)[0]}
+                  <span style={{ color: `${basic.point_blue02}` }}>
+                    {debouncedValue}
+                  </span>
+                  {stock.name.toLowerCase().split(debouncedValue)[1]}
+                </div>
+                {/* <span dangerouslySetInnerHTML={{ __html: truncatedText }} /> */}
+                {/* <div className={multilineTruncate}>{highlightedText}</div> */}
+                <div>{stock.tickerCode}</div>
+              </>
+            ) : (
+              <>
+                <div>{stock.name}</div>
+                <div style={{ color: `${basic.point_blue02}` }}>
+                  {stock.tickerCode}
+                </div>
+              </>
+            )}
           </div>
         </SearchedResultUI.StockContainer>
         <button onClick={() => toggleSelected(stock)}>

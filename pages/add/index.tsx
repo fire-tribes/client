@@ -2,17 +2,77 @@ import FeedStockInfos from '@/components/FeedStockInfoGroup/FeedStockInfos';
 import SearchLayout from '@/components/common/Layout/SearchLayout';
 import { selectedStocksAtom } from '@/hook/useGetSelectedStocks/state';
 import Backward from '@/components/common/Backward';
+import BottomFixedButton from '@/components/common/Button/BottomFixedButton';
+import { useMakePortfolio } from '@/hook/useMakePortfolio';
+import { useAddStocksAtPortfolio } from '@/hook/useAddStocksAtPortfolio';
+import useMakeAssets from '@/hook/useMakeAssets';
 import { useAtom } from 'jotai';
+import { useRouter } from 'next/router';
 
 function Add() {
+  /** '추가 완료' 관련 함수 */
+  const router = useRouter();
+  const { portfolioId } = router.query as { portfolioId?: string };
+
+  /** 포트폴리오 생성 POST 요청 useFeatureHook */
+  const { makePortfolioData, isLoadingMakePortfolioData } = useMakePortfolio();
+  /** 포트폴리오 자산 추가 POST 요청 useFeatureHook */
+  const { addStocksAtPortfolioData, isLoadingAddStocksAtPortfolioData } =
+    useAddStocksAtPortfolio();
+  const isLoading =
+    isLoadingMakePortfolioData || isLoadingAddStocksAtPortfolioData;
+  /** POST 요청에 보낼 Assets 만들기 useMakeAssets */
+  const { makeAssets } = useMakeAssets();
   /** 선택한 주식 종목 배열 */
   const [selectedStocks] = useAtom(selectedStocksAtom);
+  /** TODO: useFeatureHook으로 리팩토링 */
+  const makePortfolio = () => {
+    /** 1-1.포트폴리오가 없을 경우, 포트폴리오 생성하고 portfolioId 사용 */
+    if (!portfolioId) {
+      makePortfolioData().then((response) => {
+        /** 3. 포트폴리오 자산 추가 POST 요청에 formData로 보낼 객체 생성 */
+        console.log(response);
+        const formData = {
+          portfolioId: response.portfolioId,
+          assets: makeAssets(selectedStocks),
+        };
+        console.log('makePortfolio formData: ', formData);
+        addStocksAtPortfolioData(formData);
+      });
+    }
+  };
+  /** TODO: useFeatureHook으로 리팩토링 */
+  const madePortfolio = () => {
+    /** 1-2. 포트폴리오가 있을 경우, 기존의 portfolioId 사용 */
+    const formData = {
+      portfolioId: Number(portfolioId),
+      assets: makeAssets(selectedStocks),
+    };
+    console.log('madePortfolio formData: ', formData);
+    addStocksAtPortfolioData(formData);
+  };
+
+  const onMoveOtherPages = async () => {
+    console.log('portfolioId: ', portfolioId);
+    if (portfolioId) {
+      madePortfolio();
+    } else {
+      makePortfolio();
+    }
+  };
 
   return (
     <SearchLayout
+      buttomFixedButton={
+        <BottomFixedButton
+          isDisabled={selectedStocks.length !== 0 ? false : true}
+          onChange={onMoveOtherPages}
+          isLoading={isLoading}
+        >
+          추가 완료
+        </BottomFixedButton>
+      }
       hasButton={selectedStocks.length !== 0 ? true : false}
-      isDisabled={selectedStocks.length !== 0 ? false : true}
-      buttonName={'추가 완료'}
     >
       <section>
         <Backward title={'보유 주식 정보 입력'} />
