@@ -3,7 +3,7 @@ import { ModalV2 } from '@/components/commonV2/ModalV2';
 
 import HeadMeta, { HeadMetaProps } from '@/components/HeadMeta';
 import CommonNewBottomNavigatior from '@/components/commonV2/NavigatorBar';
-import { useControlModalV2 } from '@/hook/useControlModal';
+import { useControlModalV2 } from '@/hook/useControlModalV2';
 
 import { PropsWithChildren, useEffect, useState } from 'react';
 

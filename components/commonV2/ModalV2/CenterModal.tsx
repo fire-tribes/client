@@ -1,5 +1,5 @@
 import Modal from '@/components/common/Modal';
-import { useControlModalV2 } from '@/hook/useControlModal';
+import { useControlModalV2 } from '@/hook/useControlModalV2';
 import { PropsWithChildren, ReactNode } from 'react';
 
 interface CenterModalV2Props extends PropsWithChildren {

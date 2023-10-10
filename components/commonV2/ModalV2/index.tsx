@@ -1,5 +1,5 @@
 import ModalV2Styled from './style';
-import { useControlModalV2 } from '@/hook/useControlModal';
+import { useControlModalV2 } from '@/hook/useControlModalV2';
 
 export function ModalV2() {
   const { modalState } = useControlModalV2();
