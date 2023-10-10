@@ -1,6 +1,6 @@
 import Backward from '@/components/common/Backward';
 import BottomFixedButton from '@/components/common/Button/BottomFixedButton';
-import SearchLayout from '@/components/common/Layout/SearchLayout';
+import SearchLayoutV2 from '@/components/commonV2/Layout/SearchLayoutV2';
 import EditStockInfo from '@/components/EditStocksGroup/EditStockInfo';
 import { useEditPortfolio } from '@/hook/useEditPortfolio';
 import { useRouter } from 'next/router';
@@ -24,7 +24,7 @@ const Post = () => {
   };
 
   return (
-    <SearchLayout
+    <SearchLayoutV2
       buttomFixedButton={
         <BottomFixedButton
           isDisabled={false}
@@ -35,6 +35,10 @@ const Post = () => {
         </BottomFixedButton>
       }
       hasButton={true}
+      headMetaProps={{
+        title: '스노우볼 - 배당 정보 편집',
+        image: '/icon/snow_logo.png',
+      }}
     >
       <section>
         <Backward title={'보유 주식 편집'} hasBeforePath={'개별 편집 페이지'} />
@@ -42,7 +46,7 @@ const Post = () => {
       <section>
         <EditStockInfo />
       </section>
-    </SearchLayout>
+    </SearchLayoutV2>
   );
 };
 

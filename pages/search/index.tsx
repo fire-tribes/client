@@ -1,5 +1,5 @@
 import SearchedResults from '@/components/SearchStockGroup/SearchedResults';
-import SearchLayout from '@/components/common/Layout/SearchLayout';
+import SearchLayoutV2 from '@/components/commonV2/Layout/SearchLayoutV2';
 import { selectedStocksAtom } from '@/hook/useGetSelectedStocks/state';
 import BiggerCloseSvg from '@/public/icon/biggerClose.svg';
 import SmallerCloseSvg from '@/public/icon/smallerClose.svg';
@@ -79,7 +79,7 @@ function Search() {
   };
 
   return (
-    <SearchLayout
+    <SearchLayoutV2
       buttomFixedButton={
         <BottomFixedButton
           isDisabled={selectedStocks.length !== 0 ? false : true}
@@ -90,6 +90,10 @@ function Search() {
         </BottomFixedButton>
       }
       hasButton={isSearchActive}
+      headMetaProps={{
+        title: '스노우볼 - 배당 주식 검색',
+        image: '/icon/snow_logo.png',
+      }}
     >
       {loading ? (
         <LoadingContainer>
@@ -146,7 +150,7 @@ function Search() {
           )}
         </>
       )}
-    </SearchLayout>
+    </SearchLayoutV2>
   );
 }
 

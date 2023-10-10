@@ -1,11 +1,11 @@
 import FeedStockInfos from '@/components/FeedStockInfoGroup/FeedStockInfos';
-import SearchLayout from '@/components/common/Layout/SearchLayout';
 import { selectedStocksAtom } from '@/hook/useGetSelectedStocks/state';
 import Backward from '@/components/common/Backward';
 import BottomFixedButton from '@/components/common/Button/BottomFixedButton';
 import { useMakePortfolio } from '@/hook/useMakePortfolio';
 import { useAddStocksAtPortfolio } from '@/hook/useAddStocksAtPortfolio';
 import useMakeAssets from '@/hook/useMakeAssets';
+import SearchLayoutV2 from '@/components/commonV2/Layout/SearchLayoutV2';
 import { useAtom } from 'jotai';
 import { useRouter } from 'next/router';
 
@@ -62,7 +62,7 @@ function Add() {
   };
 
   return (
-    <SearchLayout
+    <SearchLayoutV2
       buttomFixedButton={
         <BottomFixedButton
           isDisabled={selectedStocks.length !== 0 ? false : true}
@@ -73,6 +73,10 @@ function Add() {
         </BottomFixedButton>
       }
       hasButton={selectedStocks.length !== 0 ? true : false}
+      headMetaProps={{
+        title: '스노우볼 - 배당 정보 입력',
+        image: '/icon/snow_logo.png',
+      }}
     >
       <section>
         <Backward title={'보유 주식 정보 입력'} />
@@ -80,7 +84,7 @@ function Add() {
       <section>
         <FeedStockInfos />
       </section>
-    </SearchLayout>
+    </SearchLayoutV2>
   );
 }
 

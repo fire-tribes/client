@@ -1,6 +1,6 @@
 import Backward from '@/components/common/Backward';
 import BottomFixedButton from '@/components/common/Button/BottomFixedButton';
-import SearchLayout from '@/components/common/Layout/SearchLayout';
+import SearchLayoutV2 from '@/components/commonV2/Layout/SearchLayoutV2';
 import NothingStocks from '@/components/common/NothingStocks';
 import EditStocks from '@/components/EditStocksGroup/EditStocks';
 import { useDeletePortfolio } from '@/hook/useDeletePortfolio';
@@ -25,7 +25,7 @@ function Edit() {
   };
 
   return (
-    <SearchLayout
+    <SearchLayoutV2
       buttomFixedButton={
         <BottomFixedButton
           isDisabled={false}
@@ -36,6 +36,10 @@ function Edit() {
         </BottomFixedButton>
       }
       hasButton={true}
+      headMetaProps={{
+        title: '스노우볼 - 배당 주식 편집',
+        image: '/icon/snow_logo.png',
+      }}
     >
       <section>
         <Backward title={'보유 주식 편집'} hasBeforePath={'전체 편집 페이지'} />
@@ -53,7 +57,7 @@ function Edit() {
       ) : (
         <NothingStocks />
       )}
-    </SearchLayout>
+    </SearchLayoutV2>
   );
 }
 
