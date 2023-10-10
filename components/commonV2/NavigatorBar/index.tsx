@@ -4,6 +4,7 @@ import FlexBox from '@/components/common/FlexBox';
 import CommonIcon from '@/components/common/Icon';
 
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 interface NavagationItem {
   href: string;
@@ -13,17 +14,17 @@ interface NavagationItem {
 
 const navagationItems: NavagationItem[] = [
   {
-    href: '/v2',
+    href: '/',
     label: '홈',
     iconName: 'home',
   },
   {
-    href: '/v2/caculate',
+    href: '/caculate',
     label: '계산',
     iconName: 'chart',
   },
   {
-    href: '/v2/setting',
+    href: '/setting',
     label: '설정',
     iconName: 'setting',
   },
@@ -38,7 +39,7 @@ export default function BottomNavigatorV2() {
       <S.NavigatorItems>
         {navagationItems.map(({ href, label, iconName }) => (
           <S.NavigationItem key={label}>
-            <S.NavigationLink href={href}>
+            <Link href={href}>
               <FlexBox flexDirection={'column'} gap={'4px'}>
                 <CommonIcon
                   iconName={
@@ -54,7 +55,7 @@ export default function BottomNavigatorV2() {
                   {label}
                 </CommonFont>
               </FlexBox>
-            </S.NavigationLink>
+            </Link>
           </S.NavigationItem>
         ))}
       </S.NavigatorItems>

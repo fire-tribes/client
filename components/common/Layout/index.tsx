@@ -24,6 +24,7 @@ const Layout = ({ children, showBottomNavigator = true }: LayoutProps) => {
 const StyledLayout = styled.main`
   min-width: 320px;
   max-width: 430px;
+
   height: 100vh;
   margin: 0 auto;
   position: relative;
