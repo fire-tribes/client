@@ -1,6 +1,9 @@
 import S from './style';
+import { ModalV2 } from '@/components/commonV2/ModalV2';
+
 import HeadMeta, { HeadMetaProps } from '@/components/HeadMeta';
 import CommonNewBottomNavigatior from '@/components/commonV2/NavigatorBar';
+import { useControlModalV2 } from '@/hook/useControlModal';
 
 import { PropsWithChildren, useEffect, useState } from 'react';
 
@@ -37,12 +40,14 @@ export default function LayoutV2({
   headMetaProps,
 }: LayoutV2Props) {
   const vh = useMobileFullView();
+  const { modalState } = useControlModalV2();
   return (
     <S.LayoutBody vh={vh}>
       <HeadMeta {...headMetaProps} />
       <S.LayoutMaxMin>
         <S.LayoutContent>{children}</S.LayoutContent>
         {showBottomNavigator && <CommonNewBottomNavigatior />}
+        {modalState.isOpen && <ModalV2 />}
       </S.LayoutMaxMin>
     </S.LayoutBody>
   );
