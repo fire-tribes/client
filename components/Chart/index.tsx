@@ -1,7 +1,7 @@
 import { options } from '@/components/Chart/options';
 import {
   createShowChartDividendDatas,
-  getShortCurrencyKRByPlusNumber,
+  getShortCurrencyDividendChartKR,
 } from '@/components/Chart/utils';
 import { useAnnualDividend } from '@/hook/useAnnualDividend';
 import { useTheme } from '@emotion/react';
@@ -44,7 +44,7 @@ export default function AnnualDividendBarChart() {
               align: 'top',
               offset: 0,
               formatter: (value: number) => {
-                return getShortCurrencyKRByPlusNumber(value);
+                return getShortCurrencyDividendChartKR(value);
               },
               /** color를 변경하고 싶을 떄
                * color: '#36A2EB',
