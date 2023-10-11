@@ -65,35 +65,36 @@ function RecentSearchWords({
           </button>
         </AlertModal>
       </RecentSearchWordsUI.TopContainer>
-      <div>
-        {recentSearchWordsDataArray === undefined ||
-        recentSearchWordsDataArray.length === 0 ? (
-          <RecentSearchWordsUI.NothingRecentSearchWordsContainer>
-            <div>
-              최근 검색 기록이 없어요.
-              <tr />
-              주식 이름 혹은 티커를 검색해주세요.
-              <tr />
-              (예: JEPI, SCHD)
-            </div>
-          </RecentSearchWordsUI.NothingRecentSearchWordsContainer>
-        ) : isLoadingGetRecentSearchWordsData ? (
+
+      {recentSearchWordsDataArray === undefined ||
+      recentSearchWordsDataArray.length === 0 ? (
+        <RecentSearchWordsUI.NothingRecentSearchWordsContainer>
+          <div>
+            최근 검색 기록이 없어요.
+            <tr />
+            주식 이름 혹은 티커를 검색해주세요.
+            <tr />
+            (예: JEPI, SCHD)
+          </div>
+        </RecentSearchWordsUI.NothingRecentSearchWordsContainer>
+      ) : isLoadingGetRecentSearchWordsData ? (
+        <RecentSearchWordsUI.LoadingContainer>
           <CircularProgress />
-        ) : (
-          recentSearchWordsDataArray.map((stock, id) => {
-            return (
-              <RecentSearchWord
-                key={id}
-                stock={stock}
-                handleDeleteRecentSearchWord={() =>
-                  handleDeleteRecentSearchWord(id)
-                }
-                onClickRecentSearchWord={onClickRecentSearchWord}
-              />
-            );
-          })
-        )}
-      </div>
+        </RecentSearchWordsUI.LoadingContainer>
+      ) : (
+        recentSearchWordsDataArray.map((stock, id) => {
+          return (
+            <RecentSearchWord
+              key={id}
+              stock={stock}
+              handleDeleteRecentSearchWord={() =>
+                handleDeleteRecentSearchWord(id)
+              }
+              onClickRecentSearchWord={onClickRecentSearchWord}
+            />
+          );
+        })
+      )}
     </>
   );
 }

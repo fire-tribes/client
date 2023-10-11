@@ -221,7 +221,7 @@ function FeedStockInfos() {
         ) : (
           <NothingStocks />
         )}
-        <div style={{ height: '52px' }}></div>
+        <div style={{ height: '100px' }}></div>
       </div>
     </>
   );

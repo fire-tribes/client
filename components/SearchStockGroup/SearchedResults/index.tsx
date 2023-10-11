@@ -138,7 +138,7 @@ function SearchedResults({ value }: SearchResultsProps) {
         removeSelected={handleRemoveSelected}
       />
       <h6>검색 결과</h6>
-      {debouncedValue === '' ? (
+      {debouncedValue === '' || searchedResults === undefined ? (
         <SearchedResultsUI.SearchNothingContainer>
           검색어 결과가 없습니다.
         </SearchedResultsUI.SearchNothingContainer>
@@ -165,13 +165,10 @@ function SearchedResults({ value }: SearchResultsProps) {
                 />
               );
             })}
-          {searchedResults === undefined && (
-            <SearchedResultsUI.SearchNothingContainer>
-              검색어 결과가 없습니다.
-            </SearchedResultsUI.SearchNothingContainer>
-          )}
           {isLoading ? (
-            <CircularProgress />
+            <SearchedResultsUI.LoadingContainer>
+              <CircularProgress />
+            </SearchedResultsUI.LoadingContainer>
           ) : hasNextPage ? (
             <SearchedResultsUI.Button onClick={onClickLoadMoreButton}>
               더 보기

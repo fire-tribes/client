@@ -11,9 +11,6 @@ const TopContainer = styled.div`
 `;
 
 const NothingRecentSearchWordsContainer = styled.div`
-  height: calc(100vh - 16px - 52px - 20px - 19px - 36px - 19px - 56px);
-  position: relative;
-
   > div {
     position: absolute;
     left: 50%;
@@ -30,7 +27,15 @@ const NothingRecentSearchWordsContainer = styled.div`
   }
 `;
 
+const LoadingContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
 export const RecentSearchWordsUI = {
   TopContainer,
   NothingRecentSearchWordsContainer,
+  LoadingContainer,
 } as const;

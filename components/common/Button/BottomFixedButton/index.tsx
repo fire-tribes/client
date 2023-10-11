@@ -16,10 +16,14 @@ function BottomFixedButton({
   ...rest
 }: ButtonCSSProps) {
   return (
-    <div>
+    <div
+      style={{
+        width: '100%',
+      }}
+    >
       <span
         style={{
-          position: 'fixed',
+          position: 'absolute',
           minWidth: '320px',
           maxWidth: '430px',
           bottom: 92,
@@ -31,7 +35,7 @@ function BottomFixedButton({
       ></span>
       <div
         style={{
-          position: 'fixed',
+          position: 'absolute',
           minWidth: '320px',
           maxWidth: '430px',
           bottom: 0,

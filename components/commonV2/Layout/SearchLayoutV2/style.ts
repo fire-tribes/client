@@ -17,6 +17,7 @@ const S = {
     background-color: ${({ theme }) => theme.palette.basic.gray8};
   `,
   LayoutMaxMin: styled.div`
+    /** BottomFixedButton 고정을 위한 position */
     position: relative;
     width: 100%;
 
@@ -41,7 +42,7 @@ const S = {
 
     > div:last-child {
       position: absolute;
-      z-index: 1;
+      z-index: 3;
     }
   `,
 

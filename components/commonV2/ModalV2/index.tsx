@@ -7,9 +7,9 @@ export function ModalV2() {
   return (
     <ModalV2Styled.ModalDimmed isBottomSheet={modalState.options.isBottomSheet}>
       {modalState.options.isBottomSheet ? (
-        <ModalV2Styled.BotommSheetModalContainer>
+        <ModalV2Styled.BottomSheetModalContainer>
           {modalState.content}
-        </ModalV2Styled.BotommSheetModalContainer>
+        </ModalV2Styled.BottomSheetModalContainer>
       ) : (
         <ModalV2Styled.ModalContainer>
           {modalState.content}

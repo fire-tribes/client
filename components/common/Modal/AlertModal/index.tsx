@@ -112,10 +112,18 @@ function AlertModal({
       <Snackbar
         open={showToast.open}
         onClose={handleClose}
-        autoHideDuration={3 * 1000}
+        autoHideDuration={1000 * 1000}
         anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
         TransitionComponent={SlideTransition}
-        style={{ width: '398px', marginBottom: '100px', zIndex: '0' }}
+        style={{
+          position: 'absolute',
+          left: '50%',
+          right: 'auto',
+          bottom: '12%',
+          transform: 'translateX(-50%)',
+          width: '398px',
+          zIndex: '2',
+        }}
       >
         <SnackbarContent
           style={{

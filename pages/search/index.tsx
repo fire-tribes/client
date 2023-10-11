@@ -5,7 +5,7 @@ import BiggerCloseSvg from '@/public/icon/biggerClose.svg';
 import SmallerCloseSvg from '@/public/icon/smallerClose.svg';
 import SearchInput from '@/components/SearchStockGroup/SearchInput';
 import RecentSearchWords from '@/components/SearchStockGroup/RecentSearchWords';
-import PopluarStocks from '@/components/SearchStockGroup/PopularStocks';
+// import PopluarStocks from '@/components/SearchStockGroup/PopularStocks';
 import useUpdateRecentSearchWords from '@/hook/useUpdateRecentSearchWords';
 import BottomFixedButton from '@/components/common/Button/BottomFixedButton';
 import { useState } from 'react';
@@ -13,8 +13,18 @@ import Image from 'next/image';
 import { useAtom } from 'jotai';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { CircularProgress } from '@mui/material';
+import {
+  CircularProgress,
+  Slide,
+  SlideProps,
+  Snackbar,
+  SnackbarContent,
+} from '@mui/material';
 import styled from '@emotion/styled';
+
+function SlideTransition(props: SlideProps) {
+  return <Slide {...props} direction="up" />;
+}
 
 function Search() {
   const router = useRouter();
@@ -61,6 +71,25 @@ function Search() {
     }
   };
 
+  /** Toast 컴포넌트 작동 로직 */
+  const [showToast, setShowToast] = useState<{ open: boolean }>({
+    open: false,
+  });
+
+  const handleConfirmButton = () => () => {
+    setShowToast({
+      open: true,
+    });
+    // setIsShowToast(true);
+  };
+
+  const handleClose = () => {
+    setShowToast({
+      ...showToast,
+      open: false,
+    });
+  };
+
   /** '다음' 관련 로직 */
   const { updateRecentSearchWords, isLoadingUpdateRecentSearchWords } =
     useUpdateRecentSearchWords();
@@ -77,13 +106,16 @@ function Search() {
       }
     }
   };
-
   return (
     <SearchLayoutV2
       buttomFixedButton={
         <BottomFixedButton
           isDisabled={selectedStocks.length !== 0 ? false : true}
-          onChange={onMoveOtherPages}
+          onChange={
+            selectedStocks.length <= 10
+              ? onMoveOtherPages
+              : handleConfirmButton()
+          }
           isLoading={isLoadingUpdateRecentSearchWords}
         >
           다음
@@ -132,9 +164,9 @@ function Search() {
           </section>
           {!isSearchActive ? (
             <>
-              <section>
+              {/* <section>
                 <PopluarStocks />
-              </section>
+              </section> */}
               <section>
                 <RecentSearchWords
                   onClickRecentSearchWord={onClickRecentSearchWord}
@@ -148,6 +180,34 @@ function Search() {
               </section>
             </>
           )}
+          <Snackbar
+            open={showToast.open}
+            onClose={handleClose}
+            autoHideDuration={1000 * 1000}
+            anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
+            TransitionComponent={SlideTransition}
+            style={{
+              position: 'absolute',
+              left: '50%',
+              right: 'auto',
+              bottom: '12%',
+              transform: 'translateX(-50%)',
+              width: '398px',
+              zIndex: '2',
+            }}
+          >
+            <SnackbarContent
+              style={{
+                width: '100%',
+                justifyContent: 'center',
+              }}
+              message={
+                <span id="client-snackbar">
+                  한 번에 10개까지 추가 가능합니다.
+                </span>
+              }
+            />
+          </Snackbar>
         </>
       )}
     </SearchLayoutV2>
