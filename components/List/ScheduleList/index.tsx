@@ -1,14 +1,8 @@
 import { useMonthlyCalanderDividendExchangeQuery } from '@/hook/useQueryHook/useMonthlyCalanderDividendQuery';
 import CommonFont from '@/components/common/Font';
 
-import {
-  Box,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  Avatar,
-} from '@mui/material';
+import StockAvatar from '@/components/common/StockAvatar';
+import { Box, List, ListItem, ListItemText, ListItemIcon } from '@mui/material';
 
 export function ScheduleList() {
   const { data } = useMonthlyCalanderDividendExchangeQuery();
@@ -58,7 +52,7 @@ export function ScheduleList() {
                   sx={{ maxWidth: 32 }}
                 />
                 <ListItemIcon sx={{ minWidth: 0 }}>
-                  <Avatar />
+                  <StockAvatar tickerCode={tickerCode} stockCode={stockCode} />
                 </ListItemIcon>
                 <ListItemText
                   primary={

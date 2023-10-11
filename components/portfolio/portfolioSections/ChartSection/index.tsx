@@ -5,10 +5,11 @@ import Section from '@/components/Section';
 import CommonCheckButton from '@/components/common/CheckButton';
 import FlexBox from '@/components/common/FlexBox';
 import { useAnnualDividend } from '@/hook/useAnnualDividend';
-import NormalNotifyModal from '@/components/common/Modal/NormalNotifyModal';
-import Modal from '@/components/common/Modal';
 import { useEmotionTheme } from '@/hook/useThemeHooks';
 import { useControlTax } from '@/hook/useControlTax';
+
+import Modal from '@/components/common/Modal';
+import { CenterModalV2 } from '@/components/commonV2/ModalV2/CenterModal';
 
 export default function ChartSection() {
   const { annualDividendExchangeWithSimpleData } = useAnnualDividend();
@@ -44,7 +45,7 @@ export default function ChartSection() {
             >
               소득세
             </CommonCheckButton>
-            <NormalNotifyModal
+            <CenterModalV2
               title={'준비중입니다'}
               content={
                 '4대 보험을 제한 결과값 도출은 곧 출시 예정입니다. 조금만 기다려주세요!'
@@ -66,7 +67,7 @@ export default function ChartSection() {
               <CommonCheckButton fontSize="body3" isWait checked={false}>
                 4대보험
               </CommonCheckButton>
-            </NormalNotifyModal>
+            </CenterModalV2>
           </FlexBox>
         </FlexBox>
       </FlexBox>

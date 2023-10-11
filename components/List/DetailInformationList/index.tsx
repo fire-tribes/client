@@ -4,7 +4,7 @@ import { AnnualDividendListItem } from '@/components/List/DetailInformationList/
 
 import { useAnnualDividend } from '@/hook/useAnnualDividend';
 
-import NotifyListModal from '@/components/common/Modal/NotifyListModal';
+import AnnualDividendModal from '@/components/common/Modal/AnnualDividendModal';
 import type { BadgeDetailText } from '@/mocks';
 
 export default function DetailInformationList() {
@@ -171,7 +171,11 @@ export default function DetailInformationList() {
   return (
     <>
       {annualDividendListItemTexts.map(([key, value]) => (
-        <NotifyListModal key={key} modalTitle={value.title} items={value.items}>
+        <AnnualDividendModal
+          key={key}
+          modalTitle={value.title}
+          items={value.items}
+        >
           <AnnualDividendListItem
             padding={{
               top: paddingTop,
@@ -193,7 +197,7 @@ export default function DetailInformationList() {
               </CommonFont>
             }
           />
-        </NotifyListModal>
+        </AnnualDividendModal>
       ))}
     </>
   );

@@ -28,7 +28,7 @@ const useLogoutQuery = () => {
         const cookie = new Cookie();
 
         cookie.remove(ACCESS_TOKEN);
-        window.location.href = '/v2/login';
+        window.location.href = '/login';
       }
     },
   });
