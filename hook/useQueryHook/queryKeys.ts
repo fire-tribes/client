@@ -21,6 +21,11 @@ export const queryKeys = {
     exchangeRate?: number,
     isTax?: boolean | null,
   ) => ['annualDividend', isSimple, isTax, exchangeRate],
+  annualDividendKR: (isSimple?: boolean | null, isTax?: boolean | null) => [
+    'annualDividendKR',
+    isSimple,
+    isTax,
+  ],
   monthlyCalanderDividend: (
     isSimple?: boolean | null,
     exchangeRate?: number,
