@@ -1,6 +1,7 @@
 import FlexBox from '@/components/common/FlexBox';
 import CommonIcon from '@/components/common/Icon';
 import CommonFont from '@/components/common/Font';
+import CheckButtonStyled from '@/components/common/CheckButton/style';
 import type { FontSizeKeys } from '@/styles/typography';
 import type { CSSProperties, PropsWithChildren } from 'react';
 
@@ -34,11 +35,11 @@ export default function CommonCheckButton({
   };
 
   return (
-    <button onClick={handleOnClick}>
+    <CheckButtonStyled.Button onClick={handleOnClick}>
       <FlexBox gap={gap}>
         <CommonIcon iconName={iconName} />
         <CommonFont fontSize={fontSize}>{children}</CommonFont>
       </FlexBox>
-    </button>
+    </CheckButtonStyled.Button>
   );
 }
