@@ -44,14 +44,13 @@ function Edit() {
       <section>
         <Backward title={'보유 주식 편집'} hasBeforePath={'전체 편집 페이지'} />
       </section>
-
       {hasMyPortFolioData ? (
         <>
           <section>
             <EditStocks />
           </section>
           <section>
-            <div style={{ height: '52px' }}></div>
+            <div style={{ height: '100px' }}></div>
           </section>
         </>
       ) : (

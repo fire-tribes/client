@@ -1,5 +1,7 @@
 import S from './style';
+import { ModalV2 } from '../../ModalV2';
 import HeadMeta, { HeadMetaProps } from '@/components/HeadMeta';
+import { useControlModalV2 } from '@/hook/useControlModalV2';
 import { useState, type ReactNode, useEffect } from 'react';
 
 const useMobileFullView = () => {
@@ -46,12 +48,14 @@ const SearchLayoutV2 = ({
   headMetaProps,
 }: SearchLayoutV2Props) => {
   const vh = useMobileFullView();
+  const { modalState } = useControlModalV2();
   return (
     <S.LayoutBody vh={vh}>
       <HeadMeta {...headMetaProps} />
       <S.LayoutMaxMin>
         <S.LayoutContent>{children}</S.LayoutContent>
         {hasButton ? buttomFixedButton : <div></div>}
+        {modalState.isOpen && <ModalV2 />}
       </S.LayoutMaxMin>
     </S.LayoutBody>
   );

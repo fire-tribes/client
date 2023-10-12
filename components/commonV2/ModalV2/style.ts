@@ -55,7 +55,7 @@ const ModalV2Styled = {
 
     border-radius: 10px;
   `,
-  BotommSheetModalContainer: styled.div`
+  BottomSheetModalContainer: styled.div`
     width: 100%;
     padding: 24px 16px;
 

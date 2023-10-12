@@ -16,7 +16,8 @@ export const assetAPI = {
     );
   },
   getSearchedResults: (word: string, pageIndex: number) => {
-    return APIInstance.get<ResponseSuccess<GetSearchedResults>>('asset/find', {
+    // return APIInstance.get<ResponseSuccess<GetSearchedResults>>('asset/find', {
+    return APIInstance.get<GetSearchedResults>('asset/find', {
       params: {
         category: 'STOCK',
         word: word,
