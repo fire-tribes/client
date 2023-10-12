@@ -1,53 +1,15 @@
 import { KakaoSDK } from '@/components/Oauth/KakaoSDK';
 import CommonFont from '@/components/common/Font';
-import { useControlSnackbarV2 } from '@/hook/useControlSnackbarV2';
 import { useKakaoLogin } from '@/hook/useKakaoLogin';
-
 import styled from '@emotion/styled';
+import { Snackbar } from '@mui/material';
 import Image from 'next/image';
-import { useEffect } from 'react';
 
 export default function KakaoLoginButtonV2() {
   const { open, isLoading, setIsLoading, isError, setIsError } =
     useKakaoLogin();
-  const { openSnackbar, closeSnackbar } = useControlSnackbarV2();
 
-  useEffect(() => {
-    if (isLoading) {
-      openSnackbar({
-        message: '로그인 중입니다.',
-        autoHideDuration: 3 * 1000,
-        anchorOrigin: {
-          vertical: 'bottom',
-          horizontal: 'center',
-        },
-        onClose: () => {
-          setIsLoading(false);
-          closeSnackbar();
-        },
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading]);
-
-  useEffect(() => {
-    if (isError) {
-      openSnackbar({
-        message: '로그인 오류가 발생했습니다. 다시 시도해 주세요.',
-        autoHideDuration: 3000,
-        anchorOrigin: {
-          vertical: 'bottom',
-          horizontal: 'center',
-        },
-        onClose: () => {
-          setIsError(false);
-          closeSnackbar();
-        },
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isError]);
-
+  console.log(isLoading, isError);
   return (
     <>
       <KakaoSDK />
@@ -57,6 +19,52 @@ export default function KakaoLoginButtonV2() {
           카카오톡 로그인
         </CommonFont>
       </S.KakaoLoginButtonContainer>
+      {isLoading && (
+        <Snackbar
+          open={isLoading}
+          message={'로그인 중입니다.'}
+          autoHideDuration={3000}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          ContentProps={{
+            sx: {
+              justifyContent: 'center',
+            },
+          }}
+          onClose={() => {
+            setIsError(false);
+            setIsLoading(false);
+          }}
+          sx={{
+            bottom: '72px',
+          }}
+        />
+      )}
+      {isError && (
+        <Snackbar
+          open={isError}
+          message={'로그인 오류가 발생했습니다. 다시 시도해 주세요.'}
+          autoHideDuration={3000}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          ContentProps={{
+            sx: {
+              justifyContent: 'center',
+            },
+          }}
+          onClose={() => {
+            setIsError(false);
+            setIsLoading(false);
+          }}
+          sx={{
+            bottom: '72px',
+          }}
+        />
+      )}
     </>
   );
 }
