@@ -162,7 +162,7 @@ export const useAnnualDividendTaxKRQuery = () => {
   const { exchangeRate } = useExchangeRate();
   const { taxData } = useControlTax();
 
-  const { divideByTax, getPriceByTax, getTaxByPrice } = useFormatPrice();
+  const { divideByTax, getPriceByTax, getPrice, getByTax } = useFormatPrice();
 
   const getQueryFunction = () => {
     const annualDividendFullData:
@@ -189,8 +189,8 @@ export const useAnnualDividendTaxKRQuery = () => {
         dividendChange: getPriceByTax(annualDividendData.dividendChange),
         monthlyDividends: newMonthlyDividends,
         annualDividend: getPriceByTax(annualDividendData.annualDividend),
-        paidTax: getTaxByPrice(annualDividendData.paidTax),
-        unPaidTax: getTaxByPrice(annualDividendData.unPaidTax),
+        paidTax: getPrice(getByTax(annualDividendData.paidTax)),
+        unPaidTax: getPrice(getByTax(annualDividendData.unPaidTax)),
         thisMonthDividend: getPriceByTax(annualDividendData.thisMonthDividend),
       };
     }
@@ -206,7 +206,7 @@ export const useAnnualDividendSimpleKRQuery = () => {
   const queryClient = useQueryClient();
   const { modeData } = useControlMode();
   const { taxData } = useControlTax();
-  const { divideByTax, getPriceByTaxWithSimple, getTaxByPriceWithSimple } =
+  const { divideByTax, getPriceByTaxWithSimple, getPriceBySimple, getByTax } =
     useFormatPrice();
 
   const getQueryFunction = () => {
@@ -236,8 +236,8 @@ export const useAnnualDividendSimpleKRQuery = () => {
         annualDividend: getPriceByTaxWithSimple(
           annualDividendData.annualDividend,
         ),
-        paidTax: getTaxByPriceWithSimple(annualDividendData.paidTax),
-        unPaidTax: getTaxByPriceWithSimple(annualDividendData.unPaidTax),
+        paidTax: getPriceBySimple(getByTax(annualDividendData.paidTax)),
+        unPaidTax: getPriceBySimple(getByTax(annualDividendData?.unPaidTax)),
         thisMonthDividend: getPriceByTaxWithSimple(
           annualDividendData.thisMonthDividend,
         ),
