@@ -1,6 +1,6 @@
 import CommonFont from '@/components/common/Font';
 import FlexBox from '@/components/common/FlexBox';
-import { useMyPortFolioExchangeQuery } from '@/hook/useQueryHook/useMyPortFolioQuery';
+import { useMyPortFolioKRQuery } from '@/hook/useQueryHook/useMyPortFolioQuery';
 import StockAvatar from '@/components/common/StockAvatar';
 import {
   Box,
@@ -12,7 +12,8 @@ import {
 } from '@mui/material';
 
 export function MyStockList() {
-  const { data: myPortfolioData } = useMyPortFolioExchangeQuery();
+  // const { data: myPortfolioData } = useMyPortFolioExchangeQuery();
+  const { data: myPortfolioData } = useMyPortFolioKRQuery();
   const myAssetDetails = myPortfolioData?.assetDetails;
 
   return (

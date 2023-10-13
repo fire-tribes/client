@@ -58,3 +58,44 @@ export const useMyPortFolioExchangeQuery = () => {
     },
   );
 };
+
+export const useMyPortFolioKRQuery = () => {
+  const { exchangeRate } = useExchangeRate();
+  const { modeData } = useControlMode();
+  const { taxData } = useControlTax();
+  const queryClient = useQueryClient();
+
+  const { getPriceBySimple, getPrice } = useFormatPrice();
+
+  return useQuery(
+    queryKeys.changedMyPortfolio(
+      modeData.isSimple,
+      exchangeRate,
+      taxData.isTax,
+    ),
+    () => {
+      const cachedMyPortfolioQueryData:
+        | AxiosResponse<ResponseSuccess<MyPortfolioModel>>
+        | undefined = queryClient.getQueryData(queryKeys.myPortFolio());
+      const cachedMyPortfolioData = cachedMyPortfolioQueryData?.data.data;
+
+      if (cachedMyPortfolioData) {
+        const { totalValue, totalValueChange, assetDetails } =
+          cachedMyPortfolioData;
+
+        return {
+          ...cachedMyPortfolioData,
+          totalValue: getPriceBySimple(totalValue),
+          totalValueChange: getPriceBySimple(totalValueChange),
+          assetDetails: assetDetails.map((pre) => ({
+            ...pre,
+            averagePrice: getPrice(pre.averagePrice),
+            currentPrice: getPrice(pre.currentPrice),
+            assetPriceChange: getPrice(pre.assetPriceChange),
+            value: getPrice(pre.value),
+          })),
+        };
+      }
+    },
+  );
+};
