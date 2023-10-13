@@ -36,7 +36,7 @@ export default function V2Page() {
         <div>
           <Padding paddingLeft={18} paddingRight={18} paddingTop={21}>
             <CommonHeader>
-              <ModeController />
+              <ModeController hasPortfolio={true} />
             </CommonHeader>
           </Padding>
 

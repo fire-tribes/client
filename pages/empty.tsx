@@ -2,6 +2,9 @@ import CommonButton from '@/components/common/Button/CommonButton';
 import CloudImage from '@/public/Cloud.png';
 import PlusSvg from '@/public/icon/plus.svg';
 import LayoutV2 from '@/components/commonV2/Layout';
+import Padding from '@/components/commonV2/Padding';
+import CommonHeader from '@/components/common/Header';
+import ModeController from '@/components/ModeController';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -24,6 +27,11 @@ function Empty() {
         image: '/icon/snow_logo.png',
       }}
     >
+      <Padding paddingLeft={18} paddingRight={18} paddingTop={21}>
+        <CommonHeader>
+          <ModeController hasPortfolio={false} />
+        </CommonHeader>
+      </Padding>
       <EmptyUI.Item>
         {loading ? (
           <CircularProgress />

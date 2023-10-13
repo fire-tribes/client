@@ -6,7 +6,11 @@ import {
   selectedStocksAtom,
 } from '@/hook/useGetSelectedStocks/state';
 import { useGetSearchedResults } from '@/hook/useGetSearchedResults';
-import { searchedResultsAtom } from '@/hook/useGetSearchedResults/state';
+import {
+  SearchedResultsAtomProps,
+  searchedResultsAtom,
+} from '@/hook/useGetSearchedResults/state';
+import { useMyPortFolio } from '@/hook/useMyPortFolio';
 import { useAtom } from 'jotai';
 import { useDebounce } from 'use-debounce';
 import { CircularProgress } from '@mui/material';
@@ -32,9 +36,11 @@ interface Stock {
 interface SearchResultsProps {
   /** 입력한 검색어 */
   value: string;
+  /** 기존 포트폴리오에 값을 추가인지, 신규 포트폴리오에 값을 추가하는 건지 확인 */
+  portfolioId: number | undefined;
 }
 
-function SearchedResults({ value }: SearchResultsProps) {
+function SearchedResults({ value, portfolioId }: SearchResultsProps) {
   /** value를 debounce 처리하여, 일정 시간동안 값이 바뀌면 서버에 get 요청 */
   const [debouncedValue] = useDebounce(value, 0.5 * 1000);
 
@@ -131,6 +137,10 @@ function SearchedResults({ value }: SearchResultsProps) {
     });
   };
 
+  /** 이미 있는 자산이라면, 버튼 삭제하는 로직 */
+  const { myPortFolioData } = useMyPortFolio();
+
+  /**  */
   return (
     <>
       <ShowAddedStocks
@@ -150,11 +160,36 @@ function SearchedResults({ value }: SearchResultsProps) {
         <div>
           {searchedResults !== undefined &&
             searchedResults.map((stock) => {
+              const hasAlreadyStockInPortfolio = (
+                searchedResultsStock: SearchedResultsAtomProps,
+              ) => {
+                /** portfolioId가 존재한다면(기존 포트폴리오가 있다면), */
+                if (portfolioId !== undefined) {
+                  /** 기존 포트폴리오의 Ticker와 SearchedStocks의 Ticker를 비교하기  */
+                  /** 기존 포트폴리오의 자산 배열 */
+                  const portfolioStocks = myPortFolioData?.assetDetails;
+                  /** 검색된 자산 배열 */
+                  if (portfolioStocks !== undefined) {
+                    for (let i = 0; i < portfolioStocks.length; i++) {
+                      if (
+                        portfolioStocks[i].tickerCode ===
+                        searchedResultsStock.tickerCode
+                      ) {
+                        return true;
+                      } else {
+                        return false;
+                      }
+                    }
+                  }
+                }
+              };
+
               return (
                 <SearchedResult
                   key={stock.assetId}
                   stock={stock}
                   debouncedValue={debouncedValue}
+                  hasAlreadyStockInPortfolio={hasAlreadyStockInPortfolio(stock)}
                   isSelected={selectedStocks.some(
                     (selected: SelectedStocksAtomProps) =>
                       stock.tickerCode
@@ -165,16 +200,19 @@ function SearchedResults({ value }: SearchResultsProps) {
                 />
               );
             })}
-          {isLoading ? (
-            <SearchedResultsUI.LoadingContainer>
-              <CircularProgress />
-            </SearchedResultsUI.LoadingContainer>
-          ) : hasNextPage ? (
-            <SearchedResultsUI.Button onClick={onClickLoadMoreButton}>
-              더 보기
+          {hasNextPage && (
+            <SearchedResultsUI.Button
+              onClick={onClickLoadMoreButton}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <SearchedResultsUI.LoadingContainer>
+                  <CircularProgress />
+                </SearchedResultsUI.LoadingContainer>
+              ) : (
+                '더 보기'
+              )}
             </SearchedResultsUI.Button>
-          ) : (
-            <></>
           )}
           <div style={{ height: 'calc(100px)' }}></div>
         </div>
