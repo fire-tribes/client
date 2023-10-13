@@ -1,7 +1,73 @@
 import {
   getShortCurrencyKRByPlusNumber,
+  getShortCurrencyKRByMinusNumber,
   getShortCurrencyDividendChartKR,
 } from '../components/Chart/utils';
+
+describe('get minus number', () => {
+  const MINUS_TWENTY_BULLION = -2000 * 10000 * 100;
+  const MINUS_TWO_BULLION = -2000 * 10000 * 10;
+  const MINUS_TWO_THOUSAND = -2000 * 10000;
+
+  it('0', () => {
+    const result = getShortCurrencyKRByMinusNumber(0);
+    expect(result).toBe('0');
+  });
+
+  it('-200원', () => {
+    const result = getShortCurrencyKRByMinusNumber(-200);
+    expect(result).toBe('-200');
+  });
+
+  it('-2000원', () => {
+    const result = getShortCurrencyKRByMinusNumber(-2000);
+    expect(result).toBe('-2,000');
+  });
+
+  it('-2만원', () => {
+    const result = getShortCurrencyKRByMinusNumber(-2000 * 10);
+    expect(result).toBe('-2만');
+  });
+
+  it('-20만원', () => {
+    const result = getShortCurrencyKRByMinusNumber(-2000 * 100);
+    expect(result).toBe('-20만');
+  });
+
+  it('-200만원', () => {
+    const result = getShortCurrencyKRByMinusNumber(-2000 * 1000);
+    expect(result).toBe('-200만');
+  });
+
+  it('-2000만원', () => {
+    const result = getShortCurrencyKRByMinusNumber(-2000 * 10000);
+    expect(result).toBe('-2000만');
+  });
+
+  it('-2억2000만원', () => {
+    const result = getShortCurrencyKRByMinusNumber(
+      MINUS_TWO_BULLION + MINUS_TWO_THOUSAND,
+    );
+    expect(result).toBe('-2억 2000만');
+  });
+
+  it('-22억2000만원', () => {
+    const result = getShortCurrencyKRByMinusNumber(
+      MINUS_TWENTY_BULLION + MINUS_TWO_BULLION + MINUS_TWO_THOUSAND,
+    );
+    expect(result).toBe('-22억 2000만');
+  });
+
+  it('-222억2000만원', () => {
+    const result = getShortCurrencyKRByMinusNumber(
+      -2000 * 10000 * 1000 +
+        -2000 * 10000 * 100 +
+        -2000 * 10000 * 10 +
+        -2000 * 10000,
+    );
+    expect(result).toBe('-99억');
+  });
+});
 
 describe('getShortCurrencyKRByPlusNumber', () => {
   it('-100', () => {
@@ -73,29 +139,29 @@ describe('getShortCurrencyKRByPlusNumber', () => {
   it('13억3천', () => {
     const result = getShortCurrencyKRByPlusNumber(1330000000);
 
-    expect(result).toBe('13억');
+    expect(result).toBe('13억 3000만');
   });
 
   it('100억 - 1원', () => {
     const result = getShortCurrencyKRByPlusNumber(10000000000 - 1);
 
-    expect(result).toBe('99억');
+    expect(result).toBe('99억 9999만');
   });
 
   it('100억', () => {
     const result = getShortCurrencyKRByPlusNumber(10000000000);
 
-    expect(result).toBe('99억');
+    expect(result).toBe('99억 9999만');
   });
 
   it('133억3천', () => {
     const result = getShortCurrencyKRByPlusNumber(13330000000);
 
-    expect(result).toBe('99억');
+    expect(result).toBe('99억 9999만');
   });
 });
 
-describe('getShortCurrencyKRByPlusNumber', () => {
+describe('getShortCurrencyDividendChartKR', () => {
   it('-100', () => {
     const result = getShortCurrencyDividendChartKR(-100);
 

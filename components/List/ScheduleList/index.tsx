@@ -1,11 +1,11 @@
-import { useMonthlyCalanderDividendExchangeQuery } from '@/hook/useQueryHook/useMonthlyCalanderDividendQuery';
+import { useMonthlyCalanderDividendKRWithSimpleQuery } from '@/hook/useQueryHook/useMonthlyCalanderDividendQuery';
 import CommonFont from '@/components/common/Font';
 
 import StockAvatar from '@/components/common/StockAvatar';
 import { Box, List, ListItem, ListItemText, ListItemIcon } from '@mui/material';
 
 export function ScheduleList() {
-  const { data } = useMonthlyCalanderDividendExchangeQuery();
+  const { data } = useMonthlyCalanderDividendKRWithSimpleQuery();
 
   if (data?.success === true && !data?.data.length) {
     return (

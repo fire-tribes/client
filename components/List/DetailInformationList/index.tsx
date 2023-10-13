@@ -8,21 +8,22 @@ import AnnualDividendModal from '@/components/common/Modal/AnnualDividendModal';
 import type { BadgeDetailText } from '@/mocks';
 
 export default function DetailInformationList() {
-  const { annualDividendExchangeData, annualDividendExchangeWithSimpleData } =
-    useAnnualDividend();
+  const {
+    // annualDividendSimpleKRData,
+    annualDividendTaxKRData,
+    annualDividendSimpleKRData,
+  } = useAnnualDividend();
 
   const detailInformationData = {
-    annualDividend: `${
-      annualDividendExchangeWithSimpleData?.annualDividend || 0
-    }`,
+    annualDividend: `${annualDividendSimpleKRData?.annualDividend || 0}`,
     dividendPriceRatio: `${
-      annualDividendExchangeWithSimpleData?.dividendPriceRatio.toFixed(2) || 0
+      annualDividendSimpleKRData?.dividendPriceRatio.toFixed(2) || 0
     }%`,
-    paidTax: annualDividendExchangeWithSimpleData?.paidTax
-      ? `${annualDividendExchangeWithSimpleData?.paidTax}`
+    paidTax: annualDividendSimpleKRData?.paidTax
+      ? `${annualDividendSimpleKRData?.paidTax}`
       : '없음',
-    unPaidTax: annualDividendExchangeWithSimpleData?.unPaidTax
-      ? `${annualDividendExchangeWithSimpleData?.unPaidTax} 예상`
+    unPaidTax: annualDividendSimpleKRData?.unPaidTax
+      ? `${annualDividendSimpleKRData?.unPaidTax} 예상`
       : '없음',
   };
 
@@ -59,7 +60,7 @@ export default function DetailInformationList() {
           ),
           value: (
             <CommonFont fontSize="body1" fontWeight="bold" color="point_red01">
-              {annualDividendExchangeWithSimpleData?.dividendPriceRatio}%
+              {annualDividendSimpleKRData?.dividendPriceRatio}%
             </CommonFont>
           ),
         },
@@ -76,7 +77,7 @@ export default function DetailInformationList() {
           ),
           value: (
             <CommonFont fontSize="body1" fontWeight="bold" color="point_red01">
-              {annualDividendExchangeWithSimpleData?.dividendYieldRatio}%
+              {annualDividendSimpleKRData?.dividendYieldRatio}%
             </CommonFont>
           ),
         },
@@ -101,7 +102,7 @@ export default function DetailInformationList() {
           ),
           value: (
             <CommonFont fontSize="body1" fontWeight="bold" color="point_blue02">
-              {annualDividendExchangeData?.paidTax}
+              {annualDividendTaxKRData?.paidTax}
             </CommonFont>
           ),
         },
@@ -139,7 +140,7 @@ export default function DetailInformationList() {
           ),
           value: (
             <CommonFont fontSize="body1" fontWeight="bold" color="point_blue02">
-              {annualDividendExchangeData?.unPaidTax} 예상
+              {annualDividendTaxKRData?.unPaidTax} 예상
             </CommonFont>
           ),
         },

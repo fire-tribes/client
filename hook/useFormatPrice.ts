@@ -10,6 +10,7 @@ export const useFormatPrice = () => {
   const { modeData } = useControlMode();
 
   const divideByTax = (price: number) => Math.floor(price * (85 / 100));
+  const getByTax = (price: number) => Math.floor(price * (15 / 100));
   const divideSimple = (price: number) =>
     price > 0
       ? getShortCurrencyKRByPlusNumber(Math.floor(price))
@@ -47,12 +48,40 @@ export const useFormatPrice = () => {
     return newPrice.toLocaleString('ko-kr') + '원';
   };
 
+  const getTaxByPriceWithSimple = (price: number) => {
+    let newPrice: number = Math.floor(price);
+
+    if (!taxData.isTax) {
+      return '0원';
+    }
+
+    if (taxData.isTax) {
+      newPrice = getByTax(price);
+    }
+
+    if (modeData.isSimple) {
+      return divideSimple(newPrice) + '원';
+    }
+
+    return newPrice.toLocaleString('ko-kr') + '원';
+  };
+
+  const getTaxByPrice = (price: number) => {
+    if (taxData.isTax) {
+      return getByTax(price).toLocaleString('ko-kr') + '원';
+    }
+    return '0원';
+  };
+
   return {
     divideByTax,
     divideSimple,
+    getByTax,
     getPrice,
     getPriceByTax,
     getPriceBySimple,
     getPriceByTaxWithSimple,
+    getTaxByPriceWithSimple,
+    getTaxByPrice,
   };
 };
