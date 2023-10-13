@@ -17,8 +17,14 @@ import { CircularProgress } from '@mui/material';
 
 export default function V2Page() {
   const { status } = useMyPortFolio();
-  useAnnualDividend();
-  useMonthlyCalanderDividendQuery();
+  const { status: annualDividendStatus } = useAnnualDividend();
+  const { status: monthlyCalanderDividendStatus } =
+    useMonthlyCalanderDividendQuery();
+
+  const isLoadingPage =
+    status === 'loading' ||
+    annualDividendStatus === 'loading' ||
+    monthlyCalanderDividendStatus === 'loading';
 
   return (
     <LayoutV2
@@ -28,7 +34,7 @@ export default function V2Page() {
         image: '/icon/snow_logo.png',
       }}
     >
-      {status === 'loading' ? (
+      {isLoadingPage ? (
         <CenterContent>
           <CircularProgress />
         </CenterContent>

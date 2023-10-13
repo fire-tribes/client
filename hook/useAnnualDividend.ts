@@ -5,7 +5,7 @@ import {
 } from '@/hook/useQueryHook/useAnnualDividendQuery';
 
 export const useAnnualDividend = () => {
-  const { data: annualDividendData, isLoading } = useAnnualDividendQuery();
+  const { data: annualDividendData, status } = useAnnualDividendQuery();
   const { data: annualDividendExchangeData } = useAnnualDividendExchangeQuery();
   const { data: annualDividendExchangeWithSimpleData } =
     useAnnualDividendExchangeWithSimpleQuery();
@@ -14,6 +14,6 @@ export const useAnnualDividend = () => {
     annualDividendData: annualDividendData?.data,
     annualDividendExchangeData,
     annualDividendExchangeWithSimpleData,
-    isLoading,
+    status,
   };
 };
