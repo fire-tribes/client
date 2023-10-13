@@ -11,20 +11,21 @@ import NotifyMessageSection from '@/components/portfolio/portfolioSections/Notif
 import SimpleDividentScheduleSection from '@/components/portfolio/portfolioSections/SimpleDividentScheduleSection';
 import TotalStatisticsSection from '@/components/portfolio/portfolioSections/TotalStatisticsSection';
 import { useAnnualDividend } from '@/hook/useAnnualDividend';
+import { useMonthlyCalanderDividend } from '@/hook/useMonthlyCalanderDividend';
 import { useMyPortFolio } from '@/hook/useMyPortFolio';
-import { useMonthlyCalanderDividendQuery } from '@/hook/useQueryHook/useMonthlyCalanderDividendQuery';
 import { CircularProgress } from '@mui/material';
 
 export default function V2Page() {
   const { status } = useMyPortFolio();
-  const { status: annualDividendStatus } = useAnnualDividend();
   const { status: monthlyCalanderDividendStatus } =
-    useMonthlyCalanderDividendQuery();
+    useMonthlyCalanderDividend();
+  const { status: annualDividendStatus } = useAnnualDividend();
 
-  const isLoadingPage =
-    status === 'loading' ||
-    annualDividendStatus === 'loading' ||
-    monthlyCalanderDividendStatus === 'loading';
+  const isLoadingPage = !(
+    status === 'success' &&
+    annualDividendStatus === 'success' &&
+    monthlyCalanderDividendStatus === 'success'
+  );
 
   return (
     <LayoutV2
