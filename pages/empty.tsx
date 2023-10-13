@@ -10,11 +10,19 @@ import { CircularProgress } from '@mui/material';
 
 function Empty() {
   const router = useRouter();
+  const { portfolioId } = router.query as { portfolioId?: string };
   const [loading, setLoading] = useState(false);
 
   const onMoveSearchPage = () => {
     setLoading(true);
-    router.push('/search');
+
+    const SEARCH_URL = '/search';
+
+    if (portfolioId) {
+      return router.push(`${SEARCH_URL}?portfolioId=${portfolioId}`);
+    } else {
+      router.push(SEARCH_URL);
+    }
   };
   return (
     <LayoutV2
@@ -37,7 +45,7 @@ function Empty() {
               <tr /> 첫 주식을 추가해주세요.
             </div>
             <div>
-              <CommonButton onClick={() => onMoveSearchPage()}>
+              <CommonButton onClick={onMoveSearchPage}>
                 <Image src={PlusSvg} alt="plus Svg" />
                 <span>주식 추가하기</span>
               </CommonButton>

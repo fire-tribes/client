@@ -8,8 +8,18 @@ export const useMyPortFolio = () => {
   const router = useRouter();
   const { pathname } = router;
   const { data, status, isLoading, isFetching } = useMyPortFolioQuery();
-  const redirectEmpty = () => router.push('/empty');
+
   const myPortFolioData = data?.data.data;
+  const portfolioId = myPortFolioData?.portfolioId;
+
+  const redirectEmpty = () => {
+    const EMPTY_URL = '/empty';
+    if (portfolioId) {
+      return router.push(`${EMPTY_URL}?portfolioId=${portfolioId}`);
+    } else {
+      return router.push(EMPTY_URL);
+    }
+  };
 
   useEffect(() => {
     const isError = status === 'error';
