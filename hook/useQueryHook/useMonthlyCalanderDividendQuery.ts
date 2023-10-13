@@ -39,6 +39,24 @@ export const useMonthlyCalanderDividendQuery = () => {
   );
 };
 
+export const useMonthlyCalanderDividendKRQuery = () => {
+  const queryClient = useQueryClient();
+  const { modeData } = useControlMode();
+  const { taxData } = useControlTax();
+
+  return useQuery(
+    queryKeys.monthlyCalanderDividendKR(),
+    () => dividendAPI.getCalenderDividend(),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(
+          queryKeys.monthlyCalanderDividendKR(modeData.isSimple, taxData.isTax),
+        );
+      },
+    },
+  );
+};
+
 export const useMonthlyCalanderDividendExchangeQuery = () => {
   useMonthlyCalanderDividendQuery();
   const queryClient = useQueryClient();
@@ -78,6 +96,43 @@ export const useMonthlyCalanderDividendExchangeQuery = () => {
       exchangeRate,
       taxData.isTax,
     ),
+    getQueryFunction,
+  );
+};
+
+export const useMonthlyCalanderDividendKRWithSimpleQuery = () => {
+  useMonthlyCalanderDividendQuery();
+  const queryClient = useQueryClient();
+  const { exchangeRate } = useExchangeRate();
+  const { modeData } = useControlMode();
+  const { taxData } = useControlTax();
+
+  const { getPriceByTaxWithSimple } = useFormatPrice();
+
+  const getQueryFunction = () => {
+    const monthlyCalanderDividendData:
+      | ResponseSuccess<DividendCalanderModel[]>
+      | undefined = queryClient.getQueryData(
+      queryKeys.monthlyCalanderDividend(),
+    );
+
+    const calanderDividendDatas = monthlyCalanderDividendData?.data;
+
+    if (calanderDividendDatas?.length && exchangeRate) {
+      return {
+        ...monthlyCalanderDividendData,
+        data: calanderDividendDatas?.map((data) => ({
+          ...data,
+          expectedDividends: getPriceByTaxWithSimple(data.expectedDividends),
+        })),
+      };
+    }
+
+    return monthlyCalanderDividendData;
+  };
+
+  return useQuery(
+    queryKeys.monthlyCalanderDividendKR(modeData.isSimple, taxData.isTax),
     getQueryFunction,
   );
 };

@@ -9,6 +9,10 @@ export const getShortCurrencyKRByMinusNumber = (value: number) => {
   const TEN_BLIILON = 10000000000;
   const absoluteValue = Math.abs(value);
 
+  if (absoluteValue === 0) {
+    return '0';
+  }
+
   if (absoluteValue < 10000) {
     return Math.floor(value).toLocaleString('ko-kr');
   }
@@ -20,10 +24,15 @@ export const getShortCurrencyKRByMinusNumber = (value: number) => {
 
   /** 100억 미만 */
   if (absoluteValue < TEN_BLIILON) {
-    return Math.floor(value / (10000 * 10000)) + '억';
+    return [
+      Math.floor(absoluteValue / (10000 * 10000)) * -1 + '억',
+      Math.floor((absoluteValue % (10000 * 10000)) / 10000) + '만',
+    ]
+      .join(' ')
+      .trim();
   }
 
-  return '99억';
+  return '-99억';
 };
 
 export const getShortCurrencyKRByPlusNumber = (value: number) => {
@@ -44,13 +53,47 @@ export const getShortCurrencyKRByPlusNumber = (value: number) => {
 
   /** 100억 미만 */
   if (value < TEN_BLIILON) {
+    const upperMillion = Math.floor(value / (10000 * 10000));
+    const upperTenThousand = Math.floor((value % (10000 * 10000)) / 10000);
+
+    console.log(upperMillion);
+
+    return [
+      upperMillion + '억',
+      upperTenThousand > 0 ? `${upperTenThousand}만` : '',
+    ]
+      .join(' ')
+      .trim();
+  }
+
+  return '99억 9999만';
+};
+
+export const getShortCurrencyDividendChartKR = (value: number) => {
+  /** 최대 100억 */
+  const TEN_BLIILON = 10000000000;
+
+  if (value <= 0) return '';
+
+  // 1만 미만
+  if (value < 10000) {
+    return Math.floor(value).toLocaleString('ko-kr');
+  }
+
+  // 1억 미만
+  if (value < 10000 * 10000) {
+    return Math.floor(value / 10000) + '만';
+  }
+
+  /** 100억 미만 */
+  if (value < TEN_BLIILON) {
     return Math.floor(value / (10000 * 10000)) + '억';
   }
 
   return '99억';
 };
 
-const createShowChartDividendDatas = (
+export const createShowChartDividendDatas = (
   dividendDatas: MonthlyDividends | undefined,
 ) => {
   if (!dividendDatas) return;
@@ -79,36 +122,4 @@ const createShowChartDividendDatas = (
   );
 
   return showChartDividendDatas;
-};
-
-export {
-  // formatChartValue,
-  createShowChartDividendDatas,
-};
-
-// 차트는 0인 경우 '' 빈 문자열을 보여줘야한다.
-// 차트가 아닌 경우에는 toLocaleString(); 같은것들을 통해서 toFixed같은걸 적용해서 99억 이상인 경우에도 보여줘야 한다. 999조 까지만 보여줘야할 것 같다.
-
-export const getShortCurrencyDividendChartKR = (value: number) => {
-  /** 최대 100억 */
-  const TEN_BLIILON = 10000000000;
-
-  if (value <= 0) return '';
-
-  // 1만 미만
-  if (value < 10000) {
-    return Math.floor(value).toLocaleString('ko-kr');
-  }
-
-  // 1억 미만
-  if (value < 10000 * 10000) {
-    return Math.floor(value / 10000) + '만';
-  }
-
-  /** 100억 미만 */
-  if (value < TEN_BLIILON) {
-    return Math.floor(value / (10000 * 10000)) + '억';
-  }
-
-  return '99억';
 };

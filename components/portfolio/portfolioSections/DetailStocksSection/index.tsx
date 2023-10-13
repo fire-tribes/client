@@ -27,7 +27,7 @@ export default function DetailStocksSection() {
         {data?.totalValueChange && parseInt(data?.totalValueChange) > 0
           ? `+${data?.totalValueChange}`
           : `${data?.totalValueChange || '0원'}`}
-        {`(${data?.totalValueChangeRate || 0}%)`}
+        {` (${data?.totalValueChangeRate || 0}%)`}
       </Typography>
       <MyStockList />
     </Section>
