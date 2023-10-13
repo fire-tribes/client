@@ -18,10 +18,9 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, ChartDataLabels);
 
 export default function AnnualDividendBarChart() {
   const theme = useTheme();
-  const { annualDividendExchangeWithSimpleData } = useAnnualDividend();
+  const { annualDividendSimpleKRData } = useAnnualDividend();
 
-  const monthlyDividends =
-    annualDividendExchangeWithSimpleData?.monthlyDividends;
+  const monthlyDividends = annualDividendSimpleKRData?.monthlyDividends;
   const showChartDividendDatas = createShowChartDividendDatas(monthlyDividends);
 
   if (showChartDividendDatas) {

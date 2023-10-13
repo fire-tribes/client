@@ -1,17 +1,27 @@
 import {
   useAnnualDividendExchangeQuery,
+  useAnnualDividendTaxKRQuery,
   useAnnualDividendExchangeWithSimpleQuery,
   useAnnualDividendQuery,
+  useAnnualDividendSimpleKRQuery,
+  useAnnualDividendKRQuery,
 } from '@/hook/useQueryHook/useAnnualDividendQuery';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 export const useAnnualDividend = () => {
   const router = useRouter();
-  const { data: annualDividendData, status } = useAnnualDividendQuery();
+
+  /** USD  */
+  useAnnualDividendQuery();
   const { data: annualDividendExchangeData } = useAnnualDividendExchangeQuery();
   const { data: annualDividendExchangeWithSimpleData } =
     useAnnualDividendExchangeWithSimpleQuery();
+
+  /** KR  */
+  const { data: annualDividendKRData, status } = useAnnualDividendKRQuery();
+  const { data: annualDividendTaxKRData } = useAnnualDividendTaxKRQuery();
+  const { data: annualDividendSimpleKRData } = useAnnualDividendSimpleKRQuery();
 
   useEffect(() => {
     if (status === 'error') {
@@ -20,9 +30,11 @@ export const useAnnualDividend = () => {
   }, [status]);
 
   return {
-    annualDividendData: annualDividendData?.data,
+    annualDividendData: annualDividendKRData?.data,
     annualDividendExchangeData,
     annualDividendExchangeWithSimpleData,
+    annualDividendTaxKRData,
+    annualDividendSimpleKRData,
     status,
   };
 };
