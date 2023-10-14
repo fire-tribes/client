@@ -5,6 +5,7 @@ export interface SearchedResultsAtomProps {
   tickerCode: string;
   stockCode: string;
   name: string;
+  hasAlreadyStockInPortfolio: boolean;
   countryType: 'KOR' | 'USA';
   marketType:
     | 'KRX'

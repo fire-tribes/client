@@ -7,34 +7,21 @@ import {
 } from '@/hook/useGetSelectedStocks/state';
 import { useGetSearchedResults } from '@/hook/useGetSearchedResults';
 import { searchedResultsAtom } from '@/hook/useGetSearchedResults/state';
+import { useMyPortFolio } from '@/hook/useMyPortFolio';
+import { GetSearchedResultsDatas } from '@/@types/models/getSearchedResults';
 import { useAtom } from 'jotai';
 import { useDebounce } from 'use-debounce';
 import { CircularProgress } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 
-interface Stock {
-  assetId: number;
-  tickerCode: string;
-  stockCode: string;
-  name: string;
-  countryType: 'KOR' | 'USA';
-  marketType:
-    | 'KRX'
-    | 'KRX_KOSPI'
-    | 'KRX_KOSDAQ'
-    | 'KRX_KONEX'
-    | 'NYSE'
-    | 'AMEX'
-    | 'NASDAQ'
-    | 'UNKNOWN';
-  assetCategoryType: 'STOCK' | 'ETF' | 'ETN';
-}
 interface SearchResultsProps {
   /** 입력한 검색어 */
   value: string;
+  /** 기존 포트폴리오에 값을 추가인지, 신규 포트폴리오에 값을 추가하는 건지 확인 */
+  portfolioId: number | undefined;
 }
 
-function SearchedResults({ value }: SearchResultsProps) {
+function SearchedResults({ value, portfolioId }: SearchResultsProps) {
   /** value를 debounce 처리하여, 일정 시간동안 값이 바뀌면 서버에 get 요청 */
   const [debouncedValue] = useDebounce(value, 0.5 * 1000);
 
@@ -47,7 +34,11 @@ function SearchedResults({ value }: SearchResultsProps) {
     invalidateSearchedResultsData,
   } = useGetSearchedResults(debouncedValue, nextPageIndex);
   const searchedResultsArray = getSearchedResultsData?.data;
-
+  if (searchedResultsArray !== undefined) {
+    for (let i = 0; i < searchedResultsArray.length; i++) {
+      searchedResultsArray[i].hasAlreadyStockInPortfolio = false;
+    }
+  }
   const [searchedResults, setSearchedResults] = useAtom(searchedResultsAtom);
 
   useEffect(() => {
@@ -67,15 +58,33 @@ function SearchedResults({ value }: SearchResultsProps) {
 
     const newSearchedResultsArray = getSearchedResultsData?.data;
     if (newSearchedResultsArray !== undefined) {
+      for (let i = 0; i < newSearchedResultsArray.length; i++) {
+        newSearchedResultsArray[i].hasAlreadyStockInPortfolio = false;
+      }
       setSearchedResults(newSearchedResultsArray);
     }
   }, [debouncedValue]);
 
-  const onClickLoadMoreButton = async () => {
-    if (!hasNextPage) return;
+  /** 이미 있는 자산이라면, 버튼 삭제하는 로직 */
+  const { myPortFolioData } = useMyPortFolio();
+  const portfolioStocks = myPortFolioData?.assetDetails;
 
-    setNextPageIndex(nextPageIndex + 1);
-  };
+  if (portfolioId !== undefined) {
+    searchedResultsArray?.map((searchedResult) => {
+      /** 배열 portfolioStocks에서 tickerCode의 value와 일하는 객체 찾기 */
+      const hasAlreadyStock = portfolioStocks?.find(
+        (portfolioStock) =>
+          portfolioStock.tickerCode === searchedResult.tickerCode,
+      );
+
+      /** hasAlreadyStock이 true인 경우, hasAlreadyStockInPortfolio를 true로 변경 */
+      if (hasAlreadyStock) {
+        searchedResult.hasAlreadyStockInPortfolio = true;
+      } else {
+        searchedResult.hasAlreadyStockInPortfolio = false;
+      }
+    });
+  }
 
   /** Jotai의 selectedStocksAtom을 이용해서 선택된 주식을 관리 */
   const [selectedStocks, setSelectedStocks] = useAtom(selectedStocksAtom);
@@ -108,7 +117,7 @@ function SearchedResults({ value }: SearchResultsProps) {
 
   /** toggleSelected 함수를 useCallback으로 감싸서 debouncedValue가 변경될 때마다 함수가 새로 생성되도록 함 */
   const toggleSelected = useCallback(
-    (stock: Stock) => (
+    (stock: GetSearchedResultsDatas) => (
       console.log('debouncedValue in toggleSelected: ', debouncedValue),
       handleToggleSelected({
         ...stock,
@@ -129,6 +138,13 @@ function SearchedResults({ value }: SearchResultsProps) {
           : selected.stockCode !== stock.stockCode,
       );
     });
+  };
+
+  /** 더 보기 기능 */
+  const onClickLoadMoreButton = async () => {
+    if (!hasNextPage) return;
+
+    setNextPageIndex(nextPageIndex + 1);
   };
 
   return (
@@ -155,6 +171,7 @@ function SearchedResults({ value }: SearchResultsProps) {
                   key={stock.assetId}
                   stock={stock}
                   debouncedValue={debouncedValue}
+                  hasAlreadyStockInPortfolio={stock.hasAlreadyStockInPortfolio}
                   isSelected={selectedStocks.some(
                     (selected: SelectedStocksAtomProps) =>
                       stock.tickerCode
@@ -165,16 +182,19 @@ function SearchedResults({ value }: SearchResultsProps) {
                 />
               );
             })}
-          {isLoading ? (
-            <SearchedResultsUI.LoadingContainer>
-              <CircularProgress />
-            </SearchedResultsUI.LoadingContainer>
-          ) : hasNextPage ? (
-            <SearchedResultsUI.Button onClick={onClickLoadMoreButton}>
-              더 보기
+          {hasNextPage && (
+            <SearchedResultsUI.Button
+              onClick={onClickLoadMoreButton}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <SearchedResultsUI.LoadingContainer>
+                  <CircularProgress />
+                </SearchedResultsUI.LoadingContainer>
+              ) : (
+                '더 보기'
+              )}
             </SearchedResultsUI.Button>
-          ) : (
-            <></>
           )}
           <div style={{ height: 'calc(100px)' }}></div>
         </div>

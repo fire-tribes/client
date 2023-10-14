@@ -39,6 +39,11 @@ function FeedStockInfo({
   const handleInputBlur = () => {
     if (inputCountValue.trim() === '' || inputPriceValue.trim() === '') {
       setErrorText('* 보유 수량 및 가격을 정확히 입력해주세요.');
+    } else if (
+      parseInt(inputCountValue, 10) <= 0 ||
+      parseFloat(inputPriceValue) <= 0
+    ) {
+      setErrorText('* 보유 수량 및 가격은 0보다 값이 커야 합니다.');
     } else {
       setErrorText('');
     }
@@ -61,6 +66,7 @@ function FeedStockInfo({
             title={'종목 삭제'}
             message={'이 종목을 정말 삭제하시겠어요?'}
             onClickEvent={() => removeSelected(stock)}
+            isShowToast={true}
             toastMessage={'종목을 삭제하였습니다.'}
           >
             <FeedStockInfoUI.ButtonContainer>

@@ -28,10 +28,12 @@ interface SearchedResultProps {
   stock: Stock;
   /** 검색 결과 */
   debouncedValue: string;
-  /** 주식 종목 포트폴리오에 추가 선택 */
-  isSelected: boolean;
+  /** 기존 포트폴리오에 검색한 값이 있다면? */
+  hasAlreadyStockInPortfolio: boolean;
   /** 주식 종목 포트폴리오에 추가 선택 시, 실행할 함수 */
   toggleSelected: (stock: Stock) => void;
+  /** 주식 종목 포트폴리오에 추가 선택 */
+  isSelected: boolean;
 }
 
 // // 스타일링할 클래스
@@ -50,8 +52,9 @@ interface SearchedResultProps {
 function SearchedResult({
   stock,
   debouncedValue,
-  isSelected,
+  hasAlreadyStockInPortfolio,
   toggleSelected,
+  isSelected,
 }: SearchedResultProps) {
   /** debounceValue를 jotai로 만들기 */
 
@@ -107,13 +110,17 @@ function SearchedResult({
             )}
           </div>
         </SearchedResultUI.StockContainer>
-        <button onClick={() => toggleSelected(stock)}>
-          {isSelected ? (
-            <Image src={checkTrueSvg} alt="checkTrue Svg" />
-          ) : (
-            <Image src={checkFalseSvg} alt="checkFalse Svg" />
-          )}
-        </button>
+        {hasAlreadyStockInPortfolio ? (
+          <div></div>
+        ) : (
+          <button onClick={() => toggleSelected(stock)}>
+            {isSelected ? (
+              <Image src={checkTrueSvg} alt="checkTrue Svg" />
+            ) : (
+              <Image src={checkFalseSvg} alt="checkFalse Svg" />
+            )}
+          </button>
+        )}
       </SearchedResultUI.Item>
     </SearchedResultUI.Container>
   );

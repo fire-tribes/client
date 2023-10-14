@@ -48,6 +48,7 @@ function RecentSearchWords({
           title={'최근 검색어 삭제'}
           message={'최근 검색어를 모두 삭제하시겠어요?'}
           onClickEvent={() => mutate()}
+          isShowToast={true}
           toastMessage={'최근 검색어를 모두 삭제하였습니다.'}
         >
           <button
