@@ -4,7 +4,18 @@ import EditStock from '@/components/EditStocksGroup/EditStock';
 import { useMyPortFolio } from '@/hook/useMyPortFolio';
 import { assetDetailsAtom } from '@/hook/useGetAssetDetails/state';
 import { useAtom } from 'jotai';
-import { CircularProgress } from '@mui/material';
+import {
+  CircularProgress,
+  Slide,
+  SlideProps,
+  Snackbar,
+  SnackbarContent,
+} from '@mui/material';
+import { useState } from 'react';
+
+function SlideTransition(props: SlideProps) {
+  return <Slide {...props} direction="up" />;
+}
 
 function EditStocks() {
   /** Portfolio Get 요청 useFeatureHook (useMyPortfolio) */
@@ -13,11 +24,24 @@ function EditStocks() {
   // console.log('assetDetailsArray: ', assetDetailsArray);
 
   /** 수정하기 버튼 클릭 시, Jotai에 assetDetails 배열 데이터 담기 */
-  const [, setAssetDetails] = useAtom(assetDetailsAtom);
+  const [assetDetails, setAssetDetails] = useAtom(assetDetailsAtom);
   const createAssetDetailsJotai = () => {
     if (assetDetailsArray !== undefined) {
       setAssetDetails(assetDetailsArray);
     }
+  };
+
+  /** 주식을 삭제했을 때, Toast 창 띄우기 */
+  const [isShowToast, setIsShowToast] = useState(false);
+  if (
+    assetDetailsArray !== undefined &&
+    assetDetailsArray.length !== assetDetails.length
+  ) {
+    setIsShowToast(true);
+  }
+
+  const handleClose = () => {
+    setIsShowToast(false);
   };
 
   return (
@@ -43,6 +67,30 @@ function EditStocks() {
       ) : (
         <NothingStocks />
       )}
+      <Snackbar
+        open={isShowToast}
+        onClose={handleClose}
+        autoHideDuration={3 * 1000}
+        anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
+        TransitionComponent={SlideTransition}
+        style={{
+          position: 'absolute',
+          left: '50%',
+          right: 'auto',
+          bottom: '12%',
+          transform: 'translateX(-50%)',
+          width: '398px',
+          zIndex: '2',
+        }}
+      >
+        <SnackbarContent
+          style={{
+            width: '100%',
+            justifyContent: 'center',
+          }}
+          message={<span id="client-snackbar">종목을 삭제하였습니다.</span>}
+        />
+      </Snackbar>
     </>
   );
 }

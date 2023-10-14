@@ -29,7 +29,7 @@ interface SearchedResultProps {
   /** 검색 결과 */
   debouncedValue: string;
   /** 기존 포트폴리오에 검색한 값이 있다면? */
-  hasAlreadyStockInPortfolio: boolean | undefined;
+  hasAlreadyStockInPortfolio: boolean;
   /** 주식 종목 포트폴리오에 추가 선택 시, 실행할 함수 */
   toggleSelected: (stock: Stock) => void;
   /** 주식 종목 포트폴리오에 추가 선택 */

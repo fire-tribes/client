@@ -2,7 +2,6 @@
 // import Toast from '../../Toast';
 import Modal, { TModalProps } from '@/components/common/Modal';
 import useControlModal from '@/hook/useControlModal';
-// import useControlToast from '@/hook/useControlToast';
 import { basic } from '@/styles/palette';
 import * as React from 'react';
 import Snackbar from '@mui/material/Snackbar';
@@ -22,6 +21,7 @@ interface AlertModalProps
   title: string;
   message: string;
   onClickEvent?: () => void;
+  isShowToast: boolean;
   toastMessage?: string;
 }
 
@@ -37,10 +37,10 @@ function AlertModal({
   layout = 'fill',
   position = 'center',
   onClickEvent,
+  isShowToast,
   toastMessage,
 }: AlertModalProps) {
   const { isShow, openModal, closeModal } = useControlModal();
-  // const { isShowToast, setIsShowToast } = useControlToast();
 
   const [showToast, setShowToast] = React.useState<{ open: boolean }>({
     open: false,
@@ -53,7 +53,6 @@ function AlertModal({
     if (onClickEvent !== undefined) {
       onClickEvent();
     }
-    // setIsShowToast(true);
     closeModal();
   };
 
@@ -63,15 +62,6 @@ function AlertModal({
       open: false,
     });
   };
-
-  // React.useEffect(() => {
-  //   console.log('isShowToast: ', isShowToast);
-  //   if (isShowToast) {
-  //     setTimeout(() => {
-  //       setIsShowToast(false);
-  //     }, 3 * 1000);
-  //   }
-  // }, [isShowToast]);
 
   return (
     <>
@@ -108,9 +98,8 @@ function AlertModal({
         </Modal.Actions>
       </Modal>
       <span onClick={openModal}>{children}</span>
-      {/* {isShowToast && <Toast toastMessage={toastMessage} />} */}
       <Snackbar
-        open={showToast.open}
+        open={isShowToast ? showToast.open : false}
         onClose={handleClose}
         autoHideDuration={3 * 1000}
         anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}

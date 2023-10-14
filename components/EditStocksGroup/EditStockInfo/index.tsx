@@ -40,7 +40,7 @@ export default function EditStockInfo() {
   const assetId = Number(slug?.[1]);
   const portfolioAssetId = Number(slug?.[2]);
   /** 만들어진 Jotai(assetDetails)에서 값 가져오기 */
-  const [assetDetails] = useAtom(assetDetailsAtom);
+  const [assetDetails, setAssetDetails] = useAtom(assetDetailsAtom);
   console.log('assetDetails: ', assetDetails);
   const [editedAssetDetails, setEditedAssetDetails] = useAtom(
     editedAssetDetailsAtom,
@@ -133,6 +133,12 @@ export default function EditStockInfo() {
         myPortFolioData !== undefined ? myPortFolioData.portfolioId : 0,
       portfolioAssetId: object !== undefined ? object.portfolioAssetId : 0,
     };
+    setAssetDetails((prev) =>
+      prev.filter(
+        (assetDetail) =>
+          assetDetail.portfolioAssetId !== object?.portfolioAssetId,
+      ),
+    );
     deleteAssetDetailsData(requestObject);
   };
 
@@ -159,6 +165,7 @@ export default function EditStockInfo() {
               title={'종목 삭제'}
               message={'이 종목을 정말 삭제하시겠어요?'}
               onClickEvent={() => handleRemoveSelected()}
+              isShowToast={false}
               toastMessage={'종목을 삭제하였습니다.'}
             >
               <EditStockInfoUI.ButtonContainer>
