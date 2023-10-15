@@ -1,5 +1,3 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/7f6d25f8-1f8a-4b72-aa2e-ff0d65e9e810/deploy-status)](https://app.netlify.com/sites/fire-tribes/deploys)
-
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
