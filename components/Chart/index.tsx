@@ -23,6 +23,13 @@ export default function AnnualDividendBarChart() {
   const monthlyDividends = annualDividendSimpleKRData?.monthlyDividends;
   const showChartDividendDatas = createShowChartDividendDatas(monthlyDividends);
 
+  const backgroundColor = showChartDividendDatas?.map((_, index) => {
+    const thisMonth = new Date().getMonth();
+    return index === thisMonth
+      ? theme.palette.basic.point_red01
+      : theme.palette.basic.point_red02;
+  });
+
   if (showChartDividendDatas) {
     return (
       /**
@@ -35,9 +42,14 @@ export default function AnnualDividendBarChart() {
           ...options,
           plugins: {
             datalabels: {
-              font: {
-                size: 9,
-              },
+              font: () =>
+                // context
+                {
+                  return {
+                    size: 9,
+                    // size: context.active ? 12 : 9,
+                  };
+                },
               anchor: 'end',
               clip: false,
               align: 'top',
@@ -57,8 +69,8 @@ export default function AnnualDividendBarChart() {
             {
               label: '',
               data: showChartDividendDatas.map(({ dividend }) => dividend),
-              backgroundColor: [theme.palette.basic.point_red01],
-              borderColor: [theme.palette.basic.point_red01],
+              backgroundColor: backgroundColor,
+              borderColor: backgroundColor,
               borderRadius: 5,
               /** 한쪽만 적용 true, 양쪽 다 둥글게 false  */
               borderSkipped: false,
@@ -73,3 +85,8 @@ export default function AnnualDividendBarChart() {
 
   return null;
 }
+
+// [
+//   theme.palette.basic.point_red01,
+//   theme.palette.basic.point_red02,
+// ],
