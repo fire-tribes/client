@@ -55,7 +55,7 @@ export default function DetailInformationList() {
           ),
           subTitle: (
             <CommonFont fontSize="body3" fontWeight="regular" color="gray6">
-              주식을 산 시점의 가격을 반영한 배당율
+              주식을 산 시점의 가격을 반영한 배당률
             </CommonFont>
           ),
           value: (
@@ -72,7 +72,7 @@ export default function DetailInformationList() {
           ),
           subTitle: (
             <CommonFont fontSize="body3" fontWeight="regular" color="gray6">
-              현재 변동한 주식 가격을 반영한 배당율
+              현재 변동한 주식 가격을 반영한 배당률
             </CommonFont>
           ),
           value: (
