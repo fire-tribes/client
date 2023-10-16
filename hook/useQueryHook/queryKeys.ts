@@ -38,11 +38,7 @@ export const queryKeys = {
   ) => ['monthlyCalanderDividend', isSimple, isTax],
   popularStocks: () => ['popularStocks'],
   recentSearchWords: () => ['getRecentSearchWords'],
-  searchedResults: (word: string, pageIndex: number) => [
-    'searchedResults',
-    word,
-    pageIndex,
-  ],
+  searchedResults: (word: string) => ['searchedResults', word],
   currentPrice: (assetIds: number) => ['currentPrice', assetIds],
   currentPrices: (assetIds: number[]) => ['currentPrice', assetIds],
   portfolio: () => ['portfolio'],

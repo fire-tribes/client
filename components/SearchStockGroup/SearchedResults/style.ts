@@ -8,7 +8,7 @@ const LoadingContainer = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-const Button = styled.button`
+const BottomContainer = styled.div`
   width: 100%;
   display: block;
   text-align: center;
@@ -25,6 +25,6 @@ const SearchNothingContainer = styled.div`
 
 export const SearchedResultsUI = {
   LoadingContainer,
+  BottomContainer,
   SearchNothingContainer,
-  Button,
 } as const;
