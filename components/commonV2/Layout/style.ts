@@ -8,10 +8,12 @@ const S = {
     justify-content: center;
     align-items: center;
 
+    min-width: 320px;
     height: ${({ vh }) => `calc(${vh}px * 100)`};
 
     @media (min-width: 430px) {
       height: 100vh;
+      min-height: 667px;
     }
 
     background-color: ${({ theme }) => theme.palette.basic.gray8};
@@ -23,6 +25,7 @@ const S = {
     max-height: initial;
     min-height: initial;
     height: 100%;
+    min-width: 320px;
 
     overflow: hidden;
     border-radius: none;
