@@ -1,5 +1,4 @@
 import { useControlMode } from '@/hook/useControlMode';
-import { useExchangeRate } from '@/hook/useExchangeRate';
 import { portfolioAPI } from '@/core/api/portfolio';
 import { queryKeys } from '@/hook/useQueryHook/queryKeys';
 import { useControlTax } from '@/hook/useControlTax';
@@ -13,8 +12,7 @@ export const useMyPortFolioQuery = () => {
   return useQuery(queryKeys.myPortFolio(), portfolioAPI.getMyPortFolio);
 };
 
-export const useMyPortFolioExchangeQuery = () => {
-  const { exchangeRate } = useExchangeRate();
+export const useMyPortFolioTaxWithSimpleKRQuery = () => {
   const { modeData } = useControlMode();
   const { taxData } = useControlTax();
   const queryClient = useQueryClient();
@@ -22,57 +20,7 @@ export const useMyPortFolioExchangeQuery = () => {
   const { getPriceBySimple, getPrice } = useFormatPrice();
 
   return useQuery(
-    queryKeys.changedMyPortfolio(
-      modeData.isSimple,
-      exchangeRate,
-      taxData.isTax,
-    ),
-    () => {
-      console.log('start');
-
-      const cachedMyPortfolioQueryData:
-        | AxiosResponse<ResponseSuccess<MyPortfolioModel>>
-        | undefined = queryClient.getQueryData(queryKeys.myPortFolio());
-      const cachedMyPortfolioData = cachedMyPortfolioQueryData?.data.data;
-
-      if (cachedMyPortfolioData && exchangeRate) {
-        const { totalValue, totalValueChange, assetDetails } =
-          cachedMyPortfolioData;
-
-        return {
-          ...cachedMyPortfolioData,
-          totalValue: getPriceBySimple(totalValue * exchangeRate),
-          totalValueChange: getPriceBySimple(totalValueChange * exchangeRate),
-          assetDetails: assetDetails.map((pre) => ({
-            ...pre,
-            averagePrice: getPrice(pre.averagePrice * exchangeRate),
-            currentPrice: getPrice(pre.currentPrice * exchangeRate),
-            assetPriceChange: getPrice(pre.assetPriceChange * exchangeRate),
-            value: getPrice(pre.value * exchangeRate),
-          })),
-        };
-      }
-    },
-    {
-      enabled: !!exchangeRate,
-    },
-  );
-};
-
-export const useMyPortFolioKRQuery = () => {
-  const { exchangeRate } = useExchangeRate();
-  const { modeData } = useControlMode();
-  const { taxData } = useControlTax();
-  const queryClient = useQueryClient();
-
-  const { getPriceBySimple, getPrice } = useFormatPrice();
-
-  return useQuery(
-    queryKeys.changedMyPortfolio(
-      modeData.isSimple,
-      exchangeRate,
-      taxData.isTax,
-    ),
+    queryKeys.changedMyPortfolioKR(modeData.isSimple, taxData.isTax),
     () => {
       const cachedMyPortfolioQueryData:
         | AxiosResponse<ResponseSuccess<MyPortfolioModel>>

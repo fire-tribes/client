@@ -16,6 +16,11 @@ export const queryKeys = {
     exchangeRate?: number,
     isTax?: boolean | null,
   ) => ['changedMyPortfolio', isSimple, isTax, exchangeRate],
+  changedMyPortfolioKR: (isSimple?: boolean | null, isTax?: boolean | null) => [
+    'changedMyPortfolio',
+    isSimple,
+    isTax,
+  ],
   annualDividend: (
     isSimple?: boolean | null,
     exchangeRate?: number,
@@ -35,7 +40,7 @@ export const queryKeys = {
     isSimple?: boolean | null,
 
     isTax?: boolean | null,
-  ) => ['monthlyCalanderDividend', isSimple, isTax],
+  ) => ['monthlyCalanderDividendKR', isSimple, isTax],
   popularStocks: () => ['popularStocks'],
   recentSearchWords: () => ['getRecentSearchWords'],
   searchedResults: (word: string) => ['searchedResults', word],
