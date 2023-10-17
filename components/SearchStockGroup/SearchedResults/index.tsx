@@ -70,7 +70,7 @@ function SearchedResults({ value }: SearchResultsProps) {
 
   const hasAlreadyStock = (searchedResult: GetSearchedResultsDatas) => {
     if (portfolioStocks) {
-      portfolioStocks?.find(
+      return portfolioStocks?.some(
         (portfolioStock) =>
           portfolioStock.tickerCode === searchedResult.tickerCode,
       );

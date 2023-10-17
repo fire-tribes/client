@@ -99,6 +99,11 @@ export default function EditStockInfo() {
   const handleInputBlur = () => {
     if (!editedAssetDetails.count || !editedAssetDetails.price) {
       setErrorText('* 보유 수량 및 가격을 정확히 입력해주세요.');
+    } else if (
+      parseInt(editedAssetDetails.count.toString(), 10) <= 0 ||
+      parseFloat(editedAssetDetails.price.toString()) <= 0
+    ) {
+      setErrorText('* 보유 수량 및 가격은 0보다 값이 커야 합니다.');
     } else {
       setErrorText('');
     }

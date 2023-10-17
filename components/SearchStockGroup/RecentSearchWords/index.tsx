@@ -5,6 +5,7 @@ import { useGetRecentSearchWords } from '@/hook/useGetRecentSearchWords';
 import { useDeleteRecentSearchWord } from '@/hook/useDeleteRecentSearchWord';
 import { useRemoveRecentSearchWordsAll } from '@/hook/useRemoveRecentSearchWordsAll';
 import { basic } from '@/styles/palette';
+// import { GetRecentSearchWords } from '@/@types/models/getRecentSearchWords';
 import { CircularProgress } from '@mui/material';
 
 interface RecentSearchWords {
@@ -24,7 +25,7 @@ function RecentSearchWords({
   /** 최근 검색어 데이터 Get */
   const { getRecentSearchWordsData, isLoadingGetRecentSearchWordsData } =
     useGetRecentSearchWords();
-  const recentSearchWordsDataArray = getRecentSearchWordsData?.data;
+  const recentSearchWordsDataArray = getRecentSearchWordsData?.data.reverse();
   console.log('recentSearchWordsDataArray: ', recentSearchWordsDataArray);
 
   /** 특정 최근 검색어 Delete  */

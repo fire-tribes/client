@@ -174,7 +174,10 @@ function FeedStockInfos() {
             const onChangeCountEventHandle = (
               e: ChangeEvent<HTMLInputElement>,
             ) => {
-              const { value } = e.target;
+              // const { value } = e.target;
+              /** 숫자 외의 문자 제거 */
+              const value = e.target.value.replace(/[^0-9]/g, '');
+
               setSelectedStocks((stock) => {
                 const array = [...stock];
                 array[id].count = value;
