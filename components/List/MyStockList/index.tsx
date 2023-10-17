@@ -80,7 +80,7 @@ export function MyStockList() {
                       textAlign="left"
                       primary={
                         <CommonFont fontSize="caption" color="gray6">
-                          배당율
+                          배당률
                         </CommonFont>
                       }
                     ></DetailListItemText>

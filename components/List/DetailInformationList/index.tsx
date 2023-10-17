@@ -7,12 +7,11 @@ import { useAnnualDividend } from '@/hook/useAnnualDividend';
 import AnnualDividendModal from '@/components/common/Modal/AnnualDividendModal';
 import type { BadgeDetailText } from '@/mocks';
 
+const DIVIDEND_PRICE_RATIO_KR = '투자 배당률';
+
 export default function DetailInformationList() {
-  const {
-    // annualDividendSimpleKRData,
-    annualDividendTaxKRData,
-    annualDividendSimpleKRData,
-  } = useAnnualDividend();
+  const { annualDividendTaxKRData, annualDividendSimpleKRData } =
+    useAnnualDividend();
 
   const detailInformationData = {
     annualDividend: `${annualDividendSimpleKRData?.annualDividend || 0}`,
@@ -43,19 +42,19 @@ export default function DetailInformationList() {
     },
     dividendPriceRatio: {
       shouldOpenModal: true,
-      title: '배당 수익률',
+      title: DIVIDEND_PRICE_RATIO_KR,
       color: 'point_red01',
       iconName: 'expand_more',
       items: [
         {
           title: (
             <CommonFont fontSize="body1" fontWeight="normal">
-              투자 배당률
+              {DIVIDEND_PRICE_RATIO_KR}
             </CommonFont>
           ),
           subTitle: (
             <CommonFont fontSize="body3" fontWeight="regular" color="gray6">
-              주식을 산 시점의 가격을 반영한 배당율
+              주식을 산 시점의 가격을 반영한 배당률
             </CommonFont>
           ),
           value: (
@@ -72,7 +71,7 @@ export default function DetailInformationList() {
           ),
           subTitle: (
             <CommonFont fontSize="body3" fontWeight="regular" color="gray6">
-              현재 변동한 주식 가격을 반영한 배당율
+              현재 변동한 주식 가격을 반영한 배당률
             </CommonFont>
           ),
           value: (
