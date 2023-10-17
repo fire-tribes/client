@@ -1,20 +1,20 @@
 import CommonFont from '@/components/common/Font';
-import { ScheduleList } from '@/components/List/ScheduleList';
 import Section from '@/components/Section';
 import FlexBox from '@/components/common/FlexBox';
 import CommonIcon from '@/components/common/Icon';
 import Modal from '@/components/common/Modal';
 import { useEmotionPalette } from '@/hook/useThemeHooks';
 import { CenterModalV2 } from '@/components/commonV2/ModalV2/CenterModal';
+import MonthlyCalanderDividendList from '@/components/List/MonthlyCalanderDividendList';
 
-export default function SimpleDividentScheduleSection() {
+export default function MonthlyCalanderDividendSection() {
   const palette = useEmotionPalette();
   return (
     <Section textAlign="left">
       <Section.Title paddingBottom="18px">{`배당 달력 (${
         new Date().getMonth() + 1
       }월)`}</Section.Title>
-      <ScheduleList />
+      <MonthlyCalanderDividendList />
       <Section.Footer padding={'20px 0px'}>
         <FlexBox>
           <CenterModalV2
