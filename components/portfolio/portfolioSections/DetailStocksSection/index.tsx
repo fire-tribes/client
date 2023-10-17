@@ -3,11 +3,11 @@ import { MyStockList } from '@/components/List/MyStockList';
 import Section from '@/components/Section';
 import FlexBox from '@/components/common/FlexBox';
 
-import { useMyPortFolioExchangeQuery } from '@/hook/useQueryHook/useMyPortFolioQuery';
+import { useMyPortFolioTaxWithSimpleKRQuery } from '@/hook/useQueryHook/useMyPortFolioQuery';
 import { Typography } from '@mui/material';
 
 export default function DetailStocksSection() {
-  const { data } = useMyPortFolioExchangeQuery();
+  const { data } = useMyPortFolioTaxWithSimpleKRQuery();
 
   return (
     <Section textAlign="left" paddingTop="18px">

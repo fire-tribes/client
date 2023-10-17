@@ -8,7 +8,7 @@ import ExchangeRateBox from '@/components/dividend/ExchangeRate';
 import ChartSection from '@/components/portfolio/portfolioSections/ChartSection';
 import DetailStocksSection from '@/components/portfolio/portfolioSections/DetailStocksSection';
 import NotifyMessageSection from '@/components/portfolio/portfolioSections/NotifyMessageSection';
-import SimpleDividentScheduleSection from '@/components/portfolio/portfolioSections/SimpleDividentScheduleSection';
+import MonthlyCalanderDividendSection from '@/components/portfolio/portfolioSections/SimpleDividentScheduleSection';
 import TotalStatisticsSection from '@/components/portfolio/portfolioSections/TotalStatisticsSection';
 import { useAnnualDividend } from '@/hook/useAnnualDividend';
 import { useMonthlyCalanderDividend } from '@/hook/useMonthlyCalanderDividend';
@@ -57,7 +57,7 @@ export default function V2Page() {
             <TotalStatisticsSection />
           </Padding>
           <Padding paddingLeft={18} paddingRight={18}>
-            <SimpleDividentScheduleSection />
+            <MonthlyCalanderDividendSection />
           </Padding>
 
           <CommonBar />

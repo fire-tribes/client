@@ -1,13 +1,16 @@
-import { useMonthlyCalanderDividendKRWithSimpleQuery } from '@/hook/useQueryHook/useMonthlyCalanderDividendQuery';
 import CommonFont from '@/components/common/Font';
 
 import StockAvatar from '@/components/common/StockAvatar';
+import { useMonthlyCalanderDividend } from '@/hook/useMonthlyCalanderDividend';
 import { Box, List, ListItem, ListItemText, ListItemIcon } from '@mui/material';
 
-export function ScheduleList() {
-  const { data } = useMonthlyCalanderDividendKRWithSimpleQuery();
+export default function MonthlyCalanderDividendList() {
+  const { monthlyCalanderDividendSimpleKRData } = useMonthlyCalanderDividend();
 
-  if (data?.success === true && !data?.data.length) {
+  if (
+    monthlyCalanderDividendSimpleKRData?.success === true &&
+    !monthlyCalanderDividendSimpleKRData?.data.length
+  ) {
     return (
       <CommonFont
         component="p"
@@ -20,7 +23,10 @@ export function ScheduleList() {
       </CommonFont>
     );
   }
-  if (data?.success === false) {
+  if (
+    monthlyCalanderDividendSimpleKRData?.success !== undefined &&
+    monthlyCalanderDividendSimpleKRData?.success === false
+  ) {
     return (
       <CommonFont
         component="p"
@@ -37,7 +43,7 @@ export function ScheduleList() {
   return (
     <Box>
       <List disablePadding>
-        {data?.data.map(
+        {monthlyCalanderDividendSimpleKRData?.data.map(
           ({
             tickerCode,
             stockCode,

@@ -1,16 +1,20 @@
 import {
-  useMonthlyCalanderDividendExchangeQuery,
-  useMonthlyCalanderDividendQuery,
+  useMonthlyCalanderDividendKRQuery,
+  useMonthlyCalanderDividendKRWithSimpleQuery,
 } from '@/hook/useQueryHook/useMonthlyCalanderDividendQuery';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 export const useMonthlyCalanderDividend = () => {
   const router = useRouter();
-  const { data: monthlyCalanderDividendData, status } =
-    useMonthlyCalanderDividendQuery();
-  const { data: monthlyCalanderDividendExchangeData } =
-    useMonthlyCalanderDividendExchangeQuery();
+  // const { data: monthlyCalanderDividendData, status } =
+  //   useMonthlyCalanderDividendQuery();
+  // const { data: monthlyCalanderDividendExchangeData } =
+  //   useMonthlyCalanderDividendExchangeQuery();
+  const { data: monthlyCalanderDividendKRData, status } =
+    useMonthlyCalanderDividendKRQuery();
+  const { data: monthlyCalanderDividendSimpleKRData } =
+    useMonthlyCalanderDividendKRWithSimpleQuery();
 
   useEffect(() => {
     if (status === 'error') {
@@ -19,8 +23,8 @@ export const useMonthlyCalanderDividend = () => {
   }, [status]);
 
   return {
-    monthlyCalanderDividendData,
-    monthlyCalanderDividendExchangeData,
+    monthlyCalanderDividendKRData,
+    monthlyCalanderDividendSimpleKRData,
     status,
   };
 };
