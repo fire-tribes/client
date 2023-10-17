@@ -52,20 +52,47 @@ function Add() {
     addStocksAtPortfolioData(formData);
   };
 
+  /** 추가 완료 버튼을 눌렀을 때 작동할 기능 */
   const onMoveOtherPages = async () => {
     console.log('portfolioId: ', portfolioId);
     if (portfolioId) {
       madePortfolio();
+      /** jotai 초기화 */
+      // setSelectedStocks([]);
     } else {
       makePortfolio();
+      /** jotai 초기화 */
+      // setSelectedStocks([]);
     }
+  };
+
+  const hasValueAtCountOrPrice = () => {
+    const values: boolean[] = [];
+    selectedStocks.forEach((selectedStock) => {
+      if (
+        selectedStock.count === '0' ||
+        selectedStock.price === '0' ||
+        selectedStock.count === '' ||
+        selectedStock.price === ''
+      ) {
+        values.push(false);
+      }
+
+      values.push(true);
+    });
+
+    return values.every((value) => value); // 모든 값이 true인지 확인
   };
 
   return (
     <SearchLayoutV2
       buttomFixedButton={
         <BottomFixedButton
-          isDisabled={selectedStocks.length !== 0 ? false : true}
+          isDisabled={
+            selectedStocks.length !== 0 && hasValueAtCountOrPrice()
+              ? false
+              : true
+          }
           onChange={onMoveOtherPages}
           isLoading={isLoading}
         >

@@ -16,7 +16,7 @@ export default function KakaoLoginButtonV2() {
     if (isLoading) {
       openSnackbar({
         message: '로그인 중입니다.',
-        autoHideDuration: 3 * 1000,
+        autoHideDuration: 5 * 1000,
         anchorOrigin: {
           vertical: 'bottom',
           horizontal: 'center',
@@ -34,7 +34,7 @@ export default function KakaoLoginButtonV2() {
     if (isError) {
       openSnackbar({
         message: '로그인 오류가 발생했습니다. 다시 시도해 주세요.',
-        autoHideDuration: 3000,
+        autoHideDuration: 3 * 1000,
         anchorOrigin: {
           vertical: 'bottom',
           horizontal: 'center',

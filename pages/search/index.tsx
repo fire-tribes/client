@@ -183,7 +183,7 @@ function Search() {
           <Snackbar
             open={showToast.open}
             onClose={handleClose}
-            autoHideDuration={1000 * 1000}
+            autoHideDuration={3 * 1000}
             anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
             TransitionComponent={SlideTransition}
             style={{

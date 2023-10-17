@@ -1,4 +1,6 @@
+import { selectedStocksAtom } from './useGetSelectedStocks/state';
 import { useAddStocksAtPortfolioQuery } from '@/hook/useQueryHook/useAddStocksAtPortfolioQuery';
+import { useAtom } from 'jotai';
 import { useRouter } from 'next/router';
 
 interface feededStockInfos {
@@ -18,10 +20,14 @@ export const useAddStocksAtPortfolio = () => {
 
   // const formData: feededStockInfos;
   // const addStocksAtPortfolioData = mutate(formData);
+  /** 선택한 주식 종목 배열 */
+  const [, setSelectedStocks] = useAtom(selectedStocksAtom);
 
   const addStocksAtPortfolioData = async (formData: feededStockInfos) => {
     await mutateAsync(formData);
     console.log('mutate phase');
+    /** jotai 초기화 */
+    setSelectedStocks([]);
     router.push('/');
   };
 

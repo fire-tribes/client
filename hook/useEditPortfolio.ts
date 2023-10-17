@@ -33,6 +33,7 @@ export const useEditPortfolio = () => {
       console.log('editedAssetDetails.assetId: ', editedAssetDetails.assetId);
       if (stock.assetId === editedAssetDetails.assetId) {
         console.log('같을 때, price: ', editedAssetDetails.price);
+        console.log('currencyType: ', editedAssetDetails.currencyType);
         return {
           portfolioAssetId: stock.portfolioAssetId,
           price: editedAssetDetails.price,
@@ -41,11 +42,11 @@ export const useEditPortfolio = () => {
         };
       } else {
         console.log('다를 때, price: ', stock.averagePrice);
+        console.log('다를 때, price: ', stock.currencyType);
         return {
           portfolioAssetId: stock.portfolioAssetId,
-          // assetId: stock.assetId,
-          count: stock.count,
           price: stock.averagePrice,
+          count: stock.count,
           currencyType: stock.currencyType,
         };
       }

@@ -5,7 +5,9 @@ import NothingStocks from '@/components/common/NothingStocks';
 import EditStocks from '@/components/EditStocksGroup/EditStocks';
 import { useDeletePortfolio } from '@/hook/useDeletePortfolio';
 import { useMyPortFolio } from '@/hook/useMyPortFolio';
+import { editedAssetDetailsAtom } from '@/hook/useEditedAssetDetails/state';
 import { useRouter } from 'next/router';
+import { useAtom } from 'jotai';
 
 function Edit() {
   const router = useRouter();
@@ -21,8 +23,11 @@ function Edit() {
     if (!hasMyPortFolioData && portfolioId !== undefined) {
       await deletePortfolioData(portfolioId);
     }
-    router.push('/');
+    router.push('/empty');
   };
+
+  const [editedAssetDetails] = useAtom(editedAssetDetailsAtom);
+  console.log('editedAssetDetails: ', editedAssetDetails);
 
   return (
     <SearchLayoutV2
