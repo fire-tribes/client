@@ -176,7 +176,7 @@ function Search() {
           ) : (
             <>
               <section>
-                <SearchedResults value={value} portfolioId={portfolioId} />
+                <SearchedResults value={value} />
               </section>
             </>
           )}
