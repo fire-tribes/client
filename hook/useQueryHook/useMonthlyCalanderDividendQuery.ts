@@ -103,7 +103,7 @@ export const useMonthlyCalanderDividendExchangeQuery = () => {
 export const useMonthlyCalanderDividendKRWithSimpleQuery = () => {
   useMonthlyCalanderDividendQuery();
   const queryClient = useQueryClient();
-  const { exchangeRate } = useExchangeRate();
+  // const { exchangeRate } = useExchangeRate();
   const { modeData } = useControlMode();
   const { taxData } = useControlTax();
 
@@ -118,7 +118,7 @@ export const useMonthlyCalanderDividendKRWithSimpleQuery = () => {
 
     const calanderDividendDatas = monthlyCalanderDividendData?.data;
 
-    if (calanderDividendDatas?.length && exchangeRate) {
+    if (calanderDividendDatas?.length) {
       return {
         ...monthlyCalanderDividendData,
         data: calanderDividendDatas?.map((data) => ({

@@ -16,6 +16,11 @@ export const queryKeys = {
     exchangeRate?: number,
     isTax?: boolean | null,
   ) => ['changedMyPortfolio', isSimple, isTax, exchangeRate],
+  changedMyPortfolioKR: (isSimple?: boolean | null, isTax?: boolean | null) => [
+    'changedMyPortfolio',
+    isSimple,
+    isTax,
+  ],
   annualDividend: (
     isSimple?: boolean | null,
     exchangeRate?: number,
