@@ -24,7 +24,7 @@ function Add() {
   /** POST 요청에 보낼 Assets 만들기 useMakeAssets */
   const { makeAssets } = useMakeAssets();
   /** 선택한 주식 종목 배열 */
-  const [selectedStocks, setSelectedStocks] = useAtom(selectedStocksAtom);
+  const [selectedStocks] = useAtom(selectedStocksAtom);
   /** TODO: useFeatureHook으로 리팩토링 */
   const makePortfolio = () => {
     /** 1-1.포트폴리오가 없을 경우, 포트폴리오 생성하고 portfolioId 사용 */
@@ -58,11 +58,11 @@ function Add() {
     if (portfolioId) {
       madePortfolio();
       /** jotai 초기화 */
-      setSelectedStocks([]);
+      // setSelectedStocks([]);
     } else {
       makePortfolio();
       /** jotai 초기화 */
-      setSelectedStocks([]);
+      // setSelectedStocks([]);
     }
   };
 
