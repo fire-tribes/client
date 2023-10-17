@@ -11,13 +11,14 @@ import {
   Snackbar,
   SnackbarContent,
 } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function SlideTransition(props: SlideProps) {
   return <Slide {...props} direction="up" />;
 }
 
 function EditStocks() {
+  console.log('editStocks');
   /** Portfolio Get 요청 useFeatureHook (useMyPortfolio) */
   const { myPortFolioData, isLoading, isFetching } = useMyPortFolio();
   const assetDetailsArray = myPortFolioData?.assetDetails;
@@ -33,12 +34,14 @@ function EditStocks() {
 
   /** 주식을 삭제했을 때, Toast 창 띄우기 */
   const [isShowToast, setIsShowToast] = useState(false);
-  if (
-    assetDetailsArray !== undefined &&
-    assetDetailsArray.length !== assetDetails.length
-  ) {
-    setIsShowToast(true);
-  }
+  useEffect(() => {
+    if (
+      assetDetailsArray !== undefined &&
+      assetDetailsArray.length !== assetDetails.length
+    ) {
+      setIsShowToast(true);
+    }
+  }, [assetDetailsArray]);
 
   const handleClose = () => {
     setIsShowToast(false);

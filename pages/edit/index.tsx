@@ -23,7 +23,7 @@ function Edit() {
     if (!hasMyPortFolioData && portfolioId !== undefined) {
       await deletePortfolioData(portfolioId);
     }
-    router.push('/');
+    router.push('/empty');
   };
 
   const [editedAssetDetails] = useAtom(editedAssetDetailsAtom);

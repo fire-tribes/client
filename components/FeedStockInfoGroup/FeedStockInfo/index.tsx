@@ -81,7 +81,7 @@ function FeedStockInfo({
           <div>
             <input
               type="text"
-              value={inputCountValue}
+              value={String(inputCountValue)}
               placeholder="보유 수량"
               onChange={changeCountEventHandle}
               onBlur={handleInputBlur}
