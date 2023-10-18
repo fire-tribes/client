@@ -1,6 +1,6 @@
 {
-  "name": "SnowBall",
-  "short_name": "SnowBall",
+  "name": "스노우볼",
+  "short_name": "스노우볼",
   "description": "주식 배당 전문 서비스를 제공합니다.",
   "display": "standalone",
   "orientation": "portrait",
@@ -8,6 +8,7 @@
   "background_color": "#ffffff",
   "scope": "/",
   "start_url": "/",
+  "id": "snowball.watch",
   "icons": [
     {
       "src": "/snowball_icon-512x512.png",
