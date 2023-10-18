@@ -8,6 +8,7 @@
   "background_color": "#ffffff",
   "scope": "/",
   "start_url": "/",
+  "id": "snowball.watch",
   "icons": [
     {
       "src": "/snowball_icon-512x512.png",
