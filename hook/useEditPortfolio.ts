@@ -24,16 +24,7 @@ export const useEditPortfolio = () => {
   // makeAssets
   const makeAssets = (array: AssetDetailsAtomProps[]) => {
     return array.map((stock) => {
-      // console.log('stock.portfolioAssetId: ', stock.portfolioAssetId);
-      // console.log(
-      //   'editedAssetDetails.portfolioAssetId: ',
-      //   editedAssetDetails.portfolioAssetId,
-      // );
-      console.log('stock.assetId: ', stock.assetId);
-      console.log('editedAssetDetails.assetId: ', editedAssetDetails.assetId);
       if (stock.assetId === editedAssetDetails.assetId) {
-        console.log('같을 때, price: ', editedAssetDetails.price);
-        console.log('currencyType: ', editedAssetDetails.currencyType);
         return {
           portfolioAssetId: stock.portfolioAssetId,
           price: editedAssetDetails.price,
@@ -41,8 +32,6 @@ export const useEditPortfolio = () => {
           currencyType: editedAssetDetails.currencyType,
         };
       } else {
-        console.log('다를 때, price: ', stock.averagePrice);
-        console.log('다를 때, price: ', stock.currencyType);
         return {
           portfolioAssetId: stock.portfolioAssetId,
           price: stock.averagePrice,
@@ -65,7 +54,6 @@ export const useEditPortfolio = () => {
       portfolioId: myPortFolioData?.portfolioId,
       assets: makeAssets(assetDetails),
     };
-    console.log('madePortfolio formData: ', formData);
     return await updatePortfolioData(formData);
   };
 
@@ -73,10 +61,4 @@ export const useEditPortfolio = () => {
     isLoadingUpdatePortfolioData,
     updatePort,
   };
-  // const formData = {
-  //   portfolioId: Number(portfolioId),
-  //   assets: makeAssets(assetDetails),
-  // };
-  // console.log('madePortfolio formData: ', formData);
-  // updatePortfolioData(formData);
 };

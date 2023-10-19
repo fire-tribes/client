@@ -19,8 +19,6 @@ export const dividendAPI = {
       await APIInstance.get<ResponseSuccess<DividendCalanderModel[]>>(
         'dividend/calendar',
       );
-
-    console.log(data);
     return data;
   },
 };

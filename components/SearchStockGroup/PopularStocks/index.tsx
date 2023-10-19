@@ -9,7 +9,6 @@ function PopularStocks() {
   /** 인기주식 호출 */
   const { getPopularStocksData } = useGetPopularStocks();
   const popularStocksArray = getPopularStocksData?.data;
-  console.log('getPopularStocksData?: ', getPopularStocksData);
 
   return (
     <>

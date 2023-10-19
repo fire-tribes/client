@@ -23,7 +23,6 @@ import { ChangeEvent, useEffect, useState } from 'react';
 function FeedStockInfos() {
   /** Jotai의 selectedStocksAtom을 이용해서 선택된 주식을 관리 */
   const [selectedStocks, setSelectedStocks] = useAtom(selectedStocksAtom);
-  console.log('selectedStocks: ', selectedStocks);
 
   /** [삭제 함수] Jotai로 만든 주식 종목 배열에서 해당 객체 삭제하는 함수 */
   const handleRemoveSelected = (stock: SelectedStocksAtomProps) => {
@@ -79,19 +78,15 @@ function FeedStockInfos() {
     invalidateCurrentPrices,
     invalidateCurrentPrice,
   } = useGetCurrentPriceInSelectedStocks(isPressAllButton, newIsPressAllButton);
-  // isPressAllButton, newIsPressAllButton
-  // console.log('start getCurrentPriceDatas');
-  // console.log('getCurrentPriceDatas: ', getCurrentPriceDatas);
 
   /**
   // TODO: before
   useEffect(() => {
     if (shouldSetAtom) {
-      console.log('start useEffect');
       const currentPricesArray = getCurrentPriceDatas.map(
         (data) => data.data?.data.data[0]?.currentPrice,
       );
-      console.log('currentPricesArray: ', currentPricesArray);
+      
       if (currentPricesArray.length !== 0) {
         setSelectedStocks((prev) =>
           prev.map((value, id) => ({
@@ -205,7 +200,6 @@ function FeedStockInfos() {
                 return array;
               });
             };
-            console.log('stock.price: ', stock.price);
             return (
               <FeedStockInfo
                 key={id}

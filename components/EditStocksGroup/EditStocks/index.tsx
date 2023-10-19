@@ -18,11 +18,9 @@ function SlideTransition(props: SlideProps) {
 }
 
 function EditStocks() {
-  console.log('editStocks');
   /** Portfolio Get 요청 useFeatureHook (useMyPortfolio) */
   const { myPortFolioData, isLoading, isFetching } = useMyPortFolio();
   const assetDetailsArray = myPortFolioData?.assetDetails;
-  // console.log('assetDetailsArray: ', assetDetailsArray);
 
   /** 수정하기 버튼 클릭 시, Jotai에 assetDetails 배열 데이터 담기 */
   const [assetDetails, setAssetDetails] = useAtom(assetDetailsAtom);
