@@ -110,15 +110,13 @@ function SearchedResults({ value }: SearchResultsProps) {
 
   /** toggleSelected 함수를 useCallback으로 감싸서 debouncedValue가 변경될 때마다 함수가 새로 생성되도록 함 */
   const toggleSelected = useCallback(
-    (stock: GetSearchedResultsDatas) => (
-      console.log('debouncedValue in toggleSelected: ', debouncedValue),
+    (stock: GetSearchedResultsDatas) =>
       handleToggleSelected({
         ...stock,
         count: '',
         price: '',
         debouncedValue: debouncedValue,
-      })
-    ),
+      }),
     [debouncedValue, handleToggleSelected],
   );
 

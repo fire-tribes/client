@@ -26,7 +26,6 @@ export const useGetCurrentPriceInAssetDetailsQuery = (
     enabled: !!isPressButton,
     onSuccess: (response: Response) => {
       const responseCurrentPrice = response.data.data[0]?.currentPrice;
-      console.log('responseCurrentPrice: ', responseCurrentPrice);
 
       if (responseCurrentPrice !== undefined) {
         setEditedAssetDetails((prev) => ({

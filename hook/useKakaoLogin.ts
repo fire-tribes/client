@@ -59,7 +59,6 @@ export const useKakaoLogin = () => {
 
   const open = () => {
     const origin = window.location.origin;
-    console.log(origin);
 
     if (process.env.NEXT_PUBLIC_LOCAL_SERVER_ORIGIN === origin) {
       window.Kakao?.Auth.authorize({

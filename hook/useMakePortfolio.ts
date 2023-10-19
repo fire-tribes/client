@@ -6,7 +6,6 @@ export const useMakePortfolio = () => {
   const makePortfolioData = async () => {
     const response = await mutateAsync();
     // FIX:
-    console.log('useFeatureHook response: ', response);
     return response.data.data;
   };
 

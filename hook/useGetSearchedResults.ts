@@ -12,9 +12,7 @@ export const useGetSearchedResults = (word: string) => {
     queryKeys.searchedResults(word),
     ({ pageParam = 1 }) => {
       const infinite = async () => {
-        console.log('pageParam: ', pageParam);
         const response = await assetAPI.getSearchedResults(word, pageParam);
-        console.log('infiniteQuery response.data: ', response.data);
         return response.data;
       };
       return infinite();
