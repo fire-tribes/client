@@ -4,25 +4,25 @@ import { AnnualDividendListItem } from '@/components/List/DetailInformationList/
 
 import { useAnnualDividend } from '@/hook/useAnnualDividend';
 
-import NotifyListModal from '@/components/common/Modal/NotifyListModal';
+import AnnualDividendModal from '@/components/common/Modal/AnnualDividendModal';
 import type { BadgeDetailText } from '@/mocks';
 
+const DIVIDEND_PRICE_RATIO_KR = '투자 배당률';
+
 export default function DetailInformationList() {
-  const { annualDividendExchangeData, annualDividendExchangeWithSimpleData } =
+  const { annualDividendTaxKRData, annualDividendSimpleKRData } =
     useAnnualDividend();
 
   const detailInformationData = {
-    annualDividend: `${
-      annualDividendExchangeWithSimpleData?.annualDividend || 0
-    }`,
+    annualDividend: `${annualDividendSimpleKRData?.annualDividend || 0}`,
     dividendPriceRatio: `${
-      annualDividendExchangeWithSimpleData?.dividendPriceRatio.toFixed(2) || 0
+      annualDividendSimpleKRData?.dividendPriceRatio.toFixed(2) || 0
     }%`,
-    paidTax: annualDividendExchangeWithSimpleData?.paidTax
-      ? `${annualDividendExchangeWithSimpleData?.paidTax}`
+    paidTax: annualDividendSimpleKRData?.paidTax
+      ? `${annualDividendSimpleKRData?.paidTax}`
       : '없음',
-    unPaidTax: annualDividendExchangeWithSimpleData?.unPaidTax
-      ? `${annualDividendExchangeWithSimpleData?.unPaidTax} 예상`
+    unPaidTax: annualDividendSimpleKRData?.unPaidTax
+      ? `${annualDividendSimpleKRData?.unPaidTax} 예상`
       : '없음',
   };
 
@@ -42,24 +42,24 @@ export default function DetailInformationList() {
     },
     dividendPriceRatio: {
       shouldOpenModal: true,
-      title: '배당 수익률',
+      title: DIVIDEND_PRICE_RATIO_KR,
       color: 'point_red01',
       iconName: 'expand_more',
       items: [
         {
           title: (
             <CommonFont fontSize="body1" fontWeight="normal">
-              투자 배당률
+              {DIVIDEND_PRICE_RATIO_KR}
             </CommonFont>
           ),
           subTitle: (
             <CommonFont fontSize="body3" fontWeight="regular" color="gray6">
-              주식을 산 시점의 가격을 반영한 배당율
+              주식을 산 시점의 가격을 반영한 배당률
             </CommonFont>
           ),
           value: (
             <CommonFont fontSize="body1" fontWeight="bold" color="point_red01">
-              {annualDividendExchangeWithSimpleData?.dividendPriceRatio}%
+              {annualDividendSimpleKRData?.dividendPriceRatio}%
             </CommonFont>
           ),
         },
@@ -71,12 +71,12 @@ export default function DetailInformationList() {
           ),
           subTitle: (
             <CommonFont fontSize="body3" fontWeight="regular" color="gray6">
-              현재 변동한 주식 가격을 반영한 배당율
+              현재 변동한 주식 가격을 반영한 배당률
             </CommonFont>
           ),
           value: (
             <CommonFont fontSize="body1" fontWeight="bold" color="point_red01">
-              {annualDividendExchangeWithSimpleData?.dividendYieldRatio}%
+              {annualDividendSimpleKRData?.dividendYieldRatio}%
             </CommonFont>
           ),
         },
@@ -101,7 +101,7 @@ export default function DetailInformationList() {
           ),
           value: (
             <CommonFont fontSize="body1" fontWeight="bold" color="point_blue02">
-              {annualDividendExchangeData?.paidTax}
+              {annualDividendTaxKRData?.paidTax}
             </CommonFont>
           ),
         },
@@ -139,7 +139,7 @@ export default function DetailInformationList() {
           ),
           value: (
             <CommonFont fontSize="body1" fontWeight="bold" color="point_blue02">
-              {annualDividendExchangeData?.unPaidTax} 예상
+              {annualDividendTaxKRData?.unPaidTax} 예상
             </CommonFont>
           ),
         },
@@ -171,7 +171,11 @@ export default function DetailInformationList() {
   return (
     <>
       {annualDividendListItemTexts.map(([key, value]) => (
-        <NotifyListModal key={key} modalTitle={value.title} items={value.items}>
+        <AnnualDividendModal
+          key={key}
+          modalTitle={value.title}
+          items={value.items}
+        >
           <AnnualDividendListItem
             padding={{
               top: paddingTop,
@@ -193,7 +197,7 @@ export default function DetailInformationList() {
               </CommonFont>
             }
           />
-        </NotifyListModal>
+        </AnnualDividendModal>
       ))}
     </>
   );

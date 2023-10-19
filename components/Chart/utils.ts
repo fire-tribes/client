@@ -4,12 +4,74 @@ import { MonthlyDividends } from '@/@types/models/dividend';
  * ex) 9999999 => 999만
  * ex) 999999999 => 9억
  */
-export const getShortCurrencyKR = (value: number) => {
+
+export const getShortCurrencyKRByMinusNumber = (value: number) => {
+  const TEN_BLIILON = 10000000000;
+  const absoluteValue = Math.abs(value);
+
+  if (absoluteValue === 0) {
+    return '0';
+  }
+
+  if (absoluteValue < 10000) {
+    return Math.floor(value).toLocaleString('ko-kr');
+  }
+
+  // 1억 미만
+  if (absoluteValue < 10000 * 10000) {
+    return Math.floor(value / 10000) + '만';
+  }
+
+  /** 100억 미만 */
+  if (absoluteValue < TEN_BLIILON) {
+    return [
+      Math.floor(absoluteValue / (10000 * 10000)) * -1 + '억',
+      Math.floor((absoluteValue % (10000 * 10000)) / 10000) + '만',
+    ]
+      .join(' ')
+      .trim();
+  }
+
+  return '-99억';
+};
+
+export const getShortCurrencyKRByPlusNumber = (value: number) => {
   /** 최대 100억 */
   const TEN_BLIILON = 10000000000;
 
-  // 음수 또는 0
   if (value <= 0) return 0;
+
+  // 1만 미만
+  if (value < 10000) {
+    return Math.floor(value).toLocaleString('ko-kr');
+  }
+
+  // 1억 미만
+  if (value < 10000 * 10000) {
+    return Math.floor(value / 10000) + '만';
+  }
+
+  /** 100억 미만 */
+  if (value < TEN_BLIILON) {
+    const upperMillion = Math.floor(value / (10000 * 10000));
+    const upperTenThousand = Math.floor((value % (10000 * 10000)) / 10000);
+
+    return [
+      upperMillion + '억',
+      upperTenThousand > 0 ? `${upperTenThousand}만` : '',
+    ]
+      .join(' ')
+      .trim();
+  }
+
+  return '99억 9999만';
+};
+
+export const getShortCurrencyDividendChartKR = (value: number) => {
+  /** 최대 100억 */
+  const TEN_BLIILON = 10000000000;
+
+  if (value <= 0) return '';
 
   // 1만 미만
   if (value < 10000) {
@@ -29,7 +91,7 @@ export const getShortCurrencyKR = (value: number) => {
   return '99억';
 };
 
-const createShowChartDividendDatas = (
+export const createShowChartDividendDatas = (
   dividendDatas: MonthlyDividends | undefined,
 ) => {
   if (!dividendDatas) return;
@@ -58,9 +120,4 @@ const createShowChartDividendDatas = (
   );
 
   return showChartDividendDatas;
-};
-
-export {
-  // formatChartValue,
-  createShowChartDividendDatas,
 };

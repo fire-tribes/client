@@ -17,9 +17,6 @@ export const useDeleteAssetDetailsQuery = () => {
     {
       onSuccess: (response) => {
         if (response.data.success) {
-          console.log('response: ', response);
-          console.log('response.data: ', response.data);
-          console.log('response.data.success: ', response.data.success);
           queryClient.invalidateQueries(
             //무효화 하고싶은 Query key
             queryKeys.recentSearchWords(),

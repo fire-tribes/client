@@ -1,4 +1,7 @@
-import NotifyModal from '@/components/common/Modal/NotifyModal';
+import CommonFont from '@/components/common/Font';
+import Modal from '@/components/common/Modal';
+import { BottomSheetModalV2 } from '@/components/commonV2/ModalV2/BottomSheetModal';
+
 import { List, ListItem, ListItemText } from '@mui/material';
 import { PropsWithChildren, ReactNode } from 'react';
 
@@ -13,7 +16,7 @@ interface StockNotifyModalProps extends PropsWithChildren {
   items: NotifyListItemProps[] | [];
 }
 
-export default function NotifyListModal({
+export default function AnnualDividendModal({
   modalTitle,
   items,
   children,
@@ -21,8 +24,17 @@ export default function NotifyListModal({
   if (!items || items.length === 0) return <>{children}</>;
 
   return (
-    <NotifyModal
-      title={modalTitle}
+    <BottomSheetModalV2
+      title={
+        <CommonFont
+          fontSize="h4"
+          fontWeight="bold"
+          textAlign="left"
+          component="h4"
+        >
+          {modalTitle}
+        </CommonFont>
+      }
       content={
         <List disablePadding sx={{ paddingTop: '2px' }}>
           {items.map(({ title, subTitle, value }, index) => (
@@ -44,8 +56,9 @@ export default function NotifyListModal({
           ))}
         </List>
       }
+      button={<Modal.Button height={'54px'}>확인</Modal.Button>}
     >
       {children}
-    </NotifyModal>
+    </BottomSheetModalV2>
   );
 }

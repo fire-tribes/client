@@ -1,23 +1,46 @@
 import { useMyPortFolioQuery } from '@/hook/useQueryHook/useMyPortFolioQuery';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
+
+const EMPTY_REDIRECT_EXCEPTION_URLS = ['/search', '/edit'];
 
 export const useMyPortFolio = () => {
   const router = useRouter();
+  const { pathname } = router;
   const { data, status, isLoading, isFetching } = useMyPortFolioQuery();
-  const redirectEmpty = useCallback(() => router.push('/empty'), [router]);
+
   const myPortFolioData = data?.data.data;
+  const portfolioId = myPortFolioData?.portfolioId;
+
+  const redirectEmpty = () => {
+    const EMPTY_URL = '/empty';
+    if (portfolioId) {
+      return router.push(`${EMPTY_URL}?portfolioId=${portfolioId}`);
+    } else {
+      return router.push(EMPTY_URL);
+    }
+  };
 
   useEffect(() => {
-    const hasNotPortFolio = status === 'success' && !myPortFolioData;
-    const hasNotAssets =
-      status === 'success' && !myPortFolioData?.assetDetails?.length;
-
-    if ((hasNotPortFolio && hasNotAssets) || status === 'error') {
-      redirectEmpty();
+    const isError = status === 'error';
+    if (isError) {
+      router.push('500');
       return;
     }
-  }, [status, redirectEmpty, myPortFolioData]);
+
+    if (!isLoading && !isFetching && status === 'success') {
+      const hasNotPortFolio = !myPortFolioData;
+      const hasNotAssets =
+        myPortFolioData?.assetDetails &&
+        myPortFolioData?.assetDetails.length === 0;
+      const isExceptionURL = EMPTY_REDIRECT_EXCEPTION_URLS.includes(pathname);
+
+      if ((hasNotPortFolio || hasNotAssets) && !isExceptionURL) {
+        redirectEmpty();
+        return;
+      }
+    }
+  }, [status, myPortFolioData, isLoading, isFetching, pathname]);
 
   return {
     myPortFolioData,

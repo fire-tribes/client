@@ -5,13 +5,24 @@ import { useRouter } from 'next/router';
 
 interface BackwardProps {
   title: string;
+  hasBeforePath?: string;
 }
 
-function Backward({ title }: BackwardProps) {
+function Backward({ title, hasBeforePath = '없음' }: BackwardProps) {
   /** 버튼 클릭 시, 뒤로가기 */
   const router = useRouter();
+  const { slug } = router.query as { slug: string[] };
+
+  const portfolioId = Number(slug?.[0]);
+
   const handleGoBack = () => {
-    router.back();
+    if (hasBeforePath === '없음') {
+      router.back();
+    } else if (hasBeforePath === '개별 편집 페이지') {
+      router.push(`/edit?portfolioId=${portfolioId}`);
+    } else if (hasBeforePath === '전체 편집 페이지') {
+      router.push('/');
+    }
   };
 
   return (

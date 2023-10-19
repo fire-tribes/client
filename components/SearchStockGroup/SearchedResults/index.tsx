@@ -7,31 +7,20 @@ import {
 } from '@/hook/useGetSelectedStocks/state';
 import { useGetSearchedResults } from '@/hook/useGetSearchedResults';
 import { searchedResultsAtom } from '@/hook/useGetSearchedResults/state';
+import { useMyPortFolio } from '@/hook/useMyPortFolio';
+import { GetSearchedResultsDatas } from '@/@types/models/getSearchedResults';
+import { useIntersectionObserver } from '@/hook/useIntersectionObserver';
+import { basic } from '@/styles/palette';
 import { useAtom } from 'jotai';
 import { useDebounce } from 'use-debounce';
 import { CircularProgress } from '@mui/material';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-interface Stock {
-  assetId: number;
-  tickerCode: string;
-  stockCode: string;
-  name: string;
-  countryType: 'KOR' | 'USA';
-  marketType:
-    | 'KRX'
-    | 'KRX_KOSPI'
-    | 'KRX_KOSDAQ'
-    | 'KRX_KONEX'
-    | 'NYSE'
-    | 'AMEX'
-    | 'NASDAQ'
-    | 'UNKNOWN';
-  assetCategoryType: 'STOCK' | 'ETF' | 'ETN';
-}
 interface SearchResultsProps {
   /** 입력한 검색어 */
   value: string;
+  /** 기존 포트폴리오에 값을 추가인지, 신규 포트폴리오에 값을 추가하는 건지 확인 */
+  // portfolioId: number | undefined;
 }
 
 function SearchedResults({ value }: SearchResultsProps) {
@@ -43,10 +32,11 @@ function SearchedResults({ value }: SearchResultsProps) {
   const {
     getSearchedResultsData,
     isLoading,
+    fetchNextPage,
     hasNextPage,
     invalidateSearchedResultsData,
-  } = useGetSearchedResults(debouncedValue, nextPageIndex);
-  const searchedResultsArray = getSearchedResultsData?.data;
+  } = useGetSearchedResults(debouncedValue);
+  const searchedResultsArray = getSearchedResultsData;
 
   const [searchedResults, setSearchedResults] = useAtom(searchedResultsAtom);
 
@@ -63,18 +53,30 @@ function SearchedResults({ value }: SearchResultsProps) {
   useEffect(() => {
     setNextPageIndex(1);
     setSearchedResults([]);
-    invalidateSearchedResultsData(debouncedValue, nextPageIndex);
+    invalidateSearchedResultsData();
 
-    const newSearchedResultsArray = getSearchedResultsData?.data;
+    const newSearchedResultsArray = getSearchedResultsData;
     if (newSearchedResultsArray !== undefined) {
+      for (let i = 0; i < newSearchedResultsArray.length; i++) {
+        newSearchedResultsArray[i].hasAlreadyStockInPortfolio = false;
+      }
       setSearchedResults(newSearchedResultsArray);
     }
   }, [debouncedValue]);
 
-  const onClickLoadMoreButton = async () => {
-    if (!hasNextPage) return;
+  /** 이미 있는 자산이라면, 버튼 삭제하는 로직 */
+  const { myPortFolioData } = useMyPortFolio();
+  const portfolioStocks = myPortFolioData?.assetDetails;
 
-    setNextPageIndex(nextPageIndex + 1);
+  const hasAlreadyStock = (searchedResult: GetSearchedResultsDatas) => {
+    if (portfolioStocks) {
+      return portfolioStocks?.some(
+        (portfolioStock) =>
+          portfolioStock.tickerCode === searchedResult.tickerCode,
+      );
+    }
+
+    return false;
   };
 
   /** Jotai의 selectedStocksAtom을 이용해서 선택된 주식을 관리 */
@@ -108,15 +110,13 @@ function SearchedResults({ value }: SearchResultsProps) {
 
   /** toggleSelected 함수를 useCallback으로 감싸서 debouncedValue가 변경될 때마다 함수가 새로 생성되도록 함 */
   const toggleSelected = useCallback(
-    (stock: Stock) => (
-      console.log('debouncedValue in toggleSelected: ', debouncedValue),
+    (stock: GetSearchedResultsDatas) =>
       handleToggleSelected({
         ...stock,
         count: '',
         price: '',
         debouncedValue: debouncedValue,
-      })
-    ),
+      }),
     [debouncedValue, handleToggleSelected],
   );
 
@@ -131,6 +131,16 @@ function SearchedResults({ value }: SearchResultsProps) {
     });
   };
 
+  /** 무한스크롤, 더 보기 기능 */
+  // const onClickLoadMoreButton = async () => {
+  //   if (!hasNextPage) return;
+
+  //   setNextPageIndex(nextPageIndex + 1);
+  // };
+  const ref = useRef<HTMLDivElement>(null);
+  // TODO: useIntersectionObserver 내부로직 작성
+  useIntersectionObserver(ref, () => fetchNextPage());
+
   return (
     <>
       <ShowAddedStocks
@@ -138,7 +148,7 @@ function SearchedResults({ value }: SearchResultsProps) {
         removeSelected={handleRemoveSelected}
       />
       <h6>검색 결과</h6>
-      {debouncedValue === '' ? (
+      {debouncedValue === '' || searchedResults === undefined ? (
         <SearchedResultsUI.SearchNothingContainer>
           검색어 결과가 없습니다.
         </SearchedResultsUI.SearchNothingContainer>
@@ -155,6 +165,7 @@ function SearchedResults({ value }: SearchResultsProps) {
                   key={stock.assetId}
                   stock={stock}
                   debouncedValue={debouncedValue}
+                  hasAlreadyStockInPortfolio={hasAlreadyStock(stock)}
                   isSelected={selectedStocks.some(
                     (selected: SelectedStocksAtomProps) =>
                       stock.tickerCode
@@ -165,21 +176,25 @@ function SearchedResults({ value }: SearchResultsProps) {
                 />
               );
             })}
-          {searchedResults === undefined && (
-            <SearchedResultsUI.SearchNothingContainer>
-              검색어 결과가 없습니다.
-            </SearchedResultsUI.SearchNothingContainer>
+          {hasNextPage && (
+            <SearchedResultsUI.BottomContainer
+              // onClick={onClickLoadMoreButton}
+              // disabled={isLoading}
+              ref={ref}
+              style={{
+                marginBottom: '120px',
+                color: `${basic.gray4}`,
+              }}
+            >
+              {isLoading ? (
+                <SearchedResultsUI.LoadingContainer>
+                  <CircularProgress />
+                </SearchedResultsUI.LoadingContainer>
+              ) : (
+                '더 보기'
+              )}
+            </SearchedResultsUI.BottomContainer>
           )}
-          {isLoading ? (
-            <CircularProgress />
-          ) : hasNextPage ? (
-            <SearchedResultsUI.Button onClick={onClickLoadMoreButton}>
-              더 보기
-            </SearchedResultsUI.Button>
-          ) : (
-            <></>
-          )}
-          <div style={{ height: 'calc(92px - 40px)' }}></div>
         </div>
       )}
     </>

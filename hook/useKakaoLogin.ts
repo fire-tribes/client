@@ -8,6 +8,7 @@ export const useKakaoLogin = () => {
   const router = useRouter();
   const { code } = router.query as { code?: string };
   const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (code) return;
@@ -22,20 +23,34 @@ export const useKakaoLogin = () => {
 
   useEffect(() => {
     if (code && code.length > 0) {
+      setIsLoading(true);
+
       start(code)
         .then((response) => {
           const accessToken = response?.data.data.login.token.accessToken;
-          if (accessToken) {
+          const accessTokenExpiresIn =
+            response?.data.data.login.token.accessTokenExpiresIn;
+
+          if (accessToken && accessTokenExpiresIn) {
             const cookie = new Cookie();
-            cookie.set('accessToken', accessToken);
+            cookie.set('accessToken', accessToken, {
+              expires: new Date(accessTokenExpiresIn),
+            });
+
             router.push('/');
+            return;
           }
+
+          setIsLoading(false);
+          setIsError(true);
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          console.error(err);
+          setIsLoading(false);
+          setIsError(true);
+        });
     }
   }, [code]);
-
-  console.log('useKakao');
 
   const init = () => {
     if (window.Kakao?.isInitialized()) return;
@@ -43,23 +58,46 @@ export const useKakaoLogin = () => {
   };
 
   const open = () => {
-    window.Kakao?.Auth.authorize({
-      redirectUri:
-        process.env.NODE_ENV === 'development'
-          ? process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI_DEV
-          : process.env.NODE_ENV === 'production' &&
-            process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI_PRODUCTION,
-    });
+    const origin = window.location.origin;
+
+    if (process.env.NEXT_PUBLIC_LOCAL_SERVER_ORIGIN === origin) {
+      window.Kakao?.Auth.authorize({
+        redirectUri: process.env.NEXT_PUBLIC_LOCAL_SERVER_KAKAO_REDIRECT_URL,
+      });
+
+      return;
+    }
+
+    if (process.env.NEXT_PUBLIC_DEV_SERVER_ORIGIN === origin) {
+      window.Kakao?.Auth.authorize({
+        redirectUri: process.env.NEXT_PUBLIC_DEV_SERVER_KAKAO_REDIRECT_URL,
+      });
+
+      return;
+    }
+
+    if (process.env.NEXT_PUBLIC_PRODUCT_SERVER_ORIGIN === origin) {
+      window.Kakao?.Auth.authorize({
+        redirectUri: process.env.NEXT_PUBLIC_PRODUCT_SERVER_KAKAO_REDIRECT_URL,
+      });
+
+      return;
+    }
   };
 
   const start = async (code: string) => {
     if (!code || (code && isError)) return;
 
     try {
-      const resposne = await SignApi.start(code);
-      return resposne;
+      const response = await SignApi.start(code);
+
+      if (!response.data.success) {
+        throw new Error();
+      }
+
+      return response;
     } catch (err) {
-      setIsError(true);
+      throw Error(JSON.stringify(err));
     }
   };
 
@@ -67,6 +105,8 @@ export const useKakaoLogin = () => {
     init,
     open,
     start,
+    isLoading,
+    setIsLoading,
     isError,
     setIsError,
   };

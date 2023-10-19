@@ -28,7 +28,7 @@ const useLogoutQuery = () => {
         const cookie = new Cookie();
 
         cookie.remove(ACCESS_TOKEN);
-        window.location.href = '/v2/login';
+        window.location.href = '/login';
       }
     },
   });
@@ -135,6 +135,7 @@ export default function SettingPage() {
             title={'로그아웃'}
             message={'로그아웃을 하시겠습니까?'}
             onClickEvent={() => mutate()}
+            isShowToast={true}
             toastMessage="로그아웃이 완료되었습니다."
           >
             <StyledLogoutButton

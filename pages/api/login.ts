@@ -27,11 +27,16 @@ export default async function handler(
       return;
     }
 
-    /** get Access Token By KaKao */
+    /** get Access Token By KaKao
+     * KOE320' 동일한 인가코드로 로그인 요청 시 발생 (https://devtalk.kakao.com/t/koe320-an-authorization-code-must-be-supplied-authorization-code-not-found/126910)
+     */
+
     const accessResponse = await kakaoAPI.getAccessToken(code);
+
     const { access_token } = accessResponse.data;
     if (!access_token) {
       throwUndefinedError('access_token');
+      return;
     }
 
     /** get User Data By KaKao */
@@ -39,6 +44,7 @@ export default async function handler(
     const { kakao_account } = userData.data;
     if (!userData.data.kakao_account.email) {
       throwUndefinedError('user kakao email');
+      return;
     }
 
     email = kakao_account.email;
@@ -46,9 +52,8 @@ export default async function handler(
     /** await가 끝났으나 내가 원하는 로직을 실행하다가 문제가 생긴경우 (200 이나 내가 원하는 값이 없다.) */
     if (err instanceof Error) {
       const { message } = err;
-      const isUndefinedError = /UndefinedError/g.test(message);
 
-      return isUndefinedError && responseKakaoError(message);
+      return responseKakaoError(message);
     }
 
     /** await에서 넘어가지않고 바로 catch로 온 경우  */
@@ -85,7 +90,6 @@ export default async function handler(
       return responseSuccess(data);
     }
   } catch (err) {
-    console.log(err);
     responseServerError(err as AxiosError);
     return;
   }

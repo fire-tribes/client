@@ -1,23 +1,23 @@
 import CommonFont from '@/components/common/Font';
-import { ScheduleList } from '@/components/List/ScheduleList';
 import Section from '@/components/Section';
 import FlexBox from '@/components/common/FlexBox';
 import CommonIcon from '@/components/common/Icon';
-import NormalNotifyModal from '@/components/common/Modal/NormalNotifyModal';
 import Modal from '@/components/common/Modal';
 import { useEmotionPalette } from '@/hook/useThemeHooks';
+import { CenterModalV2 } from '@/components/commonV2/ModalV2/CenterModal';
+import MonthlyCalanderDividendList from '@/components/List/MonthlyCalanderDividendList';
 
-export default function SimpleDividentScheduleSection() {
+export default function MonthlyCalanderDividendSection() {
   const palette = useEmotionPalette();
   return (
     <Section textAlign="left">
       <Section.Title paddingBottom="18px">{`배당 달력 (${
         new Date().getMonth() + 1
       }월)`}</Section.Title>
-      <ScheduleList />
+      <MonthlyCalanderDividendList />
       <Section.Footer padding={'20px 0px'}>
         <FlexBox>
-          <NormalNotifyModal
+          <CenterModalV2
             title={'배당 달력'}
             content={'현재 배당 달력은 준비중입니다.'}
             button={
@@ -44,7 +44,7 @@ export default function SimpleDividentScheduleSection() {
                 <CommonIcon iconName="right_arrow" width={11} height={11} />
               </FlexBox>
             </CommonFont>
-          </NormalNotifyModal>
+          </CenterModalV2>
         </FlexBox>
       </Section.Footer>
     </Section>

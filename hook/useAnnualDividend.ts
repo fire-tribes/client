@@ -1,19 +1,40 @@
 import {
-  useAnnualDividendExchangeQuery,
-  useAnnualDividendExchangeWithSimpleQuery,
-  useAnnualDividendQuery,
+  useAnnualDividendTaxKRQuery,
+  useAnnualDividendSimpleKRQuery,
+  useAnnualDividendKRQuery,
+  // useAnnualDividendQuery,
+  // useAnnualDividendExchangeQuery,
+  // useAnnualDividendExchangeWithSimpleQuery,
 } from '@/hook/useQueryHook/useAnnualDividendQuery';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 export const useAnnualDividend = () => {
-  const { data: annualDividendData, isLoading } = useAnnualDividendQuery();
-  const { data: annualDividendExchangeData } = useAnnualDividendExchangeQuery();
-  const { data: annualDividendExchangeWithSimpleData } =
-    useAnnualDividendExchangeWithSimpleQuery();
+  const router = useRouter();
+
+  /** USD  */
+  // useAnnualDividendQuery();
+  // const { data: annualDividendExchangeData } = useAnnualDividendExchangeQuery();
+  // const { data: annualDividendExchangeWithSimpleData } =
+  //   useAnnualDividendExchangeWithSimpleQuery();
+
+  /** KR  */
+  const { data: annualDividendKRData, status } = useAnnualDividendKRQuery();
+  const { data: annualDividendTaxKRData } = useAnnualDividendTaxKRQuery();
+  const { data: annualDividendSimpleKRData } = useAnnualDividendSimpleKRQuery();
+
+  useEffect(() => {
+    if (status === 'error') {
+      router.push('/500');
+    }
+  }, [status]);
 
   return {
-    annualDividendData: annualDividendData?.data,
-    annualDividendExchangeData,
-    annualDividendExchangeWithSimpleData,
-    isLoading,
+    annualDividendData: annualDividendKRData?.data,
+    // annualDividendExchangeData,
+    // annualDividendExchangeWithSimpleData,
+    annualDividendTaxKRData,
+    annualDividendSimpleKRData,
+    status,
   };
 };

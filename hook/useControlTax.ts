@@ -36,7 +36,6 @@ export const useControlTax = () => {
     // 첫 로딩
     if (taxData.isTax === null) {
       const isTax = window.localStorage.getItem(IS_TAX);
-      console.log(isTax);
       isTax ? onTax() : offTax();
     }
   }, []);

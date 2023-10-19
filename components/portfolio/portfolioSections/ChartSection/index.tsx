@@ -5,25 +5,33 @@ import Section from '@/components/Section';
 import CommonCheckButton from '@/components/common/CheckButton';
 import FlexBox from '@/components/common/FlexBox';
 import { useAnnualDividend } from '@/hook/useAnnualDividend';
-import NormalNotifyModal from '@/components/common/Modal/NormalNotifyModal';
-import Modal from '@/components/common/Modal';
 import { useEmotionTheme } from '@/hook/useThemeHooks';
 import { useControlTax } from '@/hook/useControlTax';
 
+import Modal from '@/components/common/Modal';
+import { CenterModalV2 } from '@/components/commonV2/ModalV2/CenterModal';
+
 export default function ChartSection() {
-  const { annualDividendExchangeWithSimpleData } = useAnnualDividend();
+  const { annualDividendSimpleKRData } = useAnnualDividend();
   const { palette } = useEmotionTheme();
 
+  const isPlusDividendChange =
+    annualDividendSimpleKRData?.dividendChange &&
+    parseInt(annualDividendSimpleKRData?.dividendChange) > 0
+      ? true
+      : false;
+
   const chartSectionTexts = {
-    title: annualDividendExchangeWithSimpleData?.thisMonthDividend || '0원',
-    subTitle: annualDividendExchangeWithSimpleData?.dividendChange
-      ? `지난 배당 대비 ${annualDividendExchangeWithSimpleData?.dividendChange}%`
+    title: annualDividendSimpleKRData?.thisMonthDividend || '0원',
+    subTitle: annualDividendSimpleKRData?.dividendChange
+      ? `지난 배당 대비 ${
+          isPlusDividendChange ? '+' : ''
+        }${annualDividendSimpleKRData?.dividendChange}`
       : '',
     isShowChart:
-      annualDividendExchangeWithSimpleData?.monthlyDividends &&
-      Object.keys(annualDividendExchangeWithSimpleData?.monthlyDividends)
-        .length &&
-      annualDividendExchangeWithSimpleData?.annualDividend
+      annualDividendSimpleKRData?.monthlyDividends &&
+      Object.keys(annualDividendSimpleKRData?.monthlyDividends).length &&
+      annualDividendSimpleKRData?.annualDividend
         ? true
         : false,
   };
@@ -44,7 +52,7 @@ export default function ChartSection() {
             >
               소득세
             </CommonCheckButton>
-            <NormalNotifyModal
+            <CenterModalV2
               title={'준비중입니다'}
               content={
                 '4대 보험을 제한 결과값 도출은 곧 출시 예정입니다. 조금만 기다려주세요!'
@@ -66,7 +74,7 @@ export default function ChartSection() {
               <CommonCheckButton fontSize="body3" isWait checked={false}>
                 4대보험
               </CommonCheckButton>
-            </NormalNotifyModal>
+            </CenterModalV2>
           </FlexBox>
         </FlexBox>
       </FlexBox>
@@ -82,12 +90,7 @@ export default function ChartSection() {
         <h1 style={{ paddingBottom: '6px' }}>{title}</h1>
         <CommonFont
           fontSize="body1"
-          color={
-            annualDividendExchangeWithSimpleData?.dividendChange &&
-            annualDividendExchangeWithSimpleData?.dividendChange > 0
-              ? 'point_red01'
-              : 'point_blue02'
-          }
+          color={isPlusDividendChange ? 'point_red01' : 'point_blue02'}
         >
           {subTitle}
         </CommonFont>

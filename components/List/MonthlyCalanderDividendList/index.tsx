@@ -1,39 +1,16 @@
-import { useMonthlyCalanderDividendExchangeQuery } from '@/hook/useQueryHook/useMonthlyCalanderDividendQuery';
 import CommonFont from '@/components/common/Font';
 
-import {
-  Box,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  Avatar,
-} from '@mui/material';
+import StockAvatar from '@/components/common/StockAvatar';
+import { useMonthlyCalanderDividend } from '@/hook/useMonthlyCalanderDividend';
+import { Box, List, ListItem, ListItemText, ListItemIcon } from '@mui/material';
 
-export function ScheduleList() {
-  const { data } = useMonthlyCalanderDividendExchangeQuery();
+export default function MonthlyCalanderDividendList() {
+  const { monthlyCalanderDividendSimpleKRData } = useMonthlyCalanderDividend();
 
-  // const { data } = useMonthlyCalanderDividendQuery();
-  // const mockData: DividendCalanderModel[] = [
-  //   {
-  //     tickerCode: 'JEPI',
-  //     stockCode: '',
-  //     expectedPayDate: '2022-09-07',
-  //     exDividendDate: '2022-09-01',
-  //     expectedDividends: 7.27,
-  //     currencyType: 'USD',
-  //   },
-  //   {
-  //     tickerCode: 'JEPI',
-  //     stockCode: '',
-  //     expectedPayDate: '2022-09-07',
-  //     exDividendDate: '2022-09-01',
-  //     expectedDividends: 7.27,
-  //     currencyType: 'USD',
-  //   },
-  // ];
-
-  if (data?.success === true && !data?.data.length) {
+  if (
+    monthlyCalanderDividendSimpleKRData?.success === true &&
+    !monthlyCalanderDividendSimpleKRData?.data.length
+  ) {
     return (
       <CommonFont
         component="p"
@@ -46,7 +23,10 @@ export function ScheduleList() {
       </CommonFont>
     );
   }
-  if (data?.success === false) {
+  if (
+    monthlyCalanderDividendSimpleKRData?.success !== undefined &&
+    monthlyCalanderDividendSimpleKRData?.success === false
+  ) {
     return (
       <CommonFont
         component="p"
@@ -63,7 +43,7 @@ export function ScheduleList() {
   return (
     <Box>
       <List disablePadding>
-        {data?.data.map(
+        {monthlyCalanderDividendSimpleKRData?.data.map(
           ({
             tickerCode,
             stockCode,
@@ -71,14 +51,14 @@ export function ScheduleList() {
             expectedDividends,
             exDividendDate,
           }) => (
-            <>
+            <div key={tickerCode || stockCode}>
               <ListItem disablePadding sx={{ gap: '9px' }}>
                 <ListItemText
                   secondary={`${new Date(expectedPayDate).getDate()}일`}
                   sx={{ maxWidth: 32 }}
                 />
                 <ListItemIcon sx={{ minWidth: 0 }}>
-                  <Avatar />
+                  <StockAvatar tickerCode={tickerCode} stockCode={stockCode} />
                 </ListItemIcon>
                 <ListItemText
                   primary={
@@ -108,7 +88,7 @@ export function ScheduleList() {
                   sx={{ textAlign: 'right' }}
                 />
               </ListItem>
-            </>
+            </div>
           ),
         )}
       </List>

@@ -5,6 +5,7 @@ import { useGetRecentSearchWords } from '@/hook/useGetRecentSearchWords';
 import { useDeleteRecentSearchWord } from '@/hook/useDeleteRecentSearchWord';
 import { useRemoveRecentSearchWordsAll } from '@/hook/useRemoveRecentSearchWordsAll';
 import { basic } from '@/styles/palette';
+// import { GetRecentSearchWords } from '@/@types/models/getRecentSearchWords';
 import { CircularProgress } from '@mui/material';
 
 interface RecentSearchWords {
@@ -24,8 +25,7 @@ function RecentSearchWords({
   /** 최근 검색어 데이터 Get */
   const { getRecentSearchWordsData, isLoadingGetRecentSearchWordsData } =
     useGetRecentSearchWords();
-  const recentSearchWordsDataArray = getRecentSearchWordsData?.data;
-  console.log('recentSearchWordsDataArray: ', recentSearchWordsDataArray);
+  const recentSearchWordsDataArray = getRecentSearchWordsData?.data.reverse();
 
   /** 특정 최근 검색어 Delete  */
   const { deleteRecentSearchWordData } = useDeleteRecentSearchWord();
@@ -36,10 +36,8 @@ function RecentSearchWords({
 
   /** 전체 최근 검색어 초기화 Post */
   const { mutate } = useRemoveRecentSearchWordsAll();
-  // console.log('isRemoveRecentSearchWordsAll: ', mutate());
   /** 수정 */
 
-  console.log('recentSearchWordsDataArray: ', recentSearchWordsDataArray);
   return (
     <>
       <RecentSearchWordsUI.TopContainer>
@@ -48,6 +46,7 @@ function RecentSearchWords({
           title={'최근 검색어 삭제'}
           message={'최근 검색어를 모두 삭제하시겠어요?'}
           onClickEvent={() => mutate()}
+          isShowToast={true}
           toastMessage={'최근 검색어를 모두 삭제하였습니다.'}
         >
           <button
@@ -65,35 +64,36 @@ function RecentSearchWords({
           </button>
         </AlertModal>
       </RecentSearchWordsUI.TopContainer>
-      <div>
-        {recentSearchWordsDataArray === undefined ||
-        recentSearchWordsDataArray.length === 0 ? (
-          <RecentSearchWordsUI.NothingRecentSearchWordsContainer>
-            <div>
-              최근 검색 기록이 없어요.
-              <tr />
-              주식 이름 혹은 티커를 검색해주세요.
-              <tr />
-              (예: JEPI, SCHD)
-            </div>
-          </RecentSearchWordsUI.NothingRecentSearchWordsContainer>
-        ) : isLoadingGetRecentSearchWordsData ? (
+
+      {recentSearchWordsDataArray === undefined ||
+      recentSearchWordsDataArray.length === 0 ? (
+        <RecentSearchWordsUI.NothingRecentSearchWordsContainer>
+          <div>
+            최근 검색 기록이 없어요.
+            <tr />
+            주식 이름 혹은 티커를 검색해주세요.
+            <tr />
+            (예: JEPI, SCHD)
+          </div>
+        </RecentSearchWordsUI.NothingRecentSearchWordsContainer>
+      ) : isLoadingGetRecentSearchWordsData ? (
+        <RecentSearchWordsUI.LoadingContainer>
           <CircularProgress />
-        ) : (
-          recentSearchWordsDataArray.map((stock, id) => {
-            return (
-              <RecentSearchWord
-                key={id}
-                stock={stock}
-                handleDeleteRecentSearchWord={() =>
-                  handleDeleteRecentSearchWord(id)
-                }
-                onClickRecentSearchWord={onClickRecentSearchWord}
-              />
-            );
-          })
-        )}
-      </div>
+        </RecentSearchWordsUI.LoadingContainer>
+      ) : (
+        recentSearchWordsDataArray.map((stock, id) => {
+          return (
+            <RecentSearchWord
+              key={id}
+              stock={stock}
+              handleDeleteRecentSearchWord={() =>
+                handleDeleteRecentSearchWord(id)
+              }
+              onClickRecentSearchWord={onClickRecentSearchWord}
+            />
+          );
+        })
+      )}
     </>
   );
 }

@@ -1,18 +1,18 @@
 import CommonFont from '@/components/common/Font';
 import FlexBox from '@/components/common/FlexBox';
-import { useMyPortFolioExchangeQuery } from '@/hook/useQueryHook/useMyPortFolioQuery';
+import { useMyPortFolioTaxWithSimpleKRQuery } from '@/hook/useQueryHook/useMyPortFolioQuery';
+import StockAvatar from '@/components/common/StockAvatar';
 import {
   Box,
   List,
   ListItem,
   ListItemText,
   ListItemIcon,
-  Avatar,
   styled,
 } from '@mui/material';
 
 export function MyStockList() {
-  const { data: myPortfolioData } = useMyPortFolioExchangeQuery();
+  const { data: myPortfolioData } = useMyPortFolioTaxWithSimpleKRQuery();
   const myAssetDetails = myPortfolioData?.assetDetails;
 
   return (
@@ -23,7 +23,7 @@ export function MyStockList() {
             <FlexBox key={detail.tickerCode} flexDirection="column">
               <ListItem disablePadding sx={{ gap: '9px' }}>
                 <ListItemIcon sx={{ minWidth: 0 }}>
-                  <Avatar />
+                  <StockAvatar tickerCode={detail.tickerCode} stockCode={''} />
                 </ListItemIcon>
                 <ListItemText
                   primary={
@@ -80,7 +80,7 @@ export function MyStockList() {
                       textAlign="left"
                       primary={
                         <CommonFont fontSize="caption" color="gray6">
-                          배당율
+                          배당률
                         </CommonFont>
                       }
                     ></DetailListItemText>

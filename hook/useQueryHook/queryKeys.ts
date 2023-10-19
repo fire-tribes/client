@@ -16,23 +16,34 @@ export const queryKeys = {
     exchangeRate?: number,
     isTax?: boolean | null,
   ) => ['changedMyPortfolio', isSimple, isTax, exchangeRate],
+  changedMyPortfolioKR: (isSimple?: boolean | null, isTax?: boolean | null) => [
+    'changedMyPortfolio',
+    isSimple,
+    isTax,
+  ],
   annualDividend: (
     isSimple?: boolean | null,
     exchangeRate?: number,
     isTax?: boolean | null,
   ) => ['annualDividend', isSimple, isTax, exchangeRate],
+  annualDividendKR: (isSimple?: boolean | null, isTax?: boolean | null) => [
+    'annualDividendKR',
+    isSimple,
+    isTax,
+  ],
   monthlyCalanderDividend: (
     isSimple?: boolean | null,
     exchangeRate?: number,
     isTax?: boolean | null,
   ) => ['monthlyCalanderDividend', isSimple, isTax, exchangeRate],
+  monthlyCalanderDividendKR: (
+    isSimple?: boolean | null,
+
+    isTax?: boolean | null,
+  ) => ['monthlyCalanderDividendKR', isSimple, isTax],
   popularStocks: () => ['popularStocks'],
   recentSearchWords: () => ['getRecentSearchWords'],
-  searchedResults: (word: string, pageIndex: number) => [
-    'searchedResults',
-    word,
-    pageIndex,
-  ],
+  searchedResults: (word: string) => ['searchedResults', word],
   currentPrice: (assetIds: number) => ['currentPrice', assetIds],
   currentPrices: (assetIds: number[]) => ['currentPrice', assetIds],
   portfolio: () => ['portfolio'],

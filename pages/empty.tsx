@@ -1,7 +1,10 @@
 import CommonButton from '@/components/common/Button/CommonButton';
 import CloudImage from '@/public/Cloud.png';
 import PlusSvg from '@/public/icon/plus.svg';
-import Layout from '@/components/common/Layout';
+import LayoutV2 from '@/components/commonV2/Layout';
+import Padding from '@/components/commonV2/Padding';
+import CommonHeader from '@/components/common/Header';
+import ModeController from '@/components/ModeController';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -10,43 +13,59 @@ import { CircularProgress } from '@mui/material';
 
 function Empty() {
   const router = useRouter();
+  const { portfolioId } = router.query as { portfolioId?: string };
   const [loading, setLoading] = useState(false);
 
   const onMoveSearchPage = () => {
     setLoading(true);
-    router.push('/search');
+
+    const SEARCH_URL = '/search';
+
+    if (portfolioId) {
+      return router.push(`${SEARCH_URL}?portfolioId=${portfolioId}`);
+    } else {
+      router.push(SEARCH_URL);
+    }
   };
   return (
-    <Layout>
-      <EmptyUI.Container>
-        <EmptyUI.Item>
-          {loading ? (
-            <CircularProgress />
-          ) : (
-            <>
-              <div>
-                <Image src={CloudImage} alt="Cloud Image" />
-              </div>
-              <div>
-                배당 계산을 위해
-                <tr /> 첫 주식을 추가해주세요.
-              </div>
-              <div>
-                <CommonButton onClick={() => onMoveSearchPage()}>
-                  <Image src={PlusSvg} alt="plus Svg" />
-                  <span>주식 추가하기</span>
-                </CommonButton>
-              </div>
-            </>
-          )}
-        </EmptyUI.Item>
-      </EmptyUI.Container>
-    </Layout>
+    <LayoutV2
+      showBottomNavigator
+      headMetaProps={{
+        title: '스노우볼 - 배당 모아보기',
+        image: '/icon/snow_logo.png',
+      }}
+    >
+      <Padding paddingLeft={18} paddingRight={18} paddingTop={21}>
+        <CommonHeader>
+          <ModeController hasPortfolio={false} />
+        </CommonHeader>
+      </Padding>
+      <EmptyUI.Item>
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <>
+            <div>
+              <Image src={CloudImage} alt="Cloud Image" />
+            </div>
+            <div>
+              배당 계산을 위해
+              <tr /> 첫 주식을 추가해주세요.
+            </div>
+            <div>
+              <CommonButton onClick={onMoveSearchPage}>
+                <Image src={PlusSvg} alt="plus Svg" />
+                <span>주식 추가하기</span>
+              </CommonButton>
+            </div>
+          </>
+        )}
+      </EmptyUI.Item>
+    </LayoutV2>
   );
 }
 
 const Container = styled.div`
-  height: calc(100vh - 55px - 17px);
   position: relative;
 `;
 

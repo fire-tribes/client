@@ -3,22 +3,29 @@ import { NAVIGATOR_HEIGHT } from '@/styles/constants';
 import styled from '@emotion/styled';
 
 const S = {
-  LayoutBody: styled.div`
+  LayoutBody: styled.div<{ vh: number }>`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+
+    min-width: 320px;
+    height: ${({ vh }) => `calc(${vh}px * 100)`};
+
+    @media (min-width: 430px) {
+      height: 100vh;
+      min-height: 667px;
+    }
 
     background-color: ${({ theme }) => theme.palette.basic.gray8};
   `,
   LayoutMaxMin: styled.div`
     position: relative;
-
     width: 100%;
 
     max-height: initial;
     min-height: initial;
     height: 100%;
+    min-width: 320px;
 
     overflow: hidden;
     border-radius: none;

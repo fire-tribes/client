@@ -4,6 +4,7 @@ import testCircleSvg from '@/public/icon/testCircle.svg';
 // TODO: import upVectorSvg from '@/public/icon/upVector.svg';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 interface EditStockProps {
   /** 포트폴리오 내 종목 객체 */
@@ -27,6 +28,9 @@ interface EditStockProps {
 }
 
 function EditStock({ stock, handleEditButton }: EditStockProps) {
+  const router = useRouter();
+  const { portfolioId } = router.query as { portfolioId?: number };
+
   return (
     <EditStockUI.Container>
       <EditStockUI.Item>
@@ -38,7 +42,9 @@ function EditStock({ stock, handleEditButton }: EditStockProps) {
           <div>
             <div>{stock.tickerCode}</div>
             <button onClick={handleEditButton}>
-              <Link href={`stock/${stock.assetId}/${stock.portfolioAssetId}`}>
+              <Link
+                href={`stock/${portfolioId}/${stock.assetId}/${stock.portfolioAssetId}`}
+              >
                 수정하기
               </Link>
             </button>
