@@ -5,6 +5,7 @@ import { ACCESS_TOKEN } from '@/core/api/token';
 
 import { ResponseSuccess } from '@/@types/models/response';
 import { queryKeys } from '@/hook/useQueryHook/queryKeys';
+import { useAmplitudeInit } from '@/hook/useAmplitudeInit';
 import { Global, ThemeProvider as EmotionThemeProvider } from '@emotion/react';
 import {
   QueryCache,
@@ -23,6 +24,10 @@ import axios, { AxiosResponse } from 'axios';
 import type { AppProps } from 'next/app';
 
 function MyApp({ Component, pageProps }: AppProps) {
+  // Amplitude init
+  useAmplitudeInit();
+
+  // React Query
   const [queryClient] = useState(
     new QueryClient({
       queryCache: new QueryCache({
