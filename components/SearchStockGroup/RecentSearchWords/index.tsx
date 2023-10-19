@@ -26,7 +26,6 @@ function RecentSearchWords({
   const { getRecentSearchWordsData, isLoadingGetRecentSearchWordsData } =
     useGetRecentSearchWords();
   const recentSearchWordsDataArray = getRecentSearchWordsData?.data.reverse();
-  console.log('recentSearchWordsDataArray: ', recentSearchWordsDataArray);
 
   /** 특정 최근 검색어 Delete  */
   const { deleteRecentSearchWordData } = useDeleteRecentSearchWord();
@@ -37,10 +36,8 @@ function RecentSearchWords({
 
   /** 전체 최근 검색어 초기화 Post */
   const { mutate } = useRemoveRecentSearchWordsAll();
-  // console.log('isRemoveRecentSearchWordsAll: ', mutate());
   /** 수정 */
 
-  console.log('recentSearchWordsDataArray: ', recentSearchWordsDataArray);
   return (
     <>
       <RecentSearchWordsUI.TopContainer>

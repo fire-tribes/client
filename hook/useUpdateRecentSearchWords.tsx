@@ -21,22 +21,17 @@ function useUpdateRecentSearchWords() {
 
   const updateRecentSearchWords = () => {
     if (recentSearchWordsDataArray === undefined) {
-      console.log('첫 번째 조건문: ');
       addRecentSearchWordData(
         selectedStocks[selectedStocks.length - 1].debouncedValue,
       );
     } else if (recentSearchWordsDataArray.length === 0) {
-      console.log('두 번째 조건문: ');
       addRecentSearchWordData(
         selectedStocks[selectedStocks.length - 1].debouncedValue,
       );
     } else if (
-      recentSearchWordsDataArray[recentSearchWordsDataArray.length - 1].word ===
+      recentSearchWordsDataArray[recentSearchWordsDataArray.length - 1].word !==
       selectedStocks[selectedStocks.length - 1].debouncedValue
     ) {
-      console.log('세 번째 조건문: ');
-    } else {
-      console.log('조건문 해당사항 없음');
       addRecentSearchWordData(
         selectedStocks[selectedStocks.length - 1].debouncedValue,
       );

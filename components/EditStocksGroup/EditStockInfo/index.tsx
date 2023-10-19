@@ -41,7 +41,6 @@ export default function EditStockInfo() {
   const portfolioAssetId = Number(slug?.[2]);
   /** 만들어진 Jotai(assetDetails)에서 값 가져오기 */
   const [assetDetails, setAssetDetails] = useAtom(assetDetailsAtom);
-  console.log('assetDetails: ', assetDetails);
   const [editedAssetDetails, setEditedAssetDetails] = useAtom(
     editedAssetDetailsAtom,
   );
@@ -56,7 +55,6 @@ export default function EditStockInfo() {
     }
   };
   const object = filterAssetDetail(portfolioAssetId);
-  console.log('object: ', object);
 
   useEffect(() => {
     if (object?.count && object?.averagePrice) {
@@ -75,8 +73,6 @@ export default function EditStockInfo() {
       ...prev,
       count: Number(value),
     }));
-    // console.log('assetDetails[index!].count: ', assetDetails[index!].count);
-    // setInputCountValue(value);
   };
 
   /** price 값 직접 변경 함수  */
@@ -87,11 +83,6 @@ export default function EditStockInfo() {
       assetId: assetId,
       price: Number(value),
     }));
-    // console.log(
-    //   'assetDetails[index!].averagePrice: ',
-    //   assetDetails[index!].averagePrice,
-    // );
-    // setInputPriceValue(value);
   };
 
   /** 값을 입력하지 않았을 때, 발생시킬 Error 함수 */
