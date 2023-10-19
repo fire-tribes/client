@@ -6,7 +6,6 @@ import Link from 'next/link';
 
 export default function BadgeGroup() {
   const { myPortFolioData } = useMyPortFolio();
-  console.log('BadgeGroup');
   return (
     <FlexBox gap="6px">
       <Link

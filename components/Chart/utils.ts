@@ -56,8 +56,6 @@ export const getShortCurrencyKRByPlusNumber = (value: number) => {
     const upperMillion = Math.floor(value / (10000 * 10000));
     const upperTenThousand = Math.floor((value % (10000 * 10000)) / 10000);
 
-    console.log(upperMillion);
-
     return [
       upperMillion + '억',
       upperTenThousand > 0 ? `${upperTenThousand}만` : '',

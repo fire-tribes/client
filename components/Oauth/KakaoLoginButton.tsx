@@ -8,8 +8,6 @@ import Image from 'next/image';
 export function KakaoLoginButton() {
   const { open, isLoading, setIsLoading, isError, setIsError } =
     useKakaoLogin();
-
-  console.log(isLoading, isError);
   return (
     <>
       <KakaoSDK />

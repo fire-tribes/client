@@ -90,7 +90,6 @@ export default async function handler(
       return responseSuccess(data);
     }
   } catch (err) {
-    console.log(err);
     responseServerError(err as AxiosError);
     return;
   }

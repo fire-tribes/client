@@ -31,12 +31,10 @@ function Add() {
     if (!portfolioId) {
       makePortfolioData().then((response) => {
         /** 3. 포트폴리오 자산 추가 POST 요청에 formData로 보낼 객체 생성 */
-        console.log(response);
         const formData = {
           portfolioId: response.portfolioId,
           assets: makeAssets(selectedStocks),
         };
-        console.log('makePortfolio formData: ', formData);
         addStocksAtPortfolioData(formData);
       });
     }
@@ -48,13 +46,11 @@ function Add() {
       portfolioId: Number(portfolioId),
       assets: makeAssets(selectedStocks),
     };
-    console.log('madePortfolio formData: ', formData);
     addStocksAtPortfolioData(formData);
   };
 
   /** 추가 완료 버튼을 눌렀을 때 작동할 기능 */
   const onMoveOtherPages = async () => {
-    console.log('portfolioId: ', portfolioId);
     if (portfolioId) {
       madePortfolio();
       /** jotai 초기화 */

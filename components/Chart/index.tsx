@@ -78,7 +78,6 @@ export default function AnnualDividendBarChart() {
         },
       },
     },
-    onClick: (e) => console.log(e),
     /**
      * events의 목록 (https://www.chartjs.org/docs/latest/configuration/interactions.html#index)
      * events: [''],
