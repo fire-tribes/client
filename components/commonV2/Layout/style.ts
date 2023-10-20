@@ -11,7 +11,7 @@ const S = {
     min-width: 320px;
     height: ${({ vh }) => `calc(${vh}px * 100)`};
 
-    @media (min-width: 430px) {
+    @media (min-width: 450px) {
       height: 100vh;
       min-height: 667px;
     }
@@ -30,7 +30,7 @@ const S = {
     overflow: hidden;
     border-radius: none;
 
-    @media (min-width: 430px) {
+    @media (min-width: 450px) {
       min-height: 667px;
       max-height: 932px;
       height: 100%;
