@@ -21,9 +21,15 @@ export default function V2Page() {
     useMonthlyCalanderDividend();
   const { status: annualDividendStatus } = useAnnualDividend();
 
-  const isLoadingPage = !(
-    status === 'success' &&
-    annualDividendStatus === 'success' &&
+  // const isLoadingPage = !(
+  //   status === 'success' &&
+  //   annualDividendStatus === 'success' &&
+  //   monthlyCalanderDividendStatus === 'success'
+  // );
+
+  const isPendingRequest = !(
+    status === 'success' ||
+    annualDividendStatus === 'success' ||
     monthlyCalanderDividendStatus === 'success'
   );
 
@@ -35,7 +41,7 @@ export default function V2Page() {
         image: '/icon/snow_logo.png',
       }}
     >
-      {isLoadingPage ? (
+      {isPendingRequest ? (
         <CenterContent>
           <CircularProgress />
         </CenterContent>
