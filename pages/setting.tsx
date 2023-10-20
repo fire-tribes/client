@@ -12,7 +12,6 @@ import {
   Avatar,
   List,
   ListItem,
-  ListItemAvatar,
   ListItemButton,
   ListItemIcon,
   ListItemText,
@@ -20,6 +19,13 @@ import {
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { useMutation } from '@tanstack/react-query';
+
+const TERMS_LINKS = {
+  TERMS_OF_SERVICE:
+    'https://www.notion.so/tuemarz/3a3e5409697847c88749246893e1c3d0?pvs=4',
+  PRIVACY_POLICY:
+    'https://tuemarz.notion.site/90ef6825b4ae498d83936a18de0a8324',
+};
 
 const useLogoutQuery = () => {
   return useMutation(() => SignApi.signOut(), {
@@ -90,20 +96,19 @@ export default function SettingPage() {
                   </CommonFont>
                 </Padding>
               }
-              secondary={
-                <CommonFont fontSize="body1" fontWeight="regular" color="gray6">
-                  최근 접속일:{' '}
-                  {accessTokenDecodingResult?.exp &&
-                    new Date(
-                      accessTokenDecodingResult?.exp,
-                    ).toLocaleDateString()}
-                </CommonFont>
-              }
+              /** TODO: 어떤 데이터를 토대로 최근 접속일을 보여줄 것인지 결졍되면 주석 제거 */
+              // secondary={
+              //   <CommonFont fontSize="body1" fontWeight="regular" color="gray6">
+              //     최근 접속일:{' '}
+              //     {accessTokenDecodingResult?.exp &&
+              //       new Date(
+              //         accessTokenDecodingResult?.exp,
+              //       ).toLocaleDateString()}
+              //   </CommonFont>
+              // }
             ></ListItemText>
 
-            <ListItemAvatar>
-              <Avatar />
-            </ListItemAvatar>
+            <Avatar />
           </ListItem>
         </List>
       </div>
@@ -112,21 +117,39 @@ export default function SettingPage() {
           <CommonFont>기타</CommonFont>
           <List>
             <ListItem disablePadding>
-              <ListItemButton sx={{ padding: '14px 0', gap: '10px' }}>
-                <ListItemIcon sx={{ width: '24px', minWidth: '0' }}>
-                  <CommonIcon iconName="note" width={24} height={24} />
-                </ListItemIcon>
-                <ListItemText primary="이용약관" />
-              </ListItemButton>
+              <a
+                href={TERMS_LINKS.TERMS_OF_SERVICE}
+                target="_blank"
+                style={{
+                  display: 'block',
+                  width: '100%',
+                }}
+              >
+                <ListItemButton sx={{ padding: '14px 0', gap: '10px' }}>
+                  <ListItemIcon sx={{ width: '24px', minWidth: '0' }}>
+                    <CommonIcon iconName="note" width={24} height={24} />
+                  </ListItemIcon>
+                  <ListItemText primary="이용약관" />
+                </ListItemButton>
+              </a>
             </ListItem>
 
             <ListItem disablePadding>
-              <ListItemButton sx={{ padding: '14px 0', gap: '10px' }}>
-                <ListItemIcon sx={{ width: '24px', minWidth: '0' }}>
-                  <CommonIcon iconName="lock" width={24} height={24} />
-                </ListItemIcon>
-                <ListItemText primary="개인정보처리방침" />
-              </ListItemButton>
+              <a
+                href={TERMS_LINKS.PRIVACY_POLICY}
+                target="_blank"
+                style={{
+                  display: 'block',
+                  width: '100%',
+                }}
+              >
+                <ListItemButton sx={{ padding: '14px 0', gap: '10px' }}>
+                  <ListItemIcon sx={{ width: '24px', minWidth: '0' }}>
+                    <CommonIcon iconName="lock" width={24} height={24} />
+                  </ListItemIcon>
+                  <ListItemText primary="개인정보처리방침" />
+                </ListItemButton>
+              </a>
             </ListItem>
           </List>
         </Padding>
