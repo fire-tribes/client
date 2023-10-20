@@ -54,7 +54,13 @@ export default function MonthlyCalanderDividendList() {
             <div key={tickerCode || stockCode}>
               <ListItem disablePadding sx={{ gap: '9px' }}>
                 <ListItemText
-                  secondary={`${new Date(expectedPayDate).getDate()}일`}
+                  primary={
+                    <CommonFont
+                      fontSize="caption"
+                      color="gray6"
+                      fontWeight="normal"
+                    >{`${new Date(exDividendDate).getDate()}일`}</CommonFont>
+                  }
                   sx={{ maxWidth: 32 }}
                 />
                 <ListItemIcon sx={{ minWidth: 0 }}>
@@ -79,9 +85,9 @@ export default function MonthlyCalanderDividendList() {
                       fontWeight="regular"
                       color={'gray6'}
                     >
-                      {`${new Date(exDividendDate).getMonth() + 1}월 ${new Date(
-                        exDividendDate,
-                      ).getDate()}일 예상`}
+                      {`배당락 ${
+                        new Date(expectedPayDate).getMonth() + 1
+                      }월 ${new Date(expectedPayDate).getDate()}일 `}
                       {}
                     </CommonFont>
                   }

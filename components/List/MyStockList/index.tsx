@@ -2,6 +2,7 @@ import CommonFont from '@/components/common/Font';
 import FlexBox from '@/components/common/FlexBox';
 import { useMyPortFolioTaxWithSimpleKRQuery } from '@/hook/useQueryHook/useMyPortFolioQuery';
 import StockAvatar from '@/components/common/StockAvatar';
+import { DIVIDEND_PRICE_RATIO_KR } from '@/components/List/DetailInformationList';
 import {
   Box,
   List,
@@ -11,6 +12,10 @@ import {
   styled,
 } from '@mui/material';
 
+const getFontColorByPlusAndMinus = (price: number) => {
+  return price > 0 ? 'point_red01' : 'point_blue02';
+};
+
 export function MyStockList() {
   const { data: myPortfolioData } = useMyPortFolioTaxWithSimpleKRQuery();
   const myAssetDetails = myPortfolioData?.assetDetails;
@@ -19,6 +24,8 @@ export function MyStockList() {
     <Box>
       <StyledMyStockListContainer disablePadding>
         {myAssetDetails?.map((detail) => {
+          const isPlusAssetPriceChangeRate = detail.assetPriceChangeRate > 0;
+
           return (
             <FlexBox key={detail.tickerCode} flexDirection="column">
               <ListItem disablePadding sx={{ gap: '9px' }}>
@@ -56,17 +63,13 @@ export function MyStockList() {
                     <CommonFont
                       fontSize="caption2"
                       fontWeight="regular"
-                      color={
-                        detail?.assetPriceChangeRate &&
-                        detail?.assetPriceChangeRate > 0
-                          ? 'point_red01'
-                          : 'point_blue02'
-                      }
+                      color={getFontColorByPlusAndMinus(
+                        detail.assetPriceChangeRate,
+                      )}
                     >
-                      {detail?.assetPriceChangeRate &&
-                      detail?.assetPriceChangeRate > 0
-                        ? `+${detail?.assetPriceChangeRate}%`
-                        : '0%'}
+                      {isPlusAssetPriceChangeRate
+                        ? `+${detail.assetPriceChangeRate}%`
+                        : `${detail.assetPriceChangeRate}%`}
                     </CommonFont>
                   }
                   sx={{ textAlign: 'right' }}
@@ -80,7 +83,7 @@ export function MyStockList() {
                       textAlign="left"
                       primary={
                         <CommonFont fontSize="caption" color="gray6">
-                          배당률
+                          {DIVIDEND_PRICE_RATIO_KR}
                         </CommonFont>
                       }
                     ></DetailListItemText>
@@ -144,11 +147,9 @@ export function MyStockList() {
                           <CommonFont
                             fontSize="caption"
                             component="span"
-                            color={
-                              detail?.rateOfReturn && detail?.rateOfReturn > 0
-                                ? 'point_red01'
-                                : 'point_blue02'
-                            }
+                            color={getFontColorByPlusAndMinus(
+                              detail.rateOfReturn,
+                            )}
                           >
                             (
                             {detail?.rateOfReturn && detail.rateOfReturn > 0

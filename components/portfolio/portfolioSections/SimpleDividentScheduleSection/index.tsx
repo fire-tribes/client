@@ -11,7 +11,7 @@ export default function MonthlyCalanderDividendSection() {
   const palette = useEmotionPalette();
   return (
     <Section textAlign="left">
-      <Section.Title paddingBottom="18px">{`배당 달력 (${
+      <Section.Title paddingBottom="18px">{`배당 지급일 (${
         new Date().getMonth() + 1
       }월)`}</Section.Title>
       <MonthlyCalanderDividendList />

@@ -7,7 +7,7 @@ import { useAnnualDividend } from '@/hook/useAnnualDividend';
 import AnnualDividendModal from '@/components/common/Modal/AnnualDividendModal';
 import type { BadgeDetailText } from '@/mocks';
 
-const DIVIDEND_PRICE_RATIO_KR = '투자 배당률';
+export const DIVIDEND_PRICE_RATIO_KR = '투자 배당률';
 
 export default function DetailInformationList() {
   const { annualDividendTaxKRData, annualDividendSimpleKRData } =
