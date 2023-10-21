@@ -1,16 +1,10 @@
 import { EditStocksUI } from './style';
 import NothingStocks from '@/components/common/NothingStocks';
 import EditStock from '@/components/EditStocksGroup/EditStock';
-import { useMyPortFolio } from '@/hook/useMyPortFolio';
 import { assetDetailsAtom } from '@/hook/useGetAssetDetails/state';
+import useGetMyPortfolio from '@/hook/useGetMyPortfolio';
 import { useAtom } from 'jotai';
-import {
-  CircularProgress,
-  Slide,
-  SlideProps,
-  Snackbar,
-  SnackbarContent,
-} from '@mui/material';
+import { Slide, SlideProps, Snackbar, SnackbarContent } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 function SlideTransition(props: SlideProps) {
@@ -19,8 +13,8 @@ function SlideTransition(props: SlideProps) {
 
 function EditStocks() {
   /** Portfolio Get 요청 useFeatureHook (useMyPortfolio) */
-  const { myPortFolioData, isLoading, isFetching } = useMyPortFolio();
-  const assetDetailsArray = myPortFolioData?.assetDetails;
+  const { getMyPortfolioData } = useGetMyPortfolio();
+  const assetDetailsArray = getMyPortfolioData?.data.assetDetails;
 
   /** 수정하기 버튼 클릭 시, Jotai에 assetDetails 배열 데이터 담기 */
   const [assetDetails, setAssetDetails] = useAtom(assetDetailsAtom);
@@ -33,7 +27,9 @@ function EditStocks() {
   /** 주식을 삭제했을 때, Toast 창 띄우기 */
   const [isShowToast, setIsShowToast] = useState(false);
   useEffect(() => {
-    if (
+    if (assetDetails.length === 0) {
+      setIsShowToast(false);
+    } else if (
       assetDetailsArray !== undefined &&
       assetDetailsArray.length !== assetDetails.length
     ) {
@@ -51,11 +47,7 @@ function EditStocks() {
         종목의 우측 버튼을 통해 순서를 조정하고 삭제할 수 있습니다.
         <tr /> 종목을 탭하면 보유 수량, 평단가를 수정할 수 있습니다.
       </EditStocksUI.TopContainer>
-      {isLoading || isFetching ? (
-        <EditStocksUI.LoadingContainer>
-          <CircularProgress />
-        </EditStocksUI.LoadingContainer>
-      ) : assetDetailsArray !== undefined ? (
+      {assetDetailsArray !== undefined ? (
         assetDetailsArray.map((stock) => {
           return (
             <EditStock
