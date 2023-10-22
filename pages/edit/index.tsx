@@ -20,8 +20,10 @@ function Edit() {
   const onMoveOtherPages = async () => {
     if (!hasMyPortFolioData && portfolioId !== undefined) {
       await deletePortfolioData(portfolioId);
+      router.push('/empty');
+    } else {
+      router.push('/');
     }
-    router.push('/empty');
   };
 
   return (
