@@ -46,5 +46,4 @@ export const queryKeys = {
   searchedResults: (word: string) => ['searchedResults', word],
   currentPrice: (assetIds: number) => ['currentPrice', assetIds],
   currentPrices: (assetIds: number[]) => ['currentPrice', assetIds],
-  portfolio: () => ['portfolio'],
 };
