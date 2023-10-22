@@ -22,6 +22,7 @@ export const useMonthlyCalanderDividendKRQuery = () => {
           queryKeys.monthlyCalanderDividendKR(modeData.isSimple, taxData.isTax),
         );
       },
+      refetchOnMount: false,
     },
   );
 };

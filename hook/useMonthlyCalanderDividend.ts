@@ -7,10 +7,7 @@ import { useEffect } from 'react';
 
 export const useMonthlyCalanderDividend = () => {
   const router = useRouter();
-  // const { data: monthlyCalanderDividendData, status } =
-  //   useMonthlyCalanderDividendQuery();
-  // const { data: monthlyCalanderDividendExchangeData } =
-  //   useMonthlyCalanderDividendExchangeQuery();
+
   const { data: monthlyCalanderDividendKRData, status } =
     useMonthlyCalanderDividendKRQuery();
   const { data: monthlyCalanderDividendSimpleKRData } =
