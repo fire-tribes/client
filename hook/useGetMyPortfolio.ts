@@ -1,9 +1,9 @@
 import useGetMyPortfolioQuery from './useQueryHook/useGetMyPortfolioQuery';
 
 function useGetMyPortfolio() {
-  const { getMyPortfolioDataForEdit } = useGetMyPortfolioQuery();
+  const { myPortfolioDataForEdit } = useGetMyPortfolioQuery();
 
-  const getMyPortfolioData = getMyPortfolioDataForEdit;
+  const getMyPortfolioData = myPortfolioDataForEdit?.data;
 
   return {
     getMyPortfolioData,
