@@ -15,7 +15,8 @@ function EditStocks() {
   // const { myPortFolioData, status, isLoading, isFetching } = useMyPortFolio();
   // const assetDetailsArray = myPortFolioData?.assetDetails;
   const { getMyPortfolioData } = useGetMyPortfolio();
-  const assetDetailsArray = getMyPortfolioData?.data.assetDetails;
+
+  const assetDetailsArray = getMyPortfolioData?.data?.assetDetails;
 
   /** 수정하기 버튼 클릭 시, Jotai에 assetDetails 배열 데이터 담기 */
   const [, setAssetDetails] = useAtom(assetDetailsAtom);

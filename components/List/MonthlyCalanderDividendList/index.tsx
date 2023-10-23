@@ -59,7 +59,7 @@ export default function MonthlyCalanderDividendList() {
                       fontSize="caption"
                       color="gray6"
                       fontWeight="normal"
-                    >{`${new Date(exDividendDate).getDate()}일`}</CommonFont>
+                    >{`${new Date(expectedPayDate).getDate()}일`}</CommonFont>
                   }
                   sx={{ maxWidth: 32 }}
                 />
@@ -86,8 +86,8 @@ export default function MonthlyCalanderDividendList() {
                       color={'gray6'}
                     >
                       {`배당락 ${
-                        new Date(expectedPayDate).getMonth() + 1
-                      }월 ${new Date(expectedPayDate).getDate()}일 `}
+                        new Date(exDividendDate).getMonth() + 1
+                      }월 ${new Date(exDividendDate).getDate()}일 `}
                       {}
                     </CommonFont>
                   }

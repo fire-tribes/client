@@ -22,12 +22,6 @@ export const useMyPortFolio = () => {
   };
 
   useEffect(() => {
-    const isError = status === 'error';
-    if (isError) {
-      router.push('500');
-      return;
-    }
-
     if (!isLoading && !isFetching && status === 'success') {
       const hasNotPortFolio = !myPortFolioData;
       const hasNotAssets =

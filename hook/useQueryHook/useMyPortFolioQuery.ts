@@ -46,6 +46,8 @@ export const useMyPortFolioTaxWithSimpleKRQuery = () => {
           })),
         };
       }
+
+      return null;
     },
   );
 };

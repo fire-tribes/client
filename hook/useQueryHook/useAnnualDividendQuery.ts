@@ -18,7 +18,7 @@ export const useAnnualDividendQuery = () => {
   return useQuery({
     queryKey: queryKeys.annualDividend(),
     queryFn: dividendAPI.getAnnualDividend,
-    staleTime: 1000 * 5,
+    staleTime: 1000 * 2,
     onSuccess: () => {
       queryClient.invalidateQueries(
         queryKeys.annualDividend(
@@ -44,7 +44,8 @@ export const useAnnualDividendKRQuery = () => {
   return useQuery({
     queryKey: queryKeys.annualDividendKR(),
     queryFn: dividendAPI.getAnnualDividend,
-    staleTime: 1000 * 5,
+    refetchOnMount: false,
+    staleTime: 1000 * 2,
     onSuccess: () => {
       queryClient.invalidateQueries(
         queryKeys.annualDividendKR(null, taxData.isTax),
@@ -97,6 +98,8 @@ export const useAnnualDividendExchangeQuery = () => {
         ),
       };
     }
+
+    return null;
   };
 
   return useQuery(
@@ -149,6 +152,8 @@ export const useAnnualDividendExchangeWithSimpleQuery = () => {
         ),
       };
     }
+
+    return null;
   };
 
   return useQuery(
@@ -194,6 +199,8 @@ export const useAnnualDividendTaxKRQuery = () => {
         thisMonthDividend: getPriceByTax(annualDividendData.thisMonthDividend),
       };
     }
+
+    return null;
   };
 
   return useQuery(
@@ -243,6 +250,8 @@ export const useAnnualDividendSimpleKRQuery = () => {
         ),
       };
     }
+
+    return null;
   };
 
   return useQuery(
