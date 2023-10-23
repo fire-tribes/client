@@ -25,9 +25,9 @@ export const useControlSnackbarV2 = () => {
     setSnackbarState((pre) => ({ ...pre, open: false }));
   };
 
-  // const resetSnackbar = () => {
-  //   setSnackbarState({ ...snackbarAtomDefault });
-  // };
+  const resetSnackbar = () => {
+    setSnackbarState({ ...snackbarAtomDefault });
+  };
 
   // useEffect(() => {
   //   return () => resetSnackbar();
