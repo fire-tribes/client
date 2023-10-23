@@ -1,16 +1,14 @@
 import { EditStocksUI } from './style';
 import NothingStocks from '@/components/common/NothingStocks';
 import EditStock from '@/components/EditStocksGroup/EditStock';
+import { useControlSnackbarV2 } from '@/hook/useControlSnackbarV2';
+// import useDeleteAssetDetails from '@/hook/useDeleteAssetDetails';
 import { assetDetailsAtom } from '@/hook/useGetAssetDetails/state';
 import useGetMyPortfolio from '@/hook/useGetMyPortfolio';
 // import { useMyPortFolio } from '@/hook/useMyPortFolio';
 import { useAtom } from 'jotai';
-import { Slide, SlideProps, Snackbar, SnackbarContent } from '@mui/material';
-import { useEffect, useState } from 'react';
-
-function SlideTransition(props: SlideProps) {
-  return <Slide {...props} direction="up" />;
-}
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 function EditStocks() {
   /** Portfolio Get 요청 useFeatureHook (useMyPortfolio) */
@@ -20,7 +18,7 @@ function EditStocks() {
   const assetDetailsArray = getMyPortfolioData?.data.assetDetails;
 
   /** 수정하기 버튼 클릭 시, Jotai에 assetDetails 배열 데이터 담기 */
-  const [assetDetails, setAssetDetails] = useAtom(assetDetailsAtom);
+  const [, setAssetDetails] = useAtom(assetDetailsAtom);
   const createAssetDetailsJotai = () => {
     if (assetDetailsArray !== undefined) {
       setAssetDetails(assetDetailsArray);
@@ -28,21 +26,47 @@ function EditStocks() {
   };
 
   /** 주식을 삭제했을 때, Toast 창 띄우기 */
-  const [isShowToast, setIsShowToast] = useState(false);
-  useEffect(() => {
-    if (assetDetails.length === 0) {
-      setIsShowToast(false);
-    } else if (
-      assetDetailsArray !== undefined &&
-      assetDetailsArray.length !== assetDetails.length
-    ) {
-      setIsShowToast(true);
-    }
-  }, [assetDetailsArray]);
+  // const [isShowToast, setIsShowToast] = useState(false);
 
-  const handleClose = () => {
-    setIsShowToast(false);
+  const router = useRouter();
+  const { deleteAssetDetails } = router.query as {
+    deleteAssetDetails?: string;
   };
+
+  const { openSnackbar, closeSnackbar } = useControlSnackbarV2();
+  useEffect(() => {
+    if (deleteAssetDetails !== undefined) {
+      openSnackbar({
+        message: '종목이 삭제되었습니다.',
+        autoHideDuration: 3 * 1000,
+        anchorOrigin: {
+          vertical: 'bottom',
+          horizontal: 'center',
+        },
+        // style: {
+        //   position: 'absolute',
+        //   left: '50%',
+        //   right: 'auto',
+        //   bottom: '12%',
+        //   transform: 'translateX(-50%)',
+        //   width: '398px',
+        //   zIndex: '2',
+        // },
+        onClose: () => {
+          closeSnackbar();
+        },
+      });
+    }
+    //  else if (
+    //   assetDetailsArray !== undefined &&
+    //   assetDetailsArray.length !== assetDetails.length
+    // ) {
+    // }
+  }, [deleteAssetDetails]);
+
+  // const handleClose = () => {
+  //   setIsShowToast(false);
+  // };
 
   return (
     <>
@@ -63,7 +87,7 @@ function EditStocks() {
       ) : (
         <NothingStocks />
       )}
-      <Snackbar
+      {/* <Snackbar
         open={isShowToast}
         onClose={handleClose}
         autoHideDuration={3 * 1000}
@@ -86,7 +110,7 @@ function EditStocks() {
           }}
           message={<span id="client-snackbar">종목을 삭제하였습니다.</span>}
         />
-      </Snackbar>
+      </Snackbar> */}
     </>
   );
 }

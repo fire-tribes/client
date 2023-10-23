@@ -197,8 +197,7 @@ export default function EditStockInfo() {
               title={'종목 삭제'}
               message={'이 종목을 정말 삭제하시겠어요?'}
               onClickEvent={() => handleRemoveSelected()}
-              isShowToast={false}
-              toastMessage={'종목을 삭제하였습니다.'}
+              // isShowToast={false}
             >
               <EditStockInfoUI.ButtonContainer>
                 <Image src={trashSvg} alt="trash Svg" />
