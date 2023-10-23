@@ -43,12 +43,12 @@ function MyApp({ Component, pageProps }: AppProps) {
           }
 
           const { queryKey } = query.options;
+
           if (
             JSON.stringify(queryKey) === JSON.stringify(queryKeys.myPortFolio())
           ) {
             queryClient.invalidateQueries({
               predicate: (query) => {
-                // return query.queryKey[0] === queryKeys.changedMyPortfolio()[0];
                 return (
                   query.queryKey[0] === queryKeys.changedMyPortfolioKR()[0]
                 );
