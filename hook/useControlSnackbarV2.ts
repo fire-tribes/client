@@ -1,6 +1,6 @@
 import { SnackbarProps } from '@mui/material';
 import { atom, useAtom } from 'jotai';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 
 const snackbarAtomDefault: SnackbarProps = {
   open: false,
@@ -18,19 +18,20 @@ export const useControlSnackbarV2 = () => {
   const [snackbarState, setSnackbarState] = useAtom(snackbarAtom);
 
   const openSnackbar = (options: SnackbarProps) => {
+    console.log('hello');
     setSnackbarState((pre) => ({ ...pre, ...options, open: true }));
   };
   const closeSnackbar = () => {
     setSnackbarState((pre) => ({ ...pre, open: false }));
   };
 
-  const resetSnackbar = () => {
-    setSnackbarState({ ...snackbarAtomDefault });
-  };
+  // const resetSnackbar = () => {
+  //   setSnackbarState({ ...snackbarAtomDefault });
+  // };
 
-  useEffect(() => {
-    return () => resetSnackbar();
-  }, []);
+  // useEffect(() => {
+  //   return () => resetSnackbar();
+  // }, []);
 
   return {
     snackbarState,
