@@ -98,6 +98,8 @@ export const useAnnualDividendExchangeQuery = () => {
         ),
       };
     }
+
+    return null;
   };
 
   return useQuery(
@@ -150,6 +152,8 @@ export const useAnnualDividendExchangeWithSimpleQuery = () => {
         ),
       };
     }
+
+    return null;
   };
 
   return useQuery(
@@ -195,6 +199,8 @@ export const useAnnualDividendTaxKRQuery = () => {
         thisMonthDividend: getPriceByTax(annualDividendData.thisMonthDividend),
       };
     }
+
+    return null;
   };
 
   return useQuery(
@@ -244,6 +250,8 @@ export const useAnnualDividendSimpleKRQuery = () => {
         ),
       };
     }
+
+    return null;
   };
 
   return useQuery(
