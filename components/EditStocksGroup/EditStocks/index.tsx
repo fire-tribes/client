@@ -3,6 +3,7 @@ import NothingStocks from '@/components/common/NothingStocks';
 import EditStock from '@/components/EditStocksGroup/EditStock';
 import { assetDetailsAtom } from '@/hook/useGetAssetDetails/state';
 import useGetMyPortfolio from '@/hook/useGetMyPortfolio';
+// import { useMyPortFolio } from '@/hook/useMyPortFolio';
 import { useAtom } from 'jotai';
 import { Slide, SlideProps, Snackbar, SnackbarContent } from '@mui/material';
 import { useEffect, useState } from 'react';
@@ -13,6 +14,8 @@ function SlideTransition(props: SlideProps) {
 
 function EditStocks() {
   /** Portfolio Get 요청 useFeatureHook (useMyPortfolio) */
+  // const { myPortFolioData, status, isLoading, isFetching } = useMyPortFolio();
+  // const assetDetailsArray = myPortFolioData?.assetDetails;
   const { getMyPortfolioData } = useGetMyPortfolio();
   const assetDetailsArray = getMyPortfolioData?.data.assetDetails;
 
