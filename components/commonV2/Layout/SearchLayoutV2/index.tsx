@@ -1,5 +1,6 @@
 import S from './style';
 import { ModalV2 } from '../../ModalV2';
+import SnackbarV2 from '../../SnackbarV2';
 import HeadMeta, { HeadMetaProps } from '@/components/HeadMeta';
 import { useControlModalV2 } from '@/hook/useControlModalV2';
 import { useState, type ReactNode, useEffect } from 'react';
@@ -56,6 +57,7 @@ const SearchLayoutV2 = ({
         <S.LayoutContent>{children}</S.LayoutContent>
         {hasButton ? buttomFixedButton : <div></div>}
         {modalState.isOpen && <ModalV2 />}
+        <SnackbarV2 />
       </S.LayoutMaxMin>
     </S.LayoutBody>
   );
