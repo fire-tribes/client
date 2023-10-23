@@ -66,7 +66,6 @@ function FeedStockInfo({
             title={'종목 삭제'}
             message={'이 종목을 정말 삭제하시겠어요?'}
             onClickEvent={() => removeSelected(stock)}
-            isShowToast={true}
             toastMessage={'종목을 삭제하였습니다.'}
           >
             <FeedStockInfoUI.ButtonContainer>

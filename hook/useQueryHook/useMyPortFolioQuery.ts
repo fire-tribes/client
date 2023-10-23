@@ -9,7 +9,9 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 
 export const useMyPortFolioQuery = () => {
-  return useQuery(queryKeys.myPortFolio(), portfolioAPI.getMyPortFolio);
+  return useQuery(queryKeys.myPortFolio(), portfolioAPI.getMyPortFolio, {
+    refetchOnMount: false,
+  });
 };
 
 export const useMyPortFolioTaxWithSimpleKRQuery = () => {
@@ -44,6 +46,8 @@ export const useMyPortFolioTaxWithSimpleKRQuery = () => {
           })),
         };
       }
+
+      return null;
     },
   );
 };

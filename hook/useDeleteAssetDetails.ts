@@ -1,5 +1,4 @@
 import { useDeleteAssetDetailsQuery } from '@/hook/useQueryHook/useDeleteAssetDetailsQuery';
-import { useRouter } from 'next/router';
 
 interface DeletePortfolioAssetDetail {
   portfolioId: number;
@@ -7,21 +6,16 @@ interface DeletePortfolioAssetDetail {
 }
 
 function useDeleteAssetDetails() {
-  const router = useRouter();
-  const { slug } = router.query as { slug: string[] };
+  const { mutate } = useDeleteAssetDetailsQuery();
 
-  const portfolioId = Number(slug?.[0]);
-  const { mutateAsync, isLoading } = useDeleteAssetDetailsQuery();
-
-  const deleteAssetDetailsData = async (
+  const deleteAssetDetailsData = (
     deletePortfolioAssetDetail: DeletePortfolioAssetDetail,
   ) => {
-    await mutateAsync(deletePortfolioAssetDetail);
-    router.push(`/edit?portfolioId=${portfolioId}`);
+    mutate(deletePortfolioAssetDetail);
   };
+
   return {
     deleteAssetDetailsData,
-    isLoading,
   };
 }
 

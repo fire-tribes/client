@@ -8,10 +8,15 @@ import { useGetCurrentPriceInAssetDetails } from '@/hook/useGetCurrentPriceInAss
 import { editedAssetDetailsAtom } from '@/hook/useEditedAssetDetails/state';
 import useDeleteAssetDetails from '@/hook/useDeleteAssetDetails';
 import { useMyPortFolio } from '@/hook/useMyPortFolio';
+import { ResponseSuccess } from '@/@types/models/response';
+import { MyPortfolioModel } from '@/@types/models/portfolio';
+import { queryKeys } from '@/hook/useQueryHook/queryKeys';
 import Image from 'next/image';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useAtom } from 'jotai';
+import { useQueryClient } from '@tanstack/react-query';
+import { AxiosResponse } from 'axios';
 
 // interface EditStockInfoProps {
 //   /** 선택한 배열의 객체값 */
@@ -123,6 +128,7 @@ export default function EditStockInfo() {
   /** [삭제 함수] Jotai로 만든 주식 종목 배열에서 해당 객체 삭제하는 함수 */
   const { deleteAssetDetailsData } = useDeleteAssetDetails();
   const { myPortFolioData } = useMyPortFolio();
+  const queryClient = useQueryClient();
   const handleRemoveSelected = () => {
     const requestObject = {
       portfolioId:
@@ -135,6 +141,36 @@ export default function EditStockInfo() {
           assetDetail.portfolioAssetId !== object?.portfolioAssetId,
       ),
     );
+    /** QueryClient 수정하기 */
+    const updater = () => {
+      const myPortfolioDataForEdit:
+        | AxiosResponse<ResponseSuccess<MyPortfolioModel>>
+        | undefined = queryClient.getQueryData(queryKeys.myPortFolio());
+      console.log('myPortfolioDataForEdit: ', myPortfolioDataForEdit);
+
+      if (myPortfolioDataForEdit) {
+        const assetDetails = myPortfolioDataForEdit?.data.data.assetDetails;
+        console.log('assetDetails: ', assetDetails);
+
+        if (assetDetails) {
+          const newAssetDetails = assetDetails?.filter(
+            (assetDetail) =>
+              assetDetail.portfolioAssetId !== object?.portfolioAssetId,
+          );
+
+          myPortfolioDataForEdit.data.data.assetDetails = newAssetDetails;
+        }
+      }
+      return myPortfolioDataForEdit;
+    };
+
+    const updatedQueryData:
+      | AxiosResponse<ResponseSuccess<MyPortfolioModel>>
+      | undefined = queryClient.setQueryData(queryKeys.myPortFolio(), () =>
+      updater(),
+    );
+    console.log('updatedQueryData: ', updatedQueryData);
+
     deleteAssetDetailsData(requestObject);
   };
 
@@ -161,8 +197,7 @@ export default function EditStockInfo() {
               title={'종목 삭제'}
               message={'이 종목을 정말 삭제하시겠어요?'}
               onClickEvent={() => handleRemoveSelected()}
-              isShowToast={false}
-              toastMessage={'종목을 삭제하였습니다.'}
+              // isShowToast={false}
             >
               <EditStockInfoUI.ButtonContainer>
                 <Image src={trashSvg} alt="trash Svg" />

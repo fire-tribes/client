@@ -1,5 +1,6 @@
 import { selectedStocksAtom } from './useGetSelectedStocks/state';
 import { useAddStocksAtPortfolioQuery } from '@/hook/useQueryHook/useAddStocksAtPortfolioQuery';
+import { useRefetchPortfolioAndDividendAndCalender } from '@/hook/useRefetchPortfolioAndDividendAndCalender';
 import { useAtom } from 'jotai';
 import { useRouter } from 'next/router';
 
@@ -17,6 +18,7 @@ interface assets {
 export const useAddStocksAtPortfolio = () => {
   const router = useRouter();
   const { mutateAsync, isLoading } = useAddStocksAtPortfolioQuery();
+  const { refetch } = useRefetchPortfolioAndDividendAndCalender();
 
   // const formData: feededStockInfos;
   // const addStocksAtPortfolioData = mutate(formData);
@@ -27,6 +29,7 @@ export const useAddStocksAtPortfolio = () => {
     await mutateAsync(formData);
     /** jotai 초기화 */
     setSelectedStocks([]);
+    refetch();
     router.push('/');
   };
 

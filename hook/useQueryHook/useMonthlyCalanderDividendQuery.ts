@@ -22,6 +22,7 @@ export const useMonthlyCalanderDividendKRQuery = () => {
           queryKeys.monthlyCalanderDividendKR(modeData.isSimple, taxData.isTax),
         );
       },
+      refetchOnMount: false,
     },
   );
 };
@@ -55,7 +56,7 @@ export const useMonthlyCalanderDividendExchangeQuery = () => {
       };
     }
 
-    return monthlyCalanderDividendData;
+    return null;
   };
 
   return useQuery(
@@ -94,7 +95,7 @@ export const useMonthlyCalanderDividendKRWithSimpleQuery = () => {
       };
     }
 
-    return monthlyCalanderDividendData;
+    return null;
   };
 
   return useQuery(

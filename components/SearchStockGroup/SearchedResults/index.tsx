@@ -6,7 +6,6 @@ import {
   selectedStocksAtom,
 } from '@/hook/useGetSelectedStocks/state';
 import { useGetSearchedResults } from '@/hook/useGetSearchedResults';
-import { searchedResultsAtom } from '@/hook/useGetSearchedResults/state';
 import { useMyPortFolio } from '@/hook/useMyPortFolio';
 import { GetSearchedResultsDatas } from '@/@types/models/getSearchedResults';
 import { useIntersectionObserver } from '@/hook/useIntersectionObserver';
@@ -14,7 +13,7 @@ import { basic } from '@/styles/palette';
 import { useAtom } from 'jotai';
 import { useDebounce } from 'use-debounce';
 import { CircularProgress } from '@mui/material';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef } from 'react';
 
 interface SearchResultsProps {
   /** 입력한 검색어 */
@@ -27,42 +26,39 @@ function SearchedResults({ value }: SearchResultsProps) {
   /** value를 debounce 처리하여, 일정 시간동안 값이 바뀌면 서버에 get 요청 */
   const [debouncedValue] = useDebounce(value, 0.5 * 1000);
 
-  const [nextPageIndex, setNextPageIndex] = useState(1);
   /** 검색 결과값을 배열로 가져오는 함수 */
-  const {
-    getSearchedResultsData,
-    isLoading,
-    fetchNextPage,
-    hasNextPage,
-    invalidateSearchedResultsData,
-  } = useGetSearchedResults(debouncedValue);
+  const { getSearchedResultsData, isLoading, fetchNextPage, hasNextPage } =
+    useGetSearchedResults(debouncedValue);
   const searchedResultsArray = getSearchedResultsData;
 
-  const [searchedResults, setSearchedResults] = useAtom(searchedResultsAtom);
+  // const [searchedResults, setSearchedResults] = useAtom(searchedResultsAtom);
 
-  useEffect(() => {
-    if (searchedResultsArray !== undefined) {
-      if (nextPageIndex === 1) {
-        setSearchedResults(searchedResultsArray);
-      } else {
-        setSearchedResults([...searchedResults, ...searchedResultsArray]);
-      }
-    }
-  }, [nextPageIndex, searchedResultsArray, setSearchedResults]);
+  // useEffect(() => {
+  //   if (searchedResultsArray !== undefined) {
+  //     if (nextPageIndex === 1) {
+  //       setSearchedResults(searchedResultsArray);
+  //     } else {
+  //       setSearchedResults((searchedResults) => [
+  //         ...searchedResults,
+  //         ...searchedResultsArray,
+  //       ]);
+  //     }
+  //   }
+  // }, [nextPageIndex, searchedResultsArray]);
 
-  useEffect(() => {
-    setNextPageIndex(1);
-    setSearchedResults([]);
-    invalidateSearchedResultsData();
+  // useEffect(() => {
+  //   setNextPageIndex(1);
+  //   // setSearchedResults([]);
+  //   invalidateSearchedResultsData();
 
-    const newSearchedResultsArray = getSearchedResultsData;
-    if (newSearchedResultsArray !== undefined) {
-      for (let i = 0; i < newSearchedResultsArray.length; i++) {
-        newSearchedResultsArray[i].hasAlreadyStockInPortfolio = false;
-      }
-      setSearchedResults(newSearchedResultsArray);
-    }
-  }, [debouncedValue]);
+  //   const newSearchedResultsArray = getSearchedResultsData;
+  //   if (newSearchedResultsArray !== undefined) {
+  //     for (let i = 0; i < newSearchedResultsArray.length; i++) {
+  //       newSearchedResultsArray[i].hasAlreadyStockInPortfolio = false;
+  //     }
+  //     setSearchedResults(newSearchedResultsArray);
+  //   }
+  // }, [debouncedValue]);
 
   /** 이미 있는 자산이라면, 버튼 삭제하는 로직 */
   const { myPortFolioData } = useMyPortFolio();
@@ -148,7 +144,7 @@ function SearchedResults({ value }: SearchResultsProps) {
         removeSelected={handleRemoveSelected}
       />
       <h6>검색 결과</h6>
-      {debouncedValue === '' || searchedResults === undefined ? (
+      {debouncedValue === '' || searchedResultsArray === undefined ? (
         <SearchedResultsUI.SearchNothingContainer>
           검색어 결과가 없습니다.
         </SearchedResultsUI.SearchNothingContainer>
@@ -158,8 +154,8 @@ function SearchedResults({ value }: SearchResultsProps) {
         </SearchedResultsUI.LoadingContainer>
       ) : (
         <div>
-          {searchedResults !== undefined &&
-            searchedResults.map((stock) => {
+          {searchedResultsArray !== undefined &&
+            searchedResultsArray.map((stock) => {
               return (
                 <SearchedResult
                   key={stock.assetId}
