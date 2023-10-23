@@ -1,7 +1,6 @@
 import ModeController from '@/components/ModeController';
 import CommonBar from '@/components/common/Bar';
 import CommonHeader from '@/components/common/Header';
-import CenterContent from '@/components/commonV2/CenterContent';
 import LayoutV2 from '@/components/commonV2/Layout';
 import Padding from '@/components/commonV2/Padding';
 import ExchangeRateBox from '@/components/dividend/ExchangeRate';
@@ -13,25 +12,14 @@ import TotalStatisticsSection from '@/components/portfolio/portfolioSections/Tot
 import { useAnnualDividend } from '@/hook/useAnnualDividend';
 import { useMonthlyCalanderDividend } from '@/hook/useMonthlyCalanderDividend';
 import { useMyPortFolio } from '@/hook/useMyPortFolio';
-import { CircularProgress } from '@mui/material';
+import { useShowToastInMain } from '@/hook/useShowToastInMain';
 
 export default function V2Page() {
-  const { status } = useMyPortFolio();
-  const { status: monthlyCalanderDividendStatus } =
-    useMonthlyCalanderDividend();
-  const { status: annualDividendStatus } = useAnnualDividend();
+  useMyPortFolio();
+  useMonthlyCalanderDividend();
+  useAnnualDividend();
 
-  // const isLoadingPage = !(
-  //   status === 'success' &&
-  //   annualDividendStatus === 'success' &&
-  //   monthlyCalanderDividendStatus === 'success'
-  // );
-
-  const isPendingRequest = !(
-    status === 'success' ||
-    annualDividendStatus === 'success' ||
-    monthlyCalanderDividendStatus === 'success'
-  );
+  useShowToastInMain();
 
   return (
     <LayoutV2
@@ -41,41 +29,35 @@ export default function V2Page() {
         image: '/icon/snow_logo.png',
       }}
     >
-      {isPendingRequest ? (
-        <CenterContent>
-          <CircularProgress />
-        </CenterContent>
-      ) : (
-        <div>
-          <Padding paddingLeft={18} paddingRight={18} paddingTop={21}>
-            <CommonHeader>
-              <ModeController hasPortfolio={true} />
-            </CommonHeader>
-          </Padding>
+      <div>
+        <Padding paddingLeft={18} paddingRight={18} paddingTop={21}>
+          <CommonHeader>
+            <ModeController hasPortfolio={true} />
+          </CommonHeader>
+        </Padding>
 
-          <Padding paddingLeft={18} paddingRight={18}>
-            <ExchangeRateBox />
-          </Padding>
-          <Padding paddingLeft={18} paddingRight={18}>
-            <ChartSection />
-          </Padding>
-          <Padding paddingLeft={18} paddingRight={18}>
-            <TotalStatisticsSection />
-          </Padding>
-          <Padding paddingLeft={18} paddingRight={18}>
-            <MonthlyCalanderDividendSection />
-          </Padding>
+        <Padding paddingLeft={18} paddingRight={18}>
+          <ExchangeRateBox />
+        </Padding>
+        <Padding paddingLeft={18} paddingRight={18}>
+          <ChartSection />
+        </Padding>
+        <Padding paddingLeft={18} paddingRight={18}>
+          <TotalStatisticsSection />
+        </Padding>
+        <Padding paddingLeft={18} paddingRight={18}>
+          <MonthlyCalanderDividendSection />
+        </Padding>
 
-          <CommonBar />
+        <CommonBar />
 
-          <Padding paddingLeft={18} paddingRight={18}>
-            <DetailStocksSection />
-          </Padding>
-          <Padding paddingLeft={18} paddingRight={18}>
-            <NotifyMessageSection />
-          </Padding>
-        </div>
-      )}
+        <Padding paddingLeft={18} paddingRight={18}>
+          <DetailStocksSection />
+        </Padding>
+        <Padding paddingLeft={18} paddingRight={18}>
+          <NotifyMessageSection />
+        </Padding>
+      </div>
     </LayoutV2>
   );
 }
