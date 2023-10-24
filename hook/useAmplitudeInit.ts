@@ -11,7 +11,9 @@ export const useAmplitudeInit = () => {
   useEffect(() => {
     // awiat 로 불러오기
     // amplitude = await import("@amplitude/analytics-browser")
-    amplitude.init(AMPLITUDE_KEY);
+    amplitude.init(AMPLITUDE_KEY, {
+      defaultTracking: true,
+    });
   }, []);
 
   return {
