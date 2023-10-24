@@ -14,7 +14,6 @@ const LoginPage = () => {
       showBottomNavigator={false}
       headMetaProps={{
         title: '스노우볼 - 로그인',
-        image: '',
       }}
     >
       <CenterContent>

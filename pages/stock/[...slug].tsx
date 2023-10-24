@@ -37,7 +37,6 @@ const Post = () => {
       hasButton={true}
       headMetaProps={{
         title: '스노우볼 - 배당 정보 편집',
-        image: '/icon/snow_logo.png',
       }}
     >
       <section>

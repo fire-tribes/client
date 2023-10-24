@@ -124,7 +124,6 @@ function Search() {
       hasButton={isSearchActive}
       headMetaProps={{
         title: '스노우볼 - 배당 주식 검색',
-        image: '/icon/snow_logo.png',
       }}
     >
       {loading ? (

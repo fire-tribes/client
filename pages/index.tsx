@@ -26,7 +26,6 @@ export default function V2Page() {
       showBottomNavigator
       headMetaProps={{
         title: '스노우볼 - 배당 모아보기',
-        image: '/icon/snow_logo.png',
       }}
     >
       <div>

@@ -1,9 +1,8 @@
+import { StyledSnackbar } from '@/components/commonV2/SnackbarV2/style';
 import { useControlSnackbarV2 } from '@/hook/useControlSnackbarV2';
-import Snackbar from '@mui/material/Snackbar';
 
 export default function SnackbarV2() {
   const { snackbarState } = useControlSnackbarV2();
-
   const vertical = snackbarState.anchorOrigin?.vertical;
 
   /**
@@ -15,7 +14,7 @@ export default function SnackbarV2() {
   const bottom = vertical === 'bottom' ? '72px' : undefined;
 
   return (
-    <Snackbar
+    <StyledSnackbar
       sx={{
         position: 'absolute',
         top,
@@ -25,6 +24,10 @@ export default function SnackbarV2() {
         sx: {
           justifyContent: 'center',
         },
+      }}
+      mediaStyleProps={{
+        top,
+        bottom,
       }}
       {...snackbarState}
     />
