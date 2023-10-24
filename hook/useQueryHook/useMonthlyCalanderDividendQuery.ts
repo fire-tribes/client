@@ -56,7 +56,7 @@ export const useMonthlyCalanderDividendExchangeQuery = () => {
       };
     }
 
-    return null;
+    return monthlyCalanderDividendData;
   };
 
   return useQuery(
@@ -95,7 +95,7 @@ export const useMonthlyCalanderDividendKRWithSimpleQuery = () => {
       };
     }
 
-    return null;
+    return monthlyCalanderDividendData;
   };
 
   return useQuery(
