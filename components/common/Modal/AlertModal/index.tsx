@@ -92,7 +92,7 @@ function AlertModal({
         title={title}
         content={message}
         button={
-          <Modal.Actions>
+          <>
             {type === 'alert' && (
               <>
                 <Modal.Button
@@ -119,7 +119,7 @@ function AlertModal({
             {type === 'confirm' && (
               <Modal.Button onClick={close}>확인</Modal.Button>
             )}
-          </Modal.Actions>
+          </>
         }
       >
         {/* <Modal show={isShow} layout={layout} position={position}>
