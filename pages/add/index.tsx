@@ -98,7 +98,6 @@ function Add() {
       hasButton={selectedStocks.length !== 0 ? true : false}
       headMetaProps={{
         title: '스노우볼 - 배당 정보 입력',
-        image: '/icon/snow_logo.png',
       }}
     >
       <section>

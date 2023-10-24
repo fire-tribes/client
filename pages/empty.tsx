@@ -32,7 +32,6 @@ function Empty() {
       showBottomNavigator
       headMetaProps={{
         title: '스노우볼 - 배당 모아보기',
-        image: '/icon/snow_logo.png',
       }}
     >
       <Padding paddingLeft={18} paddingRight={18} paddingTop={21}>

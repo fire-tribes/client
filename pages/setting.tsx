@@ -78,8 +78,7 @@ export default function SettingPage() {
     <LayoutV2
       showBottomNavigator
       headMetaProps={{
-        title: '설정',
-        image: '',
+        title: '스노우볼 - 설정',
       }}
     >
       <Padding paddingLeft={16} paddingRight={16} paddingTop={21}>
