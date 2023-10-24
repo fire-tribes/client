@@ -12,7 +12,6 @@ export default function index() {
       showBottomNavigator
       headMetaProps={{
         title: '스노우볼 - 계산',
-        image: '',
       }}
     >
       <CenterContent

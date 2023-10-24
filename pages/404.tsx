@@ -16,7 +16,6 @@ export default function Custom404Page() {
       showBottomNavigator={false}
       headMetaProps={{
         title: '스노우볼 - 404',
-        image: '',
       }}
     >
       <CenterContent>

@@ -45,7 +45,6 @@ function Edit() {
       hasButton={true}
       headMetaProps={{
         title: '스노우볼 - 배당 주식 편집',
-        image: '/icon/snow_logo.png',
       }}
     >
       <section>
