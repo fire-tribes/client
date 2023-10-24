@@ -15,7 +15,7 @@ const queryClientAtom = atom<{
 export const useShowToastInMain = () => {
   const queryClient = useQueryClient();
   const [statusAtom, setStatusAtom] = useAtom(queryClientAtom);
-  const { openSnackbar, closeSnackbar, resetSnackbar } = useControlSnackbarV2();
+  const { openSnackbar, closeSnackbar } = useControlSnackbarV2();
   const { refetch } = useRefetchPortfolioAndDividendAndCalender();
 
   const annualDividendKRQueryState = queryClient.getQueryState(
@@ -53,7 +53,7 @@ export const useShowToastInMain = () => {
   useEffect(() => {
     if (isLoading) {
       openSnackbar({
-        message: '최신 자산으로 업데이트 중입니다.',
+        message: '최신 자산으로 업데이트중이에요.',
         anchorOrigin: {
           vertical: 'bottom',
           horizontal: 'center',
@@ -69,11 +69,11 @@ export const useShowToastInMain = () => {
       const isErrorAfterSuccess = statusAtom.status === 'error';
 
       if (isLoadingAfterSuccess || isErrorAfterSuccess) {
-        resetSnackbar();
-        setTimeout(
+        closeSnackbar();
+        const showSnackbarSetTimeoutId = setTimeout(
           () =>
             openSnackbar({
-              message: '성공',
+              message: '업데이트가 완료되었어요.',
               autoHideDuration: 1 * 1000,
               anchorOrigin: {
                 vertical: 'bottom',
@@ -86,7 +86,7 @@ export const useShowToastInMain = () => {
           500,
         );
         setStatusAtom({ status: 'success' });
-        return;
+        return () => clearTimeout(showSnackbarSetTimeoutId);
       }
     }
 
