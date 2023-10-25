@@ -100,7 +100,7 @@ export default function DetailInformationList() {
           ),
           subTitle: (
             <CommonFont fontSize="body3" fontWeight="regular" color="gray6">
-              {`${thisYeaderFirstDay.getFullYear()}년 1월 ~ 현재`}
+              {`${thisYeaderFirstDay.getFullYear()}년 1월 ~ 오늘`}
             </CommonFont>
           ),
           value: (
@@ -140,7 +140,7 @@ export default function DetailInformationList() {
           ),
           subTitle: (
             <CommonFont fontSize="body3" fontWeight="regular" color="gray6">
-              {`${thisYeaderFirstDay.getFullYear()}년 1월 ~ 현재`}
+              {`오늘 ~ ${thisYeaderFirstDay.getFullYear()}년 12월`}
             </CommonFont>
           ),
           value: (
