@@ -61,7 +61,7 @@ export const useShowToastInMain = () => {
         onClose: () => {},
       });
       setStatusAtom({ status: 'loading' });
-      return;
+      return () => closeSnackbar();
     }
 
     if (isSuccess) {
