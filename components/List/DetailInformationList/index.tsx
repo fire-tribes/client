@@ -59,7 +59,9 @@ export default function DetailInformationList() {
           ),
           value: (
             <CommonFont fontSize="body1" fontWeight="bold" color="point_red01">
-              {annualDividendSimpleKRData?.dividendPriceRatio}%
+              {annualDividendSimpleKRData?.dividendPriceRatio
+                ? `${annualDividendSimpleKRData?.dividendPriceRatio}%`
+                : '0%'}
             </CommonFont>
           ),
         },
@@ -76,7 +78,9 @@ export default function DetailInformationList() {
           ),
           value: (
             <CommonFont fontSize="body1" fontWeight="bold" color="point_red01">
-              {annualDividendSimpleKRData?.dividendYieldRatio}%
+              {annualDividendSimpleKRData?.dividendYieldRatio
+                ? `${annualDividendSimpleKRData?.dividendYieldRatio}%`
+                : '0%'}
             </CommonFont>
           ),
         },
@@ -101,7 +105,9 @@ export default function DetailInformationList() {
           ),
           value: (
             <CommonFont fontSize="body1" fontWeight="bold" color="point_blue02">
-              {annualDividendTaxKRData?.paidTax}
+              {annualDividendTaxKRData?.paidTax
+                ? annualDividendTaxKRData?.paidTax
+                : '없음'}
             </CommonFont>
           ),
         },
@@ -139,7 +145,9 @@ export default function DetailInformationList() {
           ),
           value: (
             <CommonFont fontSize="body1" fontWeight="bold" color="point_blue02">
-              {annualDividendTaxKRData?.unPaidTax} 예상
+              {annualDividendTaxKRData?.unPaidTax
+                ? `${annualDividendTaxKRData?.unPaidTax} 예상`
+                : '없음'}
             </CommonFont>
           ),
         },
