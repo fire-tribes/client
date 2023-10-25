@@ -20,6 +20,11 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { useMutation } from '@tanstack/react-query';
 
+const HELP_CENTER_LINKS = {
+  DIRECT_CHATTING: 'https://open.kakao.com/o/sUl98zOf',
+  GROUP_CHATTING: 'https://open.kakao.com/o/gjNg4cOf',
+};
+
 const TERMS_LINKS = {
   TERMS_OF_SERVICE:
     'https://www.notion.so/tuemarz/3a3e5409697847c88749246893e1c3d0?pvs=4',
@@ -107,13 +112,72 @@ export default function SettingPage() {
               // }
             ></ListItemText>
 
-            <Avatar />
+            <Avatar src="" sx={{ border: 'none' }}>
+              <CommonIcon iconName="profile" width={50} height={50} />
+            </Avatar>
           </ListItem>
         </List>
       </div>
       <div>
         <Padding paddingLeft={16} paddingRight={16} paddingTop={8}>
-          <CommonFont>기타</CommonFont>
+          <CommonFont
+            component="h3"
+            fontSize="body3"
+            fontWeight="regular"
+            color="gray6"
+          >
+            고객센터
+          </CommonFont>
+          <List>
+            <ListItem disablePadding>
+              <a
+                href={HELP_CENTER_LINKS.DIRECT_CHATTING}
+                target="_blank"
+                style={{
+                  display: 'block',
+                  width: '100%',
+                }}
+              >
+                <ListItemButton sx={{ padding: '14px 0', gap: '10px' }}>
+                  <ListItemIcon sx={{ width: '24px', minWidth: '0' }}>
+                    <CommonIcon iconName="helpcenter" width={24} height={24} />
+                  </ListItemIcon>
+                  <ListItemText primary="1:1 문의" />
+                </ListItemButton>
+              </a>
+            </ListItem>
+
+            <ListItem disablePadding>
+              <a
+                href={HELP_CENTER_LINKS.GROUP_CHATTING}
+                target="_blank"
+                style={{
+                  display: 'block',
+                  width: '100%',
+                }}
+              >
+                <ListItemButton sx={{ padding: '14px 0', gap: '10px' }}>
+                  <ListItemIcon sx={{ width: '24px', minWidth: '0' }}>
+                    <CommonIcon iconName="chatting" width={24} height={24} />
+                  </ListItemIcon>
+                  <ListItemText primary="오픈 단톡방 참여 (배당 커뮤니티)" />
+                </ListItemButton>
+              </a>
+            </ListItem>
+          </List>
+        </Padding>
+      </div>
+      <div>
+        <Padding paddingLeft={16} paddingRight={16} paddingTop={8}>
+          <CommonFont
+            component="h3"
+            fontSize="body3"
+            fontWeight="regular"
+            color="gray6"
+          >
+            기타
+          </CommonFont>
+
           <List>
             <ListItem disablePadding>
               <a
