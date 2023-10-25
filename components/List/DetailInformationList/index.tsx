@@ -14,7 +14,7 @@ export default function DetailInformationList() {
     useAnnualDividend();
 
   const detailInformationData = {
-    annualDividend: `${annualDividendSimpleKRData?.annualDividend || 0}`,
+    annualDividend: annualDividendSimpleKRData?.annualDividend || '없음',
     dividendPriceRatio: `${
       annualDividendSimpleKRData?.dividendPriceRatio.toFixed(2) || 0
     }%`,
