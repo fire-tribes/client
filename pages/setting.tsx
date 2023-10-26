@@ -8,6 +8,8 @@ import useControlModal from '@/hook/useControlModal';
 import LayoutV2 from '@/components/commonV2/Layout';
 import Padding from '@/components/commonV2/Padding';
 import CommonFont from '@/components/common/Font';
+
+import { useDecodingAccessToken } from '@/hook/useDecodingAccessToken';
 import {
   Avatar,
   List,
@@ -43,35 +45,6 @@ const useLogoutQuery = () => {
       }
     },
   });
-};
-
-type AccessTokenDecodingResult = {
-  email: string;
-  exp: number;
-  sub: string;
-  userId: number;
-};
-
-const useDecodingAccessToken = () => {
-  const cookie = new Cookie();
-  const accessToken = cookie.get(ACCESS_TOKEN);
-
-  /**
-   * [0] : header
-   * [1] : payload
-   * [2] : VERIFY
-   */
-
-  if (accessToken) {
-    const base64Payload = accessToken.split('.')[1];
-
-    const payload = Buffer.from(base64Payload, 'base64');
-    const result: AccessTokenDecodingResult = JSON.parse(payload.toString());
-
-    return result;
-  }
-
-  return null;
 };
 
 export default function SettingPage() {
