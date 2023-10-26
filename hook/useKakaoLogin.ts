@@ -1,6 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Cookie } from '@/core/api/cookie';
 import { SignApi } from '@/core/api/sign';
+import { ACCESS_TOKEN } from '@/core/api/token';
+import { decodingJWT } from '@/core/utils/decodingJWT';
+import { useAmplitudeLogger } from '@/hook/useAmplitudes/useAmplitudeLogger';
+import { AccessTokenDecodingResult } from '@/hook/useDecodingAccessToken';
+
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
@@ -9,6 +14,7 @@ export const useKakaoLogin = () => {
   const { code } = router.query as { code?: string };
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { eventLogger } = useAmplitudeLogger();
 
   useEffect(() => {
     if (code) return;
@@ -37,7 +43,22 @@ export const useKakaoLogin = () => {
               expires: new Date(accessTokenExpiresIn),
             });
 
-            router.push('/');
+            const decodedJWT =
+              decodingJWT<AccessTokenDecodingResult>(ACCESS_TOKEN);
+
+            router.push('/').then(
+              (value) =>
+                value &&
+                eventLogger({
+                  event_type: 'INITIAL_MAIN_VIEW',
+                  event_properties: decodedJWT
+                    ? {
+                        email: decodedJWT.email,
+                        userId: decodedJWT.userId,
+                      }
+                    : undefined,
+                }),
+            );
             return;
           }
 

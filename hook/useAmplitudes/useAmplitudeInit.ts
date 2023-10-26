@@ -1,9 +1,6 @@
 import { useEffect } from 'react';
 import * as amplitude from '@amplitude/analytics-browser';
 
-/** AmpliTude Event를 import 하는 방법 */
-// import { TrackEvent } from '@amplitude/analytics-types';
-
 const AMPLITUDE_PRODUCT_KEY = process.env
   .NEXT_PUBLIC_AMPLITUDE_PRODUCT_API_KEY as string;
 const AMPLITUDE_DEV_KEY = process.env
