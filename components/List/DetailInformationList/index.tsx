@@ -14,7 +14,7 @@ export default function DetailInformationList() {
     useAnnualDividend();
 
   const detailInformationData = {
-    annualDividend: `${annualDividendSimpleKRData?.annualDividend || 0}`,
+    annualDividend: annualDividendSimpleKRData?.annualDividend || '없음',
     dividendPriceRatio: `${
       annualDividendSimpleKRData?.dividendPriceRatio.toFixed(2) || 0
     }%`,
@@ -59,7 +59,9 @@ export default function DetailInformationList() {
           ),
           value: (
             <CommonFont fontSize="body1" fontWeight="bold" color="point_red01">
-              {annualDividendSimpleKRData?.dividendPriceRatio}%
+              {annualDividendSimpleKRData?.dividendPriceRatio
+                ? `${annualDividendSimpleKRData?.dividendPriceRatio}%`
+                : '0%'}
             </CommonFont>
           ),
         },
@@ -76,7 +78,9 @@ export default function DetailInformationList() {
           ),
           value: (
             <CommonFont fontSize="body1" fontWeight="bold" color="point_red01">
-              {annualDividendSimpleKRData?.dividendYieldRatio}%
+              {annualDividendSimpleKRData?.dividendYieldRatio
+                ? `${annualDividendSimpleKRData?.dividendYieldRatio}%`
+                : '0%'}
             </CommonFont>
           ),
         },
@@ -96,12 +100,14 @@ export default function DetailInformationList() {
           ),
           subTitle: (
             <CommonFont fontSize="body3" fontWeight="regular" color="gray6">
-              {`${thisYeaderFirstDay.getFullYear()}년 1월 ~ 현재`}
+              {`${thisYeaderFirstDay.getFullYear()}년 1월 ~ 오늘`}
             </CommonFont>
           ),
           value: (
             <CommonFont fontSize="body1" fontWeight="bold" color="point_blue02">
-              {annualDividendTaxKRData?.paidTax}
+              {annualDividendTaxKRData?.paidTax
+                ? annualDividendTaxKRData?.paidTax
+                : '없음'}
             </CommonFont>
           ),
         },
@@ -134,12 +140,14 @@ export default function DetailInformationList() {
           ),
           subTitle: (
             <CommonFont fontSize="body3" fontWeight="regular" color="gray6">
-              {`${thisYeaderFirstDay.getFullYear()}년 1월 ~ 현재`}
+              {`오늘 ~ ${thisYeaderFirstDay.getFullYear()}년 12월`}
             </CommonFont>
           ),
           value: (
             <CommonFont fontSize="body1" fontWeight="bold" color="point_blue02">
-              {annualDividendTaxKRData?.unPaidTax} 예상
+              {annualDividendTaxKRData?.unPaidTax
+                ? `${annualDividendTaxKRData?.unPaidTax} 예상`
+                : '없음'}
             </CommonFont>
           ),
         },

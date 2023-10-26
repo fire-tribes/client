@@ -15,7 +15,7 @@ export default function DetailStocksSection() {
         <Section.Title>보유 주식</Section.Title>
         <BadgeGroup />
       </FlexBox>
-      <h1>{data?.totalValue}</h1>
+      <h1>{data?.totalValue || '0원'} </h1>
       <Typography
         color={
           data?.totalValueChangeRate && data?.totalValueChangeRate > 0
