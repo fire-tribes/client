@@ -9,12 +9,13 @@ export const useFormatPrice = () => {
   const { taxData } = useControlTax();
   const { modeData } = useControlMode();
 
-  const divideByTax = (price: number) => Math.floor(price * (85 / 100));
+  const divideByTax = (price: number) =>
+    price > 0 ? Math.floor(price * (85 / 100)) : Math.ceil(price * (85 / 100));
   const getByTax = (price: number) => Math.floor(price * (15 / 100));
   const divideSimple = (price: number) =>
     price > 0
       ? getShortCurrencyKRByPlusNumber(Math.floor(price))
-      : getShortCurrencyKRByMinusNumber(Math.floor(price));
+      : getShortCurrencyKRByMinusNumber(Math.ceil(price));
 
   const getPrice = (price: number) => {
     return Math.floor(price).toLocaleString('ko-kr') + '원';
@@ -34,18 +35,28 @@ export const useFormatPrice = () => {
     return Math.floor(price).toLocaleString('ko-kr') + '원';
   };
 
+  /** TODO: Test Code 작성 필요 */
   const getPriceByTaxWithSimple = (price: number) => {
-    let newPrice: number = Math.floor(price);
+    /** 음수, 양수에 따라 다르게 소수점을 버림 */
+    let newPrice = price < 0 ? Math.ceil(price) : Math.floor(price);
 
     if (taxData.isTax) {
       newPrice = divideByTax(price);
     }
 
     if (modeData.isSimple) {
-      return divideSimple(newPrice) + '원';
+      /** divideSimple 내부에서 실행되는 함수에 의해 -0원이 0원으로 변경되어짐 */
+      const result = divideSimple(newPrice) + '원';
+      return result;
     }
 
-    return newPrice.toLocaleString('ko-kr') + '원';
+    const result = newPrice === 0 ? 0 : newPrice.toLocaleString('ko-kr');
+    /** -0 인 경우 '-0원'을 방지 */
+    if (result === 0) {
+      return '0원';
+    }
+
+    return result + '원';
   };
 
   const getTaxByPriceWithSimple = (price: number) => {

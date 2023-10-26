@@ -5,7 +5,7 @@ import { ACCESS_TOKEN } from '@/core/api/token';
 
 import { ResponseSuccess } from '@/@types/models/response';
 import { queryKeys } from '@/hook/useQueryHook/queryKeys';
-import { useAmplitudeInit } from '@/hook/useAmplitudeInit';
+import { useAmplitudeInit } from '@/hook/useAmplitudes/useAmplitudeInit';
 import { Global, ThemeProvider as EmotionThemeProvider } from '@emotion/react';
 import {
   QueryCache,
