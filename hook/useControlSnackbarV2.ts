@@ -37,5 +37,6 @@ export const useControlSnackbarV2 = () => {
     snackbarState,
     openSnackbar,
     closeSnackbar,
+    resetSnackbar,
   };
 };

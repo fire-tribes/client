@@ -10,8 +10,7 @@ export default function Custom404Page() {
     <LayoutV2
       showBottomNavigator={false}
       headMetaProps={{
-        title: '스노우볼 - 404',
-        image: '',
+        title: '스노우볼 - 500',
       }}
     >
       <CenterContent>

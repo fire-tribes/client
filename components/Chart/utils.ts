@@ -115,7 +115,7 @@ export const createShowChartDividendDatas = (
   const showChartDividendDatas = Object.values(newValue).map(
     (value, index) => ({
       month: index + 1,
-      dividend: value,
+      dividend: Math.floor(value),
     }),
   );
 

@@ -6,12 +6,8 @@ import {
   // useAnnualDividendExchangeQuery,
   // useAnnualDividendExchangeWithSimpleQuery,
 } from '@/hook/useQueryHook/useAnnualDividendQuery';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 
 export const useAnnualDividend = () => {
-  const router = useRouter();
-
   /** USD  */
   // useAnnualDividendQuery();
   // const { data: annualDividendExchangeData } = useAnnualDividendExchangeQuery();
@@ -22,12 +18,6 @@ export const useAnnualDividend = () => {
   const { data: annualDividendKRData, status } = useAnnualDividendKRQuery();
   const { data: annualDividendTaxKRData } = useAnnualDividendTaxKRQuery();
   const { data: annualDividendSimpleKRData } = useAnnualDividendSimpleKRQuery();
-
-  useEffect(() => {
-    if (status === 'error') {
-      router.push('/500');
-    }
-  }, [status]);
 
   return {
     annualDividendData: annualDividendKRData?.data,

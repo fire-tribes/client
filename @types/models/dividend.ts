@@ -46,9 +46,9 @@ type MonthlyDividends = {
 type DividendCalanderModel = {
   stockCode: string;
   tickerCode: string;
-  /** 예상 배당금 지급일 */
-  exDividendDate: string;
   /** 배당락일 (배당기준일이란 배당금을 받기위해 주식을 소유하고 있어야 하는 날이다. 배당락일은 배당 기준일의 다음날이며 배당락에 의해 주가가 변동되는 날이다.) */
+  exDividendDate: string;
+  /** 예상 배당금 지급일 */
   expectedPayDate: string;
   /** 예상 배당금 */
   expectedDividends: number;

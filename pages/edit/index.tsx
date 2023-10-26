@@ -5,6 +5,7 @@ import NothingStocks from '@/components/common/NothingStocks';
 import EditStocks from '@/components/EditStocksGroup/EditStocks';
 import { useDeletePortfolio } from '@/hook/useDeletePortfolio';
 import { useMyPortFolio } from '@/hook/useMyPortFolio';
+import { useRefetchPortfolioAndDividendAndCalender } from '@/hook/useRefetchPortfolioAndDividendAndCalender';
 import { useRouter } from 'next/router';
 
 function Edit() {
@@ -15,14 +16,18 @@ function Edit() {
   const hasMyPortFolioData = myPortFolioData?.assetDetails.length !== 0;
   const { deletePortfolioData, isLoadingDeletePortfolioData } =
     useDeletePortfolio();
+  const { refetch } = useRefetchPortfolioAndDividendAndCalender();
 
   /** 다른 페이지로 이동하는 함수 */
   const onMoveOtherPages = async () => {
     if (!hasMyPortFolioData && portfolioId !== undefined) {
       await deletePortfolioData(portfolioId);
+
       router.push('/empty');
+      refetch();
     } else {
       router.push('/');
+      refetch();
     }
   };
 
@@ -40,7 +45,6 @@ function Edit() {
       hasButton={true}
       headMetaProps={{
         title: '스노우볼 - 배당 주식 편집',
-        image: '/icon/snow_logo.png',
       }}
     >
       <section>
