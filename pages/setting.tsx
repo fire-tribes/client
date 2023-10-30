@@ -21,6 +21,7 @@ import {
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { useMutation } from '@tanstack/react-query';
+import { signOut } from 'next-auth/react';
 
 const HELP_CENTER_LINKS = {
   DIRECT_CHATTING: 'https://open.kakao.com/o/sUl98zOf',
@@ -41,6 +42,7 @@ const useLogoutQuery = () => {
         const cookie = new Cookie();
 
         cookie.remove(ACCESS_TOKEN);
+        signOut();
         window.location.href = '/login';
       }
     },
