@@ -1,6 +1,6 @@
 export type SignUpRequestBody = {
   userName: string;
-  oAuthChannelType?: 'KAKAO';
+  oAuthChannelType?: Uppercase<'kakao' | 'google'>;
   password: string;
   email: string;
 };

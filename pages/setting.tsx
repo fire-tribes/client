@@ -37,12 +37,12 @@ const TERMS_LINKS = {
 
 const useLogoutQuery = () => {
   return useMutation(() => SignApi.signOut(), {
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       if (response.success) {
         const cookie = new Cookie();
 
         cookie.remove(ACCESS_TOKEN);
-        signOut();
+        await signOut();
         window.location.href = '/login';
       }
     },
