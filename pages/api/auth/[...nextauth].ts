@@ -3,7 +3,6 @@ import GoogleProvider from 'next-auth/providers/google';
 import KakaoProvider from 'next-auth/providers/kakao';
 
 export default NextAuth({
-  useSecureCookies: process.env.NODE_ENV === 'production' ? true : false,
   session: {
     maxAge: 60,
   },

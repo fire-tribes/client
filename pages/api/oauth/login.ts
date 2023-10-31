@@ -57,7 +57,6 @@ export default async function handler(
     const canSignIn = !shouldSignUp;
 
     if (canSignIn) {
-      console.log(defaultForm);
       const signInResponse = await SignApi.signIn(defaultForm);
       const { data } = signInResponse;
 
