@@ -15,7 +15,7 @@ const modeAtom = atom<ModeAtomType>({
 const IS_DETAIL_MODE = 'isDetailMode';
 // TODO: mode는 디바이스에 한해서 고정시킬 것인가? 아니면 유저의 계정에 한해서 고정시킬것인가?
 
-export const useControlMode = () => {
+export const useControlSimpleMode = () => {
   const [modeData, setModeData] = useAtom(modeAtom);
 
   const onSimpleMode = () => {
