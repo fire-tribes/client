@@ -24,7 +24,9 @@ export default function OverlayRectangleToggleSwitch({
   items,
   fontProps,
 }: OverlayRectangleToggleSwitchProps) {
-  const [activedItemIndex, setActivedItemIndex] = useState(0);
+  const [activedItemIndex, setActivedItemIndex] = useState(() =>
+    items.findIndex(({ key }) => activedKey === key),
+  );
 
   useEffect(() => {
     const activedIndex = items.findIndex(({ key }) => activedKey === key);
