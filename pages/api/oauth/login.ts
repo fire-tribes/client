@@ -15,8 +15,9 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   const responseSuccess = (data: unknown) => res.status(200).send(data);
-  const responseServerError = (err: AxiosError) =>
-    res.status(500).send({ data: '백엔드 서버 측 에러입니다.', err });
+  const responseServerError = (err: AxiosError) => {
+    return res.status(500).send({ data: '백엔드 서버 측 에러입니다.', err });
+  };
 
   const { email, provider } = req.query as Partial<SignAPIParams>;
 
@@ -39,22 +40,27 @@ export default async function handler(
   }
 
   try {
-    const defaultForm: SignInRequestBody = {
+    const signInForm: SignInRequestBody = {
       email,
       password: '',
       oAuthChannelType: provider.toUpperCase() as OauthChannelType,
     };
 
-    const defaultSignUpForm: SignUpRequestBody = {
+    const signUpForm: SignUpRequestBody = {
       userName: '',
-      ...defaultForm,
+      ...signInForm,
     };
 
-    const { data: isValid } = await SignApi.checkSignUp({ email });
+    const checkSignUpForm = {
+      email,
+      oAuthChannelType: provider.toUpperCase() as OauthChannelType,
+    };
+
+    const { data: isValid } = await SignApi.checkSignUp(checkSignUpForm);
     const shouldSignUp = !isValid;
 
     if (shouldSignUp) {
-      const signUpResponse = await SignApi.signUp(defaultSignUpForm);
+      const signUpResponse = await SignApi.signUp(signUpForm);
 
       return responseSuccess(signUpResponse.data);
     }
@@ -62,7 +68,7 @@ export default async function handler(
     const canSignIn = !shouldSignUp;
 
     if (canSignIn) {
-      const signInResponse = await SignApi.signIn(defaultForm);
+      const signInResponse = await SignApi.signIn(signInForm);
       const { data } = signInResponse;
 
       return responseSuccess(data);
