@@ -36,6 +36,9 @@ export const sementic = {
     font_gray: basic.gray5,
     font_section_title: basic.gray_blue,
     ios_switch_background: basic.gray7,
+    currency_switch_background: basic.gray2,
+    currency_switch_overlay: basic.white,
+    currency_switch_font_color: basic.gray8,
   },
   dark: {
     bg_white: basic.white,
@@ -49,6 +52,9 @@ export const sementic = {
     font_gray: basic.gray5,
     font_section_title: basic.gray_blue,
     ios_switch_background: basic.gray7,
+    currency_switch_background: basic.gray2,
+    currency_switch_overlay: basic.white,
+    currency_switch_font_color: basic.gray8,
   },
 };
 
