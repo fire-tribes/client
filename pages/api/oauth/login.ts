@@ -2,6 +2,11 @@ import { SignApi } from '@/core/api/sign';
 import { SignAPIParams } from '@/hook/useCallServiceLoginWithSession';
 import { AxiosError } from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
+import type {
+  OauthChannelType,
+  SignInRequestBody,
+  SignUpRequestBody,
+} from '@/@types/models/signUp';
 
 const APPROVAL_PROVIDERS = ['KAKAO', 'GOOGLE'];
 
@@ -34,14 +39,14 @@ export default async function handler(
   }
 
   try {
-    const defaultForm = {
-      password: '',
+    const defaultForm: SignInRequestBody = {
       email,
+      password: '',
+      oAuthChannelType: provider.toUpperCase() as OauthChannelType,
     };
 
-    const defaultSignUpForm = {
+    const defaultSignUpForm: SignUpRequestBody = {
       userName: '',
-      oAuthChannelType: provider.toUpperCase() as Uppercase<typeof provider>,
       ...defaultForm,
     };
 
