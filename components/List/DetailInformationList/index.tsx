@@ -12,11 +12,10 @@ export const DIVIDEND_PRICE_RATIO_KR = '투자 배당률';
 export default function DetailInformationList() {
   const { annualDividendTaxKRData, annualDividendSimpleKRData } =
     useAnnualDividend();
-
   const detailInformationData = {
     annualDividend: annualDividendSimpleKRData?.annualDividend || '없음',
     dividendPriceRatio: `${
-      annualDividendSimpleKRData?.dividendPriceRatio.toFixed(2) || 0
+      annualDividendSimpleKRData?.dividendPriceRatio || 0
     }%`,
     paidTax: annualDividendSimpleKRData?.paidTax
       ? `${annualDividendSimpleKRData?.paidTax}`
