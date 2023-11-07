@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
-import { CSSProperties } from 'react';
 
-type StyledCurrencySwitchOverlayProps = {
-  left: CSSProperties['left'];
+export type StyledCurrencySwitchOverlayProps = {
+  width?: number;
+  height?: number;
+  left?: number;
 };
 
 export const StyledOverlayRectangleToggleSwitch = {
@@ -29,14 +30,15 @@ export const StyledOverlayRectangleToggleSwitch = {
   `,
   Overlay: styled.div<StyledCurrencySwitchOverlayProps>`
     position: absolute;
-    width: calc(50% - 9px);
-    height: calc(100% - 8px);
-    left: ${({ left }) => `calc(${left})`};
+
+    width: ${({ width }) => width + 'px'};
+    height: ${({ height }) => height + 'px'};
+    left: ${({ left }) => left + 'px'};
 
     background-color: ${({ theme }) =>
       theme.palette.sementic.currency_switch_overlay};
     border-radius: 4px;
 
-    transition: 0.4s left;
+    transition: 0.4s;
   `,
 };

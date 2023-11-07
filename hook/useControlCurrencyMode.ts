@@ -4,15 +4,15 @@ import { useEffect } from 'react';
 
 const CURRENCY_LIST = ['USD', 'KRW'] as const;
 const INITIAL_CURRENCY = CURRENCY_LIST[0];
-type CurrencyListElementType = (typeof CURRENCY_LIST)[number];
+export type CurrencyListElementType = (typeof CURRENCY_LIST)[number];
 
 const currencyModeAtom = atom<ExchangeRateSymbol>(INITIAL_CURRENCY);
 const TOGGLE_CURRENCY_TABLE: Record<
   CurrencyListElementType,
   CurrencyListElementType
 > = {
-  KRW: 'USD',
   USD: 'KRW',
+  KRW: 'USD',
 };
 
 const CURRENCY_TYPE_KEY = 'currencyType';
