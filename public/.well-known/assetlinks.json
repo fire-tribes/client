@@ -1,0 +1,22 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "watch.snowball.twa",
+      "sha256_cert_fingerprints": [
+        "F6:A6:52:43:E3:C4:94:9D:23:D9:4A:5E:BC:D2:FB:38:5D:92:2A:33:B6:DA:48:F2:28:9D:E8:BF:23:9A:3A:B0"
+      ]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "watch.snowball.twa",
+      "sha256_cert_fingerprints": [
+        "E0:34:35:1A:5E:7F:62:BC:01:5C:1D:C5:14:A9:FE:37:68:97:C2:C6:0D:18:87:FB:37:33:5D:6F:C2:C2:E2:07"
+      ]
+    }
+  }
+]

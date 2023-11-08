@@ -14,7 +14,7 @@ export default function ModeController({ hasPortfolio }: ModeControllerProps) {
 
   return (
     <FlexBox justifyContent="space-between">
-      <Image src="/icon/snow_logo.png" width={32} height={32} alt="snow" />
+      <Image src="/icon/snowball_icon.png" width={32} height={32} alt="snow" />
       <FlexBox gap="6px">
         {hasPortfolio ? (
           <>
