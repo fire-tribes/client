@@ -23,7 +23,7 @@ function Edit() {
     if (!hasMyPortFolioData && portfolioId !== undefined) {
       await deletePortfolioData(portfolioId);
 
-      router.push('/empty');
+      router.push('/empty'); // INFO: router.push()는 비동기이다.
       refetch();
     } else {
       router.push('/');
@@ -33,7 +33,7 @@ function Edit() {
 
   return (
     <SearchLayoutV2
-      buttomFixedButton={
+      bottomFixedButton={
         <BottomFixedButton
           isDisabled={false}
           onChange={onMoveOtherPages}

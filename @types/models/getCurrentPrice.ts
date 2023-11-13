@@ -1,3 +1,5 @@
+import { ExchangeRateSymbol } from './exchangeRate';
+
 /**
  * 현재 가격 Response Interface
  */
@@ -7,7 +9,7 @@ export type GetCurrentPrice = {
   /** 해당 종목 현재 가격 */
   currentPrice: number;
   /** 해당 종목 화폐 단위 */
-  currencyType: 'KRW' | 'USD' | 'NONE';
+  currencyType: ExchangeRateSymbol;
   /** 해당 종목 현재 가격 검색 시간 */
   accessTime: string;
   /** 해당 종목 대비기호(등락여부) */

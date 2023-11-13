@@ -99,6 +99,18 @@ const BottomContainer = styled.div`
   }
 `;
 
+const CurrencyChangeButton = styled.button`
+  color: ${basic.point_blue02};
+  font-weight: 500;
+  display: inline-block;
+  margin-right: 20px;
+
+  span:first-of-type {
+    display: inline-block;
+    margin-right: 5px;
+  }
+`;
+
 const ErrorContainer = styled.span`
   color: ${basic.point_red01};
   font-size: ${fontSize.body3};
@@ -111,5 +123,6 @@ export const FeedStockInfoUI = {
   NativeStockInfoContainer,
   ButtonContainer,
   BottomContainer,
+  CurrencyChangeButton,
   ErrorContainer,
 } as const;

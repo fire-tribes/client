@@ -16,36 +16,17 @@ const Item = styled.div`
 
 const StockContainer = styled.div`
   display: flex;
+  align-items: center;
 
-  > div:first-child {
-    position: relative;
-    > div:first-child {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 1;
-
-      ${({ theme }) => `
-        color: ${theme.palette.basic.point_blue01};
-      `}
-    }
-    > span {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-  }
-
-  div:last-child {
+  div:last-of-type {
     margin: 10px;
+    margin-left: 0;
     > p {
       ${({ theme }) => `
         font-size: ${theme.font.size.body2};
       `}
     }
-    > button {
+    > a {
       ${({ theme }) => `
         font-size: ${theme.font.size.caption};
         color: ${theme.palette.basic.point_blue01};

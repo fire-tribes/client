@@ -11,18 +11,18 @@ interface SearchLayoutProps {
   /** 하단 버튼에 들어갈 이름(Content) */
   // buttonName: '다음' | '추가 완료' | '완료' | '수정 완료';
   /** 하단 고정 버튼 */
-  buttomFixedButton: React.ReactNode;
+  bottomFixedButton: React.ReactNode;
 }
 
 const SearchLayout = ({
   children,
   hasButton,
-  buttomFixedButton,
+  bottomFixedButton,
 }: SearchLayoutProps) => {
   return (
     <StyledLayout>
       <StyledContent>{children}</StyledContent>
-      {hasButton ? buttomFixedButton : <div></div>}
+      {hasButton ? bottomFixedButton : <div></div>}
     </StyledLayout>
   );
 };

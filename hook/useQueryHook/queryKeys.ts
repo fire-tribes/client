@@ -1,3 +1,5 @@
+import { ExchangeRateSymbol } from '@/@types/models/exchangeRate';
+
 export const queryKeys = {
   exchangeRate: ['exchangeRate'],
   exampleItemGet: (title: string) => ['exampleItemGet', title],
@@ -44,6 +46,11 @@ export const queryKeys = {
   popularStocks: () => ['popularStocks'],
   recentSearchWords: () => ['getRecentSearchWords'],
   searchedResults: (word: string) => ['searchedResults', word],
-  currentPrice: (assetIds: number) => ['currentPrice', assetIds],
+  currentPrice: (assetId: number, currencyType: ExchangeRateSymbol) => [
+    'currentPrice',
+    assetId,
+    currencyType,
+  ],
   currentPrices: (assetIds: number[]) => ['currentPrice', assetIds],
+  assetDetail: () => ['assetDetail'],
 };
