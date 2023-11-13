@@ -24,7 +24,7 @@ function Edit() {
       await deletePortfolioData(portfolioId);
 
       router.push('/empty'); // INFO: router.push()는 비동기이다.
-      refetch();
+      // refetch();
     } else {
       router.push('/');
       refetch();
