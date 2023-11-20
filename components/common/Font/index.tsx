@@ -8,6 +8,7 @@ export interface CommonFontProps extends PropsWithChildren {
   fontWeight?: FontWeightKeys;
   textAlign?: CSSProperties['textAlign'];
   component?: keyof JSX.IntrinsicElements;
+  transition?: CSSProperties['transition'];
 }
 
 export default function CommonFont({
@@ -16,6 +17,7 @@ export default function CommonFont({
   color = 'gray9',
   component = 'span',
   textAlign,
+  transition,
   children,
 }: CommonFontProps) {
   return (
@@ -26,6 +28,7 @@ export default function CommonFont({
         color={color}
         textAlign={textAlign}
         as={component}
+        transition={transition}
       >
         {children}
       </CommonFontUI.Font>
