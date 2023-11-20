@@ -6,8 +6,6 @@ import type { AxiosRequestConfig } from 'axios';
 const AUTHORIZATION = 'Authorization';
 const BASE_URL = global.location?.origin;
 
-console.log('BaseURL', BASE_URL);
-
 const createAPIInstance = (config: AxiosRequestConfig) => {
   const instance = axios.create({
     ...config,
