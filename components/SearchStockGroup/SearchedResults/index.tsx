@@ -106,7 +106,7 @@ function SearchedResults({ value }: SearchResultsProps) {
   };
   /* 3-3. ('추가' 로직으로 입장했을 때) 이미 있는 자산은, 선택 버튼 숨기기 */
   const { myPortfolioCacheData } = useGetMyPortfolio();
-  const portfolioStocksInCache = myPortfolioCacheData?.data.assetDetails;
+  const portfolioStocksInCache = myPortfolioCacheData?.data?.assetDetails;
   const isHaveStockAlready = (searchedResult: GetSearchedResultData) => {
     if (portfolioStocksInCache) {
       return portfolioStocksInCache.some(
