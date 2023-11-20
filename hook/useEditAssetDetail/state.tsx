@@ -4,8 +4,8 @@ import { atom } from 'jotai';
 export interface EditAssetDetailAtomProps {
   portfolioAssetId: number;
   assetId: number;
-  count: number | '';
-  purchasePrice: number | '';
+  count: number | string;
+  purchasePrice: number | string;
   currencyType: ExchangeRateSymbol;
   tickerCode: string;
   stockCode: string;
