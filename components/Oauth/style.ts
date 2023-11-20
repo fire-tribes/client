@@ -1,16 +1,19 @@
 import styled from '@emotion/styled';
 
-export const StyledLoginButton = styled('a')`
+type StyledLoginButtonProps = {
+  backgroundColor: string;
+};
+export const StyledLoginButton = styled('a')<StyledLoginButtonProps>`
   display: flex;
 
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   gap: 7px;
 
-  width: 168px;
+  width: 220px;
   height: 58px;
   padding: 14px 18px;
 
   border-radius: 80px;
-  background-color: #faea05;
+  background-color: ${({ backgroundColor }) => backgroundColor};
 `;

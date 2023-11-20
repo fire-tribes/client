@@ -1,7 +1,7 @@
 import LayoutV2 from '@/components/commonV2/Layout';
 import CenterContent from '@/components/commonV2/CenterContent';
 import CommonFont from '@/components/common/Font';
-import KakaoLoginButtonV2 from '@/components/Oauth/KakaoLoginButton';
+import KakaoLoginButton from '@/components/Oauth/KakaoLoginButton';
 
 import { GoogleLoginButton } from '@/components/Oauth/GoogleLoginButton';
 import { useCallServiceLoginWithSession } from '@/hook/useCallServiceLoginWithSession';
@@ -39,14 +39,9 @@ const LoginPage = () => {
             </CommonFont>
           </LoginPageUI.Title>
 
-          <LoginPageUI.SubTitle>
-            <CommonFont fontSize="body3" fontWeight="normal" color="gray6">
-              카카오 톡으로 3초만에 시작하기
-            </CommonFont>
-          </LoginPageUI.SubTitle>
           <LoginPageUI.Padding>
             <LoginPageUI.LoginButtons>
-              <KakaoLoginButtonV2 />
+              <KakaoLoginButton />
               <GoogleLoginButton />
             </LoginPageUI.LoginButtons>
           </LoginPageUI.Padding>
