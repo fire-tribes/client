@@ -9,6 +9,8 @@ import CheckSvg from '@/public/icon/check.svg';
 import { basic } from '@/styles/palette';
 import { useGetCurrentPriceInSelectedStocks } from '@/hook/useGetCurrentPriceInSelectedStocks';
 import { ExchangeRateSymbol } from '@/@types/models/exchangeRate';
+import { useExchangeRate } from '@/hook/useExchangeRate';
+import { handleDemicalPoint } from '@/core/utils/handleNumber';
 import { useAtom } from 'jotai';
 import Image from 'next/image';
 import { ChangeEvent, useEffect, useState } from 'react';
@@ -17,6 +19,9 @@ function FeedStockInfos() {
   /** COMPLETED: 1. 선택된 주식 배열 가져오기  */
   /* 1-1. Jotai(selectedStocks, 선택된 목록)으로 선택된 배열 가져오기  */
   const [selectedStocks, setSelectedStocks] = useAtom(selectedStocksAtom);
+  /* 1-2. Cache에 있는 환율 정보 가져오기(GET) */
+  const { exchangeRate } = useExchangeRate();
+  const EXCHANGE_RATE = exchangeRate;
 
   /** COMPLETED: 2. 가져온 배열에서 객체값 삭제하기 */
   const handleRemoveSelected = (stock: SelectedStocksAtomProps) => {
@@ -120,12 +125,32 @@ function FeedStockInfos() {
               newCurrencyType: ExchangeRateSymbol,
             ) => {
               setSelectedStocks((prev: SelectedStocksAtomProps[]) => {
+                let newPrice = prev[id].price;
+
+                if (newCurrencyType === 'USD' && EXCHANGE_RATE !== undefined) {
+                  newPrice = handleDemicalPoint(
+                    Math.round,
+                    Number(newPrice) / EXCHANGE_RATE,
+                    2,
+                  ).toString();
+                } else if (
+                  newCurrencyType === 'KRW' &&
+                  EXCHANGE_RATE !== undefined
+                ) {
+                  newPrice = handleDemicalPoint(
+                    Math.round,
+                    Number(newPrice) * EXCHANGE_RATE,
+                    2,
+                  ).toString();
+                }
+
                 // 이전 상태를 복사하여 새로운 배열 생성한다.
                 const updatedSelectedStocks = [...prev];
 
                 // 특정 id의 객체를 찾아서 currencyType를 newCurrencyType으로 변경한다.
                 updatedSelectedStocks[id] = {
                   ...updatedSelectedStocks[id],
+                  price: newPrice,
                   currencyType: newCurrencyType,
                 };
 
