@@ -1,4 +1,3 @@
-import Component5 from '@/components/Test/Component5';
 import BottomFixedButton from '@/components/common/Button/BottomFixedButton';
 import SearchLayoutV2 from '@/components/commonV2/Layout/SearchLayoutV2';
 
@@ -24,7 +23,7 @@ function TestPage() {
         title: '스노우볼 - 배당 정보 편집',
       }}
     >
-      <Component5 />
+      <div>Component5가 있던 자리</div>
     </SearchLayoutV2>
   );
 }
