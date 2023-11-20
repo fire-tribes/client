@@ -13,6 +13,10 @@ import StockAvatar from '@/components/common/StockAvatar';
 import CurrencyTypeChoiceBottomSheetModal from '@/components/commonV2/ModalV2/CurrencyTypeChoiceBottomSheetModal';
 import { editAssetDetailAtom } from '@/hook/useEditAssetDetail/state';
 import { ExchangeRateSymbol } from '@/@types/models/exchangeRate';
+import {
+  checkDemicalPointLength,
+  handleDemicalPoint,
+} from '@/core/utils/handleNumber';
 import Image from 'next/image';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
@@ -52,18 +56,23 @@ export default function EditStockInfo({ slug }: EditStockInfoProps) {
     if (!assetDetailData) return;
 
     const { value } = e.target;
+
+    if (checkDemicalPointLength(value) > 2) return;
+
     setEditAssetDetail((prev) => ({
       ...prev,
-      count: parseInt(value, 10) || '',
+      count: value,
     }));
   };
   const handleChangePrice = (e: ChangeEvent<HTMLInputElement>) => {
     if (!assetDetailData) return;
-
     const { value } = e.target;
+
+    if (checkDemicalPointLength(value) > 2) return;
+
     setEditAssetDetail((prev) => ({
       ...prev,
-      purchasePrice: parseInt(value, 10) || '',
+      purchasePrice: value,
     }));
   };
   /** COMPLETED: 4-2. newCurrencyType 달러 또는 원화로 변경하기  */
@@ -73,7 +82,7 @@ export default function EditStockInfo({ slug }: EditStockInfoProps) {
       currencyType: newCurrencyType,
     }));
   };
-  console.log('editAssetDetail.currencyType: ', editAssetDetail.currencyType);
+
   /** COMPLETED: 4-3. '현재가 입력' 버튼으로 price 데이터 변경하기 */
   const [isPressButton, setIsPressButton] = useState(true);
   const { getCurrentPriceDatas, invalidateCurrentPrice } =
@@ -88,14 +97,22 @@ export default function EditStockInfo({ slug }: EditStockInfoProps) {
   ) => {
     const result = getCurrentPriceDatas?.data;
     invalidateCurrentPrice(assetId, currencyType);
+
     if (result) {
+      const roundedPriceToTwoDemicalPoint = handleDemicalPoint(
+        Math.round,
+        result.data[0].currentPrice,
+        2,
+      );
+
       setEditAssetDetail((prev) => ({
         ...prev,
-        purchasePrice: result.data[0].currentPrice,
+        purchasePrice: roundedPriceToTwoDemicalPoint,
       }));
     }
     setIsPressButton(true);
   };
+
   /** COMPLETED: 4-4. count, price 데이터를 입력하지 않을 때, Error 처리하기 */
   const [errorText, setErrorText] = useState('');
   const handleInputBlur = () => {
@@ -190,7 +207,7 @@ export default function EditStockInfo({ slug }: EditStockInfoProps) {
           <EditStockInfoUI.BottomContainer>
             <div>
               <input
-                type="text"
+                type="number"
                 value={editAssetDetail.count}
                 placeholder="보유 수량"
                 onChange={handleChangeCount}
@@ -211,7 +228,7 @@ export default function EditStockInfo({ slug }: EditStockInfoProps) {
               </CurrencyTypeChoiceBottomSheetModal>
               <div>{editAssetDetail.currencyType === 'KRW' ? '₩' : '$'}</div>
               <input
-                type="text"
+                type="number"
                 value={editAssetDetail.purchasePrice}
                 placeholder="구매 가격"
                 onChange={handleChangePrice}
