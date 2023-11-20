@@ -1,17 +1,16 @@
-export type SignUpRequestBody = {
-  userName: string;
-  oAuthChannelType?: Uppercase<'kakao' | 'google'>;
-  password: string;
-  email: string;
-};
-
-export type SignInRequestBody = {
-  email: string;
-  password: string;
-};
+export type OauthChannelType = Uppercase<'kakao' | 'google' | 'none'>;
 
 export type CheckSignUpRequestBody = {
   email: string;
+  oAuthChannelType: OauthChannelType;
+};
+
+export type SignInRequestBody = CheckSignUpRequestBody & {
+  password: string;
+};
+
+export type SignUpRequestBody = SignInRequestBody & {
+  userName: string;
 };
 
 export type SignResponseModel = {

@@ -28,11 +28,9 @@ export const SignApi = {
 
     return data;
   },
-  checkSignUp: ({ email }: CheckSignUpRequestBody) => {
+  checkSignUp: (params: CheckSignUpRequestBody) => {
     return AuthAPIInstance.get(`email`, {
-      params: {
-        email,
-      },
+      params,
     });
   },
 };
