@@ -17,6 +17,7 @@ import {
   checkDemicalPointLength,
   handleDemicalPoint,
 } from '@/core/utils/handleNumber';
+import { useExchangeRate } from '@/hook/useExchangeRate';
 import Image from 'next/image';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
@@ -36,6 +37,10 @@ export default function EditStockInfo({ slug }: EditStockInfoProps) {
   // const currencyType = slug?.[3];
 
   const [editAssetDetail, setEditAssetDetail] = useAtom(editAssetDetailAtom);
+
+  /** 3-1. Cache에 있는 환율 정보 가져오기(GET) */
+  const { exchangeRate } = useExchangeRate();
+  const EXCHANGE_RATE = exchangeRate;
 
   /** COMPLETED: 3-2. useFeatureHook으로 '정보 확인' API 데이터 가져오기 */
   const { getAssetDetailData } = useGetAssetDetail(
@@ -77,12 +82,38 @@ export default function EditStockInfo({ slug }: EditStockInfoProps) {
   };
   /** COMPLETED: 4-2. newCurrencyType 달러 또는 원화로 변경하기  */
   const handleCurrencyType = (newCurrencyType: ExchangeRateSymbol) => {
-    setEditAssetDetail((prev) => ({
-      ...prev,
-      currencyType: newCurrencyType,
-    }));
-  };
+    setEditAssetDetail((prev) => {
+      let newPurchasePrice = prev.purchasePrice;
 
+      if (
+        newCurrencyType === 'USD' &&
+        typeof newPurchasePrice === 'number' &&
+        EXCHANGE_RATE !== undefined
+      ) {
+        newPurchasePrice = handleDemicalPoint(
+          Math.round,
+          newPurchasePrice / EXCHANGE_RATE,
+          2,
+        );
+      } else if (
+        newCurrencyType === 'KRW' &&
+        typeof newPurchasePrice === 'number' &&
+        EXCHANGE_RATE !== undefined
+      ) {
+        newPurchasePrice = handleDemicalPoint(
+          Math.round,
+          newPurchasePrice * EXCHANGE_RATE,
+          2,
+        );
+      }
+
+      return {
+        ...prev,
+        purchasePrice: newPurchasePrice,
+        currencyType: newCurrencyType,
+      };
+    });
+  };
   /** COMPLETED: 4-3. '현재가 입력' 버튼으로 price 데이터 변경하기 */
   const [isPressButton, setIsPressButton] = useState(true);
   const { getCurrentPriceDatas, invalidateCurrentPrice } =
@@ -112,7 +143,6 @@ export default function EditStockInfo({ slug }: EditStockInfoProps) {
     }
     setIsPressButton(true);
   };
-
   /** COMPLETED: 4-4. count, price 데이터를 입력하지 않을 때, Error 처리하기 */
   const [errorText, setErrorText] = useState('');
   const handleInputBlur = () => {
