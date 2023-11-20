@@ -2,7 +2,7 @@ import { AnnualDividendModel } from '@/@types/models/dividend';
 import { ResponseSuccess } from '@/@types/models/response';
 import { dividendAPI } from '@/core/api/dividend';
 
-import { useControlMode } from '@/hook/useControlMode';
+import { useControlSimpleMode } from '@/hook/useControlSimpleMode';
 import { useControlTax } from '@/hook/useControlTax';
 import { useExchangeRate } from '@/hook/useExchangeRate';
 import { useFormatPrice } from '@/hook/useFormatPrice';
@@ -12,7 +12,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 export const useAnnualDividendQuery = () => {
   const queryClient = useQueryClient();
   const { exchangeRate } = useExchangeRate();
-  const { modeData } = useControlMode();
+  const { modeData } = useControlSimpleMode();
   const { taxData } = useControlTax();
 
   return useQuery({
@@ -38,7 +38,7 @@ export const useAnnualDividendQuery = () => {
 export const useAnnualDividendKRQuery = () => {
   const queryClient = useQueryClient();
 
-  const { modeData } = useControlMode();
+  const { modeData } = useControlSimpleMode();
   const { taxData } = useControlTax();
 
   return useQuery({
@@ -111,7 +111,7 @@ export const useAnnualDividendExchangeQuery = () => {
 export const useAnnualDividendExchangeWithSimpleQuery = () => {
   const queryClient = useQueryClient();
   const { exchangeRate } = useExchangeRate();
-  const { modeData } = useControlMode();
+  const { modeData } = useControlSimpleMode();
   const { taxData } = useControlTax();
   const { divideByTax, getPriceBySimple, getPriceByTaxWithSimple } =
     useFormatPrice();
@@ -211,7 +211,7 @@ export const useAnnualDividendTaxKRQuery = () => {
 
 export const useAnnualDividendSimpleKRQuery = () => {
   const queryClient = useQueryClient();
-  const { modeData } = useControlMode();
+  const { modeData } = useControlSimpleMode();
   const { taxData } = useControlTax();
   const { divideByTax, getPriceByTaxWithSimple, getPriceBySimple, getByTax } =
     useFormatPrice();

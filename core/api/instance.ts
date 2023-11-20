@@ -14,11 +14,17 @@ const createAPIInstance = (config: AxiosRequestConfig) => {
 };
 
 const APIInstance = createAPIInstance({
-  baseURL: process.env.NEXT_PUBLIC_SERVER_URL + '/api/v1/',
+  baseURL:
+    process.env.NODE_ENV === 'production'
+      ? process.env.NEXT_PUBLIC_SERVER_URL + '/api/v1/'
+      : process.env.NEXT_PUBLIC_DEV_SERVER_URL + '/api/v1/',
 });
 
 const AuthAPIInstance = createAPIInstance({
-  baseURL: process.env.NEXT_PUBLIC_SERVER_URL + '/api/v1/user/',
+  baseURL:
+    process.env.NODE_ENV === 'production'
+      ? process.env.NEXT_PUBLIC_SERVER_URL + '/api/v1/user/'
+      : process.env.NEXT_PUBLIC_DEV_SERVER_URL + '/api/v1/user/',
   withCredentials: true,
   headers: {
     [AUTHORIZATION]: process.env.SECRET_KEY as string,

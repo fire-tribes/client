@@ -11,6 +11,7 @@ export default function StockAvatar({
   stockCode = '',
 }: StockAvatarProps) {
   const { palette } = useEmotionTheme();
+
   return (
     <Avatar
       sx={{

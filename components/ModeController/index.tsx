@@ -1,7 +1,7 @@
 import CommonFont from '@/components/common/Font';
 import FlexBox from '@/components/common/FlexBox';
 import IOSSwitch from '@/components/common/Switch/CommonIosSwitch';
-import { useControlMode } from '@/hook/useControlMode';
+import { useControlSimpleMode } from '@/hook/useControlSimpleMode';
 import Image from 'next/image';
 
 interface ModeControllerProps {
@@ -9,7 +9,7 @@ interface ModeControllerProps {
 }
 
 export default function ModeController({ hasPortfolio }: ModeControllerProps) {
-  const { modeData, toggleMode } = useControlMode();
+  const { modeData, toggleMode } = useControlSimpleMode();
   const { isSimple: isChecked, modeText } = modeData;
 
   return (

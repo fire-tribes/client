@@ -13,6 +13,11 @@ export const queryKeys = {
       // isTax,
       // exchangeRate
     ],
+  changedMyPortfolioKRW: (
+    isSimple?: boolean | null,
+    exchangeRate?: number,
+    isTax?: boolean | null,
+  ) => ['changedMyPortfolioKRW', isSimple, isTax, exchangeRate],
   changedMyPortfolio: (
     isSimple?: boolean | null,
     exchangeRate?: number,
