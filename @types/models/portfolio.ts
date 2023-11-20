@@ -20,6 +20,8 @@ export interface MyportfoliAssetDetailModel {
   assetId: number;
   /** 미국주식 고유 문자 코드  ex) MSFT */
   tickerCode: string;
+  // /** 한국주식 고유 문자 코드  ex) 000000 */
+  // stockCode: string;
   /** 자산수량 */
   count: number;
   /** 평단가 */

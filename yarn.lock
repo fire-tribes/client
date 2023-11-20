@@ -1982,11 +1982,6 @@
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.39.tgz#e177e699ee1b8c22d23174caaa7422644389509f"
   integrity sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==
 
-"@types/gapi@^0.0.46":
-  version "0.0.46"
-  resolved "https://registry.yarnpkg.com/@types/gapi/-/gapi-0.0.46.tgz#a40a34ce8a7dd9d903f93401a36a06ec828a99eb"
-  integrity sha512-lOSwnIOzx5CD+BtXlS7gPQWuiK8G0B7FNtYGPxF/FTNF3hfTPr5AwB077IebwS+yoeQxZu8pPIh2DI/x4rpAxQ==
-
 "@types/glob@^7.1.1":
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/@types/glob/-/glob-7.2.0.tgz#bc1b5bf3aa92f25bd5dd39f35c57361bdce5b2eb"

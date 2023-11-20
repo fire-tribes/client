@@ -1,4 +1,3 @@
-// import { FeedStockInfosUI } from './style';
 import FeedStockInfo from '../FeedStockInfo';
 import NothingStocks from '@/components/common/NothingStocks';
 import CommonButton from '@/components/common/Button/CommonButton';
@@ -9,137 +8,54 @@ import {
 import CheckSvg from '@/public/icon/check.svg';
 import { basic } from '@/styles/palette';
 import { useGetCurrentPriceInSelectedStocks } from '@/hook/useGetCurrentPriceInSelectedStocks';
+import { ExchangeRateSymbol } from '@/@types/models/exchangeRate';
 import { useAtom } from 'jotai';
 import Image from 'next/image';
 import { ChangeEvent, useEffect, useState } from 'react';
 
-// interface Assets {
-//   assetId: number;
-//   price: string;
-//   count: string;
-//   currencyType: string;
-// }
-
 function FeedStockInfos() {
-  /** Jotai의 selectedStocksAtom을 이용해서 선택된 주식을 관리 */
+  /** COMPLETED: 1. 선택된 주식 배열 가져오기  */
+  /* 1-1. Jotai(selectedStocks, 선택된 목록)으로 선택된 배열 가져오기  */
   const [selectedStocks, setSelectedStocks] = useAtom(selectedStocksAtom);
 
-  /** [삭제 함수] Jotai로 만든 주식 종목 배열에서 해당 객체 삭제하는 함수 */
+  /** COMPLETED: 2. 가져온 배열에서 객체값 삭제하기 */
   const handleRemoveSelected = (stock: SelectedStocksAtomProps) => {
     setSelectedStocks((prev: SelectedStocksAtomProps[]) =>
-      prev.filter((selected: SelectedStocksAtomProps) =>
+      prev.filter((selectedStock: SelectedStocksAtomProps) =>
         stock.tickerCode
-          ? selected.tickerCode !== stock.tickerCode
-          : selected.stockCode !== stock.stockCode,
+          ? selectedStock.tickerCode !== stock.tickerCode
+          : selectedStock.stockCode !== stock.stockCode,
       ),
     );
   };
 
-  // const { getCurrentPriceData } = useGetCurrentPrice(exampleAssetIds);
-
-  /** TODO: 현재가 자동 입력 함수(미완) */
-  // const exampleAssetIds = 1;
-  // const { getCurrentPriceData } = useGetCurrentPrice(
-  //   exampleAssetIds,
-  //   isPressButton,
-  // );
-
-  /** 서버로 재요청 유무 확인을 위한 배열 생성
-   * selectedStocks가 생겼을 때 배열을 생성
-   * 최초 값은 모두 false이며, 재요청할 때 true로 변경하기 위해 배열을 만들어서 사용 */
+  /** COMPLETED: 3. 현재가 버튼 클릭 시, 가져온 배열에서 현재가 반영하기 */
+  /** 3-1. 서버에 재요청 유무를 확인할 수 있는 배열 생성하기
+   * '(전체)현재가', '(개별)현재가'가 따로 존재하며, 서버로 요청은 '(개별)현재가'만 존재한다.
+   * 전체 현재가 버튼 클릭 시, 한꺼번에 재요청할 수 있도록 핸들링할 수 있는 배열이 필요하다.
+   */
   const [isPressAllButton, setIsPressAllButton] = useState<boolean[]>([]);
+  const [newIsPressAllButton, setNewIsPressAllButton] = useState(false);
   useEffect(() => {
     const array = Array.from({ length: selectedStocks.length }, () => false);
     setIsPressAllButton(array);
   }, [selectedStocks]);
-
-  // const datas = useQueries({
-  //   queries: selectedStocks.map((stock) => ({
-  //     queryKey: queryKeys.CurrentPrice(stock.assetId),
-  //     queryFn: () => getCurrentPriceAPI.getCurrentPrice(stock.assetId),
-  //     enabled: !!isPressAllButton,
-  //   })),
-  // });
-  /** 예시
-   * datas = [
-   *  {data, isLoading, refetch, ... },
-   *  {data, isLoading, refetch, ... },
-   *  {data, isLoading, refetch, ... },
-   *  ...등등
-   * ]
-   */
-
-  const [newIsPressAllButton, setNewIsPressAllButton] = useState(false);
-
-  const {
-    // getCurrentPriceDatas,
-    // shouldSetAtom,
-    // newQueires,
-    invalidateCurrentPrices,
-    invalidateCurrentPrice,
-  } = useGetCurrentPriceInSelectedStocks(isPressAllButton, newIsPressAllButton);
-
-  /**
-  // TODO: before
-  useEffect(() => {
-    if (shouldSetAtom) {
-      const currentPricesArray = getCurrentPriceDatas.map(
-        (data) => data.data?.data.data[0]?.currentPrice,
-      );
-      
-      if (currentPricesArray.length !== 0) {
-        setSelectedStocks((prev) =>
-          prev.map((value, id) => ({
-            ...value,
-            price: String(currentPricesArray[id] || ''),
-          })),
-        );
-      }
-    }
-  }, [shouldSetAtom]);
-   */
-
-  /**
-   * 1. getCurrentPriceDatas로 현재가로 구성된 배열을 받아온다.
-   * 2. selectedStocks의 price에 getCurrentPriceDatas의 현재가를 넣어준다. (map)
-   * 3. 변경된 값을 useEffect에서 실행해서, selectedStocks가 변경될 때, 업데이트한다.
-   */
-
-  /**
-   * 원래는 데이터가 바뀌는지였다.
-   * 데이터가 바뀌면, setState를 할 때, useQuery가 한 번 더 호출되고,
-   *
-   * 지금은 모두 성공인지 아닌지 확인한다.
-   * true일 경우, 해당 값을 바꿔준다.
-   */
-
-  /** 현재가 개별 버튼 함수 */
+  /* 3-2. 서버로 현재가 데이터 GET 요청하기 */
+  const { invalidateCurrentPrice, invalidateCurrentPrices } =
+    useGetCurrentPriceInSelectedStocks(isPressAllButton, newIsPressAllButton);
+  /* 2-2. '현재가 입력' 버튼으로 price 데이터 변경하기 */
   const handleCurrentPriceButton = (assetId: number, index: number) => {
-    // getCurrentPriceDatas[id].refetch;
-    invalidateCurrentPrice(assetId);
-    // 그대로 간다.
+    invalidateCurrentPrice(assetId, selectedStocks[index].currencyType);
     setIsPressAllButton((prev) => {
       const newArray = [...prev];
       newArray[index] = true;
       return newArray;
     });
-
-    // invalidateCurrentPrices()
   };
-
-  /** 전체 Refetch(서버로 재요청) 함수 */
-  const refetchAll = () => {
-    invalidateCurrentPrices();
-    //   getCurrentPriceDatas.forEach((stock) => stock.refetch());
-  };
-  /** 현재가 전체 버튼 함수 */
+  /* 2-3. '현재가 전체 입력' 버튼으로 price 데이터 전체 변경하기 */
   const handleCurrentPriceAllButton = () => {
-    refetchAll();
+    invalidateCurrentPrices();
     setNewIsPressAllButton((prev) => !prev);
-    // setIsPressAllButton((prev) => {
-    //   const newArray = prev.map(() => true);
-    //   return newArray;
-    // });
   };
 
   return (
@@ -165,14 +81,14 @@ function FeedStockInfos() {
       <div>
         {selectedStocks.length !== 0 ? (
           selectedStocks.map((stock, id) => {
-            /** onChangeCountEventHandle 함수 */
+            /* COMPLETED: 수량 및 가격 데이터 변경하기 */
+            /* 2-2-1. count, price 데이터 직접 변경하기 */
+            /* onChangeCountEventHandle 함수 */
             const onChangeCountEventHandle = (
               e: ChangeEvent<HTMLInputElement>,
             ) => {
-              // const { value } = e.target;
-              /** 숫자 외의 문자 제거 */
+              /* 숫자 외 문자 제거 */
               const value = e.target.value.replace(/[^0-9]/g, '');
-
               setSelectedStocks((stock) => {
                 const array = [...stock];
                 array[id].count = value;
@@ -180,15 +96,13 @@ function FeedStockInfos() {
               });
             };
 
-            /** onChangePriceEventHandle 함수 */
+            /* onChangePriceEventHandle 함수 */
             const onChangePriceEventHandle = (
               e: ChangeEvent<HTMLInputElement>,
             ) => {
-              // const { value } = e.target;
-              /** 숫자 또는 소수점 외의 문자 제거 */
+              /* 숫자 또는 소수점 외의 문자 제거 */
               const value = e.target.value.replace(/[^0-9.]/g, '');
-
-              /** 소수점을 기준으로 2자리까지만 남기기 */
+              /* 소수점을 기준으로 2자리까지만 남기기 */
               const formattedValue = value.split('.');
               if (formattedValue[1]) {
                 formattedValue[1] = formattedValue[1].slice(0, 2);
@@ -200,6 +114,25 @@ function FeedStockInfos() {
                 return array;
               });
             };
+
+            /** COMPLETED: newCurrencyType으로 달러 또는 원화 변경하기 */
+            const handleCurrencyType = (
+              newCurrencyType: ExchangeRateSymbol,
+            ) => {
+              setSelectedStocks((prev: SelectedStocksAtomProps[]) => {
+                // 이전 상태를 복사하여 새로운 배열 생성한다.
+                const updatedSelectedStocks = [...prev];
+
+                // 특정 id의 객체를 찾아서 currencyType를 newCurrencyType으로 변경한다.
+                updatedSelectedStocks[id] = {
+                  ...updatedSelectedStocks[id],
+                  currencyType: newCurrencyType,
+                };
+
+                return updatedSelectedStocks;
+              });
+            };
+
             return (
               <FeedStockInfo
                 key={id}
@@ -212,6 +145,7 @@ function FeedStockInfos() {
                 inputPriceValue={stock.price}
                 changeCountEventHandle={onChangeCountEventHandle}
                 changePriceEventHandle={onChangePriceEventHandle}
+                handleCurrencyType={handleCurrencyType}
               />
             );
           })

@@ -1,22 +1,26 @@
 import { atom, useAtom } from 'jotai';
-import { ReactNode } from 'react';
+import { ReactElement } from 'react';
 
 const modalAtomInitial = {
   isOpen: false,
-  content: null,
+  content: undefined,
   options: { isBottomSheet: false },
 };
 
 const modalAtom = atom<{
   isOpen: boolean;
-  content: ReactNode;
+  content: ReactElement | JSX.Element | undefined;
   options: { isBottomSheet: boolean };
 }>(modalAtomInitial);
 
 export const useControlModalV2 = () => {
   const [modalState, setModalState] = useAtom(modalAtom);
 
-  const open = (content?: ReactNode, options?: { isBottomSheet: boolean }) =>
+  console.log(modalState.content);
+  const open = (
+    content?: ReactElement | JSX.Element,
+    options?: { isBottomSheet: boolean },
+  ) =>
     setModalState({
       isOpen: true,
       content,

@@ -2,7 +2,7 @@
  * 검색 결과 목록 Response Interface
  */
 export interface GetSearchedResults {
-  data: GetSearchedResultsDatas[];
+  data: GetSearchedResultData[];
   /** 다음 페이지 조회 가능 여부 */
   next: boolean;
   /** 현재 페이지 번호 */
@@ -11,7 +11,7 @@ export interface GetSearchedResults {
   pageTotalSize: number;
 }
 
-export interface GetSearchedResultsDatas {
+export interface GetSearchedResultData {
   hasAlreadyStockInPortfolio: boolean;
   /** 해당 종목 자산 아이디 */
   assetId: number;

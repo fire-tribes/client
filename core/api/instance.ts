@@ -4,6 +4,7 @@ import axios from 'axios';
 import type { AxiosRequestConfig } from 'axios';
 
 const AUTHORIZATION = 'Authorization';
+const BASE_URL = global.location?.origin;
 
 const createAPIInstance = (config: AxiosRequestConfig) => {
   const instance = axios.create({
@@ -13,18 +14,17 @@ const createAPIInstance = (config: AxiosRequestConfig) => {
   return instance;
 };
 
+const baseURL =
+  BASE_URL === process.env.NEXT_PUBLIC_PRODUCT_SERVER_ORIGIN
+    ? process.env.NEXT_PUBLIC_SERVER_URL
+    : process.env.NEXT_PUBLIC_DEV_SERVER_URL;
+
 const APIInstance = createAPIInstance({
-  baseURL:
-    process.env.NODE_ENV === 'production'
-      ? process.env.NEXT_PUBLIC_SERVER_URL + '/api/v1/'
-      : process.env.NEXT_PUBLIC_DEV_SERVER_URL + '/api/v1/',
+  baseURL: baseURL + '/api/v1/',
 });
 
 const AuthAPIInstance = createAPIInstance({
-  baseURL:
-    process.env.NODE_ENV === 'production'
-      ? process.env.NEXT_PUBLIC_SERVER_URL + '/api/v1/user/'
-      : process.env.NEXT_PUBLIC_DEV_SERVER_URL + '/api/v1/user/',
+  baseURL: baseURL + '/api/v1/user/',
   withCredentials: true,
   headers: {
     [AUTHORIZATION]: process.env.SECRET_KEY as string,

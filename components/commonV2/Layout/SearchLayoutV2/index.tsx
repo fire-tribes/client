@@ -37,7 +37,7 @@ interface SearchLayoutV2Props {
   /** 하단 버튼에 들어갈 이름(Content) */
   // buttonName: '다음' | '추가 완료' | '완료' | '수정 완료';
   /** 하단 고정 버튼 */
-  buttomFixedButton: React.ReactNode;
+  bottomFixedButton: React.ReactNode;
   /** headMeta */
   headMetaProps: HeadMetaProps;
 }
@@ -45,7 +45,7 @@ interface SearchLayoutV2Props {
 const SearchLayoutV2 = ({
   children,
   hasButton,
-  buttomFixedButton,
+  bottomFixedButton,
   headMetaProps,
 }: SearchLayoutV2Props) => {
   const vh = useMobileFullView();
@@ -55,7 +55,7 @@ const SearchLayoutV2 = ({
       <HeadMeta {...headMetaProps} />
       <S.LayoutMaxMin>
         <S.LayoutContent>{children}</S.LayoutContent>
-        {hasButton ? buttomFixedButton : <div></div>}
+        {hasButton ? bottomFixedButton : <div></div>}
         {modalState.isOpen && <ModalV2 />}
         <SnackbarV2 />
       </S.LayoutMaxMin>
