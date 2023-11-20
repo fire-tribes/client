@@ -10,7 +10,6 @@ import { useControlTax } from '@/hook/useControlTax';
 
 import Modal from '@/components/common/Modal';
 import { CenterModalV2 } from '@/components/commonV2/ModalV2/CenterModal';
-import { CurrencySwitch } from '@/components/ModeController/CurrencySwitch';
 
 export default function ChartSection() {
   const { annualDividendSimpleKRData } = useAnnualDividend();
@@ -90,7 +89,10 @@ export default function ChartSection() {
       >
         <FlexBox justifyContent="space-between" width="100%">
           <h1 style={{ paddingBottom: '6px' }}>{title}</h1>
-          <CurrencySwitch />
+          {/* 
+            배포를 위한 임시 주석 처리
+          <CurrencySwitch /> 
+          */}
         </FlexBox>
         <CommonFont
           fontSize="body1"
