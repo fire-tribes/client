@@ -46,12 +46,12 @@ export default function MonthlyCalanderDividendList() {
         {monthlyCalanderDividendSimpleKRData?.data.map(
           ({
             tickerCode,
-            stockCode,
+            name,
             expectedPayDate,
             expectedDividends,
             exDividendDate,
           }) => (
-            <div key={tickerCode || stockCode}>
+            <div key={tickerCode || name}>
               <ListItem disablePadding sx={{ gap: '9px' }}>
                 <ListItemText
                   primary={
@@ -64,12 +64,12 @@ export default function MonthlyCalanderDividendList() {
                   sx={{ maxWidth: 32 }}
                 />
                 <ListItemIcon sx={{ minWidth: 0 }}>
-                  <StockAvatar tickerCode={tickerCode} stockCode={stockCode} />
+                  <StockAvatar primary={tickerCode} secondary={name} />
                 </ListItemIcon>
                 <ListItemText
                   primary={
                     <CommonFont fontWeight="bold" color="gray9">
-                      {stockCode || tickerCode}
+                      {tickerCode || name}
                     </CommonFont>
                   }
                 />

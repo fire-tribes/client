@@ -60,8 +60,8 @@ function FeedStockInfo({
         <FeedStockInfoUI.TopContainer>
           <FeedStockInfoUI.NativeStockInfoContainer>
             <StockAvatar
-              tickerCode={stock.tickerCode}
-              stockCode={stock.stockCode}
+              primary={stock.tickerCode}
+              secondary={stock.stockCode}
             />
             <div>
               <div>{stock.name}</div>

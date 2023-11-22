@@ -30,12 +30,15 @@ export function MyStockList() {
             <FlexBox key={detail.tickerCode} flexDirection="column">
               <ListItem disablePadding sx={{ gap: '9px' }}>
                 <ListItemIcon sx={{ minWidth: 0 }}>
-                  <StockAvatar tickerCode={detail.tickerCode} stockCode={''} />
+                  <StockAvatar
+                    primary={detail.tickerCode}
+                    secondary={detail.name}
+                  />
                 </ListItemIcon>
                 <ListItemText
                   primary={
                     <CommonFont fontWeight="bold">
-                      {detail.tickerCode}
+                      {detail.tickerCode || detail.name}
                     </CommonFont>
                   }
                   secondary={

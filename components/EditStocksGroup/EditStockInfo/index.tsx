@@ -209,8 +209,8 @@ export default function EditStockInfo({ slug }: EditStockInfoProps) {
           <EditStockInfoUI.TopContainer>
             <EditStockInfoUI.NativeStockInfoContainer>
               <StockAvatar
-                tickerCode={editAssetDetail.tickerCode}
-                stockCode={editAssetDetail.stockCode}
+                primary={editAssetDetail.tickerCode}
+                secondary={editAssetDetail.stockCode}
               />
               <div>
                 <div>{editAssetDetail.name}</div>
