@@ -11,8 +11,12 @@ interface EditStockProps {
   /** 포트폴리오 내 종목 객체 */
   stock: {
     portfolioAssetId: number;
+    // TODO: 타입 리팩토링 제안
+    name: string;
+    tickerCode?: string;
+    stockCode?: string;
+
     assetId: number;
-    tickerCode: string;
     count: number;
     averagePrice: number;
     currentPrice: number;
@@ -36,11 +40,14 @@ function EditStock({ stock }: EditStockProps) {
       <EditStockUI.Item>
         <EditStockUI.StockContainer>
           <div>
-            {/* <div>{stock.tickerCode.split('')[0]}</div>
-            <Image src={testCircleSvg} alt="testCircle Svg" /> */}
+            {
+              /* <div>{stock.tickerCode.split('')[0]}</div>
+            <Image src={testCircleSvg} alt="testCircle Svg" /> */
+              // TODO: primary stock.tickerCode? 변경
+            }
             <StockAvatar
-              tickerCode={stock.tickerCode.split('')[0]}
-              stockCode={''}
+              primary={stock.tickerCode?.split('')[0]}
+              secondary={''}
             />
           </div>
           <div>
