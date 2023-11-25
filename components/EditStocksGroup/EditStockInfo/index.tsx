@@ -23,12 +23,14 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { useAtom } from 'jotai';
+// import { useRouter } from 'next/router';
 
 interface EditStockInfoProps {
   slug: string[];
 }
 
 export default function EditStockInfo({ slug }: EditStockInfoProps) {
+  // const router = useRouter();
   /** 3. '정보 확인' API로 수량 및 가격 데이터 가져오기(GET) */
   /** COMPLETED: 3-1. GET 요청에 필요한 portfolioId와 portfolioAssetId 가져오기 */
   const portfolioId = Number(slug?.[0]);
@@ -194,7 +196,7 @@ export default function EditStockInfo({ slug }: EditStockInfoProps) {
     };
     /** 5-1-3. 수정된 데이터로 Cache 업데이트하기 */
     queryClient.setQueryData(queryKeys.myPortFolio(), () => updater());
-
+    // router.push(`/edit?portfolioId=${portfolioId}&deleteAssetDetails=success`);
     /** 5-2. 서버 내 해당 주식 객체 삭제하기 */
     deleteAssetDetailsData({
       portfolioId,

@@ -40,18 +40,13 @@ function EditStock({ stock }: EditStockProps) {
       <EditStockUI.Item>
         <EditStockUI.StockContainer>
           <div>
-            {
-              /* <div>{stock.tickerCode.split('')[0]}</div>
-            <Image src={testCircleSvg} alt="testCircle Svg" /> */
-              // TODO: primary stock.tickerCode? 변경
-            }
             <StockAvatar
-              primary={stock.tickerCode?.split('')[0]}
-              secondary={''}
+              primary={stock.tickerCode}
+              secondary={stock.stockCode}
             />
           </div>
           <div>
-            <div>{stock.tickerCode}</div>
+            <div>{stock.name}</div>
             <Link
               href={`stock/${portfolioId}/${stock.assetId}/${stock.portfolioAssetId}/${stock.currencyType}`}
             >

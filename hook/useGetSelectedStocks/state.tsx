@@ -3,8 +3,8 @@ import { atom } from 'jotai';
 
 export interface SelectedStocksAtomProps {
   assetId: number;
-  tickerCode: string;
-  stockCode: string;
+  tickerCode?: string;
+  stockCode?: string;
   name: string;
   debouncedValue: string;
   count: string;

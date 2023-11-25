@@ -9,7 +9,7 @@ const Item = styled.div`
 
   padding: 16px 0;
 
-  > div:first-child {
+  > div:first-of-type {
     flex: 1;
   }
 `;
@@ -43,10 +43,10 @@ const ButtonContainer = styled.div`
     background: ${basic.gray1};
   }
 
-  button:first-child {
+  button:first-of-type {
     margin-right: 10px;
   }
-  button:last-child {
+  button:last-of-type {
     margin-left: 10px;
   }
 `;

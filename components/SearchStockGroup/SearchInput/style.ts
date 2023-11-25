@@ -10,15 +10,15 @@ const Item = styled.div`
   display: flex;
   align-items: center;
 
-  > div:first-child {
+  > div:first-of-type {
     flex: 1;
     margin-right: 10px;
   }
 
-  > div:last-child {
+  > div:last-of-type {
     height: 24px;
   }
-  > div:last-child:hover {
+  > div:last-of-type:hover {
     cursor: pointer;
     opacity: 0.7;
 
@@ -36,7 +36,7 @@ const InputContainer = styled.div`
   display: flex;
   align-items: center;
 
-  div:first-child {
+  div:first-of-type {
     width: 24px;
     height: 24px;
 
@@ -50,7 +50,7 @@ const InputContainer = styled.div`
     }
   }
 
-  div:last-child {
+  div:last-of-type {
     margin-left: 5px;
     display: flex;
     align-items: center;
