@@ -149,14 +149,16 @@ function Search() {
                 <Link
                   href={portfolioId ? '/' : '/empty'}
                   style={{ height: '52px' }}
-                  onClick={() => setLoading(true)}
                 >
-                  <Image
-                    src={BiggerCloseSvg}
-                    width={24}
-                    height={24}
-                    alt="Close Icon"
-                  />
+                  <a>
+                    <Image
+                      src={BiggerCloseSvg}
+                      width={24}
+                      height={24}
+                      alt="Close Icon"
+                      onClick={() => setLoading(true)}
+                    />
+                  </a>
                 </Link>
               }
             />

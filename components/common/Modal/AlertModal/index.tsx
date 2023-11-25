@@ -47,9 +47,6 @@ function AlertModal({
 }: AlertModalProps) {
   const { close } = useControlModalV2();
   const { openSnackbar, closeSnackbar } = useControlSnackbarV2();
-  // const [showToast, setShowToast] = React.useState<{ open: boolean }>({
-  //   open: false,
-  // });
 
   const handleConfirmButton = () => () => {
     if (toastMessage !== undefined) {

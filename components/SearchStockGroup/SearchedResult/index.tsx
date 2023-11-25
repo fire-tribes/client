@@ -93,7 +93,7 @@ function SearchedResult({
           </div>
         </SearchedResultUI.StockContainer>
         {hasAlreadyStockInPortfolio ? (
-          <div></div>
+          <span></span>
         ) : (
           <button onClick={() => toggleSelected(stock)}>
             {isSelected ? (

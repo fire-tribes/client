@@ -1,7 +1,7 @@
-type HandleDemicalPointMethod = Math['round'] | Math['floor'] | Math['ceil'];
+type HandleDecimalPointMethod = Math['round'] | Math['floor'] | Math['ceil'];
 
-export const handleDemicalPoint = (
-  method: HandleDemicalPointMethod,
+export const handleDecimalPoint = (
+  method: HandleDecimalPointMethod,
   value: number | string,
   point: number,
 ) => {
@@ -13,7 +13,7 @@ export const handleDemicalPoint = (
   return lastNumber;
 };
 
-export const checkDemicalPointLength = (value: string | number) => {
+export const checkDecimalPointLength = (value: string | number) => {
   if (typeof value === 'number') {
     const rightNumber = value.toString().split('.');
     return rightNumber.length;

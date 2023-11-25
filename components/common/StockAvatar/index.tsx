@@ -9,9 +9,6 @@ interface StockAvatarProps {
 export default function StockAvatar({ primary, secondary }: StockAvatarProps) {
   const { palette } = useEmotionTheme();
 
-  console.log('primary: ', primary);
-  console.log('primary?.trim()[0]: ', primary?.trim()[0]);
-
   return (
     <Avatar
       sx={{

@@ -109,10 +109,12 @@ function SearchedResults({ value }: SearchResultsProps) {
   const portfolioStocksInCache = myPortfolioCacheData?.data?.assetDetails;
   const isHaveStockAlready = (searchedResult: GetSearchedResult) => {
     if (portfolioStocksInCache) {
-      return portfolioStocksInCache.some(
-        (portfolioStock) =>
-          portfolioStock.tickerCode === searchedResult.tickerCode,
-      );
+      const isTrue = portfolioStocksInCache.some((portfolioStock) => {
+        return searchedResult.tickerCode
+          ? portfolioStock.tickerCode === searchedResult.tickerCode
+          : portfolioStock.stockCode === searchedResult.stockCode;
+      });
+      return isTrue;
     }
     return false;
   };
@@ -135,10 +137,10 @@ function SearchedResults({ value }: SearchResultsProps) {
       ) : (
         <div>
           {searchedResults !== undefined &&
-            searchedResults.map((stock) => {
+            searchedResults.map((stock, index) => {
               return (
                 <SearchedResult
-                  key={stock.assetId}
+                  key={index}
                   stock={stock}
                   debouncedValue={debouncedValue}
                   hasAlreadyStockInPortfolio={isHaveStockAlready(stock)}

@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 
 const Container = styled.div`
   padding: 16px;
+  margin: 16px 0;
 `;
 const Item = styled.div`
   display: flex;

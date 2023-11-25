@@ -7,6 +7,7 @@ import belowArrowSvg from '@/public/icon/below_arrow.svg';
 import { basic } from '@/styles/palette';
 import StockAvatar from '@/components/common/StockAvatar';
 import { ExchangeRateSymbol } from '@/@types/models/exchangeRate';
+import { handleDecimalPoint } from '@/core/utils/handleNumber';
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 
@@ -102,7 +103,7 @@ function FeedStockInfo({
             <div>{stock.currencyType === 'KRW' ? '₩' : '$'}</div>
             <input
               type="text"
-              value={String(inputPriceValue)}
+              value={String(handleDecimalPoint(Math.round, inputPriceValue, 2))}
               placeholder="구매 가격($)"
               onChange={changePriceEventHandle}
               onBlur={handleInputBlur}
