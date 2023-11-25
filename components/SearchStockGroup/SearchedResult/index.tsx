@@ -66,10 +66,7 @@ function SearchedResult({
       <SearchedResultUI.Item>
         <SearchedResultUI.StockContainer>
           <div>
-            <StockAvatar
-              primary={stock.tickerCode}
-              secondary={stock.stockCode}
-            />
+            <StockAvatar primary={stock.tickerCode} secondary={stock.name} />
           </div>
           <div>
             {hasValueInTicker ? (

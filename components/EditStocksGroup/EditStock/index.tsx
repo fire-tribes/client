@@ -1,4 +1,5 @@
 import { EditStockUI } from './style';
+import { MyportfoliAssetDetailModel } from '@/@types/models/portfolio';
 import StockAvatar from '@/components/common/StockAvatar';
 // import testCircleSvg from '@/public/icon/testCircle.svg';
 // TODO: import downVectorSvg from '@/public/icon/downVector.svg';
@@ -9,25 +10,7 @@ import { useRouter } from 'next/router';
 
 interface EditStockProps {
   /** 포트폴리오 내 종목 객체 */
-  stock: {
-    portfolioAssetId: number;
-    // TODO: 타입 리팩토링 제안
-    name: string;
-    tickerCode?: string;
-    stockCode?: string;
-
-    assetId: number;
-    count: number;
-    averagePrice: number;
-    currentPrice: number;
-    assetPriceChangeRate: number;
-    assetPriceChange: number;
-    value: number;
-    rateOfReturn: number;
-    dividendPriceRatio: number;
-    dividendMonth: number[];
-    currencyType: string;
-  };
+  stock: MyportfoliAssetDetailModel;
 }
 
 function EditStock({ stock }: EditStockProps) {
@@ -40,10 +23,7 @@ function EditStock({ stock }: EditStockProps) {
       <EditStockUI.Item>
         <EditStockUI.StockContainer>
           <div>
-            <StockAvatar
-              primary={stock.tickerCode}
-              secondary={stock.stockCode}
-            />
+            <StockAvatar primary={stock.tickerCode} secondary={stock.name} />
           </div>
           <div>
             <div>{stock.name}</div>
