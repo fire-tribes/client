@@ -16,7 +16,6 @@ const modalAtom = atom<{
 export const useControlModalV2 = () => {
   const [modalState, setModalState] = useAtom(modalAtom);
 
-  console.log(modalState.content);
   const open = (
     content?: ReactElement | JSX.Element,
     options?: { isBottomSheet: boolean },

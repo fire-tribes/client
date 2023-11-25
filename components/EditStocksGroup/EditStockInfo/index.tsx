@@ -14,8 +14,8 @@ import CurrencyTypeChoiceBottomSheetModal from '@/components/commonV2/ModalV2/Cu
 import { editAssetDetailAtom } from '@/hook/useEditAssetDetail/state';
 import { ExchangeRateSymbol } from '@/@types/models/exchangeRate';
 import {
-  checkDemicalPointLength,
-  handleDemicalPoint,
+  checkDecimalPointLength,
+  handleDecimalPoint,
 } from '@/core/utils/handleNumber';
 import { useExchangeRate } from '@/hook/useExchangeRate';
 import Image from 'next/image';
@@ -64,7 +64,7 @@ export default function EditStockInfo({ slug }: EditStockInfoProps) {
 
     const { value } = e.target;
 
-    if (checkDemicalPointLength(value) > 2) return;
+    if (checkDecimalPointLength(value) > 2) return;
 
     setEditAssetDetail((prev) => ({
       ...prev,
@@ -75,7 +75,7 @@ export default function EditStockInfo({ slug }: EditStockInfoProps) {
     if (!assetDetailData) return;
     const { value } = e.target;
 
-    if (checkDemicalPointLength(value) > 2) return;
+    if (checkDecimalPointLength(value) > 2) return;
 
     setEditAssetDetail((prev) => ({
       ...prev,
@@ -92,7 +92,7 @@ export default function EditStockInfo({ slug }: EditStockInfoProps) {
         typeof newPurchasePrice === 'number' &&
         EXCHANGE_RATE !== undefined
       ) {
-        newPurchasePrice = handleDemicalPoint(
+        newPurchasePrice = handleDecimalPoint(
           Math.round,
           newPurchasePrice / EXCHANGE_RATE,
           2,
@@ -102,7 +102,7 @@ export default function EditStockInfo({ slug }: EditStockInfoProps) {
         typeof newPurchasePrice === 'number' &&
         EXCHANGE_RATE !== undefined
       ) {
-        newPurchasePrice = handleDemicalPoint(
+        newPurchasePrice = handleDecimalPoint(
           Math.round,
           newPurchasePrice * EXCHANGE_RATE,
           2,
@@ -132,7 +132,7 @@ export default function EditStockInfo({ slug }: EditStockInfoProps) {
     invalidateCurrentPrice(assetId, currencyType);
 
     if (result) {
-      const roundedPriceToTwoDemicalPoint = handleDemicalPoint(
+      const roundedPriceToTwoDemicalPoint = handleDecimalPoint(
         Math.round,
         result.data[0].currentPrice,
         2,

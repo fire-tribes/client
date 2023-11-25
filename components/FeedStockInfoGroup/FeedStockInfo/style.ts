@@ -69,14 +69,14 @@ const ButtonContainer = styled.div`
 `;
 
 const BottomContainer = styled.div`
-  div:first-of-type {
+  > div:first-child {
     border-radius: 12px 12px 0px 0px;
     border: 1px solid ${basic.gray3};
     background: ${basic.gray0};
 
     padding: 14px 16px;
   }
-  div:last-of-type {
+  > div:last-child {
     display: flex;
 
     border-radius: 0px 0px 12px 12px;

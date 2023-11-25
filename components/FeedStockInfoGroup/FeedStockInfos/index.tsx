@@ -10,7 +10,6 @@ import { basic } from '@/styles/palette';
 import { useGetCurrentPriceInSelectedStocks } from '@/hook/useGetCurrentPriceInSelectedStocks';
 import { ExchangeRateSymbol } from '@/@types/models/exchangeRate';
 import { useExchangeRate } from '@/hook/useExchangeRate';
-import { handleDemicalPoint } from '@/core/utils/handleNumber';
 import { useAtom } from 'jotai';
 import Image from 'next/image';
 import { ChangeEvent, useEffect, useState } from 'react';
@@ -128,20 +127,12 @@ function FeedStockInfos() {
                 let newPrice = prev[id].price;
 
                 if (newCurrencyType === 'USD' && EXCHANGE_RATE !== undefined) {
-                  newPrice = handleDemicalPoint(
-                    Math.round,
-                    Number(newPrice) / EXCHANGE_RATE,
-                    2,
-                  ).toString();
+                  newPrice = (Number(newPrice) / EXCHANGE_RATE).toString();
                 } else if (
                   newCurrencyType === 'KRW' &&
                   EXCHANGE_RATE !== undefined
                 ) {
-                  newPrice = handleDemicalPoint(
-                    Math.round,
-                    Number(newPrice) * EXCHANGE_RATE,
-                    2,
-                  ).toString();
+                  newPrice = (Number(newPrice) * EXCHANGE_RATE).toString();
                 }
 
                 // 이전 상태를 복사하여 새로운 배열 생성한다.
