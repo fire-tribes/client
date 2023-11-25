@@ -1,4 +1,5 @@
 import { EditStockUI } from './style';
+import { MyportfoliAssetDetailModel } from '@/@types/models/portfolio';
 import StockAvatar from '@/components/common/StockAvatar';
 // import testCircleSvg from '@/public/icon/testCircle.svg';
 // TODO: import downVectorSvg from '@/public/icon/downVector.svg';
@@ -9,21 +10,7 @@ import { useRouter } from 'next/router';
 
 interface EditStockProps {
   /** 포트폴리오 내 종목 객체 */
-  stock: {
-    portfolioAssetId: number;
-    assetId: number;
-    tickerCode: string;
-    count: number;
-    averagePrice: number;
-    currentPrice: number;
-    assetPriceChangeRate: number;
-    assetPriceChange: number;
-    value: number;
-    rateOfReturn: number;
-    dividendPriceRatio: number;
-    dividendMonth: number[];
-    currencyType: string;
-  };
+  stock: MyportfoliAssetDetailModel;
 }
 
 function EditStock({ stock }: EditStockProps) {
@@ -36,15 +23,10 @@ function EditStock({ stock }: EditStockProps) {
       <EditStockUI.Item>
         <EditStockUI.StockContainer>
           <div>
-            {/* <div>{stock.tickerCode.split('')[0]}</div>
-            <Image src={testCircleSvg} alt="testCircle Svg" /> */}
-            <StockAvatar
-              tickerCode={stock.tickerCode.split('')[0]}
-              stockCode={''}
-            />
+            <StockAvatar primary={stock.tickerCode} secondary={stock.name} />
           </div>
           <div>
-            <div>{stock.tickerCode}</div>
+            <div>{stock.name}</div>
             <Link
               href={`stock/${portfolioId}/${stock.assetId}/${stock.portfolioAssetId}/${stock.currencyType}`}
             >

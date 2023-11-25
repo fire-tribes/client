@@ -6,7 +6,7 @@ import {
   selectedStocksAtom,
 } from '@/hook/useGetSelectedStocks/state';
 import { useGetSearchedResults } from '@/hook/useGetSearchedResults';
-import { GetSearchedResultData } from '@/@types/models/getSearchedResults';
+import { GetSearchedResult } from '@/@types/models/getSearchedResults';
 import { useIntersectionObserver } from '@/hook/useIntersectionObserver';
 import { basic } from '@/styles/palette';
 import useGetMyPortfolio from '@/hook/useGetMyPortfolio';
@@ -83,7 +83,7 @@ function SearchedResults({ value }: SearchResultsProps) {
   };
   /* 3-1-3. debouncedValue가 변경될 때마다 handleToggleSelected() 함수를 초기화하기 */
   const toggleSelected = useCallback(
-    (stock: GetSearchedResultData) =>
+    (stock: GetSearchedResult) =>
       handleToggleSelected({
         ...stock,
         count: '',
@@ -107,7 +107,7 @@ function SearchedResults({ value }: SearchResultsProps) {
   /* 3-3. ('추가' 로직으로 입장했을 때) 이미 있는 자산은, 선택 버튼 숨기기 */
   const { myPortfolioCacheData } = useGetMyPortfolio();
   const portfolioStocksInCache = myPortfolioCacheData?.data?.assetDetails;
-  const isHaveStockAlready = (searchedResult: GetSearchedResultData) => {
+  const isHaveStockAlready = (searchedResult: GetSearchedResult) => {
     if (portfolioStocksInCache) {
       return portfolioStocksInCache.some(
         (portfolioStock) =>

@@ -1,37 +1,21 @@
 import { SearchedResultUI } from './style';
-import testCircleSvg from '@/public/icon/testCircle.svg';
 import checkFalseSvg from '@/public/icon/checkFalse.svg';
 import checkTrueSvg from '@/public/icon/checkTrue.svg';
 import { basic } from '@/styles/palette';
+import StockAvatar from '@/components/common/StockAvatar';
+import { GetSearchedResult } from '@/@types/models/getSearchedResults';
 import Image from 'next/image';
 // import { css } from '@emotion/react';
 
-interface Stock {
-  assetId: number;
-  tickerCode: string;
-  stockCode: string;
-  name: string;
-  countryType: 'KOR' | 'USA';
-  marketType:
-    | 'KRX'
-    | 'KRX_KOSPI'
-    | 'KRX_KOSDAQ'
-    | 'KRX_KONEX'
-    | 'NYSE'
-    | 'AMEX'
-    | 'NASDAQ'
-    | 'UNKNOWN';
-  assetCategoryType: 'STOCK' | 'ETF' | 'ETN';
-}
 interface SearchedResultProps {
   /** 검색 결과에 해당하는 데이터 객체 */
-  stock: Stock;
+  stock: GetSearchedResult;
   /** 검색 결과 */
   debouncedValue: string;
   /** 기존 포트폴리오에 검색한 값이 있다면? */
   hasAlreadyStockInPortfolio: boolean;
   /** 주식 종목 포트폴리오에 추가 선택 시, 실행할 함수 */
-  toggleSelected: (stock: Stock) => void;
+  toggleSelected: (stock: GetSearchedResult) => void;
   /** 주식 종목 포트폴리오에 추가 선택 */
   isSelected: boolean;
 }
@@ -75,36 +59,34 @@ function SearchedResult({
   // );
 
   /** 검색어가 주식 종목명이 아닌 Ticker에 있을 때 구분하기 */
-  const hasValueInTicker =
-    stock.name.toLowerCase().split(debouncedValue).length !== 1;
+  const hasValueInTicker = stock.name.split(debouncedValue).length !== 1;
 
   return (
     <SearchedResultUI.Container>
       <SearchedResultUI.Item>
         <SearchedResultUI.StockContainer>
           <div>
-            <div>{stock.name.split('')[0]}</div>
-            <Image src={testCircleSvg} alt="testCircle Svg" />
+            <StockAvatar primary={stock.tickerCode} secondary={stock.name} />
           </div>
           <div>
             {hasValueInTicker ? (
               <>
                 <div>
-                  {stock.name.toLowerCase().split(debouncedValue)[0]}
+                  {stock.name.split(debouncedValue)[0]}
                   <span style={{ color: `${basic.point_blue02}` }}>
                     {debouncedValue}
                   </span>
-                  {stock.name.toLowerCase().split(debouncedValue)[1]}
+                  {stock.name.split(debouncedValue)[1]}
                 </div>
-                {/* <span dangerouslySetInnerHTML={{ __html: truncatedText }} /> */}
-                {/* <div className={multilineTruncate}>{highlightedText}</div> */}
-                <div>{stock.tickerCode}</div>
+                <div>
+                  {stock.tickerCode ? stock.tickerCode : stock.stockCode}
+                </div>
               </>
             ) : (
               <>
                 <div>{stock.name}</div>
                 <div style={{ color: `${basic.point_blue02}` }}>
-                  {stock.tickerCode}
+                  {stock.tickerCode ? stock.tickerCode : stock.stockCode}
                 </div>
               </>
             )}
