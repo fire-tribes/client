@@ -15,9 +15,9 @@ export type GetAssetDetail = {
   /** 해당 종목 화폐 단위 */
   currencyType: ExchangeRateSymbol;
   /** 해당 종목 TickerCode */
-  tickerCode: string;
+  tickerCode?: string;
   /** 해당 종목 StockCode */
-  stockCode: string;
+  stockCode?: string;
   /** 해당 종목 이름 */
   name: string;
 };
