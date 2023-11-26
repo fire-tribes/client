@@ -18,7 +18,6 @@ export const useAnnualDividendQuery = () => {
   return useQuery({
     queryKey: queryKeys.annualDividend(),
     queryFn: dividendAPI.getAnnualDividend,
-    staleTime: 1000 * 2,
     onSuccess: () => {
       queryClient.invalidateQueries(
         queryKeys.annualDividend(
@@ -45,7 +44,7 @@ export const useAnnualDividendKRQuery = () => {
     queryKey: queryKeys.annualDividendKR(),
     queryFn: dividendAPI.getAnnualDividend,
     refetchOnMount: false,
-    staleTime: 1000 * 2,
+    staleTime: 1000 * 1,
     onSuccess: () => {
       queryClient.invalidateQueries(
         queryKeys.annualDividendKR(null, taxData.isTax),
