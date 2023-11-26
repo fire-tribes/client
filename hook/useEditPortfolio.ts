@@ -51,7 +51,7 @@ export const useEditPortfolio = () => {
       portfolioId: myPortFolioData?.portfolioId,
       assets: makeAssets(myPortFolioData?.assetDetails),
     };
-    console.log('formData.assets: ', formData.assets);
+
     return await updatePortfolioData(formData);
   };
 
