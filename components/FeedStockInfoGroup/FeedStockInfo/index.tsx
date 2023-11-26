@@ -7,7 +7,6 @@ import belowArrowSvg from '@/public/icon/below_arrow.svg';
 import { basic } from '@/styles/palette';
 import StockAvatar from '@/components/common/StockAvatar';
 import { ExchangeRateSymbol } from '@/@types/models/exchangeRate';
-import { handleDecimalPoint } from '@/core/utils/handleNumber';
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 
@@ -19,9 +18,9 @@ interface FeedStockInfoProps {
   /** 현재가 입력 버튼 */
   currentPriceButton: () => void;
   /** 가격 input */
-  inputCountValue: string;
+  inputCountValue: string | number;
   /** 가격 input */
-  inputPriceValue: string;
+  inputPriceValue: string | number;
   /** 수량이 변화했을 때, 발생하는 Event */
   changeCountEventHandle: (e: ChangeEvent<HTMLInputElement>) => void;
   /** 가격이 변화했을 때, 발생하는 Event */
@@ -43,11 +42,11 @@ function FeedStockInfo({
   /** COMPLETED: 값을 입력하지 않았을 때, Error 발생시키기 */
   const [errorText, setErrorText] = useState('');
   const handleInputBlur = () => {
-    if (inputCountValue.trim() === '' || inputPriceValue.trim() === '') {
+    if (!inputCountValue || !inputPriceValue) {
       setErrorText('* 보유 수량 및 가격을 정확히 입력해주세요.');
     } else if (
-      parseInt(inputCountValue, 10) <= 0 ||
-      parseFloat(inputPriceValue) <= 0
+      parseInt(inputCountValue.toString(), 10) <= 0 ||
+      parseFloat(inputPriceValue.toString()) <= 0
     ) {
       setErrorText('* 보유 수량 및 가격은 0보다 값이 커야 합니다.');
     } else {
@@ -83,8 +82,8 @@ function FeedStockInfo({
         <FeedStockInfoUI.BottomContainer>
           <div>
             <input
-              type="text"
-              value={String(inputCountValue)}
+              type="number"
+              value={inputCountValue}
               placeholder="보유 수량"
               onChange={changeCountEventHandle}
               onBlur={handleInputBlur}
@@ -102,8 +101,11 @@ function FeedStockInfo({
             </CurrencyTypeChoiceBottomSheetModal>
             <div>{stock.currencyType === 'KRW' ? '₩' : '$'}</div>
             <input
-              type="text"
-              value={String(handleDecimalPoint(Math.round, inputPriceValue, 2))}
+              type="number"
+              value={
+                // handleDecimalPoint(Math.round, inputPriceValue, 2).toString()
+                inputPriceValue
+              }
               placeholder="구매 가격($)"
               onChange={changePriceEventHandle}
               onBlur={handleInputBlur}

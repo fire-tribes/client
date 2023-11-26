@@ -5,7 +5,7 @@ import BiggerCloseSvg from '@/public/icon/biggerClose.svg';
 import SmallerCloseSvg from '@/public/icon/smallerClose.svg';
 import SearchInput from '@/components/SearchStockGroup/SearchInput';
 import RecentSearchWords from '@/components/SearchStockGroup/RecentSearchWords';
-// import PopluarStocks from '@/components/SearchStockGroup/PopularStocks';
+// import PopularStocks from '@/components/SearchStockGroup/PopularStocks';
 import useUpdateRecentSearchWords from '@/hook/useUpdateRecentSearchWords';
 import BottomFixedButton from '@/components/common/Button/BottomFixedButton';
 import { useState } from 'react';
@@ -166,7 +166,7 @@ function Search() {
           {!isSearchActive ? (
             <>
               {/* <section>
-                <PopluarStocks />
+                <PopularStocks />
               </section> */}
               <section>
                 <RecentSearchWords
