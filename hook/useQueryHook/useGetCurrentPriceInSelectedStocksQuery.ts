@@ -34,7 +34,7 @@ export const useGetCurrentPriceInSelectedStocksQuery = (
             if (selectedStock.assetId === responseAssetId) {
               return {
                 ...selectedStock,
-                price: responseCurrentPrice.toString(),
+                price: responseCurrentPrice,
               };
             } else {
               return { ...selectedStock };
@@ -65,7 +65,7 @@ export const useGetCurrentPriceInSelectedStocksQuery = (
         setSelectedAtoms((prev) => {
           return prev.map((selectedStock, id) => ({
             ...selectedStock,
-            price: response[id].data.data[0]!.currentPrice.toString(),
+            price: response[id].data.data[0]!.currentPrice,
           }));
         });
       },
