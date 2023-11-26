@@ -10,6 +10,7 @@ import { basic } from '@/styles/palette';
 import { useGetCurrentPriceInSelectedStocks } from '@/hook/useGetCurrentPriceInSelectedStocks';
 import { ExchangeRateSymbol } from '@/@types/models/exchangeRate';
 import { useExchangeRate } from '@/hook/useExchangeRate';
+import { checkDecimalPointLength } from '@/core/utils/handleNumber';
 import { useAtom } from 'jotai';
 import Image from 'next/image';
 import { ChangeEvent, useEffect, useState } from 'react';
@@ -91,8 +92,10 @@ function FeedStockInfos() {
             const onChangeCountEventHandle = (
               e: ChangeEvent<HTMLInputElement>,
             ) => {
-              /* 숫자 외 문자 제거 */
-              const value = e.target.value.replace(/[^0-9]/g, '');
+              /* 숫자 또는 소수점 외의 문자 제거 */
+              const { value } = e.target;
+              if (checkDecimalPointLength(value) > 2) return;
+
               setSelectedStocks((stock) => {
                 const array = [...stock];
                 array[id].count = value;
@@ -105,16 +108,18 @@ function FeedStockInfos() {
               e: ChangeEvent<HTMLInputElement>,
             ) => {
               /* 숫자 또는 소수점 외의 문자 제거 */
-              const value = e.target.value.replace(/[^0-9.]/g, '');
-              /* 소수점을 기준으로 2자리까지만 남기기 */
-              const formattedValue = value.split('.');
-              if (formattedValue[1]) {
-                formattedValue[1] = formattedValue[1].slice(0, 2);
-              }
+              const { value } = e.target;
+              if (checkDecimalPointLength(value) > 2) return;
+
+              // /* 소수점을 기준으로 2자리까지만 남기기 */
+              // const formattedValue = value.split('.');
+              // if (formattedValue[1]) {
+              //   formattedValue[1] = formattedValue[1].slice(0, 2);
+              // }
 
               setSelectedStocks((stock) => {
                 const array = [...stock];
-                array[id].price = formattedValue.join('.');
+                array[id].price = value;
                 return array;
               });
             };
