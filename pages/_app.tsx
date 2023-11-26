@@ -21,6 +21,7 @@ import {
 } from '@mui/material/styles';
 import Cookies from 'universal-cookie';
 import axios, { AxiosResponse } from 'axios';
+import { SessionProvider } from 'next-auth/react';
 import type { AppProps } from 'next/app';
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -85,7 +86,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   });
 
   return (
-    <>
+    <SessionProvider>
       <QueryClientProvider client={queryClient}>
         <StyledEngineProvider>
           <MuiThemeProvider theme={muiTheme}>
@@ -97,7 +98,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           </MuiThemeProvider>
         </StyledEngineProvider>
       </QueryClientProvider>
-    </>
+    </SessionProvider>
   );
 }
 

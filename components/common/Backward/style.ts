@@ -20,10 +20,7 @@ const TopContainer = styled.div`
     height: 24px;
     line-height: 24px;
   }
-  > div:first-child {
-    flex: 1;
-  }
-  > div:last-child {
+  > div:last-of-type {
     width: 25px;
     height: 28px;
   }

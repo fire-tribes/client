@@ -35,6 +35,7 @@ function Add() {
           portfolioId: response.portfolioId,
           assets: makeAssets(selectedStocks),
         };
+
         addStocksAtPortfolioData(formData);
       });
     }
@@ -82,7 +83,7 @@ function Add() {
 
   return (
     <SearchLayoutV2
-      buttomFixedButton={
+      bottomFixedButton={
         <BottomFixedButton
           isDisabled={
             selectedStocks.length !== 0 && hasValueAtCountOrPrice()

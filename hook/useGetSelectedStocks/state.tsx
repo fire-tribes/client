@@ -1,13 +1,15 @@
+import { ExchangeRateSymbol } from '@/@types/models/exchangeRate';
 import { atom } from 'jotai';
 
 export interface SelectedStocksAtomProps {
   assetId: number;
-  tickerCode: string;
-  stockCode: string;
+  tickerCode?: string;
+  stockCode?: string;
   name: string;
   debouncedValue: string;
   count: string;
   price: string;
+  currencyType: ExchangeRateSymbol;
   countryType: 'KOR' | 'USA';
   marketType:
     | 'KRX'

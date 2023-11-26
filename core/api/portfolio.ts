@@ -1,5 +1,6 @@
 import APIInstance from '@/core/api/instance';
 
+import type { GetAssetDetail } from '@/@types/models/getAssetDetail';
 import type { AddStocksAtPortfolio } from '@/@types/models/addStocksAtPortfolio';
 import type { ExchangeRateModel } from '@/@types/models/exchangeRate';
 import type { MakePortfolio } from '@/@types/models/makePortfolio';
@@ -34,6 +35,11 @@ export const portfolioAPI = {
   },
   getMyPortFolio: () => {
     return APIInstance.get<ResponseSuccess<MyPortfolioModel>>('portfolio/list');
+  },
+  getAssetDetail: (portfolioId: number, portfolioAssetId: number) => {
+    return APIInstance.get<ResponseSuccess<GetAssetDetail>>(
+      `portfolio/asset?portfolioId=${portfolioId}&portfolioAssetId=${portfolioAssetId}`,
+    );
   },
   updatePortfolio: (
     portfolioId: number,

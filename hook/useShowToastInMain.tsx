@@ -1,6 +1,7 @@
 import CommonFont from '@/components/common/Font';
 import { useControlSnackbarV2 } from '@/hook/useControlSnackbarV2';
 import { queryKeys } from '@/hook/useQueryHook/queryKeys';
+import { useAnnualDividendKRQuery } from '@/hook/useQueryHook/useAnnualDividendQuery';
 import { useRefetchPortfolioAndDividendAndCalender } from '@/hook/useRefetchPortfolioAndDividendAndCalender';
 import { useQueryClient } from '@tanstack/react-query';
 import { atom, useAtom } from 'jotai';
@@ -17,6 +18,7 @@ export const useShowToastInMain = () => {
   const [statusAtom, setStatusAtom] = useAtom(queryClientAtom);
   const { openSnackbar, closeSnackbar } = useControlSnackbarV2();
   const { refetch } = useRefetchPortfolioAndDividendAndCalender();
+  useAnnualDividendKRQuery();
 
   const annualDividendKRQueryState = queryClient.getQueryState(
     queryKeys.annualDividendKR(),

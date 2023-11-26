@@ -87,7 +87,13 @@ export default function ChartSection() {
         alignItems={'start'}
         paddingBottom={'18px'}
       >
-        <h1 style={{ paddingBottom: '6px' }}>{title}</h1>
+        <FlexBox justifyContent="space-between" width="100%">
+          <h1 style={{ paddingBottom: '6px' }}>{title}</h1>
+          {/* 
+            배포를 위한 임시 주석 처리
+          <CurrencySwitch /> 
+          */}
+        </FlexBox>
         <CommonFont
           fontSize="body1"
           color={isPlusDividendChange ? 'point_red01' : 'point_blue02'}

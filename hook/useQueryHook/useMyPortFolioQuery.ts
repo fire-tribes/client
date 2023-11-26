@@ -1,4 +1,4 @@
-import { useControlMode } from '@/hook/useControlMode';
+import { useControlSimpleMode } from '@/hook/useControlSimpleMode';
 import { portfolioAPI } from '@/core/api/portfolio';
 import { queryKeys } from '@/hook/useQueryHook/queryKeys';
 import { useControlTax } from '@/hook/useControlTax';
@@ -15,7 +15,7 @@ export const useMyPortFolioQuery = () => {
 };
 
 export const useMyPortFolioTaxWithSimpleKRQuery = () => {
-  const { modeData } = useControlMode();
+  const { modeData } = useControlSimpleMode();
   const { taxData } = useControlTax();
   const queryClient = useQueryClient();
 

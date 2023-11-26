@@ -16,10 +16,14 @@ export type MyPortfolioModel = {
 export interface MyportfoliAssetDetailModel {
   /** 자산Id */
   portfolioAssetId: number;
-  /** 미국주식Id */
+  /** 미국 & 한국 주식 ID */
   assetId: number;
+  /** 미국 & 한국 주식명 */
+  name: string;
   /** 미국주식 고유 문자 코드  ex) MSFT */
-  tickerCode: string;
+  tickerCode?: string;
+  /** 한국주식 고유 문자 코드  ex) 000000 */
+  stockCode?: string;
   /** 자산수량 */
   count: number;
   /** 평단가 */

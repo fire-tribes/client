@@ -1,33 +1,20 @@
 import { EditStockUI } from './style';
-import testCircleSvg from '@/public/icon/testCircle.svg';
+import { MyportfoliAssetDetailModel } from '@/@types/models/portfolio';
+import StockAvatar from '@/components/common/StockAvatar';
+// import testCircleSvg from '@/public/icon/testCircle.svg';
 // TODO: import downVectorSvg from '@/public/icon/downVector.svg';
 // TODO: import upVectorSvg from '@/public/icon/upVector.svg';
-import Image from 'next/image';
+// import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 interface EditStockProps {
   /** 포트폴리오 내 종목 객체 */
-  stock: {
-    portfolioAssetId: number;
-    assetId: number;
-    tickerCode: string;
-    count: number;
-    averagePrice: number;
-    currentPrice: number;
-    assetPriceChangeRate: number;
-    assetPriceChange: number;
-    value: number;
-    rateOfReturn: number;
-    dividendPriceRatio: number;
-    dividendMonth: number[];
-    currencyType: string;
-  };
-  /** 수정하기 버튼 클릭 시, Jotai에 useMyPortfolio의 배열 데이터 추가 */
-  handleEditButton: () => void;
+  stock: MyportfoliAssetDetailModel;
 }
 
-function EditStock({ stock, handleEditButton }: EditStockProps) {
+function EditStock({ stock }: EditStockProps) {
+  /** 2-1. Cache로 받아온 데이터 화면에 렌더링하기 */
   const router = useRouter();
   const { portfolioId } = router.query as { portfolioId?: number };
 
@@ -36,18 +23,15 @@ function EditStock({ stock, handleEditButton }: EditStockProps) {
       <EditStockUI.Item>
         <EditStockUI.StockContainer>
           <div>
-            <div>{stock.tickerCode.split('')[0]}</div>
-            <Image src={testCircleSvg} alt="testCircle Svg" />
+            <StockAvatar primary={stock.tickerCode} secondary={stock.name} />
           </div>
           <div>
-            <div>{stock.tickerCode}</div>
-            <button onClick={handleEditButton}>
-              <Link
-                href={`stock/${portfolioId}/${stock.assetId}/${stock.portfolioAssetId}`}
-              >
-                수정하기
-              </Link>
-            </button>
+            <div>{stock.name}</div>
+            <Link
+              href={`stock/${portfolioId}/${stock.assetId}/${stock.portfolioAssetId}/${stock.currencyType}`}
+            >
+              수정하기
+            </Link>
           </div>
         </EditStockUI.StockContainer>
         <EditStockUI.ButtonContainer>

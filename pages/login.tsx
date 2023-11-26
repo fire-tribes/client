@@ -1,7 +1,10 @@
 import LayoutV2 from '@/components/commonV2/Layout';
 import CenterContent from '@/components/commonV2/CenterContent';
 import CommonFont from '@/components/common/Font';
-import KakaoLoginButtonV2 from '@/components/Oauth/KakaoLoginButtonV2';
+import KakaoLoginButton from '@/components/Oauth/KakaoLoginButton';
+
+import { GoogleLoginButton } from '@/components/Oauth/GoogleLoginButton';
+import { useCallServiceLoginWithSession } from '@/hook/useCallServiceLoginWithSession';
 import Image from 'next/image';
 import styled from '@emotion/styled';
 
@@ -9,6 +12,8 @@ const GUIDE_TEXT = `배당주 계산과 관리를 `;
 const GUIDE_TEXT_SECOND = '가장 쉽고 편하게 하는 방법';
 
 const LoginPage = () => {
+  useCallServiceLoginWithSession();
+
   return (
     <LayoutV2
       showBottomNavigator={false}
@@ -34,13 +39,11 @@ const LoginPage = () => {
             </CommonFont>
           </LoginPageUI.Title>
 
-          <LoginPageUI.SubTitle>
-            <CommonFont fontSize="body3" fontWeight="normal" color="gray6">
-              카카오 톡으로 3초만에 시작하기
-            </CommonFont>
-          </LoginPageUI.SubTitle>
           <LoginPageUI.Padding>
-            <KakaoLoginButtonV2 />
+            <LoginPageUI.LoginButtons>
+              <KakaoLoginButton />
+              <GoogleLoginButton />
+            </LoginPageUI.LoginButtons>
           </LoginPageUI.Padding>
         </LoginPageUI.Content>
       </CenterContent>
@@ -55,7 +58,6 @@ const Content = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* height: 100%; */
   padding: 0px 54px;
   text-align: center;
 
@@ -75,9 +77,15 @@ const Padding = styled.div`
   padding-top: 15px;
 `;
 
+const LoginButtons = styled.div`
+  display: grid;
+  row-gap: 10px;
+`;
+
 const LoginPageUI = {
   Content,
   Title,
   SubTitle,
   Padding,
+  LoginButtons,
 };

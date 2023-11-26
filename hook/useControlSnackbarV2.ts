@@ -18,7 +18,6 @@ export const useControlSnackbarV2 = () => {
   const [snackbarState, setSnackbarState] = useAtom(snackbarAtom);
 
   const openSnackbar = (options: SnackbarProps) => {
-    console.log('hello');
     setSnackbarState((pre) => ({ ...pre, ...options, open: true }));
   };
   const closeSnackbar = () => {

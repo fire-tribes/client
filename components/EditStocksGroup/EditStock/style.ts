@@ -7,45 +7,24 @@ const Item = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  padding: 16px 0;
-
-  > div:first-child {
+  > div:first-of-type {
     flex: 1;
   }
 `;
 
 const StockContainer = styled.div`
   display: flex;
+  align-items: center;
 
-  > div:first-child {
-    position: relative;
-    > div:first-child {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 1;
-
-      ${({ theme }) => `
-        color: ${theme.palette.basic.point_blue01};
-      `}
-    }
-    > span {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-  }
-
-  div:last-child {
+  div:last-of-type {
     margin: 10px;
+    margin-left: 0;
     > p {
       ${({ theme }) => `
         font-size: ${theme.font.size.body2};
       `}
     }
-    > button {
+    > a {
       ${({ theme }) => `
         font-size: ${theme.font.size.caption};
         color: ${theme.palette.basic.point_blue01};
@@ -62,10 +41,10 @@ const ButtonContainer = styled.div`
     background: ${basic.gray1};
   }
 
-  button:first-child {
+  button:first-of-type {
     margin-right: 10px;
   }
-  button:last-child {
+  button:last-of-type {
     margin-left: 10px;
   }
 `;

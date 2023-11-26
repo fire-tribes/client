@@ -2,15 +2,13 @@ import { useEmotionTheme } from '@/hook/useThemeHooks';
 import { Avatar } from '@mui/material';
 
 interface StockAvatarProps {
-  tickerCode: string;
-  stockCode: string;
+  primary: string | undefined;
+  secondary?: string;
 }
 
-export default function StockAvatar({
-  tickerCode = '',
-  stockCode = '',
-}: StockAvatarProps) {
+export default function StockAvatar({ primary, secondary }: StockAvatarProps) {
   const { palette } = useEmotionTheme();
+
   return (
     <Avatar
       sx={{
@@ -18,7 +16,7 @@ export default function StockAvatar({
         backgroundColor: palette.basic.gray3,
       }}
     >
-      {tickerCode.trim()[0] || stockCode.trim()[0]}
+      {primary?.trim()[0] || secondary?.trim()[0]}
     </Avatar>
   );
 }

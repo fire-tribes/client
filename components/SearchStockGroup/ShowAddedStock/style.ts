@@ -18,7 +18,7 @@ const ItemContainer = styled.div`
   display: flex;
   align-items: center;
 
-  > div:first-child {
+  > div:first-of-type {
     flex: 1;
     width: 50px;
     margin-right: 10px;
@@ -27,7 +27,7 @@ const ItemContainer = styled.div`
 
     font-weight: 700;
   }
-  div:last-child {
+  div:last-of-type {
     margin-top: auto;
   }
 `;
