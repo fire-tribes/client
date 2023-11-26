@@ -105,7 +105,7 @@ export default function EditStockInfo({ slug }: EditStockInfoProps) {
         newPurchasePrice = handleDecimalPoint(
           Math.round,
           newPurchasePrice * EXCHANGE_RATE,
-          2,
+          0,
         );
       }
 

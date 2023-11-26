@@ -16,7 +16,7 @@ interface FeedStockInfoProps {
   /** 선택한 값을 배열 삭제 */
   removeSelected: (stock: SelectedStocksAtomProps) => void;
   /** 현재가 입력 버튼 */
-  currentPriceButton: () => void;
+  handleCurrentPrice: () => void;
   /** 가격 input */
   inputCountValue: string | number;
   /** 가격 input */
@@ -32,7 +32,7 @@ interface FeedStockInfoProps {
 function FeedStockInfo({
   stock,
   removeSelected,
-  currentPriceButton,
+  handleCurrentPrice,
   inputCountValue,
   inputPriceValue,
   changeCountEventHandle,
@@ -102,17 +102,14 @@ function FeedStockInfo({
             <div>{stock.currencyType === 'KRW' ? '₩' : '$'}</div>
             <input
               type="number"
-              value={
-                // handleDecimalPoint(Math.round, inputPriceValue, 2).toString()
-                inputPriceValue
-              }
+              value={inputPriceValue}
               placeholder="구매 가격($)"
               onChange={changePriceEventHandle}
               onBlur={handleInputBlur}
             />
             <button
               style={{ color: `${basic.point_blue02}`, fontWeight: 500 }}
-              onClick={currentPriceButton}
+              onClick={handleCurrentPrice}
             >
               현재가 입력
             </button>

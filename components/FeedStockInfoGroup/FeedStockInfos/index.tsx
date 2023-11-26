@@ -10,7 +10,10 @@ import { basic } from '@/styles/palette';
 import { useGetCurrentPriceInSelectedStocks } from '@/hook/useGetCurrentPriceInSelectedStocks';
 import { ExchangeRateSymbol } from '@/@types/models/exchangeRate';
 import { useExchangeRate } from '@/hook/useExchangeRate';
-import { checkDecimalPointLength } from '@/core/utils/handleNumber';
+import {
+  checkDecimalPointLength,
+  handleDecimalPoint,
+} from '@/core/utils/handleNumber';
 import { useAtom } from 'jotai';
 import Image from 'next/image';
 import { ChangeEvent, useEffect, useState } from 'react';
@@ -46,11 +49,34 @@ function FeedStockInfos() {
     setIsPressAllButton(array);
   }, [selectedStocks]);
   /* 3-2. 서버로 현재가 데이터 GET 요청하기 */
-  const { invalidateCurrentPrice, invalidateCurrentPrices } =
-    useGetCurrentPriceInSelectedStocks(isPressAllButton, newIsPressAllButton);
+  const {
+    getCurrentPriceDatas,
+    invalidateCurrentPrice,
+    invalidateCurrentPrices,
+  } = useGetCurrentPriceInSelectedStocks(isPressAllButton, newIsPressAllButton);
   /* 2-2. '현재가 입력' 버튼으로 price 데이터 변경하기 */
-  const handleCurrentPriceButton = (assetId: number, index: number) => {
-    invalidateCurrentPrice(assetId, selectedStocks[index].currencyType);
+  const handleCurrentPriceButton = (
+    assetId: number,
+    index: number,
+    currencyType: ExchangeRateSymbol,
+  ) => {
+    const result = getCurrentPriceDatas[index].data?.data;
+    invalidateCurrentPrice(assetId, currencyType);
+
+    if (result) {
+      const roundedPriceToTwoDemicalPoint = handleDecimalPoint(
+        Math.round,
+        result.data[0].currentPrice,
+        2,
+      );
+
+      setSelectedStocks((prev) => {
+        const newSelectedStocks = [...prev];
+        newSelectedStocks[index].price = roundedPriceToTwoDemicalPoint;
+        return newSelectedStocks;
+      });
+    }
+
     setIsPressAllButton((prev) => {
       const newArray = [...prev];
       newArray[index] = true;
@@ -94,7 +120,25 @@ function FeedStockInfos() {
             ) => {
               /* 숫자 또는 소수점 외의 문자 제거 */
               const { value } = e.target;
-              if (checkDecimalPointLength(value) > 2) return;
+
+              const currentCountValueDecimalPointLength =
+                checkDecimalPointLength(selectedStocks[id].count) || 0;
+              const newCountValueDecimalPointLength =
+                checkDecimalPointLength(value) || 0;
+
+              if (newCountValueDecimalPointLength > 2) {
+                if (
+                  newCountValueDecimalPointLength >
+                  currentCountValueDecimalPointLength
+                ) {
+                  setSelectedStocks((stock) => {
+                    const array = [...stock];
+                    array[id].count = handleDecimalPoint(Math.round, value, 2);
+                    return array;
+                  });
+                  return;
+                }
+              }
 
               setSelectedStocks((stock) => {
                 const array = [...stock];
@@ -107,15 +151,37 @@ function FeedStockInfos() {
             const onChangePriceEventHandle = (
               e: ChangeEvent<HTMLInputElement>,
             ) => {
-              /* 숫자 또는 소수점 외의 문자 제거 */
-              const { value } = e.target;
-              if (checkDecimalPointLength(value) > 2) return;
+              const { value } = e.currentTarget;
 
-              // /* 소수점을 기준으로 2자리까지만 남기기 */
-              // const formattedValue = value.split('.');
-              // if (formattedValue[1]) {
-              //   formattedValue[1] = formattedValue[1].slice(0, 2);
-              // }
+              const currentPriceValueDecimalPointLength =
+                checkDecimalPointLength(selectedStocks[id].price) || 0;
+              const newPriceValueDecimalPointLength =
+                checkDecimalPointLength(value) || 0;
+
+              if (stock.currencyType === 'KRW') {
+                setSelectedStocks((stock) => {
+                  const array = [...stock];
+                  const result = handleDecimalPoint(Math.floor, value, 0);
+                  array[id].price = result.toString().replace(/[^0-9]/g, '');
+
+                  return array;
+                });
+                return;
+              }
+
+              if (newPriceValueDecimalPointLength > 2) {
+                if (
+                  newPriceValueDecimalPointLength >
+                  currentPriceValueDecimalPointLength
+                ) {
+                  setSelectedStocks((stock) => {
+                    const array = [...stock];
+                    array[id].price = handleDecimalPoint(Math.floor, value, 2);
+                    return array;
+                  });
+                  return;
+                }
+              }
 
               setSelectedStocks((stock) => {
                 const array = [...stock];
@@ -132,12 +198,20 @@ function FeedStockInfos() {
                 let newPrice = prev[id].price;
 
                 if (newCurrencyType === 'USD' && EXCHANGE_RATE !== undefined) {
-                  newPrice = (Number(newPrice) / EXCHANGE_RATE).toString();
+                  newPrice = handleDecimalPoint(
+                    Math.round,
+                    Number(newPrice) / EXCHANGE_RATE,
+                    2,
+                  );
                 } else if (
                   newCurrencyType === 'KRW' &&
                   EXCHANGE_RATE !== undefined
                 ) {
-                  newPrice = (Number(newPrice) * EXCHANGE_RATE).toString();
+                  newPrice = handleDecimalPoint(
+                    Math.round,
+                    Number(newPrice) * EXCHANGE_RATE,
+                    0,
+                  );
                 }
 
                 // 이전 상태를 복사하여 새로운 배열 생성한다.
@@ -159,8 +233,12 @@ function FeedStockInfos() {
                 key={id}
                 stock={stock}
                 removeSelected={handleRemoveSelected}
-                currentPriceButton={() =>
-                  handleCurrentPriceButton(stock.assetId, id)
+                handleCurrentPrice={() =>
+                  handleCurrentPriceButton(
+                    stock.assetId,
+                    id,
+                    stock.currencyType,
+                  )
                 }
                 inputCountValue={stock.count}
                 inputPriceValue={stock.price}

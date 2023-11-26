@@ -7,8 +7,8 @@ export interface SelectedStocksAtomProps {
   stockCode?: string;
   name: string;
   debouncedValue: string;
-  count: string;
-  price: string;
+  count: string | number;
+  price: string | number;
   currencyType: ExchangeRateSymbol;
   countryType: 'KOR' | 'USA';
   marketType:
