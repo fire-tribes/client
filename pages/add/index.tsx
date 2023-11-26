@@ -35,6 +35,7 @@ function Add() {
           portfolioId: response.portfolioId,
           assets: makeAssets(selectedStocks),
         };
+
         addStocksAtPortfolioData(formData);
       });
     }

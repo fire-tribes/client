@@ -26,7 +26,6 @@ export const useDeleteAssetDetailsQuery = () => {
           router.push(
             `/edit?portfolioId=${portfolioId}&deleteAssetDetails=success`,
           );
-          // console.log('헬로');
           queryClient.invalidateQueries(
             //무효화 하고싶은 Query key
             queryKeys.recentSearchWords(),

@@ -11,8 +11,6 @@ function EditStocks() {
 
   /** COMPLETED: 1-1. 포트폴리오 Cache 가져오기(GET) */
   const { myPortfolioCacheData } = useGetMyPortfolio();
-  console.log('router: ', router);
-  console.log('myPortfolioCacheData: ', myPortfolioCacheData);
   const assetDetails = myPortfolioCacheData?.data.assetDetails;
 
   /** COMPLETED: 5-2. 주식을 삭제했을 때, Toast 창 띄우기 */
