@@ -28,6 +28,11 @@ const HELP_CENTER_LINKS = {
   GROUP_CHATTING: 'https://open.kakao.com/o/gjNg4cOf',
 };
 
+const HELP_CENTER_LINKS = {
+  DIRECT_CHATTING: 'https://open.kakao.com/o/sUl98zOf',
+  GROUP_CHATTING: 'https://open.kakao.com/o/gjNg4cOf',
+};
+
 const TERMS_LINKS = {
   TERMS_OF_SERVICE:
     'https://www.notion.so/tuemarz/3a3e5409697847c88749246893e1c3d0?pvs=4',

@@ -157,7 +157,6 @@ function FeedStockInfos() {
               e: ChangeEvent<HTMLInputElement>,
             ) => {
               const { value } = e.currentTarget;
-
               const currentPriceValueDecimalPointLength =
                 checkDecimalPointLength(selectedStocks[id].price) || 0;
               const newPriceValueDecimalPointLength =
@@ -168,7 +167,6 @@ function FeedStockInfos() {
                   const array = [...stock];
                   const result = handleDecimalPoint(Math.floor, value, 0);
                   array[id].price = result.toString().replace(/[^0-9]/g, '');
-
                   return array;
                 });
                 return;
