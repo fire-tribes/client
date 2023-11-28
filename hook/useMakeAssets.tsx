@@ -14,12 +14,7 @@ function useMakeAssets() {
         assetId: stock.assetId,
         count: Number(stock.count),
         price: Number(stock.price),
-        currencyType:
-          stock.countryType === 'KOR'
-            ? 'KRW'
-            : stock.countryType === 'USA'
-            ? 'USD'
-            : 'NONE',
+        currencyType: stock.currencyType,
       };
 
       return newAsset;

@@ -21,6 +21,12 @@ import {
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { useMutation } from '@tanstack/react-query';
+import { signOut } from 'next-auth/react';
+
+const HELP_CENTER_LINKS = {
+  DIRECT_CHATTING: 'https://open.kakao.com/o/sUl98zOf',
+  GROUP_CHATTING: 'https://open.kakao.com/o/gjNg4cOf',
+};
 
 const HELP_CENTER_LINKS = {
   DIRECT_CHATTING: 'https://open.kakao.com/o/sUl98zOf',
@@ -36,11 +42,12 @@ const TERMS_LINKS = {
 
 const useLogoutQuery = () => {
   return useMutation(() => SignApi.signOut(), {
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       if (response.success) {
         const cookie = new Cookie();
 
         cookie.remove(ACCESS_TOKEN);
+        await signOut();
         window.location.href = '/login';
       }
     },

@@ -2,6 +2,7 @@
 import { selectedStocksAtom } from './useGetSelectedStocks/state';
 import { useGetCurrentPriceInSelectedStocksQuery } from '@/hook/useQueryHook/useGetCurrentPriceInSelectedStocksQuery';
 import { queryKeys } from '@/hook/useQueryHook/queryKeys';
+import { ExchangeRateSymbol } from '@/@types/models/exchangeRate';
 import { useQueryClient } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 
@@ -33,9 +34,14 @@ export const useGetCurrentPriceInSelectedStocks = (
     );
   };
 
-  /** 개별 무요화하고 개별 현재가 가져오기 */
-  const invalidateCurrentPrice = (assetId: number) => {
-    queryClient.invalidateQueries(queryKeys.currentPrice(assetId));
+  /** 개별 무효화하고 개별 현재가 가져오기 */
+  const invalidateCurrentPrice = (
+    assetId: number,
+    currencyType: ExchangeRateSymbol,
+  ) => {
+    queryClient.invalidateQueries(
+      queryKeys.currentPrice(assetId, currencyType),
+    );
   };
 
   return {

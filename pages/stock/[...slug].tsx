@@ -25,7 +25,7 @@ const Post = () => {
 
   return (
     <SearchLayoutV2
-      buttomFixedButton={
+      bottomFixedButton={
         <BottomFixedButton
           isDisabled={false}
           onChange={onMoveOtherPages}
@@ -43,7 +43,7 @@ const Post = () => {
         <Backward title={'보유 주식 편집'} hasBeforePath={'개별 편집 페이지'} />
       </section>
       <section>
-        <EditStockInfo />
+        <EditStockInfo slug={slug} />
       </section>
     </SearchLayoutV2>
   );

@@ -9,6 +9,7 @@ import MonthlyCalanderDividendList from '@/components/List/MonthlyCalanderDivide
 
 export default function MonthlyCalanderDividendSection() {
   const palette = useEmotionPalette();
+
   return (
     <Section textAlign="left">
       <Section.Title paddingBottom="18px">{`배당 지급일 (${

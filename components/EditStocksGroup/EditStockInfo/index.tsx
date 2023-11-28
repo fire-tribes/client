@@ -1,177 +1,207 @@
 import { EditStockInfoUI } from './styles';
 import AlertModal from '@/components/common/Modal/AlertModal';
-import testCircleSvg from '@/public/icon/testCircle.svg';
 import trashSvg from '@/public/icon/trash.svg';
+import belowArrowSvg from '@/public/icon/below_arrow.svg';
 import { basic } from '@/styles/palette';
-import { assetDetailsAtom } from '@/hook/useGetAssetDetails/state';
 import { useGetCurrentPriceInAssetDetails } from '@/hook/useGetCurrentPriceInAssetDetails';
-import { editedAssetDetailsAtom } from '@/hook/useEditedAssetDetails/state';
 import useDeleteAssetDetails from '@/hook/useDeleteAssetDetails';
-import { useMyPortFolio } from '@/hook/useMyPortFolio';
 import { ResponseSuccess } from '@/@types/models/response';
 import { MyPortfolioModel } from '@/@types/models/portfolio';
 import { queryKeys } from '@/hook/useQueryHook/queryKeys';
+import { useGetAssetDetail } from '@/hook/useGetAssetDetail';
+import StockAvatar from '@/components/common/StockAvatar';
+import CurrencyTypeChoiceBottomSheetModal from '@/components/commonV2/ModalV2/CurrencyTypeChoiceBottomSheetModal';
+import { editAssetDetailAtom } from '@/hook/useEditAssetDetail/state';
+import { ExchangeRateSymbol } from '@/@types/models/exchangeRate';
+import {
+  checkDecimalPointLength,
+  handleDecimalPoint,
+} from '@/core/utils/handleNumber';
+import { useExchangeRate } from '@/hook/useExchangeRate';
 import Image from 'next/image';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { useAtom } from 'jotai';
 import { useQueryClient } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
+import { useAtom } from 'jotai';
+// import { useRouter } from 'next/router';
 
-// interface EditStockInfoProps {
-//   /** 선택한 배열의 객체값 */
-//   // stock: assetDetailsAtomProps | undefined;
-//   /** 선택한 값을 배열 삭제 */
-//   // removeSelected: () => void;
-//   /** 현재가 입력 버튼 */
-//   // currentPriceButton: () => void;
-//   /** 가격 input */
-//   // inputCountValue: string;
-//   /** 가격 input */
-//   // inputPriceValue: string;
-//   /** 수량이 변화했을 때, 발생하는 Event */
-//   // changeCountEventHandle: (e: ChangeEvent<HTMLInputElement>) => void;
-//   /** 가격이 변화했을 때, 발생하는 Event */
-//   // changePriceEventHandle: (e: ChangeEvent<HTMLInputElement>) => void;
-//   /** handleCurrentPriceButton */
-//   // handleCurrentPriceButton: () => void;
-// }
+interface EditStockInfoProps {
+  slug: string[];
+}
 
-export default function EditStockInfo() {
-  /** 전체 편집 페이지에서 받아온 개별 종목 assetId */
-  const router = useRouter();
-  const { slug } = router.query as { slug: string[] };
-
+export default function EditStockInfo({ slug }: EditStockInfoProps) {
+  // const router = useRouter();
+  /** 3. '정보 확인' API로 수량 및 가격 데이터 가져오기(GET) */
+  /** COMPLETED: 3-1. GET 요청에 필요한 portfolioId와 portfolioAssetId 가져오기 */
+  const portfolioId = Number(slug?.[0]);
   const assetId = Number(slug?.[1]);
   const portfolioAssetId = Number(slug?.[2]);
-  /** 만들어진 Jotai(assetDetails)에서 값 가져오기 */
-  const [assetDetails, setAssetDetails] = useAtom(assetDetailsAtom);
-  const [editedAssetDetails, setEditedAssetDetails] = useAtom(
-    editedAssetDetailsAtom,
+  // const currencyType = slug?.[3];
+
+  const [editAssetDetail, setEditAssetDetail] = useAtom(editAssetDetailAtom);
+
+  /** 3-1. Cache에 있는 환율 정보 가져오기(GET) */
+  const { exchangeRate } = useExchangeRate();
+  const EXCHANGE_RATE = exchangeRate;
+
+  /** COMPLETED: 3-2. useFeatureHook으로 '정보 확인' API 데이터 가져오기 */
+  const { getAssetDetailData } = useGetAssetDetail(
+    portfolioId,
+    portfolioAssetId,
   );
-
-  /** 1. AssetId의 value가 router.query로 받은 id이므로 assetId로 index를 찾는다. */
-  const filterAssetDetail = (portfolioAssetId: number) => {
-    const assetDetailsArray = assetDetails;
-    if (assetDetailsArray !== undefined) {
-      return assetDetailsArray.filter((assetDetail) => {
-        return assetDetail.portfolioAssetId === portfolioAssetId;
-      })[0];
-    }
-  };
-  const object = filterAssetDetail(portfolioAssetId);
-
+  const assetDetailData = getAssetDetailData?.data;
   useEffect(() => {
-    if (object?.count && object?.averagePrice) {
-      setEditedAssetDetails((prev) => ({
+    // useEffect로 객체의 상태 업데이트 이후 동작 수행
+    if (assetDetailData) {
+      setEditAssetDetail((prev) => ({ ...prev, ...assetDetailData }));
+    }
+  }, [assetDetailData, setEditAssetDetail]);
+
+  /** 4. 수량 및 가격 데이터를 수정하기 */
+  /** COMPLETED: 4-1. count, price 데이터 직접 변경하기 */
+  const handleChangeCount = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!assetDetailData) return;
+
+    const { value } = e.target;
+
+    if (checkDecimalPointLength(value) > 2) return;
+
+    setEditAssetDetail((prev) => ({
+      ...prev,
+      count: value,
+    }));
+  };
+  const handleChangePrice = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!assetDetailData) return;
+    const { value } = e.target;
+
+    if (checkDecimalPointLength(value) > 2) return;
+
+    setEditAssetDetail((prev) => ({
+      ...prev,
+      purchasePrice: value,
+    }));
+  };
+  /** COMPLETED: 4-2. newCurrencyType 달러 또는 원화로 변경하기  */
+  const handleCurrencyType = (newCurrencyType: ExchangeRateSymbol) => {
+    setEditAssetDetail((prev) => {
+      let newPurchasePrice = prev.purchasePrice;
+
+      if (
+        newCurrencyType === 'USD' &&
+        typeof newPurchasePrice === 'number' &&
+        EXCHANGE_RATE !== undefined
+      ) {
+        newPurchasePrice = handleDecimalPoint(
+          Math.round,
+          newPurchasePrice / EXCHANGE_RATE,
+          2,
+        );
+      } else if (
+        newCurrencyType === 'KRW' &&
+        typeof newPurchasePrice === 'number' &&
+        EXCHANGE_RATE !== undefined
+      ) {
+        newPurchasePrice = handleDecimalPoint(
+          Math.round,
+          newPurchasePrice * EXCHANGE_RATE,
+          0,
+        );
+      }
+
+      return {
         ...prev,
-        assetId: assetId,
-        count: object.count,
-        price: object.averagePrice,
+        purchasePrice: newPurchasePrice,
+        currencyType: newCurrencyType,
+      };
+    });
+  };
+  /** COMPLETED: 4-3. '현재가 입력' 버튼으로 price 데이터 변경하기 */
+  const [isPressButton, setIsPressButton] = useState(true);
+  const { getCurrentPriceDatas, invalidateCurrentPrice } =
+    useGetCurrentPriceInAssetDetails(
+      assetId,
+      editAssetDetail.currencyType,
+      isPressButton,
+    );
+  const handleCurrentPrice = async (
+    assetId: number,
+    currencyType: ExchangeRateSymbol,
+  ) => {
+    const result = getCurrentPriceDatas?.data;
+    invalidateCurrentPrice(assetId, currencyType);
+
+    if (result) {
+      const roundedPriceToTwoDemicalPoint = handleDecimalPoint(
+        Math.round,
+        result.data[0].currentPrice,
+        2,
+      );
+
+      setEditAssetDetail((prev) => ({
+        ...prev,
+        purchasePrice: roundedPriceToTwoDemicalPoint,
       }));
     }
-  }, [object]);
-  /** count 값 직접 변경 함수 */
-  const changeCountEventHandle = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setEditedAssetDetails((prev) => ({
-      ...prev,
-      count: Number(value),
-    }));
+    setIsPressButton(true);
   };
-
-  /** price 값 직접 변경 함수  */
-  const changePriceEventHandle = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setEditedAssetDetails((prev) => ({
-      ...prev,
-      assetId: assetId,
-      price: Number(value),
-    }));
-  };
-
-  /** 값을 입력하지 않았을 때, 발생시킬 Error 함수 */
+  /** COMPLETED: 4-4. count, price 데이터를 입력하지 않을 때, Error 처리하기 */
   const [errorText, setErrorText] = useState('');
   const handleInputBlur = () => {
-    if (!editedAssetDetails.count || !editedAssetDetails.price) {
+    if (!assetDetailData) return;
+
+    if (
+      /** 4-3-1. 수량 및 가격이 ''일 떄, Error 처리하기 */
+      !assetDetailData.count ||
+      !assetDetailData.purchasePrice
+    ) {
       setErrorText('* 보유 수량 및 가격을 정확히 입력해주세요.');
     } else if (
-      parseInt(editedAssetDetails.count.toString(), 10) <= 0 ||
-      parseFloat(editedAssetDetails.price.toString()) <= 0
+      /** 4-3-2. 수량 및 가격이 음수일 때 Error 처리하기 */
+      parseInt(assetDetailData.count.toString(), 10) <= 0 ||
+      parseFloat(assetDetailData.purchasePrice.toString()) <= 0
     ) {
       setErrorText('* 보유 수량 및 가격은 0보다 값이 커야 합니다.');
     } else {
+      /** 4-3-3. 수량 및 가격이 제대로 입력되었을 때, Error 문구 초기화 */
       setErrorText('');
     }
   };
 
-  /** 현재가 개별 버튼 함수 */
-  const [isPressButton, setIsPressButton] = useState(false);
-  const { invalidateCurrentPrice } = useGetCurrentPriceInAssetDetails(
-    assetId,
-    isPressButton,
-  );
-
-  const handleCurrentPriceButton = (assetId: number) => {
-    invalidateCurrentPrice(assetId);
-    setIsPressButton(true);
-    // const currentPrice = getCurrentPriceDatas?.data[0]?.currentPrice;
-    // if (currentPrice !== undefined) {
-    //   setEditedAssetDetails((prev) => ({
-    //     ...prev,
-    //     assetId: assetId,
-    //     price: currentPrice,
-    //   }));
-    // }
-  };
-
-  /** [삭제 함수] Jotai로 만든 주식 종목 배열에서 해당 객체 삭제하는 함수 */
+  /** COMPLETED: 5-1. 해당 주식 삭제하기 */
   const { deleteAssetDetailsData } = useDeleteAssetDetails();
-  const { myPortFolioData } = useMyPortFolio();
   const queryClient = useQueryClient();
   const handleRemoveSelected = () => {
-    const requestObject = {
-      portfolioId:
-        myPortFolioData !== undefined ? myPortFolioData.portfolioId : 0,
-      portfolioAssetId: object !== undefined ? object.portfolioAssetId : 0,
-    };
-    setAssetDetails((prev) =>
-      prev.filter(
-        (assetDetail) =>
-          assetDetail.portfolioAssetId !== object?.portfolioAssetId,
-      ),
-    );
-    /** QueryClient 수정하기 */
+    /** 5-1-1. Cache에 해당 주식 객체 삭제하기 */
     const updater = () => {
       const myPortfolioDataForEdit:
         | AxiosResponse<ResponseSuccess<MyPortfolioModel>>
         | undefined = queryClient.getQueryData(queryKeys.myPortFolio());
-      console.log('myPortfolioDataForEdit: ', myPortfolioDataForEdit);
 
       if (myPortfolioDataForEdit) {
-        const assetDetails = myPortfolioDataForEdit?.data.data.assetDetails;
-        console.log('assetDetails: ', assetDetails);
-
+        const assetDetails = myPortfolioDataForEdit.data.data.assetDetails;
         if (assetDetails) {
+          /** 5-1-2. Cache 내 portfolioAssetId가 일치하지 않는 객체만 필터링하기
+           * (일치한 값을 찾아서 해당 주식 객체 삭제하기)
+           */
           const newAssetDetails = assetDetails?.filter(
             (assetDetail) =>
-              assetDetail.portfolioAssetId !== object?.portfolioAssetId,
+              assetDetail.portfolioAssetId !==
+              assetDetailData?.portfolioAssetId,
           );
-
           myPortfolioDataForEdit.data.data.assetDetails = newAssetDetails;
         }
       }
       return myPortfolioDataForEdit;
     };
-
-    const updatedQueryData:
-      | AxiosResponse<ResponseSuccess<MyPortfolioModel>>
-      | undefined = queryClient.setQueryData(queryKeys.myPortFolio(), () =>
-      updater(),
-    );
-    console.log('updatedQueryData: ', updatedQueryData);
-
-    deleteAssetDetailsData(requestObject);
+    /** 5-1-3. 수정된 데이터로 Cache 업데이트하기 */
+    queryClient.setQueryData(queryKeys.myPortFolio(), () => updater());
+    // router.push(`/edit?portfolioId=${portfolioId}&deleteAssetDetails=success`);
+    /** 5-2. 서버 내 해당 주식 객체 삭제하기 */
+    deleteAssetDetailsData({
+      portfolioId,
+      portfolioAssetId,
+    });
   };
 
   return (
@@ -180,16 +210,16 @@ export default function EditStockInfo() {
         <EditStockInfoUI.Item>
           <EditStockInfoUI.TopContainer>
             <EditStockInfoUI.NativeStockInfoContainer>
+              <StockAvatar
+                primary={editAssetDetail.tickerCode}
+                secondary={editAssetDetail.stockCode}
+              />
               <div>
-                <div>{object?.tickerCode.split('')[0]}</div>
-                <Image src={testCircleSvg} alt="testCircle Svg" />
-              </div>
-              <div>
-                <div>{object?.tickerCode}</div>
+                <div>{editAssetDetail.name}</div>
                 <div>
-                  {object?.tickerCode}
-                  {/* ? assetDetails[ASSET_ID].tickerCode
-                    : assetDetails[ASSET_ID].stockCode */}
+                  {editAssetDetail.tickerCode
+                    ? editAssetDetail.tickerCode
+                    : editAssetDetail.stockCode}
                 </div>
               </div>
             </EditStockInfoUI.NativeStockInfoContainer>
@@ -197,7 +227,6 @@ export default function EditStockInfo() {
               title={'종목 삭제'}
               message={'이 종목을 정말 삭제하시겠어요?'}
               onClickEvent={() => handleRemoveSelected()}
-              // isShowToast={false}
             >
               <EditStockInfoUI.ButtonContainer>
                 <Image src={trashSvg} alt="trash Svg" />
@@ -210,24 +239,38 @@ export default function EditStockInfo() {
           <EditStockInfoUI.BottomContainer>
             <div>
               <input
-                type="text"
-                value={editedAssetDetails.count || ''}
+                type="number"
+                value={editAssetDetail.count}
                 placeholder="보유 수량"
-                onChange={changeCountEventHandle}
+                onChange={handleChangeCount}
                 onBlur={handleInputBlur}
               />
             </div>
             <div>
+              <CurrencyTypeChoiceBottomSheetModal
+                changeCurrencyType={editAssetDetail.currencyType}
+                handleCurrencyType={handleCurrencyType}
+              >
+                <EditStockInfoUI.CurrencyChangeButton>
+                  <span>
+                    {editAssetDetail.currencyType === 'KRW' ? '원화' : '달러'}
+                  </span>
+                  <Image src={belowArrowSvg} alt="belowArrow Svg" />
+                </EditStockInfoUI.CurrencyChangeButton>
+              </CurrencyTypeChoiceBottomSheetModal>
+              <div>{editAssetDetail.currencyType === 'KRW' ? '₩' : '$'}</div>
               <input
-                type="text"
-                value={editedAssetDetails.price || ''}
-                placeholder="구매 가격($)"
-                onChange={changePriceEventHandle}
+                type="number"
+                value={editAssetDetail.purchasePrice}
+                placeholder="구매 가격"
+                onChange={handleChangePrice}
                 onBlur={handleInputBlur}
               />
               <button
                 style={{ color: `${basic.point_blue02}`, fontWeight: 500 }}
-                onClick={() => handleCurrentPriceButton(assetId)}
+                onClick={() =>
+                  handleCurrentPrice(assetId, editAssetDetail.currencyType)
+                }
               >
                 현재가 입력
               </button>

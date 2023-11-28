@@ -1,9 +1,12 @@
 import { FeedStockInfoUI } from './style';
 import AlertModal from '@/components/common/Modal/AlertModal';
+import CurrencyTypeChoiceBottomSheetModal from '@/components/commonV2/ModalV2/CurrencyTypeChoiceBottomSheetModal';
 import { SelectedStocksAtomProps } from '@/hook/useGetSelectedStocks/state';
-import testCircleSvg from '@/public/icon/testCircle.svg';
 import trashSvg from '@/public/icon/trash.svg';
+import belowArrowSvg from '@/public/icon/below_arrow.svg';
 import { basic } from '@/styles/palette';
+import StockAvatar from '@/components/common/StockAvatar';
+import { ExchangeRateSymbol } from '@/@types/models/exchangeRate';
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 
@@ -13,50 +16,50 @@ interface FeedStockInfoProps {
   /** 선택한 값을 배열 삭제 */
   removeSelected: (stock: SelectedStocksAtomProps) => void;
   /** 현재가 입력 버튼 */
-  currentPriceButton: () => void;
+  handleCurrentPrice: () => void;
   /** 가격 input */
-  inputCountValue: string;
+  inputCountValue: string | number;
   /** 가격 input */
-  inputPriceValue: string;
+  inputPriceValue: string | number;
   /** 수량이 변화했을 때, 발생하는 Event */
   changeCountEventHandle: (e: ChangeEvent<HTMLInputElement>) => void;
   /** 가격이 변화했을 때, 발생하는 Event */
   changePriceEventHandle: (e: ChangeEvent<HTMLInputElement>) => void;
+  /** CurrencyType 변화 함수 */
+  handleCurrencyType: (newCurrencyType: ExchangeRateSymbol) => void;
 }
 
 function FeedStockInfo({
   stock,
   removeSelected,
-  currentPriceButton,
+  handleCurrentPrice,
   inputCountValue,
   inputPriceValue,
   changeCountEventHandle,
   changePriceEventHandle,
+  handleCurrencyType,
 }: FeedStockInfoProps) {
+  /** COMPLETED: 값을 입력하지 않았을 때, Error 발생시키기 */
   const [errorText, setErrorText] = useState('');
-
-  /** 값을 입력하지 않았을 때, 발생시킬 Error 함수 */
   const handleInputBlur = () => {
-    if (inputCountValue.trim() === '' || inputPriceValue.trim() === '') {
+    if (!inputCountValue || !inputPriceValue) {
       setErrorText('* 보유 수량 및 가격을 정확히 입력해주세요.');
     } else if (
-      parseInt(inputCountValue, 10) <= 0 ||
-      parseFloat(inputPriceValue) <= 0
+      parseInt(inputCountValue.toString(), 10) <= 0 ||
+      parseFloat(inputPriceValue.toString()) <= 0
     ) {
       setErrorText('* 보유 수량 및 가격은 0보다 값이 커야 합니다.');
     } else {
       setErrorText('');
     }
   };
+
   return (
     <FeedStockInfoUI.Container>
       <FeedStockInfoUI.Item>
         <FeedStockInfoUI.TopContainer>
           <FeedStockInfoUI.NativeStockInfoContainer>
-            <div>
-              <div>{stock.name.split('')[0]}</div>
-              <Image src={testCircleSvg} alt="testCircle Svg" />
-            </div>
+            <StockAvatar primary={stock.tickerCode} secondary={stock.name} />
             <div>
               <div>{stock.name}</div>
               <div>{stock.tickerCode ? stock.tickerCode : stock.stockCode}</div>
@@ -79,24 +82,34 @@ function FeedStockInfo({
         <FeedStockInfoUI.BottomContainer>
           <div>
             <input
-              type="text"
-              value={String(inputCountValue)}
+              type="number"
+              value={inputCountValue}
               placeholder="보유 수량"
               onChange={changeCountEventHandle}
               onBlur={handleInputBlur}
             />
           </div>
           <div>
+            <CurrencyTypeChoiceBottomSheetModal
+              changeCurrencyType={stock.currencyType}
+              handleCurrencyType={handleCurrencyType}
+            >
+              <FeedStockInfoUI.CurrencyChangeButton>
+                <span>{stock.currencyType === 'KRW' ? '원화' : '달러'}</span>
+                <Image src={belowArrowSvg} alt="belowArrow Svg" />
+              </FeedStockInfoUI.CurrencyChangeButton>
+            </CurrencyTypeChoiceBottomSheetModal>
+            <div>{stock.currencyType === 'KRW' ? '₩' : '$'}</div>
             <input
-              type="text"
-              value={String(inputPriceValue)}
+              type="number"
+              value={inputPriceValue}
               placeholder="구매 가격($)"
               onChange={changePriceEventHandle}
               onBlur={handleInputBlur}
             />
             <button
               style={{ color: `${basic.point_blue02}`, fontWeight: 500 }}
-              onClick={currentPriceButton}
+              onClick={handleCurrentPrice}
             >
               현재가 입력
             </button>

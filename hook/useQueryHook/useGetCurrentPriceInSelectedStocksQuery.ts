@@ -21,8 +21,9 @@ export const useGetCurrentPriceInSelectedStocksQuery = (
   /** 개별 현재가 가져오기 */
   const oldQueries = useQueries({
     queries: selectedStocks.map((stock, id) => ({
-      queryKey: queryKeys.currentPrice(stock.assetId),
-      queryFn: () => assetAPI.getCurrentPrice(stock.assetId),
+      queryKey: queryKeys.currentPrice(stock.assetId, stock.currencyType),
+      queryFn: () =>
+        assetAPI.getCurrentPrice(stock.assetId, stock.currencyType),
       enabled: !!isPressAllButton[id],
       onSuccess: (response: Response) => {
         const responseAssetId = response.data.data[0]?.assetId;
@@ -33,7 +34,7 @@ export const useGetCurrentPriceInSelectedStocksQuery = (
             if (selectedStock.assetId === responseAssetId) {
               return {
                 ...selectedStock,
-                price: responseCurrentPrice.toString(),
+                price: responseCurrentPrice,
               };
             } else {
               return { ...selectedStock };
@@ -51,7 +52,7 @@ export const useGetCurrentPriceInSelectedStocksQuery = (
     ),
     () => {
       const apis = selectedStocks.map((stock) =>
-        assetAPI.getCurrentPrice(stock.assetId),
+        assetAPI.getCurrentPrice(stock.assetId, stock.currencyType),
       );
 
       return Promise.all([...apis]);
@@ -64,7 +65,7 @@ export const useGetCurrentPriceInSelectedStocksQuery = (
         setSelectedAtoms((prev) => {
           return prev.map((selectedStock, id) => ({
             ...selectedStock,
-            price: response[id].data.data[0]!.currentPrice.toString(),
+            price: response[id].data.data[0]!.currentPrice,
           }));
         });
       },

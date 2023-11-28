@@ -47,9 +47,6 @@ function AlertModal({
 }: AlertModalProps) {
   const { close } = useControlModalV2();
   const { openSnackbar, closeSnackbar } = useControlSnackbarV2();
-  // const [showToast, setShowToast] = React.useState<{ open: boolean }>({
-  //   open: false,
-  // });
 
   const handleConfirmButton = () => () => {
     if (toastMessage !== undefined) {
@@ -60,15 +57,6 @@ function AlertModal({
           vertical: 'bottom',
           horizontal: 'center',
         },
-        // style: {
-        //   position: 'absolute',
-        //   left: '50%',
-        //   right: 'auto',
-        //   bottom: '12%',
-        //   transform: 'translateX(-50%)',
-        //   width: '398px',
-        //   zIndex: '2',
-        // },
         onClose: () => closeSnackbar(),
       });
     }
@@ -78,13 +66,6 @@ function AlertModal({
     }
     close();
   };
-
-  // const handleClose = () => {
-  //   setShowToast({
-  //     ...showToast,
-  //     open: false,
-  //   });
-  // };
 
   return (
     <>

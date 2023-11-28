@@ -2,12 +2,12 @@ import {
   getShortCurrencyKRByMinusNumber,
   getShortCurrencyKRByPlusNumber,
 } from '@/components/Chart/utils';
-import { useControlMode } from '@/hook/useControlMode';
+import { useControlSimpleMode } from '@/hook/useControlSimpleMode';
 import { useControlTax } from '@/hook/useControlTax';
 
 export const useFormatPrice = () => {
   const { taxData } = useControlTax();
-  const { modeData } = useControlMode();
+  const { modeData } = useControlSimpleMode();
 
   const divideByTax = (price: number) =>
     price > 0 ? Math.floor(price * (85 / 100)) : Math.ceil(price * (85 / 100));

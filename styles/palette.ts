@@ -17,6 +17,7 @@ export const basic = {
   point_red02: '#FECECF',
   point_blue01: '#00AEE4',
   point_blue02: '#0077E4',
+  point_yellow01: '#FAEA05',
   gray_blue: '#2F7287',
 } as const;
 
@@ -36,6 +37,11 @@ export const sementic = {
     font_gray: basic.gray5,
     font_section_title: basic.gray_blue,
     ios_switch_background: basic.gray7,
+    currency_switch_background: basic.gray2,
+    currency_switch_overlay: basic.white,
+    currency_switch_font_color: basic.gray8,
+    google_login_button_background: basic.gray1,
+    kakao_login_button_background: basic.point_yellow01,
   },
   dark: {
     bg_white: basic.white,
@@ -49,6 +55,11 @@ export const sementic = {
     font_gray: basic.gray5,
     font_section_title: basic.gray_blue,
     ios_switch_background: basic.gray7,
+    currency_switch_background: basic.gray2,
+    currency_switch_overlay: basic.white,
+    currency_switch_font_color: basic.gray8,
+    google_login_button_background: basic.gray1,
+    kakao_login_button_background: basic.point_yellow01,
   },
 };
 

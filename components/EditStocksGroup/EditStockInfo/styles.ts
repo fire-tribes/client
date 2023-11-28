@@ -16,40 +16,20 @@ const TopContainer = styled.div`
 const NativeStockInfoContainer = styled.div`
   flex: 1;
   display: flex;
+  align-items: center;
 
-  > div:first-child {
-    position: relative;
-    > div:first-child {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 1;
-
-      ${({ theme }) => `
-        color: ${theme.palette.basic.point_blue01};
-      `}
-    }
-    > span {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-  }
-
-  > div:last-child {
+  > div:last-of-type {
     flex: 1;
     margin: 10px;
 
-    > div:first-child {
+    > div:first-of-type {
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 2; /* 2줄까지 표시 */
       overflow: hidden;
     }
 
-    >div: last-child {
+    > div:last-of-type {
       font-size: ${fontSize.caption2};
       color: ${basic.gray6};
       font-weight: 100;
@@ -69,14 +49,14 @@ const ButtonContainer = styled.div`
 `;
 
 const BottomContainer = styled.div`
-  div:first-child {
+  > div:first-of-type {
     border-radius: 12px 12px 0px 0px;
     border: 1px solid ${basic.gray3};
     background: ${basic.gray0};
 
     padding: 14px 16px;
   }
-  div:last-child {
+  > div:last-of-type {
     display: flex;
 
     border-radius: 0px 0px 12px 12px;
@@ -99,6 +79,18 @@ const BottomContainer = styled.div`
   }
 `;
 
+const CurrencyChangeButton = styled.button`
+  color: ${basic.point_blue02};
+  font-weight: 500;
+  display: inline-block;
+  margin-right: 20px;
+
+  span:first-of-type {
+    display: inline-block;
+    margin-right: 5px;
+  }
+`;
+
 const ErrorContainer = styled.span`
   color: ${basic.point_red01};
   font-size: ${fontSize.body3};
@@ -111,5 +103,6 @@ export const EditStockInfoUI = {
   NativeStockInfoContainer,
   ButtonContainer,
   BottomContainer,
+  CurrencyChangeButton,
   ErrorContainer,
 } as const;

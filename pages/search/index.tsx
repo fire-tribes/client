@@ -5,7 +5,7 @@ import BiggerCloseSvg from '@/public/icon/biggerClose.svg';
 import SmallerCloseSvg from '@/public/icon/smallerClose.svg';
 import SearchInput from '@/components/SearchStockGroup/SearchInput';
 import RecentSearchWords from '@/components/SearchStockGroup/RecentSearchWords';
-// import PopluarStocks from '@/components/SearchStockGroup/PopularStocks';
+// import PopularStocks from '@/components/SearchStockGroup/PopularStocks';
 import useUpdateRecentSearchWords from '@/hook/useUpdateRecentSearchWords';
 import BottomFixedButton from '@/components/common/Button/BottomFixedButton';
 import { useState } from 'react';
@@ -47,7 +47,7 @@ function Search() {
     setIsSearchActive(true);
   };
   /** Input 태그가 활성화되면 작은 취소 버튼이 생김 */
-  const handlButtonHidden: React.CSSProperties = {
+  const handleButtonHidden: React.CSSProperties = {
     display: isSearchActive ? 'inline' : 'none',
   };
   /** 작은 취소 버튼을 눌렀을 때, Input의 검색어 초기화 함수 */
@@ -108,7 +108,7 @@ function Search() {
   };
   return (
     <SearchLayoutV2
-      buttomFixedButton={
+      bottomFixedButton={
         <BottomFixedButton
           isDisabled={selectedStocks.length !== 0 ? false : true}
           onChange={
@@ -140,7 +140,7 @@ function Search() {
               smallerCancelButton={
                 <button
                   onClick={handleClickSmallerCancelButton}
-                  style={handlButtonHidden}
+                  style={handleButtonHidden}
                 >
                   <Image src={SmallerCloseSvg} alt="smallerClose Svg" />
                 </button>
@@ -149,14 +149,16 @@ function Search() {
                 <Link
                   href={portfolioId ? '/' : '/empty'}
                   style={{ height: '52px' }}
-                  onClick={() => setLoading(true)}
                 >
-                  <Image
-                    src={BiggerCloseSvg}
-                    width={24}
-                    height={24}
-                    alt="Close Icon"
-                  />
+                  <a>
+                    <Image
+                      src={BiggerCloseSvg}
+                      width={24}
+                      height={24}
+                      alt="Close Icon"
+                      onClick={() => setLoading(true)}
+                    />
+                  </a>
                 </Link>
               }
             />
@@ -164,7 +166,7 @@ function Search() {
           {!isSearchActive ? (
             <>
               {/* <section>
-                <PopluarStocks />
+                <PopularStocks />
               </section> */}
               <section>
                 <RecentSearchWords

@@ -4,13 +4,31 @@ import type { NextRequest } from 'next/server';
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
   const accessToken = request.cookies.get('accessToken');
-  const isRequiredLoginURL = !request.url.includes('/login');
+  const isLoginURL = request.url.includes('/login');
+  const shouldLoginURL = !request.url.includes('/login');
 
-  if (!accessToken && isRequiredLoginURL) {
+  const notShouldLogin = isLoginURL && accessToken;
+
+  if (notShouldLogin) {
+    return NextResponse.redirect(new URL('/', request.url));
+  }
+
+  const shouldLogin = shouldLoginURL && !accessToken;
+
+  if (shouldLogin) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 }
 
 export const config = {
-  matcher: ['/', '/empty', '/add', '/edit', '/search', '/caculate', '/setting'],
+  matcher: [
+    '/',
+    '/empty',
+    '/add',
+    '/edit',
+    '/search',
+    '/caculate',
+    '/setting',
+    '/login',
+  ],
 };
