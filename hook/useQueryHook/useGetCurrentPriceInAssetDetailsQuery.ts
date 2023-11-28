@@ -1,7 +1,8 @@
-import { editedAssetDetailsAtom } from '../useEditedAssetDetails/state';
 import { assetAPI } from '../../core/api/asset';
 import { queryKeys } from '../../hook/useQueryHook/queryKeys';
+import { editAssetDetailAtom } from '../useEditAssetDetail/state';
 import { ExchangeRateSymbol } from '@/@types/models/exchangeRate';
+import { handleDecimalPoint } from '@/core/utils/handleNumber';
 import { useQuery } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 
@@ -19,24 +20,37 @@ export const useGetCurrentPriceInAssetDetailsQuery = (
   currencyType: ExchangeRateSymbol,
   isPressButton: boolean,
 ) => {
-  const [, setEditedAssetDetails] = useAtom(editedAssetDetailsAtom);
+  const [, setEditAssetDetail] = useAtom(editAssetDetailAtom);
   /** 개별 현재가 가져오기 */
   const oldQueries = useQuery({
-    // queries: assetDetails.map((asset, id) => ({
     queryKey: queryKeys.currentPrice(assetId, currencyType),
     queryFn: () => assetAPI.getCurrentPrice(assetId, currencyType),
     enabled: !!isPressButton,
     onSuccess: (response: Response) => {
-      const responseCurrentPrice = response.data.data[0]?.currentPrice;
-
-      if (responseCurrentPrice !== undefined) {
-        setEditedAssetDetails((prev) => ({
+      // if (responseCurrentPrice !== undefined) {
+      if (currencyType === 'USD') {
+        const responseCurrentPrice = handleDecimalPoint(
+          Math.round,
+          response.data.data[0]?.currentPrice,
+          2,
+        );
+        setEditAssetDetail((prev) => ({
           ...prev,
-          price: responseCurrentPrice,
+          purchasePrice: responseCurrentPrice,
+        }));
+      } else if (currencyType === 'KRW') {
+        const responseCurrentPrice = handleDecimalPoint(
+          Math.round,
+          response.data.data[0]?.currentPrice,
+          0,
+        );
+        setEditAssetDetail((prev) => ({
+          ...prev,
+          purchasePrice: responseCurrentPrice,
         }));
       }
+      // }
     },
-    // })),
   });
 
   return { oldQueries };

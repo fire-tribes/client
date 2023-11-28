@@ -13,7 +13,7 @@ export const useGetCurrentPriceInSelectedStocks = (
   const [selectedStocks] = useAtom(selectedStocksAtom);
 
   // initial Atom
-  const { oldQueries: getCurrentPriceDatas, newQueires } =
+  const { oldQueries: getCurrentPriceDatas, newQueries } =
     useGetCurrentPriceInSelectedStocksQuery(
       isPressAllButton,
       newIsPressAllButton,
@@ -39,15 +39,16 @@ export const useGetCurrentPriceInSelectedStocks = (
     assetId: number,
     currencyType: ExchangeRateSymbol,
   ) => {
-    queryClient.invalidateQueries(
-      queryKeys.currentPrice(assetId, currencyType),
-    );
+    queryClient.invalidateQueries({
+      queryKey: queryKeys.currentPrice(assetId, currencyType),
+      refetchType: 'all',
+    });
   };
 
   return {
     getCurrentPriceDatas,
     shouldSetAtom,
-    newQueires,
+    newQueries,
     invalidateCurrentPrices,
     invalidateCurrentPrice,
   };
