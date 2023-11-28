@@ -1,6 +1,7 @@
 import { selectedStocksAtom } from '../useGetSelectedStocks/state';
 import { queryKeys } from '@/hook/useQueryHook/queryKeys';
 import { assetAPI } from '@/core/api/asset';
+import { handleDecimalPoint } from '@/core/utils/handleNumber';
 import { useQueries, useQuery } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 
@@ -17,7 +18,7 @@ export const useGetCurrentPriceInSelectedStocksQuery = (
   isPressAllButton: boolean[],
   newIsPressAllButton: boolean,
 ) => {
-  const [selectedStocks, setSelectedAtoms] = useAtom(selectedStocksAtom);
+  const [selectedStocks, setSelectedStocks] = useAtom(selectedStocksAtom);
   /** 개별 현재가 가져오기 */
   const oldQueries = useQueries({
     queries: selectedStocks.map((stock, id) => ({
@@ -27,9 +28,13 @@ export const useGetCurrentPriceInSelectedStocksQuery = (
       enabled: !!isPressAllButton[id],
       onSuccess: (response: Response) => {
         const responseAssetId = response.data.data[0]?.assetId;
-        const responseCurrentPrice = response.data.data[0]?.currentPrice;
+        const responseCurrentPrice = handleDecimalPoint(
+          Math.round,
+          response.data.data[0]?.currentPrice,
+          2,
+        );
 
-        setSelectedAtoms((prev) => {
+        setSelectedStocks((prev) => {
           return prev.map((selectedStock) => {
             if (selectedStock.assetId === responseAssetId) {
               return {
@@ -46,7 +51,7 @@ export const useGetCurrentPriceInSelectedStocksQuery = (
   });
 
   /** 전체 현재가 가져오기 */
-  const newQueires = useQuery(
+  const newQueries = useQuery(
     queryKeys.currentPrices(
       selectedStocks.map((selectedStock) => selectedStock.assetId),
     ),
@@ -60,17 +65,19 @@ export const useGetCurrentPriceInSelectedStocksQuery = (
     {
       enabled: !!newIsPressAllButton,
       onSuccess: (response) => {
-        // const data = response[0].data.data[0]?.assetId;
-
-        setSelectedAtoms((prev) => {
+        setSelectedStocks((prev) => {
           return prev.map((selectedStock, id) => ({
             ...selectedStock,
-            price: response[id].data.data[0]!.currentPrice,
+            price: handleDecimalPoint(
+              Math.round,
+              response[id].data.data[0]!.currentPrice,
+              2,
+            ),
           }));
         });
       },
     },
   );
 
-  return { oldQueries, newQueires };
+  return { oldQueries, newQueries };
 };

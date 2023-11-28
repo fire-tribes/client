@@ -118,31 +118,35 @@ export default function EditStockInfo({ slug }: EditStockInfoProps) {
   };
   /** COMPLETED: 4-3. '현재가 입력' 버튼으로 price 데이터 변경하기 */
   const [isPressButton, setIsPressButton] = useState(true);
-  const { getCurrentPriceDatas, invalidateCurrentPrice } =
+  const { getCurrentPriceData, invalidateCurrentPrice } =
     useGetCurrentPriceInAssetDetails(
       assetId,
       editAssetDetail.currencyType,
       isPressButton,
     );
-  const handleCurrentPrice = async (
+  const handleCurrentPrice = (
     assetId: number,
     currencyType: ExchangeRateSymbol,
   ) => {
-    const result = getCurrentPriceDatas?.data;
-    invalidateCurrentPrice(assetId, currencyType);
-
+    const result = getCurrentPriceData?.data;
     if (result) {
-      const roundedPriceToTwoDemicalPoint = handleDecimalPoint(
-        Math.round,
-        result.data[0].currentPrice,
-        2,
-      );
-
-      setEditAssetDetail((prev) => ({
-        ...prev,
-        purchasePrice: roundedPriceToTwoDemicalPoint,
-      }));
+      invalidateCurrentPrice(assetId, currencyType);
+      return;
     }
+
+    // if (result) {
+    //   const roundedPriceToTwoDecimalPoint = handleDecimalPoint(
+    //     Math.round,
+    //     result.data[0].currentPrice,
+    //     2,
+    //   );
+
+    //   setEditAssetDetail((prev) => ({
+    //     ...prev,
+    //     purchasePrice: roundedPriceToTwoDecimalPoint,
+    //   }));
+    // }
+
     setIsPressButton(true);
   };
   /** COMPLETED: 4-4. count, price 데이터를 입력하지 않을 때, Error 처리하기 */

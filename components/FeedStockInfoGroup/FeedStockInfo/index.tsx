@@ -54,6 +54,8 @@ function FeedStockInfo({
     }
   };
 
+  console.log('inputPriceValue: ', inputPriceValue);
+
   return (
     <FeedStockInfoUI.Container>
       <FeedStockInfoUI.Item>

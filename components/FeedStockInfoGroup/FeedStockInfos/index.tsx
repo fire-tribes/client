@@ -47,7 +47,7 @@ function FeedStockInfos() {
   useEffect(() => {
     const array = Array.from({ length: selectedStocks.length }, () => false);
     setIsPressAllButton(array);
-  }, [selectedStocks]);
+  }, []);
   /* 3-2. 서버로 현재가 데이터 GET 요청하기 */
   const {
     getCurrentPriceDatas,
@@ -61,22 +61,27 @@ function FeedStockInfos() {
     currencyType: ExchangeRateSymbol,
   ) => {
     const result = getCurrentPriceDatas[index].data?.data;
-    invalidateCurrentPrice(assetId, currencyType);
-
     if (result) {
-      const roundedPriceToTwoDemicalPoint = handleDecimalPoint(
-        Math.round,
-        result.data[0].currentPrice,
-        2,
-      );
-
-      setSelectedStocks((prev) => {
-        const newSelectedStocks = [...prev];
-        newSelectedStocks[index].price = roundedPriceToTwoDemicalPoint;
-        return newSelectedStocks;
-      });
+      invalidateCurrentPrice(assetId, currencyType);
+      return;
     }
 
+    // if (result) {
+    //   const roundedPriceToTwoDecimalPoint = handleDecimalPoint(
+    //     Math.round,
+    //     result.data[0].currentPrice,
+    //     2,
+    //   );
+
+    //   setSelectedStocks((prev) => {
+    //     const newSelectedStocks = [...prev];
+    //     newSelectedStocks[index].price = roundedPriceToTwoDecimalPoint;
+    //     return newSelectedStocks;
+    //   });
+    //   return;
+    // }
+
+    // console.log('start');
     setIsPressAllButton((prev) => {
       const newArray = [...prev];
       newArray[index] = true;
@@ -152,7 +157,6 @@ function FeedStockInfos() {
               e: ChangeEvent<HTMLInputElement>,
             ) => {
               const { value } = e.currentTarget;
-
               const currentPriceValueDecimalPointLength =
                 checkDecimalPointLength(selectedStocks[id].price) || 0;
               const newPriceValueDecimalPointLength =
@@ -163,7 +167,6 @@ function FeedStockInfos() {
                   const array = [...stock];
                   const result = handleDecimalPoint(Math.floor, value, 0);
                   array[id].price = result.toString().replace(/[^0-9]/g, '');
-
                   return array;
                 });
                 return;
@@ -176,7 +179,8 @@ function FeedStockInfos() {
                 ) {
                   setSelectedStocks((stock) => {
                     const array = [...stock];
-                    array[id].price = handleDecimalPoint(Math.floor, value, 2);
+                    const result = handleDecimalPoint(Math.floor, value, 2);
+                    array[id].price = result;
                     return array;
                   });
                   return;
@@ -196,7 +200,6 @@ function FeedStockInfos() {
             ) => {
               setSelectedStocks((prev: SelectedStocksAtomProps[]) => {
                 let newPrice = prev[id].price;
-
                 if (newCurrencyType === 'USD' && EXCHANGE_RATE !== undefined) {
                   newPrice = handleDecimalPoint(
                     Math.round,
@@ -213,21 +216,19 @@ function FeedStockInfos() {
                     0,
                   );
                 }
-
                 // 이전 상태를 복사하여 새로운 배열 생성한다.
                 const updatedSelectedStocks = [...prev];
-
                 // 특정 id의 객체를 찾아서 currencyType를 newCurrencyType으로 변경한다.
                 updatedSelectedStocks[id] = {
                   ...updatedSelectedStocks[id],
                   price: newPrice,
                   currencyType: newCurrencyType,
                 };
-
                 return updatedSelectedStocks;
               });
             };
 
+            console.log('stock.price: ', stock.price);
             return (
               <FeedStockInfo
                 key={id}
