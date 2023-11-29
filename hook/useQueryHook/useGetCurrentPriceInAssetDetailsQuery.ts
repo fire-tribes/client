@@ -24,7 +24,7 @@ export const useGetCurrentPriceInAssetDetailsQuery = (
   const [, setEditAssetDetail] = useAtom(editAssetDetailAtom);
   const [, setIsPressButtonInEdit] = useAtom(changeIsPressButtonInEditAtom);
   /** 개별 현재가 가져오기 */
-  const oldQueries = useQuery({
+  const currentPriceQuery = useQuery({
     queryKey: queryKeys.currentPrice(assetId, currencyType),
     queryFn: () => assetAPI.getCurrentPrice(assetId, currencyType),
     enabled: !!isPressButton,
@@ -58,5 +58,5 @@ export const useGetCurrentPriceInAssetDetailsQuery = (
     },
   });
 
-  return { oldQueries };
+  return { currentPriceQuery };
 };

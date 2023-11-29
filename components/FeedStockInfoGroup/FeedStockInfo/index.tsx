@@ -56,6 +56,7 @@ function FeedStockInfo({
     }
   };
 
+  /* 2-2. '현재가 입력' 버튼으로 price 데이터 변경하기 */
   const [isPressButton, setIsPressButton] = useAtom(changeIsPressButtonAtom);
   const { getCurrentPriceData, invalidateCurrentPrice } =
     useGetCurrentPriceInSelectedStocks(
@@ -63,12 +64,12 @@ function FeedStockInfo({
       stock.currencyType,
       isPressButton,
     );
-  const handleCurrentPrice = async () => {
+  const handleCurrentPrice = () => {
     setIsPressButton(true);
     const result = getCurrentPriceData.data?.data;
 
     if (result) {
-      await invalidateCurrentPrice(stock.assetId, stock.currencyType);
+      invalidateCurrentPrice(stock.assetId, stock.currencyType);
       return;
     }
   };

@@ -44,46 +44,9 @@ function FeedStockInfos() {
    */
   // const [isPressAllButton, setIsPressAllButton] = useState<boolean[]>([]);
   const [newIsPressAllButton, setNewIsPressAllButton] = useState(false);
-  // useEffect(() => {
-  //   const array = Array.from({ length: selectedStocks.length }, () => false);
-  //   setIsPressAllButton(array);
-  // }, [selectedStocks]);
   /* 3-2. 서버로 현재가 데이터 GET 요청하기 */
   const { invalidateCurrentPrices } =
     useGetCurrentPriceAllInSelectedStocks(newIsPressAllButton);
-  /* 2-2. '현재가 입력' 버튼으로 price 데이터 변경하기 */
-  // const handleCurrentPriceButton = (
-  //   assetId: number,
-  //   currencyType: ExchangeRateSymbol,
-  // ) => {
-  //   const result = getCurrentPriceData.data?.data;
-  //   if (result) {
-  //     invalidateCurrentPrice(assetId, currencyType);
-  //     return;
-  //   }
-
-  //   // if (result) {
-  //   //   const flooredPriceToTwoDecimalPoint = handleDecimalPoint(
-  //   //     Math.floor,
-  //   //     result.data[0].currentPrice,
-  //   //     2,
-  //   //   );
-
-  //   //   setSelectedStocks((prev) => {
-  //   //     const newSelectedStocks = [...prev];
-  //   //     newSelectedStocks[index].price = flooredPriceToTwoDecimalPoint;
-  //   //     return newSelectedStocks;
-  //   //   });
-  //   //   return;
-  //   // }
-
-  //   // console.log('start');
-  //   setIsPressAllButton((prev) => {
-  //     const newArray = [...prev];
-  //     newArray[index] = true;
-  //     return newArray;
-  //   });
-  // };
   /* 2-3. '현재가 전체 입력' 버튼으로 price 데이터 전체 변경하기 */
   const handleCurrentPriceAllButton = () => {
     invalidateCurrentPrices();

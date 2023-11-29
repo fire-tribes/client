@@ -14,16 +14,12 @@ export const useGetCurrentPriceInSelectedStocks = (
   // const [selectedStocks] = useAtom(selectedStocksAtom);
 
   // initial Atom
-  const { oldQuery: getCurrentPriceData } =
+  const { currentPriceQuery: getCurrentPriceData } =
     useGetCurrentPriceInSelectedStocksQuery(
       assetId,
       currencyType,
       isPressButton,
     );
-
-  // const shouldSetAtom = getCurrentPriceDatas.every(
-  //   (query) => query.fetchStatus !== 'fetching',
-  // );
 
   /** invalidation(무효화) */
   /** 개별 무효화하고 개별 현재가 가져오기 */

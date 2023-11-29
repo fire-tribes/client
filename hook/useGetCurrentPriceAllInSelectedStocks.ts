@@ -11,7 +11,7 @@ export const useGetCurrentPriceAllInSelectedStocks = (
   const [selectedStocks] = useAtom(selectedStocksAtom);
 
   // initial Atom
-  const { newQueries: getCurrentPriceAllData } =
+  const { currentPriceQueries: getCurrentPriceAllData } =
     useGetCurrentPriceAllInSelectedStocksQuery(newIsPressAllButton);
 
   /** invalidation(무효화) */

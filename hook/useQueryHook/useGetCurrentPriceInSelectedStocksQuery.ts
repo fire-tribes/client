@@ -24,7 +24,7 @@ export const useGetCurrentPriceInSelectedStocksQuery = (
   const [, setSelectedStocks] = useAtom(selectedStocksAtom);
   const [, setIsPressButton] = useAtom(changeIsPressButtonAtom);
   /** 개별 현재가 가져오기 */
-  const oldQuery = useQuery({
+  const currentPriceQuery = useQuery({
     // queries: selectedStocks.map((stock, id) => ({
     queryKey: queryKeys.currentPrice(assetId, currencyType),
     queryFn: () => assetAPI.getCurrentPrice(assetId, currencyType),
@@ -74,5 +74,5 @@ export const useGetCurrentPriceInSelectedStocksQuery = (
     // })),
   });
 
-  return { oldQuery };
+  return { currentPriceQuery };
 };
