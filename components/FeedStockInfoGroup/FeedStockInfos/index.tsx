@@ -212,7 +212,6 @@ function FeedStockInfos() {
                     0,
                   );
                 }
-
                 // 이전 상태를 복사하여 새로운 배열 생성한다.
                 const updatedSelectedStocks = [...prev];
                 // 특정 id의 객체를 찾아서 currencyType를 newCurrencyType으로 변경한다.
@@ -226,6 +225,7 @@ function FeedStockInfos() {
               return;
             };
 
+            console.log('stock.price: ', stock.price);
             return (
               <FeedStockInfo
                 key={id}
