@@ -9,13 +9,13 @@ export const useGetCurrentPriceInAssetDetails = (
   isPressButton: boolean,
 ) => {
   // initial Atom
-  const { oldQueries } = useGetCurrentPriceInAssetDetailsQuery(
+  const { currentPriceQuery } = useGetCurrentPriceInAssetDetailsQuery(
     assetId,
     currencyType,
     isPressButton,
   );
 
-  const getCurrentPriceData = oldQueries.data;
+  const getCurrentPriceData = currentPriceQuery.data;
 
   const queryClient = useQueryClient();
   /** invalidation(무효화) */
