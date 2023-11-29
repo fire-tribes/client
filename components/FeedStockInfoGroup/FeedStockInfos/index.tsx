@@ -7,16 +7,16 @@ import {
 } from '@/hook/useGetSelectedStocks/state';
 import CheckSvg from '@/public/icon/check.svg';
 import { basic } from '@/styles/palette';
-import { useGetCurrentPriceInSelectedStocks } from '@/hook/useGetCurrentPriceInSelectedStocks';
 import { ExchangeRateSymbol } from '@/@types/models/exchangeRate';
 import { useExchangeRate } from '@/hook/useExchangeRate';
 import {
   checkDecimalPointLength,
   handleDecimalPoint,
 } from '@/core/utils/handleNumber';
+import { useGetCurrentPriceAllInSelectedStocks } from '@/hook/useGetCurrentPriceAllInSelectedStocks';
 import { useAtom } from 'jotai';
 import Image from 'next/image';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 function FeedStockInfos() {
   /** COMPLETED: 1. 선택된 주식 배열 가져오기  */
@@ -42,52 +42,48 @@ function FeedStockInfos() {
    * '(전체)현재가', '(개별)현재가'가 따로 존재하며, 서버로 요청은 '(개별)현재가'만 존재한다.
    * 전체 현재가 버튼 클릭 시, 한꺼번에 재요청할 수 있도록 핸들링할 수 있는 배열이 필요하다.
    */
-  const [isPressAllButton, setIsPressAllButton] = useState<boolean[]>([]);
+  // const [isPressAllButton, setIsPressAllButton] = useState<boolean[]>([]);
   const [newIsPressAllButton, setNewIsPressAllButton] = useState(false);
-  useEffect(() => {
-    const array = Array.from({ length: selectedStocks.length }, () => false);
-    setIsPressAllButton(array);
-  }, []);
+  // useEffect(() => {
+  //   const array = Array.from({ length: selectedStocks.length }, () => false);
+  //   setIsPressAllButton(array);
+  // }, [selectedStocks]);
   /* 3-2. 서버로 현재가 데이터 GET 요청하기 */
-  const {
-    getCurrentPriceDatas,
-    invalidateCurrentPrice,
-    invalidateCurrentPrices,
-  } = useGetCurrentPriceInSelectedStocks(isPressAllButton, newIsPressAllButton);
+  const { invalidateCurrentPrices } =
+    useGetCurrentPriceAllInSelectedStocks(newIsPressAllButton);
   /* 2-2. '현재가 입력' 버튼으로 price 데이터 변경하기 */
-  const handleCurrentPriceButton = (
-    assetId: number,
-    index: number,
-    currencyType: ExchangeRateSymbol,
-  ) => {
-    const result = getCurrentPriceDatas[index].data?.data;
-    if (result) {
-      invalidateCurrentPrice(assetId, currencyType);
-      return;
-    }
+  // const handleCurrentPriceButton = (
+  //   assetId: number,
+  //   currencyType: ExchangeRateSymbol,
+  // ) => {
+  //   const result = getCurrentPriceData.data?.data;
+  //   if (result) {
+  //     invalidateCurrentPrice(assetId, currencyType);
+  //     return;
+  //   }
 
-    // if (result) {
-    //   const roundedPriceToTwoDecimalPoint = handleDecimalPoint(
-    //     Math.round,
-    //     result.data[0].currentPrice,
-    //     2,
-    //   );
+  //   // if (result) {
+  //   //   const flooredPriceToTwoDecimalPoint = handleDecimalPoint(
+  //   //     Math.floor,
+  //   //     result.data[0].currentPrice,
+  //   //     2,
+  //   //   );
 
-    //   setSelectedStocks((prev) => {
-    //     const newSelectedStocks = [...prev];
-    //     newSelectedStocks[index].price = roundedPriceToTwoDecimalPoint;
-    //     return newSelectedStocks;
-    //   });
-    //   return;
-    // }
+  //   //   setSelectedStocks((prev) => {
+  //   //     const newSelectedStocks = [...prev];
+  //   //     newSelectedStocks[index].price = flooredPriceToTwoDecimalPoint;
+  //   //     return newSelectedStocks;
+  //   //   });
+  //   //   return;
+  //   // }
 
-    // console.log('start');
-    setIsPressAllButton((prev) => {
-      const newArray = [...prev];
-      newArray[index] = true;
-      return newArray;
-    });
-  };
+  //   // console.log('start');
+  //   setIsPressAllButton((prev) => {
+  //     const newArray = [...prev];
+  //     newArray[index] = true;
+  //     return newArray;
+  //   });
+  // };
   /* 2-3. '현재가 전체 입력' 버튼으로 price 데이터 전체 변경하기 */
   const handleCurrentPriceAllButton = () => {
     invalidateCurrentPrices();
@@ -138,7 +134,7 @@ function FeedStockInfos() {
                 ) {
                   setSelectedStocks((stock) => {
                     const array = [...stock];
-                    array[id].count = handleDecimalPoint(Math.round, value, 2);
+                    array[id].count = handleDecimalPoint(Math.floor, value, 2);
                     return array;
                   });
                   return;
@@ -202,7 +198,7 @@ function FeedStockInfos() {
                 let newPrice = prev[id].price;
                 if (newCurrencyType === 'USD' && EXCHANGE_RATE !== undefined) {
                   newPrice = handleDecimalPoint(
-                    Math.round,
+                    Math.floor,
                     Number(newPrice) / EXCHANGE_RATE,
                     2,
                   );
@@ -211,11 +207,12 @@ function FeedStockInfos() {
                   EXCHANGE_RATE !== undefined
                 ) {
                   newPrice = handleDecimalPoint(
-                    Math.round,
+                    Math.floor,
                     Number(newPrice) * EXCHANGE_RATE,
                     0,
                   );
                 }
+
                 // 이전 상태를 복사하여 새로운 배열 생성한다.
                 const updatedSelectedStocks = [...prev];
                 // 특정 id의 객체를 찾아서 currencyType를 newCurrencyType으로 변경한다.
@@ -226,21 +223,15 @@ function FeedStockInfos() {
                 };
                 return updatedSelectedStocks;
               });
+              return;
             };
 
-            console.log('stock.price: ', stock.price);
             return (
               <FeedStockInfo
                 key={id}
+                index={id}
                 stock={stock}
                 removeSelected={handleRemoveSelected}
-                handleCurrentPrice={() =>
-                  handleCurrentPriceButton(
-                    stock.assetId,
-                    id,
-                    stock.currencyType,
-                  )
-                }
                 inputCountValue={stock.count}
                 inputPriceValue={stock.price}
                 changeCountEventHandle={onChangeCountEventHandle}

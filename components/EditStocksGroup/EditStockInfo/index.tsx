@@ -18,6 +18,7 @@ import {
   handleDecimalPoint,
 } from '@/core/utils/handleNumber';
 import { useExchangeRate } from '@/hook/useExchangeRate';
+import { changeIsPressButtonInEditAtom } from '@/hook/useChangeIsPressButtonInEdit/state';
 import Image from 'next/image';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
@@ -86,25 +87,17 @@ export default function EditStockInfo({ slug }: EditStockInfoProps) {
   const handleCurrencyType = (newCurrencyType: ExchangeRateSymbol) => {
     setEditAssetDetail((prev) => {
       let newPurchasePrice = prev.purchasePrice;
-
-      if (
-        newCurrencyType === 'USD' &&
-        typeof newPurchasePrice === 'number' &&
-        EXCHANGE_RATE !== undefined
-      ) {
+      console.log('newPurchasePrice: ', newPurchasePrice);
+      if (newCurrencyType === 'USD' && EXCHANGE_RATE !== undefined) {
         newPurchasePrice = handleDecimalPoint(
-          Math.round,
-          newPurchasePrice / EXCHANGE_RATE,
+          Math.floor,
+          Number(newPurchasePrice) / EXCHANGE_RATE,
           2,
         );
-      } else if (
-        newCurrencyType === 'KRW' &&
-        typeof newPurchasePrice === 'number' &&
-        EXCHANGE_RATE !== undefined
-      ) {
+      } else if (newCurrencyType === 'KRW' && EXCHANGE_RATE !== undefined) {
         newPurchasePrice = handleDecimalPoint(
-          Math.round,
-          newPurchasePrice * EXCHANGE_RATE,
+          Math.floor,
+          Number(newPurchasePrice) * EXCHANGE_RATE,
           0,
         );
       }
@@ -115,19 +108,23 @@ export default function EditStockInfo({ slug }: EditStockInfoProps) {
         currencyType: newCurrencyType,
       };
     });
+    return;
   };
   /** COMPLETED: 4-3. '현재가 입력' 버튼으로 price 데이터 변경하기 */
-  const [isPressButton, setIsPressButton] = useState(true);
+  const [isPressButtonInEdit, setIsPressButtonInEdit] = useAtom(
+    changeIsPressButtonInEditAtom,
+  );
   const { getCurrentPriceData, invalidateCurrentPrice } =
     useGetCurrentPriceInAssetDetails(
       assetId,
       editAssetDetail.currencyType,
-      isPressButton,
+      isPressButtonInEdit,
     );
   const handleCurrentPrice = (
     assetId: number,
     currencyType: ExchangeRateSymbol,
   ) => {
+    setIsPressButtonInEdit(true);
     const result = getCurrentPriceData?.data;
     if (result) {
       invalidateCurrentPrice(assetId, currencyType);
@@ -135,19 +132,17 @@ export default function EditStockInfo({ slug }: EditStockInfoProps) {
     }
 
     // if (result) {
-    //   const roundedPriceToTwoDecimalPoint = handleDecimalPoint(
-    //     Math.round,
+    //   const floor = handleDecimalPoint(
+    //     Math.floor,
     //     result.data[0].currentPrice,
     //     2,
     //   );
 
     //   setEditAssetDetail((prev) => ({
     //     ...prev,
-    //     purchasePrice: roundedPriceToTwoDecimalPoint,
+    //     purchasePrice: floor,
     //   }));
     // }
-
-    setIsPressButton(true);
   };
   /** COMPLETED: 4-4. count, price 데이터를 입력하지 않을 때, Error 처리하기 */
   const [errorText, setErrorText] = useState('');

@@ -7,16 +7,19 @@ import belowArrowSvg from '@/public/icon/below_arrow.svg';
 import { basic } from '@/styles/palette';
 import StockAvatar from '@/components/common/StockAvatar';
 import { ExchangeRateSymbol } from '@/@types/models/exchangeRate';
+import { useGetCurrentPriceInSelectedStocks } from '@/hook/useGetCurrentPriceInSelectedStocks';
+import { changeIsPressButtonAtom } from '@/hook/useChangeIsPressButton/state';
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
+import { useAtom } from 'jotai';
 
 interface FeedStockInfoProps {
+  /** 선택한 배열의 index */
+  index: number;
   /** 선택한 배열의 객체값 */
   stock: SelectedStocksAtomProps;
   /** 선택한 값을 배열 삭제 */
   removeSelected: (stock: SelectedStocksAtomProps) => void;
-  /** 현재가 입력 버튼 */
-  handleCurrentPrice: () => void;
   /** 가격 input */
   inputCountValue: string | number;
   /** 가격 input */
@@ -32,7 +35,6 @@ interface FeedStockInfoProps {
 function FeedStockInfo({
   stock,
   removeSelected,
-  handleCurrentPrice,
   inputCountValue,
   inputPriceValue,
   changeCountEventHandle,
@@ -54,7 +56,22 @@ function FeedStockInfo({
     }
   };
 
-  console.log('inputPriceValue: ', inputPriceValue);
+  const [isPressButton, setIsPressButton] = useAtom(changeIsPressButtonAtom);
+  const { getCurrentPriceData, invalidateCurrentPrice } =
+    useGetCurrentPriceInSelectedStocks(
+      stock.assetId,
+      stock.currencyType,
+      isPressButton,
+    );
+  const handleCurrentPrice = async () => {
+    setIsPressButton(true);
+    const result = getCurrentPriceData.data?.data;
+
+    if (result) {
+      await invalidateCurrentPrice(stock.assetId, stock.currencyType);
+      return;
+    }
+  };
 
   return (
     <FeedStockInfoUI.Container>
