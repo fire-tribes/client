@@ -25,6 +25,7 @@ export const useControlModalV2 = () => {
       content,
       options: options ? options : modalAtomInitial.options,
     });
+
   const close = () => setModalState(() => ({ ...modalAtomInitial }));
 
   return {

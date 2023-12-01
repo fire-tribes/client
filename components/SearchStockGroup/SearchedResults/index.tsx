@@ -88,6 +88,10 @@ function SearchedResults({ value }: SearchResultsProps) {
         ...stock,
         count: '',
         price: '',
+        cachedPrice: {
+          KRW: undefined,
+          USD: undefined,
+        },
         currencyType: stock.countryType === 'KOR' ? 'KRW' : 'USD',
         debouncedValue: debouncedValue,
       }),

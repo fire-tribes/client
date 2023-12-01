@@ -9,6 +9,7 @@ export interface SelectedStocksAtomProps {
   debouncedValue: string;
   count: string | number;
   price: string | number;
+  cachedPrice: Record<ExchangeRateSymbol, string | number | undefined>;
   currencyType: ExchangeRateSymbol;
   countryType: 'KOR' | 'USA';
   marketType:

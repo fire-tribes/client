@@ -1,4 +1,5 @@
 import { FeedStockInfoUI } from './style';
+import { HandleCurrencyTypeFunction } from '../FeedStockInfos';
 import AlertModal from '@/components/common/Modal/AlertModal';
 import CurrencyTypeChoiceBottomSheetModal from '@/components/commonV2/ModalV2/CurrencyTypeChoiceBottomSheetModal';
 import { SelectedStocksAtomProps } from '@/hook/useGetSelectedStocks/state';
@@ -6,7 +7,7 @@ import trashSvg from '@/public/icon/trash.svg';
 import belowArrowSvg from '@/public/icon/below_arrow.svg';
 import { basic } from '@/styles/palette';
 import StockAvatar from '@/components/common/StockAvatar';
-import { ExchangeRateSymbol } from '@/@types/models/exchangeRate';
+// import { ExchangeRateSymbol } from '@/@types/models/exchangeRate';
 import { useGetCurrentPriceInSelectedStocks } from '@/hook/useGetCurrentPriceInSelectedStocks';
 import { changeIsPressButtonAtom } from '@/hook/useChangeIsPressButton/state';
 import Image from 'next/image';
@@ -29,10 +30,11 @@ interface FeedStockInfoProps {
   /** 가격이 변화했을 때, 발생하는 Event */
   changePriceEventHandle: (e: ChangeEvent<HTMLInputElement>) => void;
   /** CurrencyType 변화 함수 */
-  handleCurrencyType: (newCurrencyType: ExchangeRateSymbol) => void;
+  handleCurrencyType: HandleCurrencyTypeFunction;
 }
 
 function FeedStockInfo({
+  index,
   stock,
   removeSelected,
   inputCountValue,
@@ -111,6 +113,7 @@ function FeedStockInfo({
           </div>
           <div>
             <CurrencyTypeChoiceBottomSheetModal
+              index={index}
               changeCurrencyType={stock.currencyType}
               handleCurrencyType={handleCurrencyType}
             >

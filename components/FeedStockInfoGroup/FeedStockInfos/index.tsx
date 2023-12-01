@@ -18,11 +18,16 @@ import { useAtom } from 'jotai';
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 
+export type HandleCurrencyTypeFunction = (params: {
+  newCurrencyType: ExchangeRateSymbol;
+  index: number;
+}) => void;
+
 function FeedStockInfos() {
   /** COMPLETED: 1. 선택된 주식 배열 가져오기  */
   /* 1-1. Jotai(selectedStocks, 선택된 목록)으로 선택된 배열 가져오기  */
   const [selectedStocks, setSelectedStocks] = useAtom(selectedStocksAtom);
-  /* 1-2. Cache에 있는 환율 정보 가져오기(GET) */
+  /* 1-2. 환율 정보 가져오기(GET) */
   const { exchangeRate } = useExchangeRate();
   const EXCHANGE_RATE = exchangeRate;
 
@@ -75,7 +80,7 @@ function FeedStockInfos() {
       )}
       <div>
         {selectedStocks.length !== 0 ? (
-          selectedStocks.map((stock, id) => {
+          selectedStocks.map((stock, index) => {
             /* COMPLETED: 수량 및 가격 데이터 변경하기 */
             /* 2-2-1. count, price 데이터 직접 변경하기 */
             /* onChangeCountEventHandle 함수 */
@@ -86,7 +91,7 @@ function FeedStockInfos() {
               const { value } = e.target;
 
               const currentCountValueDecimalPointLength =
-                checkDecimalPointLength(selectedStocks[id].count) || 0;
+                checkDecimalPointLength(selectedStocks[index].count) || 0;
               const newCountValueDecimalPointLength =
                 checkDecimalPointLength(value) || 0;
 
@@ -97,7 +102,11 @@ function FeedStockInfos() {
                 ) {
                   setSelectedStocks((stock) => {
                     const array = [...stock];
-                    array[id].count = handleDecimalPoint(Math.floor, value, 2);
+                    array[index].count = handleDecimalPoint(
+                      Math.floor,
+                      value,
+                      2,
+                    );
                     return array;
                   });
                   return;
@@ -106,7 +115,7 @@ function FeedStockInfos() {
 
               setSelectedStocks((stock) => {
                 const array = [...stock];
-                array[id].count = value;
+                array[index].count = value;
                 return array;
               });
             };
@@ -115,9 +124,21 @@ function FeedStockInfos() {
             const onChangePriceEventHandle = (
               e: ChangeEvent<HTMLInputElement>,
             ) => {
+              // change event가 발생하면 selectedStocks의 index 값을 통해 접근하여 cached 값을 초기화
+              setSelectedStocks((stock) => {
+                const array = [...stock];
+                array[index].cachedPrice = {
+                  KRW: undefined,
+                  USD: undefined,
+                };
+
+                return array;
+              });
+
+              // 기존 로직
               const { value } = e.currentTarget;
               const currentPriceValueDecimalPointLength =
-                checkDecimalPointLength(selectedStocks[id].price) || 0;
+                checkDecimalPointLength(selectedStocks[index].price) || 0;
               const newPriceValueDecimalPointLength =
                 checkDecimalPointLength(value) || 0;
 
@@ -125,7 +146,7 @@ function FeedStockInfos() {
                 setSelectedStocks((stock) => {
                   const array = [...stock];
                   const result = handleDecimalPoint(Math.floor, value, 0);
-                  array[id].price = result.toString().replace(/[^0-9]/g, '');
+                  array[index].price = result.toString().replace(/[^0-9]/g, '');
                   return array;
                 });
                 return;
@@ -139,7 +160,7 @@ function FeedStockInfos() {
                   setSelectedStocks((stock) => {
                     const array = [...stock];
                     const result = handleDecimalPoint(Math.floor, value, 2);
-                    array[id].price = result;
+                    array[index].price = result;
                     return array;
                   });
                   return;
@@ -148,51 +169,212 @@ function FeedStockInfos() {
 
               setSelectedStocks((stock) => {
                 const array = [...stock];
-                array[id].price = value;
+                array[index].price = value;
                 return array;
               });
             };
 
             /** COMPLETED: newCurrencyType으로 달러 또는 원화 변경하기 */
-            const handleCurrencyType = (
-              newCurrencyType: ExchangeRateSymbol,
-            ) => {
-              setSelectedStocks((prev: SelectedStocksAtomProps[]) => {
-                let newPrice = prev[id].price;
-                if (newCurrencyType === 'USD' && EXCHANGE_RATE !== undefined) {
-                  newPrice = handleDecimalPoint(
-                    Math.floor,
-                    Number(newPrice) / EXCHANGE_RATE,
-                    2,
-                  );
-                } else if (
-                  newCurrencyType === 'KRW' &&
-                  EXCHANGE_RATE !== undefined
-                ) {
-                  newPrice = handleDecimalPoint(
-                    Math.floor,
-                    Number(newPrice) * EXCHANGE_RATE,
-                    0,
-                  );
-                }
-                // 이전 상태를 복사하여 새로운 배열 생성한다.
-                const updatedSelectedStocks = [...prev];
-                // 특정 id의 객체를 찾아서 currencyType를 newCurrencyType으로 변경한다.
-                updatedSelectedStocks[id] = {
-                  ...updatedSelectedStocks[id],
-                  price: newPrice,
-                  currencyType: newCurrencyType,
-                };
-                return updatedSelectedStocks;
-              });
-              return;
+            const handleCurrencyType: HandleCurrencyTypeFunction = ({
+              newCurrencyType,
+              index,
+            }) => {
+              // 접근
+              console.log('selectedStocks:', selectedStocks);
+              console.log('selectedStock is :', selectedStocks[index]);
+              console.log('index', index);
+
+              const { cachedPrice } = selectedStocks[index];
+              const cachedCurrentCurrencyTypeValue =
+                cachedPrice[newCurrencyType];
+
+              console.log(
+                'cachedCurrentCurrencyTypeValue',
+                cachedCurrentCurrencyTypeValue,
+              );
+
+              // 현재 변경하려는 타입의 캐시된 데이터가 존재한다면 별다른 로직을 수행하지 않고 그대로 리턴
+              if (cachedCurrentCurrencyTypeValue) {
+                setSelectedStocks((prev: SelectedStocksAtomProps[]) => {
+                  const updatedSelectedStocks = [...prev];
+                  // 특정 index의 객체를 찾아서 currencyType를 newCurrencyType으로 변경한다.
+                  updatedSelectedStocks[index] = {
+                    ...updatedSelectedStocks[index],
+                    price: cachedCurrentCurrencyTypeValue,
+                    currencyType: newCurrencyType,
+                  };
+
+                  return updatedSelectedStocks;
+                });
+
+                return;
+              }
+
+              if (!cachedCurrentCurrencyTypeValue) {
+                if (!EXCHANGE_RATE) return;
+
+                setSelectedStocks((prev: SelectedStocksAtomProps[]) => {
+                  const prevPrice = prev[index].price;
+                  const newUpdatedSelectedStocks = [...prev];
+
+                  if (newCurrencyType === 'USD') {
+                    const newPrice = handleDecimalPoint(
+                      Math.floor,
+                      Number(prevPrice) / EXCHANGE_RATE,
+                      2,
+                    );
+
+                    const prevCachedPrice =
+                      newUpdatedSelectedStocks[index].cachedPrice;
+                    const newCachedPrice = {
+                      ...prevCachedPrice,
+                      [newCurrencyType]: newPrice,
+                    };
+
+                    newUpdatedSelectedStocks[index] = {
+                      ...prev[index],
+                      price: newPrice,
+                      cachedPrice: newCachedPrice,
+                      currencyType: newCurrencyType,
+                    };
+
+                    return newUpdatedSelectedStocks;
+                  }
+
+                  if (newCurrencyType === 'KRW') {
+                    const newPrice = handleDecimalPoint(
+                      Math.floor,
+                      Number(prevPrice) * EXCHANGE_RATE,
+                      0,
+                    );
+
+                    const prevCachedPrice =
+                      newUpdatedSelectedStocks[index].cachedPrice;
+                    const newCachedPrice = {
+                      ...prevCachedPrice,
+                      [newCurrencyType]: newPrice,
+                    };
+
+                    newUpdatedSelectedStocks[index] = {
+                      ...prev[index],
+                      price: newPrice,
+                      cachedPrice: newCachedPrice,
+                      currencyType: newCurrencyType,
+                    };
+
+                    return newUpdatedSelectedStocks;
+                  }
+
+                  return prev;
+                });
+              }
             };
 
-            console.log('stock.price: ', stock.price);
+            // return prev
+
+            // }
+
+            //           // return updatedSelectedStocks;
+
+            //       // FIXME: EXCHANGE_RATE는 상수이기 때문에 없을 경우가 존재하지 않는다. exchangeRate 로 변수명 변경필요
+            //             /** TODO: 리팩토링 진행
+            //          *  let 사용 x
+            //          *  else if 말고 if 문만을 여러번 사용
+            //          *  공통으로 들어가는 EXCHANGE_RATE !== undefined는 첫번쨰 if 문에서 일괄처리
+            //          *
+            //          *  USD인 경우 로직 실행 후 리턴
+            //          *  KRW인 경우 로직 실행 후 리턴
+            //          */
+
+            //     }
+            //       // if (EXCHANGE_RATE) {
+
+            //       //   updatedSelectedStocks[index] = {
+            //       //     ...updatedSelectedStocks[index],
+            //       //     price: newPrice,
+            //       //     cachedPrice:
+            //       //     currencyType: newCurrencyType,
+            //       //   };
+            //       //   return updatedSelectedStocks;
+
+            //       // }
+
+            //       // if (newCurrencyType === 'KRW') {
+            //       //   newPrice = handleDecimalPoint(
+            //       //     Math.floor,
+            //       //     Number(newPrice) * EXCHANGE_RATE,
+            //       //     0,
+            //       //   );
+            //       // }
+            //       // } else if (
+            //       //   newCurrencyType === 'KRW' &&
+            //       //   // EXCHANGE_RATE !== undefined
+            //       // ) {
+
+            //       // }
+            //       // 이전 상태를 복사하여 새로운 배열 생성한다.
+
+            //       // const updatedSelectedStocks = [...prev];
+            //       // const newCachedPrice = {
+            //       //   ...updatedSelectedStocks[index].cachedPrice,
+            //       //   [newCurrencyType]: newPrice,
+            //       // },
+
+            //       // 특정 index의 객체를 찾아서 currencyType를 newCurrencyType으로 변경한다.
+            //       // updatedSelectedStocks[index] = {
+            //       //   ...updatedSelectedStocks[index],
+            //       //   price: newPrice,
+            //       //   cachedPrice:
+            //       //   currencyType: newCurrencyType,
+            //       // };
+            //       // return updatedSelectedStocks;
+            //     });
+
+            //     return;
+            //     // newValue를 아래 로직처럼 진행하고 cached 값도 변경해준다.
+            //   }
+
+            //   // TODO: EXCHANGE_RATE가 없을 겨우 어떻게 해줄것인가? (아무것도 안해줘도 되지 않을까?)
+            //   return;
+
+            //   // setSelectedStocks((prev: SelectedStocksAtomProps[]) => {
+            //   //   let newPrice = prev[id].price;
+            //   //   if (newCurrencyType === 'USD' && EXCHANGE_RATE !== undefined) {
+            //   //     newPrice = handleDecimalPoint(
+            //   //       Math.floor,
+            //   //       Number(newPrice) / EXCHANGE_RATE,
+            //   //       2,
+            //   //     );
+            //   //   } else if (
+            //   //     newCurrencyType === 'KRW' &&
+            //   //     EXCHANGE_RATE !== undefined
+            //   //   ) {
+            //   //     newPrice = handleDecimalPoint(
+            //   //       Math.floor,
+            //   //       Number(newPrice) * EXCHANGE_RATE,
+            //   //       0,
+            //   //     );
+            //   //   }
+            //   //   // 이전 상태를 복사하여 새로운 배열 생성한다.
+            //   //   const updatedSelectedStocks = [...prev];
+            //   //   // 특정 id의 객체를 찾아서 currencyType를 newCurrencyType으로 변경한다.
+            //   //   updatedSelectedStocks[id] = {
+            //   //     ...updatedSelectedStocks[id],
+            //   //     price: newPrice,
+            //   //     currencyType: newCurrencyType,
+            //   //   };
+            //   //   return updatedSelectedStocks;
+            //   // });
+            //   // return;
+            // };
+
+            console.log('stock', stock);
+
+            // console.log('stock.price: ', stock.price);
             return (
               <FeedStockInfo
-                key={id}
-                index={id}
+                key={index}
+                index={index}
                 stock={stock}
                 removeSelected={handleRemoveSelected}
                 inputCountValue={stock.count}

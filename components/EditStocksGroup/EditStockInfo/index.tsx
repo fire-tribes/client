@@ -39,7 +39,7 @@ export default function EditStockInfo({ slug }: EditStockInfoProps) {
 
   const [editAssetDetail, setEditAssetDetail] = useAtom(editAssetDetailAtom);
 
-  /** 3-1. Cache에 있는 환율 정보 가져오기(GET) */
+  /** 3-1. 환율 정보 가져오기(GET) */
   const { exchangeRate } = useExchangeRate();
   const EXCHANGE_RATE = exchangeRate;
 
@@ -85,7 +85,6 @@ export default function EditStockInfo({ slug }: EditStockInfoProps) {
   const handleCurrencyType = (newCurrencyType: ExchangeRateSymbol) => {
     setEditAssetDetail((prev) => {
       let newPurchasePrice = prev.purchasePrice;
-      console.log('newPurchasePrice: ', newPurchasePrice);
       if (newCurrencyType === 'USD' && EXCHANGE_RATE !== undefined) {
         newPurchasePrice = handleDecimalPoint(
           Math.floor,
