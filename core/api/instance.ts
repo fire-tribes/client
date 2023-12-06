@@ -36,6 +36,8 @@ export const changeAuthAPIInstanceBaseUrlIntoProductServerUrl = (
   }
 };
 
+console.log('instance.ts baseURL', baseURL);
+
 const APIInstance = createAPIInstance({
   baseURL: baseURL + '/api/v1/',
 });
