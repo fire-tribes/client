@@ -18,19 +18,18 @@ import {
   handleDecimalPoint,
 } from '@/core/utils/handleNumber';
 import { useExchangeRate } from '@/hook/useExchangeRate';
+import { changeIsPressButtonInEditAtom } from '@/hook/useChangeIsPressButtonInEdit/state';
 import Image from 'next/image';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { useAtom } from 'jotai';
-// import { useRouter } from 'next/router';
 
 interface EditStockInfoProps {
   slug: string[];
 }
 
 export default function EditStockInfo({ slug }: EditStockInfoProps) {
-  // const router = useRouter();
   /** 3. '정보 확인' API로 수량 및 가격 데이터 가져오기(GET) */
   /** COMPLETED: 3-1. GET 요청에 필요한 portfolioId와 portfolioAssetId 가져오기 */
   const portfolioId = Number(slug?.[0]);
@@ -86,25 +85,17 @@ export default function EditStockInfo({ slug }: EditStockInfoProps) {
   const handleCurrencyType = (newCurrencyType: ExchangeRateSymbol) => {
     setEditAssetDetail((prev) => {
       let newPurchasePrice = prev.purchasePrice;
-
-      if (
-        newCurrencyType === 'USD' &&
-        typeof newPurchasePrice === 'number' &&
-        EXCHANGE_RATE !== undefined
-      ) {
+      console.log('newPurchasePrice: ', newPurchasePrice);
+      if (newCurrencyType === 'USD' && EXCHANGE_RATE !== undefined) {
         newPurchasePrice = handleDecimalPoint(
-          Math.round,
-          newPurchasePrice / EXCHANGE_RATE,
+          Math.floor,
+          Number(newPurchasePrice) / EXCHANGE_RATE,
           2,
         );
-      } else if (
-        newCurrencyType === 'KRW' &&
-        typeof newPurchasePrice === 'number' &&
-        EXCHANGE_RATE !== undefined
-      ) {
+      } else if (newCurrencyType === 'KRW' && EXCHANGE_RATE !== undefined) {
         newPurchasePrice = handleDecimalPoint(
-          Math.round,
-          newPurchasePrice * EXCHANGE_RATE,
+          Math.floor,
+          Number(newPurchasePrice) * EXCHANGE_RATE,
           0,
         );
       }
@@ -115,35 +106,28 @@ export default function EditStockInfo({ slug }: EditStockInfoProps) {
         currencyType: newCurrencyType,
       };
     });
+    return;
   };
   /** COMPLETED: 4-3. '현재가 입력' 버튼으로 price 데이터 변경하기 */
-  const [isPressButton, setIsPressButton] = useState(true);
-  const { getCurrentPriceDatas, invalidateCurrentPrice } =
+  const [isPressButtonInEdit, setIsPressButtonInEdit] = useAtom(
+    changeIsPressButtonInEditAtom,
+  );
+  const { getCurrentPriceData, invalidateCurrentPrice } =
     useGetCurrentPriceInAssetDetails(
       assetId,
       editAssetDetail.currencyType,
-      isPressButton,
+      isPressButtonInEdit,
     );
-  const handleCurrentPrice = async (
+  const handleCurrentPrice = (
     assetId: number,
     currencyType: ExchangeRateSymbol,
   ) => {
-    const result = getCurrentPriceDatas?.data;
-    invalidateCurrentPrice(assetId, currencyType);
-
+    setIsPressButtonInEdit(true);
+    const result = getCurrentPriceData?.data;
     if (result) {
-      const roundedPriceToTwoDemicalPoint = handleDecimalPoint(
-        Math.round,
-        result.data[0].currentPrice,
-        2,
-      );
-
-      setEditAssetDetail((prev) => ({
-        ...prev,
-        purchasePrice: roundedPriceToTwoDemicalPoint,
-      }));
+      invalidateCurrentPrice(assetId, currencyType);
+      return;
     }
-    setIsPressButton(true);
   };
   /** COMPLETED: 4-4. count, price 데이터를 입력하지 않을 때, Error 처리하기 */
   const [errorText, setErrorText] = useState('');
@@ -196,7 +180,6 @@ export default function EditStockInfo({ slug }: EditStockInfoProps) {
     };
     /** 5-1-3. 수정된 데이터로 Cache 업데이트하기 */
     queryClient.setQueryData(queryKeys.myPortFolio(), () => updater());
-    // router.push(`/edit?portfolioId=${portfolioId}&deleteAssetDetails=success`);
     /** 5-2. 서버 내 해당 주식 객체 삭제하기 */
     deleteAssetDetailsData({
       portfolioId,
