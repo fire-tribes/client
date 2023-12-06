@@ -19,6 +19,8 @@ const baseURL =
     ? process.env.NEXT_PUBLIC_SERVER_URL
     : process.env.NEXT_PUBLIC_DEV_SERVER_URL;
 
+console.log('instance.ts baseURL', baseURL);
+
 const APIInstance = createAPIInstance({
   baseURL: baseURL + '/api/v1/',
 });
@@ -47,6 +49,11 @@ const token = new Token({
 
 APIInstance.interceptors.request.use(tokenVerifyHandler);
 APIInstance.interceptors.response.use();
+
+AuthAPIInstance.interceptors.request.use((config) => {
+  console.log('intercepter', config.baseURL);
+  return config;
+});
 
 export { APIInstance, AuthAPIInstance };
 export default APIInstance;
