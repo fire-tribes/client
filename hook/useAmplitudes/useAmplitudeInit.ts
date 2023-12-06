@@ -1,3 +1,4 @@
+import { productServerHostname } from '@/core/api/instance';
 import { useEffect } from 'react';
 import * as amplitude from '@amplitude/analytics-browser';
 
@@ -9,31 +10,21 @@ const AMPLITUDE_DEV_KEY = process.env
 //TODO: 매번 init을 해주지 않으려면 Provider를 만들어서 Context로 해줘야하지 않을까?
 export const useAmplitudeInit = () => {
   useEffect(() => {
-    const origin = window.location.origin;
+    const currentUrlHostname = window.location.hostname;
 
-    if (process.env.NEXT_PUBLIC_LOCAL_SERVER_ORIGIN === origin) {
-      amplitude.init(AMPLITUDE_DEV_KEY, {
-        defaultTracking: true,
-      });
-
-      return;
-    }
-
-    if (process.env.NEXT_PUBLIC_DEV_SERVER_ORIGIN === origin) {
-      amplitude.init(AMPLITUDE_DEV_KEY, {
-        defaultTracking: true,
-      });
-
-      return;
-    }
-
-    if (process.env.NEXT_PUBLIC_PRODUCT_SERVER_ORIGIN === origin) {
+    if (currentUrlHostname === productServerHostname) {
       amplitude.init(AMPLITUDE_PRODUCT_KEY, {
         defaultTracking: true,
       });
 
       return;
     }
+
+    amplitude.init(AMPLITUDE_DEV_KEY, {
+      defaultTracking: true,
+    });
+
+    return;
   }, []);
 
   return {

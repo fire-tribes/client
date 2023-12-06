@@ -4,7 +4,6 @@ import axios from 'axios';
 import type { AxiosRequestConfig } from 'axios';
 
 const AUTHORIZATION = 'Authorization';
-const BASE_URL = global.location?.origin;
 
 const createAPIInstance = (config: AxiosRequestConfig) => {
   const instance = axios.create({
@@ -14,10 +13,30 @@ const createAPIInstance = (config: AxiosRequestConfig) => {
   return instance;
 };
 
+const currentUrlHostname = global.location?.hostname;
+
+export const productServerHostname =
+  process.env.NEXT_PUBLIC_PRODUCT_SERVER_HOSTNAME;
+export const productServerURL = process.env.NEXT_PUBLIC_SERVER_URL;
+const devServerURL = process.env.NEXT_PUBLIC_DEV_SERVER_URL;
+
 const baseURL =
-  BASE_URL === process.env.NEXT_PUBLIC_PRODUCT_SERVER_ORIGIN
-    ? process.env.NEXT_PUBLIC_SERVER_URL
-    : process.env.NEXT_PUBLIC_DEV_SERVER_URL;
+  currentUrlHostname === productServerHostname
+    ? productServerURL
+    : devServerURL;
+
+console.log('instance.ts baseURL', baseURL);
+
+export const changeAuthAPIInstanceBaseUrlIntoProductServerUrl = (
+  hostname: string,
+) => {
+  if (hostname === productServerHostname) {
+    const newBaseURL = productServerURL + '/api/v1/user/';
+    AuthAPIInstance.defaults.baseURL = newBaseURL;
+  }
+};
+
+console.log('instance.ts baseURL', baseURL);
 
 const APIInstance = createAPIInstance({
   baseURL: baseURL + '/api/v1/',
@@ -47,6 +66,11 @@ const token = new Token({
 
 APIInstance.interceptors.request.use(tokenVerifyHandler);
 APIInstance.interceptors.response.use();
+
+AuthAPIInstance.interceptors.request.use((config) => {
+  console.log('intercepter', config.baseURL);
+  return config;
+});
 
 export { APIInstance, AuthAPIInstance };
 export default APIInstance;
