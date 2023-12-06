@@ -1,5 +1,6 @@
 import { SignApi } from '@/core/api/sign';
 import { SignAPIParams } from '@/hook/useCallServiceLoginWithSession';
+import { changeAuthAPIInstanceBaseUrlIntoProductServerUrl } from '@/core/api/instance';
 import { AxiosError } from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 import type {
@@ -39,6 +40,11 @@ export default async function handler(
       .send({ data: '제공하지 않는 플랫폼으로 로그인을 시도하였습니다.' });
   }
 
+  /** change AuthAPIInstace baseURL By request host name */
+  const requestHostname = req.headers.host?.split(':')[0] || '';
+  changeAuthAPIInstanceBaseUrlIntoProductServerUrl(requestHostname);
+
+  /** try signAPI call */
   try {
     const signInForm: SignInRequestBody = {
       email,
