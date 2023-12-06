@@ -31,7 +31,8 @@ export const changeAuthAPIInstanceBaseUrlIntoProductServerUrl = (
   hostname: string,
 ) => {
   if (hostname === productServerHostname) {
-    AuthAPIInstance.defaults.baseURL = productServerURL;
+    const newBaseURL = productServerURL + '/api/v1/user/';
+    AuthAPIInstance.defaults.baseURL = newBaseURL;
   }
 };
 
