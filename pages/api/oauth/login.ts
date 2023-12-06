@@ -69,11 +69,14 @@ export default async function handler(
 
     if (canSignIn) {
       const signInResponse = await SignApi.signIn(signInForm);
+      console.log('i"m, api routes baseURL', signInResponse.config.baseURL);
+
       const { data } = signInResponse;
 
       return responseSuccess(data);
     }
   } catch (err) {
+    console.log(err);
     responseServerError(err as AxiosError);
     return;
   }
