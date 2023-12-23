@@ -38,7 +38,6 @@ export default async function handler(
         return res.send(postResult.data);
       }
     }
-
     return res.status(400).send('fail: send slack alarm');
   } catch (err) {
     console.log();
