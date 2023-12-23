@@ -1,6 +1,6 @@
 import { Cookie } from '@/core/api/cookie';
 import { Token } from '@/core/api/token';
-import axios from 'axios';
+import axios, { type AxiosError } from 'axios';
 import type { AxiosRequestConfig } from 'axios';
 
 const AUTHORIZATION = 'Authorization';
@@ -25,8 +25,6 @@ const baseURL =
     ? productServerURL
     : devServerURL;
 
-console.log('instance.ts baseURL', baseURL);
-
 export const changeAuthAPIInstanceBaseUrlIntoProductServerUrl = (
   hostname: string,
 ) => {
@@ -36,7 +34,13 @@ export const changeAuthAPIInstanceBaseUrlIntoProductServerUrl = (
   }
 };
 
-console.log('instance.ts baseURL', baseURL);
+export const isProductionServer = (hostname: string) => {
+  if (hostname === productServerHostname) {
+    return true;
+  }
+
+  return false;
+};
 
 const APIInstance = createAPIInstance({
   baseURL: baseURL + '/api/v1/',
@@ -48,6 +52,10 @@ const AuthAPIInstance = createAPIInstance({
   headers: {
     [AUTHORIZATION]: process.env.SECRET_KEY as string,
   },
+});
+
+export const SlackAPIInstance = createAPIInstance({
+  baseURL: process.env.NEXT_PUBLIC_SLACK_ERROR_ALARM_URL,
 });
 
 const tokenVerifyHandler = (config: AxiosRequestConfig) => {
@@ -65,10 +73,20 @@ const token = new Token({
 });
 
 APIInstance.interceptors.request.use(tokenVerifyHandler);
-APIInstance.interceptors.response.use();
+APIInstance.interceptors.response.use(
+  () => {},
+  (err: AxiosError) => {
+    axios.post('api/alarm/slack', {
+      message: `
+*Method* : [${err.config.method?.toUpperCase()}]
+*End Point* : ${err.config.baseURL}${err.config.url}
+*Description* : *name*: ${err.name}, *message*: ${err.message}
+`,
+    });
+  },
+);
 
 AuthAPIInstance.interceptors.request.use((config) => {
-  console.log('intercepter', config.baseURL);
   return config;
 });
 
