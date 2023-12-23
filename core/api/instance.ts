@@ -83,7 +83,7 @@ const createSlackAlarmMessage = (err: AxiosError) => {
 };
 
 const sendSlackAlarmToNextApiRoutes = (err: AxiosError) => {
-  axios.post('api/alarm/slack', createSlackAlarmMessage(err));
+  return axios.post('api/alarm/slack', createSlackAlarmMessage(err));
 };
 
 APIInstance.interceptors.request.use(tokenVerifyHandler);
