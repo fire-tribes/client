@@ -72,23 +72,32 @@ const token = new Token({
   apiHeaders: APIInstance.defaults.headers,
 });
 
-APIInstance.interceptors.request.use(tokenVerifyHandler);
-APIInstance.interceptors.response.use(
-  () => {},
-  (err: AxiosError) => {
-    axios.post('api/alarm/slack', {
-      message: `
+const createSlackAlarmMessage = (err: AxiosError) => {
+  return {
+    message: `
 *Method* : [${err.config.method?.toUpperCase()}]
 *End Point* : ${err.config.baseURL}${err.config.url}
 *Description* : *name*: ${err.name}, *message*: ${err.message}
 `,
-    });
-  },
-);
+  };
+};
+
+const sendSlackAlarmToNextApiRoutes = (err: AxiosError) => {
+  axios.post('api/alarm/slack', createSlackAlarmMessage(err));
+};
+
+APIInstance.interceptors.request.use(tokenVerifyHandler);
+APIInstance.interceptors.response.use((response) => {
+  return response;
+}, sendSlackAlarmToNextApiRoutes);
 
 AuthAPIInstance.interceptors.request.use((config) => {
   return config;
 });
+
+AuthAPIInstance.interceptors.response.use((response) => {
+  return response;
+}, sendSlackAlarmToNextApiRoutes);
 
 export { APIInstance, AuthAPIInstance };
 export default APIInstance;
