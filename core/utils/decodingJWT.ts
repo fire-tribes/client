@@ -18,7 +18,7 @@ export function parsingJWT<T>(JWT: string) {
    * [2] : VERIFY
    */
 
-  const base64Payload = JWT.split('.')[1];
+  const base64Payload = JWT.split('.')?.[1];
   const payload = Buffer.from(base64Payload, 'base64');
 
   /** 문자열 변환 후 JS Object로 변환 */
