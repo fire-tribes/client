@@ -265,7 +265,7 @@ export const StyledTitle = styled.h2`
 `;
 
 export const config: PageConfig = {
-  runtime: 'edge',
+  runtime: 'experimental-edge',
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
