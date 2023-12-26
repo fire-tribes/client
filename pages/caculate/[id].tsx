@@ -5,10 +5,7 @@ import Padding from '@/components/commonV2/Padding';
 import CenterContent from '@/components/commonV2/CenterContent';
 import styled from '@emotion/styled';
 import Image from 'next/image';
-import type {
-  GetServerSideProps,
-  // PageConfig
-} from 'next';
+import type { GetServerSideProps } from 'next';
 
 type Resposne = {
   id: number;
