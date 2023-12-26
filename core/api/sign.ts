@@ -17,6 +17,11 @@ export const SignApi = {
       },
     });
   },
+  checkSignUp: (params: CheckSignUpRequestBody) => {
+    return AuthAPIInstance.get(`email`, {
+      params,
+    });
+  },
   signUp: (body: SignUpRequestBody) => {
     return AuthAPIInstance.post('signup', body, {});
   },
@@ -27,10 +32,5 @@ export const SignApi = {
     const { data } = await APIInstance.post('user/logout');
 
     return data;
-  },
-  checkSignUp: (params: CheckSignUpRequestBody) => {
-    return AuthAPIInstance.get(`email`, {
-      params,
-    });
   },
 };
